@@ -16,7 +16,7 @@ A felhasználók regisztrálhatnak, bejelentkezhetnek, és virtuális játékoka
 
 ---
 
-#🧠 Technológiák
+## 🧠 Technológiák
 
 | Terület | Technológia |
 |----------|--------------|
@@ -26,7 +26,7 @@ A felhasználók regisztrálhatnak, bejelentkezhetnek, és virtuális játékoka
 | **Környezet** | XAMPP |
 | **Stílus** | Angular Material / Tailwind (opcionális) |
 
-#🌟 Célja
+## 🌟 Célja
 
 Ez a projekt a [Vizsgaprojekt / Szakdolgozat / Tanulmányi cél] keretében készült,
 és célja egy modern, reszponzív, adatbázis alapú webalkalmazás fejlesztése Angular és XAMPP technológiákkal.
