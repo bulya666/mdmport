@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Sze 13. 22:13
+-- Létrehozás ideje: 2025. Okt 29. 15:22
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -30,8 +30,46 @@ SET time_zone = "+00:00";
 CREATE TABLE `gamephotos` (
   `id` int(11) NOT NULL,
   `gameid` int(11) NOT NULL,
-  `pic` longblob NOT NULL
+  `pic` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- A tábla adatainak kiíratása `gamephotos`
+--
+
+INSERT INTO `gamephotos` (`id`, `gameid`, `pic`) VALUES
+(19, 1, 'cs2_1.png'),
+(20, 1, 'cs2_2.png'),
+(21, 1, 'cs2_3.png'),
+(22, 1, 'cs2_4.png'),
+(23, 2, 'dota2_1.jpg'),
+(24, 2, 'dota2_2.jpg'),
+(25, 2, 'dota2_3.jpg'),
+(26, 2, 'dota2_4.jpg'),
+(27, 5, 'greenhell_1.jpg'),
+(28, 5, 'greenhell_2.jpg'),
+(29, 5, 'greenhell_3.jpg'),
+(30, 5, 'greenhell_4.jpg'),
+(31, 4, 'wot_1.jpg'),
+(32, 4, 'wot_2.jpg'),
+(33, 4, 'wot_3.jpg'),
+(34, 4, 'wot_4.jpg'),
+(35, 3, 'tf2_1.jpg'),
+(36, 3, 'tf2_2.jpg'),
+(37, 3, 'tf2_3.jpg'),
+(38, 3, 'tf2_4.jpg'),
+(39, 6, 'rdr2_1.png'),
+(40, 6, 'rdr2_2.png'),
+(41, 6, 'rdr2_3.png'),
+(42, 6, 'rdr2_4.png'),
+(43, 7, 'rust_1.jpg'),
+(44, 7, 'rust_2.jpg'),
+(45, 7, 'rust_3.jpg'),
+(46, 7, 'rust_4.jpg'),
+(47, 8, 'soft_1.jpg'),
+(48, 8, 'soft_2.jpg'),
+(49, 8, 'soft_3.jpg'),
+(50, 8, 'soft_4.jpg');
 
 -- --------------------------------------------------------
 
@@ -53,7 +91,7 @@ CREATE TABLE `games` (
 --
 
 INSERT INTO `games` (`id`, `title`, `tag`, `price`, `desc`, `thumbnail`) VALUES
-(1, 'Counter-Strike: Global Offensive', 'free top', 'INGYEN', 'Csapat alapú FPS versenyjáték.', 'https://cdn.cloudflare.steamstatic.com/steam/apps/730/capsule_616x353.jpg'),
+(1, 'Counter-Strike 2', 'free top', 'INGYEN', 'Csapat alapú FPS versenyjáték.', 'https://cdn.cloudflare.steamstatic.com/steam/apps/730/capsule_616x353.jpg'),
 (2, 'Dota 2', 'free', 'INGYEN', 'MOBA — taktika és együttműködés.', 'https://cdn.cloudflare.steamstatic.com/steam/apps/570/capsule_616x353.jpg'),
 (3, 'Team Fortress 2', 'free', 'INGYEN', 'Színes, osztályalapú humoros FPS.', 'https://cdn.cloudflare.steamstatic.com/steam/apps/440/capsule_616x353.jpg'),
 (4, 'World Of Tanks', 'free', 'INGYEN', 'Többjátékos online harckocsis csatajáték.', 'https://cdn.cloudflare.steamstatic.com/steam/apps/1407200/capsule_616x353.jpg'),
@@ -168,7 +206,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT a táblához `gamephotos`
 --
 ALTER TABLE `gamephotos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT a táblához `games`

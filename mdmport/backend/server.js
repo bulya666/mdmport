@@ -113,6 +113,18 @@ app.get('/api/ownedg', async (req, res) => {
   }
 });
 
+// 🔹 Összes kép lekérése a gamephotos táblából
+app.get('/api/gamephotos', async (req, res) => {
+  try {
+    const sql = 'SELECT id, gameid, pic FROM gamephotos ORDER BY gameid, id';
+    const [rows] = await pool.query(sql);
+    res.json(rows);
+  } catch (err) {
+    console.error('Hiba a gamephotos lekérdezésnél:', err);
+    res.status(500).json({ error: 'DB error' });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`mdmport API fut: http://localhost:${PORT}/api/games`);
