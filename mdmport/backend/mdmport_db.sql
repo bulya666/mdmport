@@ -20,8 +20,11 @@ SET time_zone = "+00:00";
 --
 -- Adatbázis: `mdmport_db`
 --
-
 -- --------------------------------------------------------
+
+CREATE DATABASE IF NOT EXISTS `mdmport_db`
+  DEFAULT CHARACTER SET utf8mb4
+  COLLATE utf8mb4_general_ci;
 
 --
 -- Tábla szerkezet ehhez a táblához `gamephotos`
@@ -66,10 +69,10 @@ INSERT INTO `gamephotos` (`id`, `gameid`, `pic`) VALUES
 (44, 7, 'rust_2.jpg'),
 (45, 7, 'rust_3.jpg'),
 (46, 7, 'rust_4.jpg'),
-(47, 8, 'soft_1.jpg'),
-(48, 8, 'soft_2.jpg'),
-(49, 8, 'soft_3.jpg'),
-(50, 8, 'soft_4.jpg');
+(47, 8, 'sotf_1.jpg'),
+(48, 8, 'sotf_2.jpg'),
+(49, 8, 'sotf_3.jpg'),
+(50, 8, 'sotf_4.jpg');
 
 -- --------------------------------------------------------
 

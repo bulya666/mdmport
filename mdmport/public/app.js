@@ -204,3 +204,4 @@ async function loadGames() {
   // export init függvény Angular számára
   global.initGameCatalog = init;
 })(window);
+
