@@ -13,12 +13,22 @@
     </div>
 
     <div class="top-actions">
-        <a routerLink="/community" class="btn1">Közösség</a>
-        <a routerLink="/" class="btn1">Áruház</a>
-         <a routerLink="/login" class="btn1">Bejelentkezés</a>
-    </div>
+
+<button class="hamburger" [class.active]="menuOpen" (click)="toggleMenu()">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
+<div class="nav-links" [class.show]="menuOpen">
+  <a routerLink="/community" class="btn1" (click)="closeMenu()">Közösség</a>
+  <a routerLink="/" class="btn1" (click)="closeMenu()">Áruház</a>
+  <a routerLink="/login" class="btn1" (click)="closeMenu()">Bejelentkezés</a>
 </div>
 
+  </div>
+
+</div>
 <main class="container">
     <section class="hero">
         <div class="tabs">

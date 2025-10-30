@@ -61,7 +61,7 @@
 // adatlekérés
 async function loadGames() {
   try {
-    // 1️⃣ játékok lekérése
+    // játékok lekérése
     const [gamesRes, photosRes] = await Promise.all([
       fetch('http://localhost:3000/api/games'),
       fetch('http://localhost:3000/api/gamephotos')
@@ -73,7 +73,7 @@ async function loadGames() {
     const gamesData = await gamesRes.json();
     const photosData = await photosRes.json();
 
-    // 2️⃣ játékokat és képeket összekapcsoljuk gameid alapján
+    // játékokat és képeket összekapcsoljuk gameid alapján
     GAMES = gamesData.map((g, i) => {
       const relatedPhotos = photosData
         .filter(p => p.gameid === g.id)
@@ -204,4 +204,3 @@ async function loadGames() {
   // export init függvény Angular számára
   global.initGameCatalog = init;
 })(window);
-

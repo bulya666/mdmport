@@ -15,4 +15,15 @@ export class MainComponent implements AfterViewInit{
       (window as any).initGameCatalog();
     }
   }
+  
+  menuOpen = false;
+
+    toggleMenu() {
+      this.menuOpen = !this.menuOpen;
+    }
+
+    closeMenu() {
+      this.menuOpen = false;
+    }
+
 }
