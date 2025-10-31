@@ -132,30 +132,14 @@
   // Akciók kártya megjelenítése (önállóan)
   function showNoSalesCard() {
     animateCatalog(() => {
-      catalog.innerHTML = `
-        <div class="no-sales" style="
-          display:flex;flex-direction:column;align-items:center;
-          justify-content:center;text-align:center;
-          background:rgba(255,255,255,0.05);
-          border:1px solid rgba(255,255,255,0.1);
-          border-radius:18px;padding:80px 40px;
-          margin:80px auto 100px 220px;max-width:700px;
-          box-shadow:0 0 40px rgba(0,0,0,0.25);
-          opacity:0;transform:scale(0.97);
-          transition:opacity 0.4s ease, transform 0.4s ease;
-          width: 1500px;
-        ">
-          <img src='https://cdn-icons-png.flaticon.com/512/4076/4076549.png'
-               alt='no sales'
-               style='width:100px;height:100px;opacity:0.7;margin-bottom:25px;'>
-          <h2 style='color:#fff;font-weight:700;margin-bottom:12px;font-size:1.6rem'>
-            Jelenleg nincsenek akciók
-          </h2>
-          <p style='color:#ccc;font-size:1.1rem'>
-            Térj vissza később, hátha új ajánlatok érkeznek. 
-          </p>
-        </div>
-      `;
+    catalog.innerHTML = `
+  <div class="no-sales">
+    <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png" alt="no sales">
+    <h2>Jelenleg nincsenek akciók</h2>
+    <p>Térj vissza később, hátha új ajánlatok érkeznek 💸</p>
+  </div>
+`;
+
       requestAnimationFrame(() => {
         const card = catalog.querySelector(".no-sales");
         if (card) {
