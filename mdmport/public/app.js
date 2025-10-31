@@ -1,5 +1,3 @@
-// src/assets/js/app.js
-
 (function (global) {
   let GAMES = [];
   let catalog, search, tabs;
@@ -8,109 +6,214 @@
   let currentShots = [];
   let currentIndex = 0;
 
-  // inicializálás
+  // Egységes animációs wrapper
+  function animateCatalog(callback) {
+    if (!catalog) return callback();
+    catalog.style.transition = "opacity 0.35s ease, transform 0.35s ease";
+    catalog.style.opacity = "0";
+    catalog.style.transform = "scale(0.97)";
+    setTimeout(() => {
+      callback();
+      requestAnimationFrame(() => {
+        catalog.style.opacity = "1";
+        catalog.style.transform = "scale(1)";
+      });
+    }, 250);
+  }
+
+  // Inicializálás
   function init() {
-    catalog = document.getElementById('catalog');
-    search = document.getElementById('search');
-    tabs = document.querySelectorAll('.tab');
-    modal = document.getElementById('modal');
-    mTitle = document.getElementById('m-title');
-    mCover = document.getElementById('m-cover');
-    mDesc = document.getElementById('m-desc');
-    mPrice = document.getElementById('m-price');
-    mShots = document.getElementById('m-shots');
-    mClose = document.getElementById('m-close');
-    lightbox = document.getElementById('lightbox');
-    lightboxImg = document.getElementById('lightbox-img');
-    lbPrev = document.getElementById('lb-prev');
-    lbNext = document.getElementById('lb-next');
+    catalog = document.getElementById("catalog");
+    search = document.getElementById("search");
+    tabs = document.querySelectorAll(".tab");
+    modal = document.getElementById("modal");
+    mTitle = document.getElementById("m-title");
+    mCover = document.getElementById("m-cover");
+    mDesc = document.getElementById("m-desc");
+    mPrice = document.getElementById("m-price");
+    mShots = document.getElementById("m-shots");
+    mClose = document.getElementById("m-close");
+    lightbox = document.getElementById("lightbox");
+    lightboxImg = document.getElementById("lightbox-img");
+    lbPrev = document.getElementById("lb-prev");
+    lbNext = document.getElementById("lb-next");
 
-    if (!catalog) {
-      console.error("app.js: hiányoznak a szükséges HTML elemek!");
-      return;
-    }
+    if (!catalog) return console.error("Hiányzik a #catalog elem!");
 
-    tabs.forEach(t => t.addEventListener('click', () => {
-      tabs.forEach(x => x.classList.remove('active'));
-      t.classList.add('active');
-      applyFilter();
-    }));
-    if (tabs.length) tabs[0].classList.add('active');
-    if (search) search.addEventListener('input', applyFilter);
+    // Tabkezelés
+    tabs.forEach(t =>
+      t.addEventListener("click", () => {
+        if (t.classList.contains("active")) return;
+        tabs.forEach(x => x.classList.remove("active"));
+        t.classList.add("active");
+        applyFilter();
+      })
+    );
+    if (tabs.length) tabs[0].classList.add("active");
 
-    if (mClose) mClose.addEventListener('click', closeModal);
-    if (modal) modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    // Keresés debounce-elve
+    if (search) search.addEventListener("input", debounce(applyFilter, 150));
 
-    if (lightbox) {
-      lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.style.display = 'none'; });
-    }
-    if (lbPrev) lbPrev.addEventListener('click', e => { e.stopPropagation(); showLightbox(currentIndex - 1); });
-    if (lbNext) lbNext.addEventListener('click', e => { e.stopPropagation(); showLightbox(currentIndex + 1); });
+    // Modal bezárás
+    if (mClose) mClose.addEventListener("click", closeModal);
+    if (modal)
+      modal.addEventListener("click", e => {
+        if (e.target === modal) closeModal();
+      });
 
-    document.addEventListener('keydown', e => {
-      if (lightbox && lightbox.style.display === 'flex') {
-        if (e.key === 'ArrowLeft') showLightbox(currentIndex - 1);
-        if (e.key === 'ArrowRight') showLightbox(currentIndex + 1);
-        if (e.key === 'Escape') lightbox.style.display = 'none';
+    // Lightbox vezérlés
+    if (lightbox)
+      lightbox.addEventListener("click", e => {
+        if (e.target === lightbox) lightbox.style.display = "none";
+      });
+    if (lbPrev)
+      lbPrev.addEventListener("click", e => {
+        e.stopPropagation();
+        showLightbox(currentIndex - 1);
+      });
+    if (lbNext)
+      lbNext.addEventListener("click", e => {
+        e.stopPropagation();
+        showLightbox(currentIndex + 1);
+      });
+
+    // Billentyűvezérlés lightboxhoz
+    document.addEventListener("keydown", e => {
+      if (lightbox && lightbox.style.display === "flex") {
+        if (e.key === "ArrowLeft") showLightbox(currentIndex - 1);
+        if (e.key === "ArrowRight") showLightbox(currentIndex + 1);
+        if (e.key === "Escape") lightbox.style.display = "none";
       }
     });
 
-    loadGames();
+    bindFooterLinks(); // Footer linkek, pl. "Akciók"
+    loadGames(); // API-ból betöltés
   }
 
-// adatlekérés
-async function loadGames() {
-  try {
-    // játékok lekérése
-    const [gamesRes, photosRes] = await Promise.all([
-      fetch('http://localhost:3000/api/games'),
-      fetch('http://localhost:3000/api/gamephotos')
-    ]);
+  // Footer linkek kezelése (Ajánlott, Top, Ingyenes, Akciók)
+  function bindFooterLinks() {
+    const links = Array.from(document.querySelectorAll("a"));
+    const map = {
+      top: "top listák",
+      free: "ingyenes",
+      all: "ajánlott"
+    };
 
-    if (!gamesRes.ok || !photosRes.ok)
-      throw new Error("API hiba a lekérésnél.");
-
-    const gamesData = await gamesRes.json();
-    const photosData = await photosRes.json();
-
-    // játékokat és képeket összekapcsoljuk gameid alapján
-    GAMES = gamesData.map((g, i) => {
-      const relatedPhotos = photosData
-        .filter(p => p.gameid === g.id)
-        .map(p => `/images/${p.pic}`); // képfájlok útvonala a public/images-ből
-
-      return {
-        id: g.id,
-        title: g.title || 'Ismeretlen játék',
-        tag: g.tag || 'other',
-        price: g.price || 'Ingyenes',
-        desc: g.desc || '',
-        thumb: g.thumbnail || 'https://via.placeholder.com/200x120?text=No+Image',
-        shots: relatedPhotos
-      };
+    // normál tab linkek
+    Object.entries(map).forEach(([key, txt]) => {
+      const link = links.find(a =>
+        a.textContent.trim().toLowerCase().includes(txt)
+      );
+      if (link)
+        link.addEventListener("click", e => {
+          e.preventDefault();
+          const tab = document.querySelector(`.tab[data-filter="${key}"]`);
+          if (tab) {
+            tabs.forEach(x => x.classList.remove("active"));
+            tab.classList.add("active");
+          }
+          applyFilter();
+        });
     });
 
-    applyFilter();
-
-  } catch (err) {
-    console.error("Nem sikerült betölteni az adatokat:", err);
-    if (catalog)
-      catalog.innerHTML = `<p style="color:red">Nem sikerült betölteni az adatokat az API-ból.</p>`;
+    // külön az "Akciók" link — nincs hozzá tab
+    const akcioLink = links.find(a =>
+      a.textContent.trim().toLowerCase().includes("akció")
+    );
+    if (akcioLink) {
+      akcioLink.addEventListener("click", e => {
+        e.preventDefault();
+        tabs.forEach(x => x.classList.remove("active")); // levesszük az actívet
+        showNoSalesCard(); // külön funkció a megjelenítésre
+      });
+    }
   }
-}
 
+  // Akciók kártya megjelenítése (önállóan)
+  function showNoSalesCard() {
+    animateCatalog(() => {
+      catalog.innerHTML = `
+        <div class="no-sales" style="
+          display:flex;flex-direction:column;align-items:center;
+          justify-content:center;text-align:center;
+          background:rgba(255,255,255,0.05);
+          border:1px solid rgba(255,255,255,0.1);
+          border-radius:18px;padding:80px 40px;
+          margin:80px auto 100px 220px;max-width:700px;
+          box-shadow:0 0 40px rgba(0,0,0,0.25);
+          opacity:0;transform:scale(0.97);
+          transition:opacity 0.4s ease, transform 0.4s ease;
+          width: 1500px;
+        ">
+          <img src='https://cdn-icons-png.flaticon.com/512/4076/4076549.png'
+               alt='no sales'
+               style='width:100px;height:100px;opacity:0.7;margin-bottom:25px;'>
+          <h2 style='color:#fff;font-weight:700;margin-bottom:12px;font-size:1.6rem'>
+            Jelenleg nincsenek akciók
+          </h2>
+          <p style='color:#ccc;font-size:1.1rem'>
+            Térj vissza később, hátha új ajánlatok érkeznek 💸
+          </p>
+        </div>
+      `;
+      requestAnimationFrame(() => {
+        const card = catalog.querySelector(".no-sales");
+        if (card) {
+          requestAnimationFrame(() => {
+            card.style.opacity = "1";
+            card.style.transform = "scale(1)";
+          });
+        }
+      });
+    });
+  }
 
-  // lista kirajzolása
+  // Keresés és szűrés animációval
+  function applyFilter() {
+    if (!search || !tabs) return;
+
+    animateCatalog(() => {
+      const q = search.value.trim().toLowerCase();
+      const activeTab = document.querySelector(".tab.active");
+      const filter = activeTab ? activeTab.dataset.filter : "all";
+
+      let out = GAMES.filter(g => {
+        if (filter === "all") return true;
+        if (Array.isArray(g.tag)) return g.tag.includes(filter);
+        return g.tag === filter;
+      });
+
+      if (q) {
+        const query = q.toLowerCase();
+        out = out.filter(
+          g =>
+            g.title.toLowerCase().includes(query) ||
+            g.desc.toLowerCase().includes(query)
+        );
+      }
+
+      renderList(out);
+    });
+  }
+
+  // 🧠 Debounce (a keresés optimalizálására)
+  function debounce(fn, ms) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => fn.apply(this, args), ms);
+    };
+  }
+
+  // 🎨 Lista kirajzolása
   function renderList(list) {
-    if (!catalog) return;
-    catalog.innerHTML = '';
-
-    list.forEach(g => {
-      const card = document.createElement('article');
-      card.className = 'card';
-      card.innerHTML = `
+    catalog.innerHTML = list
+      .map(
+        g => `
+      <article class="card">
         <div class="thumb">
-          <img src="${g.thumb}" alt="${escapeHtml(g.title)} screenshot" style="width:100%;height:100%;object-fit:cover">
+          <img src="${g.thumb}" alt="${escapeHtml(g.title)} screenshot"
+               style="width:100%;height:100%;object-fit:cover">
         </div>
         <div class="meta">
           <h3>${escapeHtml(g.title)}</h3>
@@ -119,88 +222,104 @@ async function loadGames() {
             <div class="price">${escapeHtml(g.price)}</div>
             <button class="buy" data-id="${g.id}">Megnézem</button>
           </div>
-        </div>`;
-      catalog.appendChild(card);
-    });
+        </div>
+      </article>`
+      )
+      .join("");
 
-    catalog.querySelectorAll('.buy').forEach(btn =>
-      btn.addEventListener('click', e => {
+    catalog.querySelectorAll(".buy").forEach(btn =>
+      btn.addEventListener("click", e => {
         const id = Number(e.currentTarget.dataset.id);
         openModal(GAMES.find(x => x.id === id));
       })
     );
   }
 
-  // szűrés
-  function applyFilter() {
-    if (!search || !tabs) return;
-    const q = search.value.trim().toLowerCase();
-    const activeTab = document.querySelector('.tab.active');
-    const filter = activeTab ? activeTab.dataset.filter : 'all';
+  // 🧾 Játékadatok betöltése
+  async function loadGames() {
+    try {
+      const [gamesRes, photosRes] = await Promise.all([
+        fetch("/api/games"),
+        fetch("/api/gamephotos"),
+      ]);
 
-    let out = GAMES.filter(g => {
-      if (filter === 'all') return true;
-      if (Array.isArray(g.tag)) return g.tag.includes(filter);
-      return g.tag === filter;
-    });
+      if (!gamesRes.ok || !photosRes.ok) throw new Error("API hiba.");
 
-    if (q) {
-      out = out.filter(g =>
-        g.title.toLowerCase().includes(q) || g.desc.toLowerCase().includes(q)
-      );
+      const [gamesData, photosData] = await Promise.all([
+        gamesRes.json(),
+        photosRes.json(),
+      ]);
+
+      const photoMap = photosData.reduce((acc, p) => {
+        (acc[p.gameid] ||= []).push(`/images/${p.pic}`);
+        return acc;
+      }, {});
+
+      GAMES = gamesData.map(g => ({
+        id: g.id,
+        title: g.title || "Ismeretlen játék",
+        tag: g.tag || "other",
+        price: g.price || "Ingyenes",
+        desc: g.desc || "",
+        thumb: g.thumbnail || "https://via.placeholder.com/200x120?text=No+Image",
+        shots: photoMap[g.id] || [],
+      }));
+
+      applyFilter();
+    } catch (err) {
+      console.error("Betöltési hiba:", err);
+      catalog.innerHTML =
+        "<p style='color:red'>Nem sikerült betölteni az adatokat az API-ból.</p>";
     }
-
-    renderList(out);
   }
 
-  // modal
+  // 🪟 Modal funkciók
   function openModal(game) {
     if (!game || !modal) return;
     mTitle.textContent = game.title;
     mCover.src = game.thumb;
     mDesc.textContent = game.desc;
     mPrice.textContent = game.price;
-    mShots.innerHTML = '';
+    mShots.innerHTML = "";
     currentShots = game.shots;
 
     game.shots.forEach((s, idx) => {
-      const i = document.createElement('img');
+      const i = document.createElement("img");
       i.src = s;
-      i.alt = game.title + ' shot';
-      i.style.width = '48%';
-      i.style.borderRadius = '6px';
-      i.style.cursor = 'pointer';
-      i.style.objectFit = 'cover';
-      i.addEventListener('click', () => showLightbox(idx));
+      i.alt = game.title + " shot";
+      Object.assign(i.style, {
+        width: "48%",
+        borderRadius: "6px",
+        cursor: "pointer",
+        objectFit: "cover",
+      });
+      i.addEventListener("click", () => showLightbox(idx));
       mShots.appendChild(i);
     });
 
-    modal.style.display = 'flex';
-    modal.setAttribute('aria-hidden', 'false');
+    modal.style.display = "flex";
   }
 
   function closeModal() {
-    modal.style.display = 'none';
-    modal.setAttribute('aria-hidden', 'true');
+    modal.style.display = "none";
   }
 
-  // lightbox
+  // 💡 Lightbox vezérlés
   function showLightbox(index) {
     if (!lightbox || !lightboxImg) return;
     if (index < 0) index = currentShots.length - 1;
     if (index >= currentShots.length) index = 0;
     currentIndex = index;
     lightboxImg.src = currentShots[currentIndex];
-    lightbox.style.display = 'flex';
+    lightbox.style.display = "flex";
   }
 
-  // HTML escaping
+  // 🧰 HTML escaping helper
   function escapeHtml(s) {
-    return (s + '').replace(/[&<>"']/g, c =>
-      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]
+    return (s + "").replace(/[&<>"']/g, c =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]
     );
   }
 
-  // export init függvény Angular számára
   global.initGameCatalog = init;
 })(window);
