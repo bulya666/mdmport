@@ -152,7 +152,7 @@
             Jelenleg nincsenek akciók
           </h2>
           <p style='color:#ccc;font-size:1.1rem'>
-            Térj vissza később, hátha új ajánlatok érkeznek 💸
+            Térj vissza később, hátha új ajánlatok érkeznek. 
           </p>
         </div>
       `;

@@ -602,3 +602,171 @@
     grid-template-columns: 1fr;
   }
 }
+/* ===================== */
+/* 📱 Extra reszponzivitás */
+/* ===================== */
+
+/* Kis tabletek és mobilok (max 768px) */
+@media (max-width: 768px) {
+  /* Topbar */
+  .topbar {
+    flex-wrap: wrap;
+    padding: 10px 14px;
+  }
+
+  .brand h1 {
+    font-size: 16px;
+  }
+
+  .search {
+    margin-left: 0;
+    width: 100%;
+    order: 3;
+    margin-top: 8px;
+  }
+
+  .search input {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .top-actions {
+    order: 2;
+  }
+
+  /* Tabs */
+  .hero .tabs {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tab {
+    flex: 1 1 calc(50% - 10px);
+    text-align: center;
+  }
+
+  /* Cards */
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+  }
+
+  .card .thumb {
+    height: 100px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+  }
+
+  .card .meta {
+    padding: 10px;
+  }
+
+  .buy {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+
+  /* Modal */
+  .modal {
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  .modal .modal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal h2 {
+    font-size: 18px;
+  }
+
+  /* Footer */
+  .mdm-wrap {
+    padding: 24px 16px;
+  }
+
+  .mdm-columns {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .mdm-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .to-top {
+    align-self: flex-end;
+  }
+}
+
+/* Nagyon kis képernyők (max 480px) */
+@media (max-width: 480px) {
+  .brand h1 {
+    display: none; /* csak a logó marad */
+  }
+
+  .tab {
+    flex: 1 1 100%;
+    font-size: 14px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .card .thumb {
+    height: 150px;
+  }
+
+  .card h3 {
+    font-size: 15px;
+  }
+
+  .hero {
+    gap: 10px;
+  }
+
+  .mdm-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .mdm-news input {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .btn {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .mdm-social .ico {
+    width: 36px;
+    height: 36px;
+  }
+
+  .mdm-logo {
+    font-size: 22px;
+  }
+}
+
+/* Nagy kijelzők (full HD felett) */
+@media (min-width: 1440px) {
+  .container,
+  .mdm-wrap {
+    max-width: 1320px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .modal {
+    max-width: 1000px;
+  }
+}
