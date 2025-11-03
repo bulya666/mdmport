@@ -1,11 +1,11 @@
-# 🎮 mdmport – Steam-inspirált Játékportál
+# mdmport – Steam-inspirált Játékportál
 
 **mdmport** egy vizsgaprojekt, amely egy *Steam*-hez hasonló játékportált valósít meg.  
 A felhasználók regisztrálhatnak, bejelentkezhetnek, és virtuális játékokat “vásárolhatnak”, amelyek az adatbázisban a saját fiókjukhoz kerülnek.  
 
 ---
 
-# 🚀 Fő funkciók
+#  Fő funkciók
 
 ✅ Felhasználói regisztráció és bejelentkezés  
 ✅ Játéklista böngészése  
@@ -16,7 +16,7 @@ A felhasználók regisztrálhatnak, bejelentkezhetnek, és virtuális játékoka
 
 ---
 
-## 🧠 Technológiák
+##  Technológiák
 
 | Terület | Technológia |
 |----------|--------------|
@@ -26,7 +26,7 @@ A felhasználók regisztrálhatnak, bejelentkezhetnek, és virtuális játékoka
 | **Környezet** | XAMPP |
 | **Stílus** | Angular Material / Tailwind (opcionális) |
 
-## 🌟 Célja
+##  Célja
 
 Ez a projekt a szakdolgozat keretében készült,
 és célja egy modern, reszponzív, adatbázis alapú webalkalmazás fejlesztése Angular és XAMPP technológiákkal.
