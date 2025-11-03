@@ -33,5 +33,5 @@ Ez a projekt a [Vizsgaprojekt / Szakdolgozat / Tanulmányi cél] keretében kés
 
 ## Indítás
 Backend mappában lévő "mdmport_db.sql" fájl feltöltése XAMPP felületre.
-Terminálba "npm update", miután befejeződött a folyamat "npm start".
+Terminálba "npm update", miután befejeződött, "npm install mysql2" és a projekt indításához "npm start".
 
