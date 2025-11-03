@@ -1,5 +1,5 @@
 <div class="topbar">
-    <a routerLink="">
+    <a (click)="refresh()">
         <div class="brand">
             <img src="mdmlogo.png" alt="MDMPort logo" id="logo">
             <section class="mdm-brand">
@@ -22,7 +22,7 @@
 
 <div class="nav-links" [class.show]="menuOpen">
   <a routerLink="/community" class="btn1" (click)="closeMenu()">Közösség</a>
-  <a routerLink="/" class="btn1" (click)="closeMenu()">Áruház</a>
+  <a routerLink="/" class="btn1" (click)="closeMenu()" (click)="refresh()">Áruház</a>
   <a routerLink="/login" class="btn1" (click)="closeMenu()">Bejelentkezés</a>
 </div>
 
@@ -92,10 +92,10 @@ background:rgb(10, 10, 10);border:none;color:white;cursor:pointer;padding:20px;b
         <div class="col">
             <h3>Felfedezés</h3>
             <ul>
-                <li><a href="#">Top listák</a></li>
-                <li><a href="#">Ingyenes játékok</a></li>
-                <li><a href="#">Akciók</a></li>
-                <li><a href="#" >Ajánlott</a></li>
+                <li><a routerLink="/">Top listák</a></li>
+                <li><a routerLink="/">Ingyenes játékok</a></li>
+                <li><a routerLink="/">Akciók</a></li>
+                <li><a routerLink="/">Ajánlott</a></li>
             </ul>
         </div>
         <div class="col">
@@ -103,7 +103,6 @@ background:rgb(10, 10, 10);border:none;color:white;cursor:pointer;padding:20px;b
             <ul>
                 <li><a href="#">Hírek & cikkek</a></li>
                 <li><a href="#">Események</a></li>
-                <li><a href="#">Discord</a></li>
                 <li><a href="#">Támogatás</a></li>
             </ul>
         </div>

@@ -1,6 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { RouterLink } from "@angular/router";
 
+
 @Component({
   selector: 'app-main',
   standalone: true,
@@ -10,7 +11,6 @@ import { RouterLink } from "@angular/router";
 })
 export class MainComponent implements AfterViewInit{
   ngAfterViewInit(): void {
-    // app.js Angular-kompatibilis inicializáló
     if ((window as any).initGameCatalog) {
       (window as any).initGameCatalog();
     }
@@ -26,4 +26,7 @@ export class MainComponent implements AfterViewInit{
       this.menuOpen = false;
     }
 
+  refresh() {
+    window.location.reload();
+  }
 }
