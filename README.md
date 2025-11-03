@@ -7,12 +7,12 @@ A felhasználók regisztrálhatnak, bejelentkezhetnek, és virtuális játékoka
 
 #  Fő funkciók
 
-✅ Felhasználói regisztráció és bejelentkezés  
-✅ Játéklista böngészése  
-✅ “Vásárlás” funkció (a játék hozzáadása a felhasználó könyvtárához)  
-✅ Saját játékgyűjtemény megtekintése  
-✅ Adatbázis alapú adattárolás  
-✅ Angular frontend, NPM + XAMPP backend  
+- Felhasználói regisztráció és bejelentkezés  
+- Játéklista böngészése  
+- “Vásárlás” funkció (a játék hozzáadása a felhasználó könyvtárához)  
+- Saját játékgyűjtemény megtekintése  
+- Adatbázis alapú adattárolás  
+- Angular frontend, NPM + XAMPP backend  
 
 ---
 
