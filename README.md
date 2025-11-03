@@ -24,7 +24,7 @@ A felhasználók regisztrálhatnak, bejelentkezhetnek, és virtuális játékoka
 | **Backend** | Node.js (NPM) + PHP (XAMPP környezet) |
 | **Adatbázis** | MySQL |
 | **Környezet** | XAMPP |
-| **Stílus** | Angular Material / Tailwind (opcionális) |
+| **Stílus** | Angular Material / CSS |
 
 ##  Célja
 
