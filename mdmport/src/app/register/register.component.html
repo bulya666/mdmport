@@ -1,0 +1,10 @@
+<body>
+  <div class="form-container">
+    <h2>Regisztráció</h2>
+    <input [(ngModel)]="username" placeholder="Felhasználónév">
+    <input [(ngModel)]="password" type="password" placeholder="Jelszó">
+    <button routerlink="/fooldal" (click)="register()">Regisztráció</button>
+    <p>Van már fiókod? <a (click)="switch()">Jelentkezz be itt</a></p>
+  </div>
+  <button routerLink="/" (click)="goBack()">vissza</button>
+</body>
