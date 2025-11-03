@@ -28,7 +28,7 @@ A felhasználók regisztrálhatnak, bejelentkezhetnek, és virtuális játékoka
 
 ## 🌟 Célja
 
-Ez a projekt a [Vizsgaprojekt / Szakdolgozat / Tanulmányi cél] keretében készült,
+Ez a projekt a szakdolgozat keretében készült,
 és célja egy modern, reszponzív, adatbázis alapú webalkalmazás fejlesztése Angular és XAMPP technológiákkal.
 
 ## Indítás
