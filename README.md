@@ -31,3 +31,7 @@ A felhasználók regisztrálhatnak, bejelentkezhetnek, és virtuális játékoka
 Ez a projekt a [Vizsgaprojekt / Szakdolgozat / Tanulmányi cél] keretében készült,
 és célja egy modern, reszponzív, adatbázis alapú webalkalmazás fejlesztése Angular és XAMPP technológiákkal.
 
+## Indítás
+Backend mappában lévő "mdmport_db.sql" fájl feltöltése XAMPP felületre.
+Terminálba "npm update", miután befejeződött a folyamat "npm start".
+
