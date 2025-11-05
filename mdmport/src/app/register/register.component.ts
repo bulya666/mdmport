@@ -20,15 +20,24 @@ export class RegisterComponent {
   register() {
     if (this.auth.register(this.username, this.password)) {
       alert('Sikeres regisztráció! Most már bejelentkezhetsz.');
-      this.router.navigate(['/fooldal']);
+      this.router.navigate(['/login']);
     } else {
       alert('Ez a felhasználónév már létezik!');
     }
   }
-    goBack() {
+  goBack() {
     this.router.navigate(['/']);
   }
-  switch () {
+  switch() {
     this.router.navigate(['/login']);
   }
+    menuOpen = false;
+
+    toggleMenu() {
+      this.menuOpen = !this.menuOpen;
+    }
+
+    closeMenu() {
+      this.menuOpen = false;
+    }
 }
