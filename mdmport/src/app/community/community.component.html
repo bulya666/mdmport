@@ -26,9 +26,75 @@
         </div>
     </div>
 </div>
+<!-- Topbar vége -->
 
 
 
+<div class="community-page">
+  <h1>Közösség</h1>
+
+  <mat-card class="new-post">
+    <mat-card-title>Új bejegyzés</mat-card-title>
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="w-full">
+        <textarea matInput placeholder="Oszd meg gondolataid..." [(ngModel)]="newPostContent"></textarea>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="addPost()">Közzététel</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-tab-group>
+    <mat-tab label="Bejegyzések">
+      <div class="posts">
+        <mat-card *ngFor="let post of posts" class="post-card">
+          <mat-card-header>
+            <div mat-card-avatar class="user-avatar"></div>
+            <mat-card-title>{{ post.author }}</mat-card-title>
+            <mat-card-subtitle>{{ post.date | date:'medium' }}</mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+            <p>{{ post.content }}</p>
+          </mat-card-content>
+
+          <mat-card-actions>
+            <button mat-button color="primary" (click)="likePost(post)">
+              <mat-icon>thumb_up</mat-icon> {{ post.likes }}
+            </button>
+            <button mat-button (click)="toggleComments(post)">
+              <mat-icon>comment</mat-icon>
+              {{ post.showComments ? 'Hozzászólások elrejtése' : 'Hozzászólások megtekintése' }}
+              ({{ post.comments.length }})
+            </button>
+          </mat-card-actions>
+
+          <div *ngIf="post.showComments" class="comments">
+            <mat-list>
+              <mat-list-item *ngFor="let c of post.comments">
+                <mat-icon matListIcon>person</mat-icon>
+                <div matLine><b>{{ c.author }}</b></div>
+                <div matLine>{{ c.text }}</div>
+              </mat-list-item>
+            </mat-list>
+
+            <div class="add-comment">
+              <input matInput #commentInput placeholder="Írj hozzászólást..." />
+              <button mat-icon-button color="primary" (click)="addComment(post, commentInput)">
+                <mat-icon>send</mat-icon>
+              </button>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+
+
+<!-- Footer eleje -->
 <footer class="mdm-footer" role="contentinfo" aria-label="Oldal lábléc">
     <div class="mdm-wrap">
     <section class="mdm-brand">
