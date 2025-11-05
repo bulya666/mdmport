@@ -20,13 +20,16 @@ export class LoginComponent {
   login() {
     if (this.auth.login(this.username, this.password)) {
       localStorage.setItem('username', this.username);
-      this.router.navigate(['/fooldal'], { state: { user: this.username } });
+      this.router.navigate(['/'], { state: { user: this.username } });
     } else {
       alert('Hibás adatok!');
     }
   }
-  goBack() {
+  goBackshop() {
     this.router.navigate(['/']);
+  }
+  goBackcommunity() {
+    this.router.navigate(['/community']);
   }
   switch() {
     this.router.navigate(['/register']);

@@ -1,4 +1,3 @@
-<!-- 🔝 TOPBAR (1:1 a mainből) -->
 <div class="topbar">
   <a routerLink="">
     <div class="brand">
@@ -14,35 +13,30 @@
   </div>
 
   <div class="top-actions">
-    <!-- Hamburger menu -->
     <button class="hamburger" [class.active]="menuOpen" (click)="toggleMenu()">
       <span></span>
       <span></span>
       <span></span>
     </button>
 
-    <!-- Nav links -->
     <div class="nav-links" [class.show]="menuOpen">
-      <a routerLink="/community" class="btn1" (click)="closeMenu()">Közösség</a>
-      <a routerLink="/shop" class="btn1" (click)="closeMenu()">Áruház</a>
+      <a routerLink="/community" class="btn1" (click)="goBackcommunity()">Közösség</a>
+      <a routerLink="/" class="btn1" (click)="goBackshop()">Áruház</a>
       <a routerLink="/login" class="btn1 active" (click)="closeMenu()">Bejelentkezés</a>
     </div>
   </div>
 </div>
 
-<!-- 🧭 LOGIN MAIN -->
 <main class="login-container">
   <div class="form-container">
     <h2>Bejelentkezés</h2>
     <input [(ngModel)]="username" placeholder="Felhasználónév">
     <input [(ngModel)]="password" type="password" placeholder="Jelszó">
-    <button routerLink="/fooldal" (click)="login()">Belépés</button>
+    <button routerLink="/" (click)="login()">Belépés</button>
     <p>Még nincs fiókod? <a (click)="switch()">Regisztrálj itt</a></p>
   </div>
-  <button routerLink="/" class="back-btn" (click)="goBack()">Vissza</button>
 </main>
 
-<!-- 🔻 FOOTER -->
 <footer class="mdm-footer" role="contentinfo" aria-label="Oldal lábléc">
   <div class="mdm-wrap">
     <section class="mdm-brand">
