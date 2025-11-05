@@ -17,18 +17,19 @@ export class LoginComponent {
 
   constructor(private auth: AuthService, private router: Router) {}
 
-  login() {
-    if (this.auth.login(this.username, this.password)) {
-      localStorage.setItem('username', this.username);
-      this.router.navigate(['/'], { state: { user: this.username } });
-    } else {
-      alert('Hibás adatok!');
-    }
+  async login() {
+  const success = await this.auth.login(this.username, this.password);
+  if (success) {
+    this.router.navigate(['/'], { state: { user: this.username } });
+  } else {
+    alert('Hibás adatok!');
   }
-  goBackshop() {
+}
+
+  goToShop() {
     this.router.navigate(['/']);
   }
-  goBackcommunity() {
+  goToCommunity() {
     this.router.navigate(['/community']);
   }
   switch() {

@@ -57,6 +57,9 @@ export class CommunityComponent implements OnInit{
   goBack() {
     this.router.navigate(['/']);
   }
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
 
 newPostContent = '';
   posts: Post[] = [];
@@ -65,12 +68,10 @@ newPostContent = '';
     this.loadPosts();
   }
 
-  /** Mentés localStorage-be */
   savePosts() {
     localStorage.setItem('community_posts', JSON.stringify(this.posts));
   }
 
-  /** Betöltés localStorage-ből */
   loadPosts() {
     const data = localStorage.getItem('community_posts');
     if (data) {
@@ -85,7 +86,6 @@ newPostContent = '';
         this.posts = [];
       }
     } else {
-      // Példa bejegyzések, ha még nincs semmi
       this.posts = [
         {
           author: 'Kovács László',

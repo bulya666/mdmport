@@ -21,14 +21,11 @@
 
         <div class="nav-links" [class.show]="menuOpen">
         <a routerLink="/community" class="btn1" (click)="closeMenu()">Közösség</a>
-        <a routerLink="/" class="btn1" (click)="closeMenu()" (click)="goBack()">Áruház</a>
-        <a routerLink="/login" class="btn1" (click)="closeMenu()">Bejelentkezés</a>
+        <a routerLink="/" class="btn1" (click)="goBack()">Áruház</a>
+        <a routerLink="/login" class="btn1" (click)="goToLogin()">Bejelentkezés</a>
         </div>
     </div>
 </div>
-<!-- Topbar vége -->
-
-
 
 <div class="community-page">
   <h1>Közösség</h1>
@@ -92,9 +89,6 @@
   </mat-tab-group>
 </div>
 
-
-
-<!-- Footer eleje -->
 <footer class="mdm-footer" role="contentinfo" aria-label="Oldal lábléc">
     <div class="mdm-wrap">
     <section class="mdm-brand">

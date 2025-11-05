@@ -16,20 +16,21 @@ export class RegisterComponent {
 
   constructor(private auth: AuthService, private router: Router) {}
 
-  register() {
-    if (this.auth.register(this.username, this.password)) {
-      alert('Sikeres regisztráció! Most már bejelentkezhetsz.');
-      this.router.navigate(['/login']);
-    } else {
-      alert('Ez a felhasználónév már létezik!');
-    }
+  async register() {
+  const success = await this.auth.register(this.username, this.password);
+  if (success) {
+    alert('Sikeres regisztráció!');
+    this.router.navigate(['/login']);
+  } else {
+    alert('Ez a felhasználónév már létezik vagy hiba történt!');
   }
+}
 
-  goBackshop() {
+
+  goToShop() {
     this.router.navigate(['/']);
   }
-  
-  goBackcommunity() {
+  goToCommunity() {
     this.router.navigate(['/community']);
   }
 
