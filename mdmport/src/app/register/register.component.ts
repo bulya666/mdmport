@@ -3,7 +3,6 @@ import { Router} from '@angular/router';
 import { AuthService } from '../auth.service';
 import { FormsModule } from '@angular/forms';
 
-
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -25,12 +24,19 @@ export class RegisterComponent {
       alert('Ez a felhasználónév már létezik!');
     }
   }
-  goBack() {
+
+  goBackshop() {
     this.router.navigate(['/']);
   }
+  
+  goBackcommunity() {
+    this.router.navigate(['/community']);
+  }
+
   switch() {
     this.router.navigate(['/login']);
   }
+
     menuOpen = false;
 
     toggleMenu() {
