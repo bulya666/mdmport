@@ -1,53 +1,52 @@
 <div class="topbar">
-  <a routerLink="">
-    <div class="brand">
-      <img src="mdmlogo.png" alt="MDMPort logo" id="logo">
-      <section class="mdm-brand">
-        <div class="mdm-logo" aria-label="mdmport kezdőlap">mdm<span>port</span></div>
-      </section>
-    </div>
-  </a>
+	<a routerLink="">
+		<div class="brand">
+			<img src="mdmlogo.png" alt="MDMPort logo" id="logo" />
+			<section class="mdm-brand">
+				<div class="mdm-logo" aria-label="mdmport kezdőlap">mdm<span>port</span></div>
+			</section>
+		</div>
+	</a>
 
-  <div class="search">
-    <input id="search" placeholder="Játékok keresése...">
-  </div>
+	<div class="search">
+		<input id="search" placeholder="Játékok keresése..." />
+	</div>
 
-  <div class="top-actions">
-    <button class="hamburger" [class.active]="menuOpen" (click)="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+	<div class="top-actions">
+		<button class="hamburger" [class.active]="menuOpen" (click)="toggleMenu()">
+			<span></span>
+			<span></span>
+			<span></span>
+		</button>
 
-
-    <div class="nav-links" [class.show]="menuOpen">
-      <a routerLink="/community" class="btn1" (click)="goToCommunity()">Közösség</a>
-      <a routerLink="/" class="btn1" (click)="goToShop()">Áruház</a>
-      <a routerLink="/login" class="btn1 active" (click)="closeMenu()">Bejelentkezés</a>
-    </div>
-  </div>
+		<div class="nav-links" [class.show]="menuOpen">
+			<a routerLink="/community" class="btn1" (click)="goToCommunity()">Közösség</a>
+			<a routerLink="/" class="btn1" (click)="goToShop()">Áruház</a>
+			<a routerLink="/login" class="btn1 active" (click)="closeMenu()">Bejelentkezés</a>
+		</div>
+	</div>
 </div>
 
-  <main class="register-container">
-    <div class="form-container">
-    <h2>Regisztráció</h2>
-    <input [(ngModel)]="username" placeholder="Felhasználónév">
-    <input [(ngModel)]="password" type="password" placeholder="Jelszó">
-    <button routerLink="/" (click)="register()">Regisztráció</button>
-    <p>Van már fiókod? <a (click)="switch()">Jelentkezz be itt</a></p>
-  </div>
-  </main>
+<main class="register-container">
+	<div class="form-container">
+		<h2>Regisztráció</h2>
+		<input [(ngModel)]="username" placeholder="Felhasználónév" />
+		<input [(ngModel)]="password" type="password" placeholder="Jelszó" />
+		<button routerLink="/" (click)="register()">Regisztráció</button>
+		<p>Van már fiókod? <a (click)="switch()">Jelentkezz be itt</a></p>
+	</div>
+</main>
 
 <footer class="mdm-footer" role="contentinfo" aria-label="Oldal lábléc">
-  <div class="mdm-wrap">
-    <section class="mdm-brand">
-      <a routerLink="" class="mdm-logo" aria-label="mdmport kezdőlap">mdm<span>port</span></a>
-      <p class="mdm-tag">Fedezd fel. Gyűjts. Játssz. – egy helyen a kedvenceid, hírek és ajánlatok.</p>
-      <div class="mdm-badges" aria-label="Minőségi jelvények">
-        <span class="badge">🎮 1 200+ játék</span>
-        <span class="badge">⚡ Gyors letöltés</span>
-        <span class="badge">🛡️ Biztonságos</span>
-      </div>
-    </section>
-  </div>
+	<div class="mdm-wrap">
+		<section class="mdm-brand">
+			<a routerLink="" class="mdm-logo" aria-label="mdmport kezdőlap">mdm<span>port</span></a>
+			<p class="mdm-tag">Fedezd fel. Gyűjts. Játssz. – egy helyen a kedvenceid, hírek és ajánlatok.</p>
+			<div class="mdm-badges" aria-label="Minőségi jelvények">
+				<span class="badge">🎮 1 200+ játék</span>
+				<span class="badge">⚡ Gyors letöltés</span>
+				<span class="badge">🛡️ Biztonságos</span>
+			</div>
+		</section>
+	</div>
 </footer>

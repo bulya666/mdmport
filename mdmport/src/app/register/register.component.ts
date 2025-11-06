@@ -1,50 +1,49 @@
-import { Component } from '@angular/core';
-import { Router} from '@angular/router';
-import { AuthService } from '../auth.service';
-import { FormsModule } from '@angular/forms';
+import { Component } from "@angular/core";
+import { Router } from "@angular/router";
+import { AuthService } from "../auth.service";
+import { FormsModule } from "@angular/forms";
 
 @Component({
-  selector: 'app-register',
+  selector: "app-register",
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.css"],
 })
 export class RegisterComponent {
-  username = '';
-  password = '';
+  username = "";
+  password = "";
 
   constructor(private auth: AuthService, private router: Router) {}
 
   async register() {
-  const success = await this.auth.register(this.username, this.password);
-  if (success) {
-    alert('Sikeres regisztráció!');
-    this.router.navigate(['/login']);
-  } else {
-    alert('Ez a felhasználónév már létezik vagy hiba történt!');
+    const success = await this.auth.register(this.username, this.password);
+    if (success) {
+      alert("Sikeres regisztráció!");
+      this.router.navigate(["/login"]);
+    } else {
+      alert("Ez a felhasználónév már létezik vagy hiba történt!");
+    }
   }
-}
-
 
   goToShop() {
-    this.router.navigate(['/']);
+    this.router.navigate(["/"]);
   }
   goToCommunity() {
-    this.router.navigate(['/community']);
+    this.router.navigate(["/community"]);
   }
 
   switch() {
-    this.router.navigate(['/login']);
+    this.router.navigate(["/login"]);
   }
 
-    menuOpen = false;
+  menuOpen = false;
 
-    toggleMenu() {
-      this.menuOpen = !this.menuOpen;
-    }
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
 
-    closeMenu() {
-      this.menuOpen = false;
-    }
+  closeMenu() {
+    this.menuOpen = false;
+  }
 }

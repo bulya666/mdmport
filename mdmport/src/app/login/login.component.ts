@@ -1,47 +1,61 @@
-import { Component } from '@angular/core';
-import { Router} from '@angular/router';
-import { AuthService } from '../auth.service';
-import { FormsModule } from '@angular/forms';
-
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { AuthService } from "../auth.service";
+import { FormsModule } from "@angular/forms";
 
 @Component({
-  selector: 'app-login',
+  selector: "app-login",
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"],
 })
-export class LoginComponent {
-  username = '';
-  password = '';
+export class LoginComponent implements OnInit {
+  username = "";
+  password = "";
+  loggedUser: string | null = null;
+  menuOpen = false;
 
   constructor(private auth: AuthService, private router: Router) {}
 
-  async login() {
-  const success = await this.auth.login(this.username, this.password);
-  if (success) {
-    this.router.navigate(['/'], { state: { user: this.username } });
-  } else {
-    alert('Hibás adatok!');
+  ngOnInit() {
+    this.loggedUser = this.auth.getLoggedUser();
   }
-}
+
+  async login() {
+    const success = await this.auth.login(this.username, this.password);
+    if (success) {
+      this.loggedUser = this.auth.getLoggedUser();
+      this.router.navigate(["/"]);
+    } else {
+      alert("Hibás adatok!");
+    }
+  }
+
+  logout() {
+    this.auth.logout();
+    this.loggedUser = null;
+    this.closeMenu();
+    this.router.navigate(["/"]);
+  }
 
   goToShop() {
-    this.router.navigate(['/']);
+    this.router.navigate(["/"]);
   }
+
   goToCommunity() {
-    this.router.navigate(['/community']);
+    this.router.navigate(["/community"]);
   }
+
   switch() {
-    this.router.navigate(['/register']);
+    this.router.navigate(["/register"]);
   }
-    menuOpen = false;
 
-    toggleMenu() {
-      this.menuOpen = !this.menuOpen;
-    }
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
 
-    closeMenu() {
-      this.menuOpen = false;
-    }
+  closeMenu() {
+    this.menuOpen = false;
+  }
 }

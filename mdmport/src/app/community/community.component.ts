@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { MatCardModule } from "@angular/material/card";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatTabsModule } from "@angular/material/tabs";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatListModule } from "@angular/material/list";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { AuthService } from "../auth.service";
+import { RouterLink } from "@angular/router";
 
 interface Comment {
   author: string;
@@ -24,6 +26,7 @@ interface Post {
   comments: Comment[];
   showComments?: boolean;
 }
+
 interface GalleryImage {
   src: string;
   alt: string;
@@ -35,52 +38,84 @@ interface Member {
 }
 
 @Component({
-  selector: 'app-community',
+  selector: "app-community",
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule , MatIconModule, MatTabsModule, MatListModule, FormsModule, MatFormFieldModule, MatInputModule, MatExpansionModule],
-  templateUrl: './community.component.html',
-  styleUrl: './community.component.css'
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTabsModule,
+    MatListModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatExpansionModule,
+    RouterLink,
+  ],
+  templateUrl: "./community.component.html",
+  styleUrl: "./community.component.css",
 })
-
-export class CommunityComponent implements OnInit{
+export class CommunityComponent implements OnInit {
   menuOpen = false;
+  loggedUser: string | null = null;
+  userMenuOpen = false;
 
-    toggleMenu() {
-      this.menuOpen = !this.menuOpen;
-    }
+  constructor(private router: Router, private auth: AuthService) {}
 
-    closeMenu() {
-      this.menuOpen = false;
-    }
-  constructor(private router: Router) {}
-
-  goBack() {
-    this.router.navigate(['/']);
+  toggleUserMenu() {
+    this.userMenuOpen = !this.userMenuOpen;
   }
+
+  closeUserMenu() {
+    this.userMenuOpen = false;
+  }
+
+  logout() {
+    this.auth.logout();
+    this.loggedUser = null;
+    this.closeMenu();
+    this.closeUserMenu();
+    this.router.navigate(["/"]);
+  }
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenu() {
+    this.menuOpen = false;
+  }
+
+  goToShop() {
+    this.router.navigate(["/"]);
+  }
+
   goToLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigate(["/login"]);
   }
 
-newPostContent = '';
+  newPostContent = "";
   posts: Post[] = [];
 
   ngOnInit(): void {
+    this.loggedUser = this.auth.getLoggedUser();
     this.loadPosts();
   }
 
   savePosts() {
-    localStorage.setItem('community_posts', JSON.stringify(this.posts));
+    localStorage.setItem("community_posts", JSON.stringify(this.posts));
   }
 
   loadPosts() {
-    const data = localStorage.getItem('community_posts');
+    const data = localStorage.getItem("community_posts");
     if (data) {
       try {
         const parsed = JSON.parse(data);
         this.posts = parsed.map((p: any) => ({
           ...p,
           date: new Date(p.date),
-          showComments: false
+          showComments: false,
         }));
       } catch {
         this.posts = [];
@@ -88,24 +123,24 @@ newPostContent = '';
     } else {
       this.posts = [
         {
-          author: 'Kovács László',
+          author: "Kovács László",
           date: new Date(),
-          content: 'Ma reggel kipróbáltam az új frissítést – nagyon jól fut!',
+          content: "Ma reggel kipróbáltam az új frissítést – nagyon jól fut!",
           likes: 12,
           comments: [
-            { author: 'Anna', text: 'Teljesen egyetértek!' },
-            { author: 'Péter', text: 'Én is észrevettem a javulást!' }
+            { author: "Anna", text: "Teljesen egyetértek!" },
+            { author: "Péter", text: "Én is észrevettem a javulást!" },
           ],
-          showComments: false
+          showComments: false,
         },
         {
-          author: 'Tóth Anna',
+          author: "Tóth Anna",
           date: new Date(),
-          content: 'Valaki tudja, mikor jön a következő esemény?',
+          content: "Valaki tudja, mikor jön a következő esemény?",
           likes: 8,
           comments: [],
-          showComments: false
-        }
+          showComments: false,
+        },
       ];
     }
   }
@@ -113,14 +148,14 @@ newPostContent = '';
   addPost() {
     if (!this.newPostContent.trim()) return;
     this.posts.unshift({
-      author: 'Vendég',
+      author: "Vendég",
       date: new Date(),
       content: this.newPostContent,
       likes: 0,
       comments: [],
-      showComments: false
+      showComments: false,
     });
-    this.newPostContent = '';
+    this.newPostContent = "";
     this.savePosts();
   }
 
@@ -136,26 +171,26 @@ newPostContent = '';
   addComment(post: Post, input: HTMLInputElement) {
     const text = input.value.trim();
     if (!text) return;
-    post.comments.push({ author: 'Vendég', text });
-    input.value = '';
+    post.comments.push({ author: "Vendég", text });
+    input.value = "";
     this.savePosts();
   }
 
   clearAll() {
-    if (confirm('Biztosan törlöd az összes bejegyzést?')) {
+    if (confirm("Biztosan törlöd az összes bejegyzést?")) {
       this.posts = [];
-      localStorage.removeItem('community_posts');
+      localStorage.removeItem("community_posts");
     }
   }
   gallery: GalleryImage[] = [
-    { src: 'assets/community1.jpg', alt: 'Közösségi esemény #1' },
-    { src: 'assets/community2.jpg', alt: 'Közösségi esemény #2' },
-    { src: 'assets/community3.jpg', alt: 'Közösségi esemény #3' }
+    { src: "assets/community1.jpg", alt: "Közösségi esemény #1" },
+    { src: "assets/community2.jpg", alt: "Közösségi esemény #2" },
+    { src: "assets/community3.jpg", alt: "Közösségi esemény #3" },
   ];
 
   members: Member[] = [
-    { name: 'Kovács László', role: 'Admin' },
-    { name: 'Tóth Anna', role: 'Tag' },
-    { name: 'Szabó Péter', role: 'Moderátor' }
+    { name: "Kovács László", role: "Admin" },
+    { name: "Tóth Anna", role: "Tag" },
+    { name: "Szabó Péter", role: "Moderátor" },
   ];
 }

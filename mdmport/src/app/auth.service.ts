@@ -1,57 +1,43 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class AuthService {
-  // Itt legyen az éles HTTPS API-d URL-je:
-  private apiUrl = 'http://localhost:${PORT}/api/users';
-
-  private http = inject(HttpClient);
-
-  /**
-   * Bejelentkezés a backendhez
-   * @returns Promise<boolean> sikeresség
-   */
   async login(username: string, password: string): Promise<boolean> {
-    try {
-      const res: any = await firstValueFrom(
-        this.http.post(`${this.apiUrl}/login`, { username, password })
-      );
+    const usersJson = localStorage.getItem("users");
+    const users = usersJson ? JSON.parse(usersJson) : [];
 
-      if (res && res.success) {
-        localStorage.setItem('username', username);
-        localStorage.setItem('token', res.token || '');
-        return true;
-      } else {
-        return false;
-      }
-    } catch (error) {
-      console.error('Login error:', error);
+    const user = users.find(
+      (u: any) => u.username === username && u.password === password
+    );
+
+    if (user) {
+      localStorage.setItem("username", username);
+      return true;
+    } else {
       return false;
     }
   }
 
   async register(username: string, password: string): Promise<boolean> {
-    try {
-      const res: any = await firstValueFrom(
-        this.http.post(`${this.apiUrl}/register`, { username, password })
-      );
-      return !!res?.success;
-    } catch (error) {
-      console.error('Register error:', error);
+    const usersJson = localStorage.getItem("users");
+    const users = usersJson ? JSON.parse(usersJson) : [];
+
+    if (users.find((u: any) => u.username === username)) {
       return false;
     }
+
+    users.push({ username, password });
+    localStorage.setItem("users", JSON.stringify(users));
+    return true;
   }
 
   getLoggedUser(): string | null {
-    return localStorage.getItem('username');
+    return localStorage.getItem("username");
   }
 
   logout(): void {
-    localStorage.removeItem('username');
-    localStorage.removeItem('token');
+    localStorage.removeItem("username");
   }
 }

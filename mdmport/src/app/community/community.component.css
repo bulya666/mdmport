@@ -1,10 +1,13 @@
-
 .topbar {
   display: flex;
   align-items: center;
   gap: 20px;
   padding: 12px 20px;
-  background: linear-gradient(180deg, rgba(8, 26, 48, 1) 0%, rgba(8, 26, 48, 1) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(8, 26, 48, 1) 0%,
+    rgba(8, 26, 48, 1) 100%
+  );
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
@@ -115,21 +118,17 @@
   transform: rotate(-45deg) translateY(-8px);
 }
 
-
 .nav-links {
   display: flex;
   gap: 15px;
 }
-
 
 .container {
   max-width: 1200px;
   margin: 24px auto;
   padding: 0 18px;
 }
-/* topbar vége */
 
-/* === ALAP === */
 .community-page {
   max-width: 900px;
   margin: 40px auto;
@@ -144,7 +143,6 @@ h1 {
   color: #fff;
 }
 
-/* === ÚJ BEJEGYZÉS KÁRTYA === */
 .new-post {
   margin-bottom: 24px;
   background: rgba(255, 255, 255, 0.05);
@@ -153,7 +151,6 @@ h1 {
   padding: 16px;
 }
 
-/* --- Angular Material form field “outline” teljes eltávolítása --- */
 mat-form-field {
   width: 100%;
   --mdc-outlined-text-field-outline-color: transparent;
@@ -261,7 +258,7 @@ button[mat-button][color="warn"] {
   color: #fff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
   transition: background 0.2s ease, transform 0.1s ease;
-  min-height: 110px; 
+  min-height: 110px;
   width: 40%;
 }
 
@@ -327,8 +324,6 @@ button[mat-button][color="warn"] {
   color: #fff !important;
 }
 
-
-/* footer rész kezdete */
 .mdm-footer {
   background: var(--bg);
   color: var(--text);
@@ -352,7 +347,7 @@ button[mat-button][color="warn"] {
 .mdm-logo {
   font-weight: 800;
   font-size: 28px;
-  letter-spacing: .3px;
+  letter-spacing: 0.3px;
   color: var(--text);
   text-decoration: none;
 }
@@ -362,7 +357,7 @@ button[mat-button][color="warn"] {
 }
 
 .mdm-tag {
-  margin: .6rem 0 1rem;
+  margin: 0.6rem 0 1rem;
   color: var(--muted);
   max-width: 52ch;
 }
@@ -392,7 +387,7 @@ button[mat-button][color="warn"] {
   font-size: 14px;
   color: var(--muted);
   text-transform: uppercase;
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
   margin-bottom: 10px;
 }
 
@@ -407,7 +402,7 @@ button[mat-button][color="warn"] {
 .mdm-columns a {
   color: var(--text);
   text-decoration: none;
-  opacity: .9;
+  opacity: 0.9;
 }
 
 .mdm-columns a:hover {
@@ -439,7 +434,6 @@ button[mat-button][color="warn"] {
   padding-top: 20px;
 }
 
-
 .to-top {
   background: var(--bg-soft);
   border: 1px solid var(--ring);
@@ -452,7 +446,6 @@ button[mat-button][color="warn"] {
 .to-top:hover {
   border-color: var(--acc);
 }
-
 
 @media (max-width: 980px) {
   .mdm-cta {
@@ -670,4 +663,53 @@ button[mat-button][color="warn"] {
   .hamburger {
     display: flex;
   }
+}
+
+.user-menu-container {
+  position: relative;
+  display: inline-block;
+}
+
+.user-btn {
+  position: relative;
+  background: none;
+  border: none;
+  color: rgb(255, 0, 0);
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 3px;
+}
+
+.user-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: rgba(8, 26, 48, 1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.user-menu-item {
+  color: #fff;
+  padding: 10px 16px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.user-menu-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.logout {
+  color: #ff6b6b;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.user-menu-item.logout:hover {
+  background: rgba(255, 107, 107, 0.1);
 }
