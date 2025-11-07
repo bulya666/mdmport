@@ -705,3 +705,26 @@
 .user-menu-item.logout:hover {
   background: rgba(255, 107, 107, 0.1);
 }
+.remove {
+  background: var(--acc);
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.6rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(155, 17, 30, 0.3);
+}
+
+.remove:hover {
+  background: #c81f28;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(155, 17, 30, 0.4);
+}
+
+.remove:active {
+  transform: scale(0.98);
+  box-shadow: none;
+}
