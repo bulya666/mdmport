@@ -61,7 +61,7 @@ export class CommunityComponent implements OnInit {
   loggedUser: string | null = null;
   userMenuOpen = false;
 
-  constructor(private router: Router, private auth: AuthService) {}
+  constructor(private router: Router, private auth: AuthService) { }
 
   toggleUserMenu() {
     this.userMenuOpen = !this.userMenuOpen;
@@ -146,35 +146,74 @@ export class CommunityComponent implements OnInit {
   }
 
   addPost() {
-    if (!this.newPostContent.trim()) return;
-    this.posts.unshift({
-      author: "Vendég",
+    if (!this.loggedUser) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const content = this.newPostContent.trim();
+    if (!content) return;
+
+    const newPost = {
+      author: this.loggedUser,
       date: new Date(),
-      content: this.newPostContent,
+      content: content,
       likes: 0,
-      comments: [],
-      showComments: false,
-    });
-    this.newPostContent = "";
-    this.savePosts();
+      likesBy: [],
+      comments: []
+    };
+
+    this.posts.unshift(newPost);
+    this.newPostContent = '';
+  }
+  likePost(post: any) {
+    if (!this.loggedUser) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    if (!post.likesBy) {
+      post.likesBy = [];
+    }
+
+    const user = this.loggedUser;
+    const index = post.likesBy.indexOf(user);
+
+    if (index === -1) {
+      post.likes++;
+      post.likesBy.push(user);
+    } else {
+      post.likes--;
+      post.likesBy.splice(index, 1);
+    }
   }
 
-  likePost(post: Post) {
-    post.likes++;
-    this.savePosts();
-  }
 
   toggleComments(post: Post) {
     post.showComments = !post.showComments;
   }
 
-  addComment(post: Post, input: HTMLInputElement) {
-    const text = input.value.trim();
+  addComment(post: any, commentInput: HTMLInputElement) {
+    if (!this.loggedUser) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const text = commentInput.value.trim();
     if (!text) return;
-    post.comments.push({ author: "Vendég", text });
-    input.value = "";
-    this.savePosts();
+
+    if (!post.comments) {
+      post.comments = [];
+    }
+
+    post.comments.push({
+      author: this.loggedUser,
+      text: text
+    });
+
+    commentInput.value = '';
   }
+
 
   clearAll() {
     if (confirm("Biztosan törlöd az összes bejegyzést?")) {
@@ -182,15 +221,4 @@ export class CommunityComponent implements OnInit {
       localStorage.removeItem("community_posts");
     }
   }
-  gallery: GalleryImage[] = [
-    { src: "assets/community1.jpg", alt: "Közösségi esemény #1" },
-    { src: "assets/community2.jpg", alt: "Közösségi esemény #2" },
-    { src: "assets/community3.jpg", alt: "Közösségi esemény #3" },
-  ];
-
-  members: Member[] = [
-    { name: "Kovács László", role: "Admin" },
-    { name: "Tóth Anna", role: "Tag" },
-    { name: "Szabó Péter", role: "Moderátor" },
-  ];
 }
