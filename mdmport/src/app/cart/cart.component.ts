@@ -6,6 +6,7 @@ import { AuthService } from '../auth.service';
 interface CartItem {
   name: string;
   price: number;
+  image: string;
 }
 
 @Component({
@@ -28,37 +29,11 @@ export class CartComponent implements OnInit {
     this.loadCart();
   }
 
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-  }
-
-  closeMenu() {
-    this.menuOpen = false;
-  }
-
-  refresh() {
-    window.location.reload();
-  }
-
-  toggleUserMenu() {
-    this.userMenuOpen = !this.userMenuOpen;
-  }
-
-  closeUserMenu() {
-    this.userMenuOpen = false;
-  }
-
-  logout() {
-    this.auth.logout();
-    this.loggedUser = null;
-    this.closeUserMenu();
-    this.router.navigate(['/']);
-  }
-
-  loadCart() {
-    const saved = localStorage.getItem('cart');
-    this.cartItems = saved ? JSON.parse(saved) : [];
-  }
+loadCart() {
+  const saved = localStorage.getItem('cart');
+  this.cartItems = saved ? JSON.parse(saved) : [];
+  console.log("Betöltött kosár:", this.cartItems);
+}
 
   saveCart() {
     localStorage.setItem('cart', JSON.stringify(this.cartItems));
@@ -71,5 +46,31 @@ export class CartComponent implements OnInit {
 
   getTotal(): number {
     return this.cartItems.reduce((sum, i) => sum + i.price, 0);
+  }
+
+  purchase() {
+    this.cartItems = [];
+    localStorage.removeItem('cart');
+  }
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+  closeMenu() {
+    this.menuOpen = false;
+  }
+  refresh() {
+    this.loadCart();
+  }
+  toggleUserMenu() {
+    this.userMenuOpen = !this.userMenuOpen;
+  }
+  closeUserMenu() {
+    this.userMenuOpen = false;
+  }
+  logout() {
+    this.auth.logout();
+    this.loggedUser = null;
+    this.closeMenu();
+    this.router.navigate(['/']);
   }
 }
