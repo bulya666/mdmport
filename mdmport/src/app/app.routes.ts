@@ -6,12 +6,11 @@ import { CommunityComponent } from './community/community.component';
 import { CartComponent } from './cart/cart.component';
 import { LibraryComponent } from './library/library.component';
 
-
 export const routes: Routes = [
     {path:"", component:MainComponent},
     {path:"login", component:LoginComponent},
     {path:"register", component:RegisterComponent},
     {path:"community", component:CommunityComponent},
     {path:"cart", component:CartComponent},
-    {path:"library", component:LibraryComponent}
+    {path:"library", component:LibraryComponent},
 ];

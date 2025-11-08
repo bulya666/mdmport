@@ -10,8 +10,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
 import { MatExpansionModule } from "@angular/material/expansion";
-import { AuthService } from "../auth.service";
-import { RouterLink } from "@angular/router";
+import { AuthService } from "../services/auth.service";
 
 interface Comment {
   author: string;
@@ -51,7 +50,6 @@ interface Member {
     MatFormFieldModule,
     MatInputModule,
     MatExpansionModule,
-    RouterLink,
   ],
   templateUrl: "./community.component.html",
   styleUrl: "./community.component.css",

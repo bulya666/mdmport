@@ -1,0 +1,39 @@
+<div class="topbar">
+	<a (click)="refresh()">
+		<div class="brand">
+			<img src="mdmlogo.png" alt="MDMPort logo" id="logo" />
+			<section class="mdm-brand">
+				<div class="mdm-logo" aria-label="mdmport kezdőlap">mdm<span>port</span></div>
+			</section>
+		</div>
+	</a>
+
+	<div class="search">
+		<input id="search" placeholder="Játékok keresése..." />
+	</div>
+
+	<div class="top-actions">
+		<button class="hamburger" [class.active]="menuOpen" (click)="toggleMenu()">
+			<span></span>
+			<span></span>
+			<span></span>
+		</button>
+
+		<div class="nav-links" [class.show]="menuOpen">
+			<a routerLink="/community" class="btn1" (click)="closeMenu()">Közösség</a>
+			<a routerLink="/" class="btn1" (click)="closeMenu()">Áruház</a>
+            
+            <a *ngIf="!loggedUser" routerLink="/login" class="btn1" (click)="closeMenu()">Bejelentkezés</a>
+
+            <div class="user-menu-container" *ngIf="loggedUser">
+            <button class="btn1 user-btn" (click)="toggleUserMenu()">{{ loggedUser }}</button>
+            <div class="user-menu" *ngIf="userMenuOpen">
+                <a routerLink="/cart" (click)="closeUserMenu()" class="user-menu-item">Kosár</a>
+                <a routerLink="/library" (click)="closeUserMenu()" class="user-menu-item">Könyvtár</a>
+                <a (click)="logout()" class="user-menu-item logout">Kijelentkezés</a>
+            </div>
+            </div>
+		</div>
+
+	</div>
+</div>

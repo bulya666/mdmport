@@ -1,12 +1,11 @@
 import { Component, AfterViewInit, OnInit } from "@angular/core";
-import { Router, RouterLink } from "@angular/router";
-import { NgIf } from "@angular/common";
-import { AuthService } from "../auth.service";
+import { Router} from "@angular/router";
+import { AuthService } from "../services/auth.service";
 
 @Component({
   selector: "app-main",
   standalone: true,
-  imports: [RouterLink, NgIf],
+  imports: [],
   templateUrl: "./main.component.html",
   styleUrl: "./main.component.css",
 })
@@ -17,10 +16,12 @@ export class MainComponent implements AfterViewInit, OnInit {
 
   constructor(private auth: AuthService, private router: Router) {}
 
-  ngOnInit() {
-    this.loggedUser = this.auth.getLoggedUser();
+  ngOnInit(): void {
+    this.loggedUser = sessionStorage.getItem('user');
+    this.auth.loggedUser$.subscribe(username => {
+      this.loggedUser = username;
+    });
   }
-
   ngAfterViewInit(): void {
     if ((window as any).initGameCatalog) {
       (window as any).initGameCatalog();
@@ -83,7 +84,7 @@ addToCart() {
     this.menuOpen = !this.menuOpen;
   }
 
-  closeMenu() {
+  closeMenu(): void {
     this.menuOpen = false;
   }
 
@@ -91,11 +92,8 @@ addToCart() {
     window.location.reload();
   }
 
-  logout() {
+  logout(): void {
     this.auth.logout();
-    this.loggedUser = null;
-    this.closeMenu();
-    this.router.navigate(["/"]);
   }
 
   toggleUserMenu() {
@@ -109,4 +107,5 @@ addToCart() {
   toCart() {
     this.router.navigate(["/cart"]);
   }
+  
 }

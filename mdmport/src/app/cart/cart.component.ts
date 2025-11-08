@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { Router} from '@angular/router';
+import { AuthService } from "../services/auth.service";
 
 interface CartItem {
   name: string;
@@ -12,7 +12,7 @@ interface CartItem {
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, RouterLink, NgIf],
+  imports: [CommonModule, NgIf],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
