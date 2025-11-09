@@ -1,10 +1,12 @@
+<div class="register-container">
+  <form (ngSubmit)="register()">
+	<h2>Regisztráció</h2>
+    <input type="text" [(ngModel)]="username" name="username" required placeholder="Felhasználónév:">
 
-<main class="register-container">
-	<div class="form-container">
-		<h2>Regisztráció</h2>
-		<input [(ngModel)]="username" placeholder="Felhasználónév" />
-		<input [(ngModel)]="password" type="password" placeholder="Jelszó" />
-		<button routerLink="/" (click)="register()">Regisztráció</button>
-		<p>Van már fiókod? <a (click)="switch()">Jelentkezz be itt</a></p>
-	</div>
-</main>
+    <input type="password" [(ngModel)]="password" name="password" required placeholder="Jelszó:">
+
+    <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required placeholder="Jelszó újra:">
+
+    <button type="submit">Regisztrálok</button>
+  </form>
+</div>

@@ -3,11 +3,14 @@ import { Router } from "@angular/router";
 import { AuthService } from "../services/auth.service";
 import { FormsModule } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: "app-login",
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, MatSnackBarModule, MatButtonModule],
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"],
 })
@@ -18,7 +21,7 @@ export class LoginComponent implements OnInit {
   loggedUser: string | null = null;
   menuOpen = false;
 
-  constructor(private auth: AuthService, private http: HttpClient, private router: Router) {}
+  constructor(private auth: AuthService, private http: HttpClient, private router: Router, private toast: ToastService) {}
 
   ngOnInit() {
       this.auth.loggedUser$.subscribe(user => this.loggedUser = user);
@@ -30,27 +33,21 @@ export class LoginComponent implements OnInit {
       password: this.password
     }).subscribe({
       next: (res) => {
-        if (res.success) {
-          console.log('Bejelentkezett felhasználó:', res.user);
+        if (res?.success) {
+          this.toast.show('Sikeres bejelentkezés! ✅', 'success');
           localStorage.setItem('loggedUser', res.user);
-          this.router.navigate(['/']).then(() => {
-          window.location.reload(); 
-        });
-
+            setTimeout(() => {
+                this.router.navigate(['/']).then(() => {
+                  window.location.reload();
+                });
+              }, 500);
         }
       },
-      error: (err) => {
-        this.errorMessage = err.error.message || 'Hibás felhasználónév vagy jelszó.';
+      error: () => {
+        this.toast.show('Hibás felhasználónév vagy jelszó.', 'error');
       }
-      
     });
   }
-  logout() {
-  this.auth.logout();
-  this.closeMenu();
-  this.router.navigate(['/'])
-  }
-
   goToShop() {
     this.router.navigate(["/"]);
   }

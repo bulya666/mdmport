@@ -521,51 +521,9 @@
   }
 }
 
-.user-menu-container {
-  position: relative;
-  display: inline-block;
-}
-
-.user-btn {
-  position: relative;
-  background: none;
-  border: none;
-  color: rgb(255, 0, 0);
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 3px;
-}
-
-.user-menu {
-  position: absolute;
-  top: 40px;
-  right: 0;
-  background: rgba(8, 26, 48, 1);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-  min-width: 150px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-}
-
-.user-menu-item {
-  color: #fff;
-  padding: 10px 16px;
-  text-decoration: none;
-  transition: background 0.2s ease;
-}
-
-.user-menu-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
 .logout {
   color: #ff6b6b;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.user-menu-item.logout:hover {
-  background: rgba(255, 107, 107, 0.1);
-}
+

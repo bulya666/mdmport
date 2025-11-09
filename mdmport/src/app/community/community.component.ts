@@ -54,44 +54,13 @@ interface Member {
   templateUrl: "./community.component.html",
   styleUrl: "./community.component.css",
 })
+
 export class CommunityComponent implements OnInit {
   menuOpen = false;
   loggedUser: string | null = null;
   userMenuOpen = false;
 
   constructor(private router: Router, private auth: AuthService) { }
-
-  toggleUserMenu() {
-    this.userMenuOpen = !this.userMenuOpen;
-  }
-
-  closeUserMenu() {
-    this.userMenuOpen = false;
-  }
-
-  logout() {
-    this.auth.logout();
-    this.loggedUser = null;
-    this.closeMenu();
-    this.closeUserMenu();
-    this.router.navigate(["/"]);
-  }
-
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-  }
-
-  closeMenu() {
-    this.menuOpen = false;
-  }
-
-  goToShop() {
-    this.router.navigate(["/"]);
-  }
-
-  goToLogin() {
-    this.router.navigate(["/login"]);
-  }
 
   newPostContent = "";
   posts: Post[] = [];

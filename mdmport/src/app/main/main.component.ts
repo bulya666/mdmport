@@ -92,9 +92,6 @@ addToCart() {
     window.location.reload();
   }
 
-  logout(): void {
-    this.auth.logout();
-  }
 
   toggleUserMenu() {
     this.userMenuOpen = !this.userMenuOpen;

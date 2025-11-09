@@ -1,49 +1,55 @@
-import { Component } from "@angular/core";
-import { Router } from "@angular/router";
-import { AuthService } from "../services/auth.service";
-import { FormsModule } from "@angular/forms";
-
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { ToastService } from '../services/toast.service'; 
+import { FormsModule } from '@angular/forms';
 @Component({
-  selector: "app-register",
-  standalone: true,
-  imports: [FormsModule],
-  templateUrl: "./register.component.html",
-  styleUrls: ["./register.component.css"],
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css'],
+  standalone : true,
+  imports: [FormsModule]
 })
 export class RegisterComponent {
-  username = "";
-  password = "";
+  username: string = '';
+  password: string = '';
+  confirmPassword: string = '';
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private toast: ToastService
+  ) {}
 
-  async register() {
-    const success = await this.auth.register(this.username, this.password);
-    if (success) {
-      alert("Sikeres regisztráció!");
-      this.router.navigate(["/login"]);
-    } else {
-      alert("Ez a felhasználónév már létezik vagy hiba történt!");
+  register(): void {
+    if (!this.username || !this.password) {
+      this.toast.show('Tölts ki minden mezőt!', 'error');
+      return;
     }
-  }
 
-  goToShop() {
-    this.router.navigate(["/"]);
-  }
-  goToCommunity() {
-    this.router.navigate(["/community"]);
-  }
+    if (this.password !== this.confirmPassword) {
+      this.toast.show('A jelszavak nem egyeznek.', 'error');
+      return;
+    }
 
-  switch() {
-    this.router.navigate(["/login"]);
-  }
-
-  menuOpen = false;
-
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-  }
-
-  closeMenu() {
-    this.menuOpen = false;
+    this.http.post<any>('http://localhost:3000/api/register', {
+      username: this.username,
+      password: this.password
+    }).subscribe({
+      next: (res) => {
+        if (res?.success) {
+          this.toast.show('Sikeres regisztráció! 🎉', 'success');
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 1000);
+        } else {
+          this.toast.show(res.message || 'Ismeretlen hiba történt.', 'error');
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        this.toast.show('A felhasználónév már létezik vagy hiba történt.', 'error');
+      }
+    });
   }
 }
