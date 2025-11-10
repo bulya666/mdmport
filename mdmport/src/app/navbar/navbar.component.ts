@@ -1,16 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ApplicationRef, createComponent, inject  } from '@angular/core';
+import { Component, OnInit, ApplicationRef, createComponent, inject, HostListener} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { LogoutOverlayComponent } from '../logout-overlay/logout-overlay.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
   standalone: true,
-  imports: [CommonModule, RouterLink]
+  imports: [CommonModule, RouterLink, MatIconModule]
 })
 export class NavbarComponent implements OnInit {
   private appRef = inject(ApplicationRef);
@@ -23,14 +24,11 @@ export class NavbarComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    // 🔹 Figyeljük a route váltásokat, és mindig újraolvassuk a localStorage-ot
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.loggedUser = localStorage.getItem('loggedUser');
       }
     });
-
-    // 🔹 Első betöltéskor is
     this.loggedUser = localStorage.getItem('loggedUser');
   }
 
@@ -50,9 +48,13 @@ export class NavbarComponent implements OnInit {
     this.userMenuOpen = false;
   }
 
-  refresh() {
+toStore() {
+  if (this.router.url === '/') {
     window.location.reload();
+  } else {
+    this.router.navigate(['/']);
   }
+}
 
   logout() {
     const overlayRef = createComponent(LogoutOverlayComponent, { environmentInjector: this.appRef.injector });
@@ -70,5 +72,12 @@ export class NavbarComponent implements OnInit {
 
       this.router.navigate(['/']).then(() => window.location.reload());
     }, 1500);
+  }
+    @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.user-menu-container')) {
+      this.userMenuOpen = false;
+    }
   }
 }

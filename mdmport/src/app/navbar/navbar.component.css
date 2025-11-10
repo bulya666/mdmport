@@ -54,7 +54,7 @@
     font-size: 16px;
     color: white;
     cursor: pointer;
-    padding: 5px 20px;
+    padding: 10px 20px;
     outline: none;
     font-weight: 600;
     text-decoration: none;
@@ -135,14 +135,14 @@
 
 .user-menu {
   position: absolute;
-  top: 55px;
-  left: 760px;
+  top: 60px;
+  left: 360%;
   background: rgba(8, 26, 48, 1);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 6px;
   display: flex;
   flex-direction: column;
-  min-width: 150px;
+  min-width: 200px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   z-index: 1000;
 }
@@ -178,7 +178,7 @@
     outline: none;
     font-weight: 800;
     text-decoration: none;
-    margin-left: 720%;
+    left: 400%;
 }
 
 .user-btn::after {
@@ -200,6 +200,46 @@
 
 .user-btn:hover {
     color: rgba(146, 24, 24, 0.829);
+}
+.user-menu-container {
+  position: relative;
+  display: inline-block;
+}
+
+.user-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 25px;
+  padding: 8px 14px;
+}
+
+.user-icon {
+  font-size: 22px;
+  color: #555;
+}
+
+.logout {
+  color: #c0392b;
+}
+
+.chevron {
+  transition: transform 0.25s ease;
+}
+
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {

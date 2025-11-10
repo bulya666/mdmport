@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router} from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { MatCardModule } from "@angular/material/card";
@@ -56,22 +56,15 @@ interface Member {
 })
 
 export class CommunityComponent implements OnInit {
-  menuOpen = false;
-  loggedUser: string | null = null;
-  userMenuOpen = false;
-
-  constructor(private router: Router, private auth: AuthService) { }
-
-  newPostContent = "";
+loggedUser: string | null = null;
   posts: Post[] = [];
+  newPostContent = "";
 
-  ngOnInit(): void {
-    this.loggedUser = this.auth.getLoggedUser();
+  constructor(private router: Router, private auth: AuthService) {}
+
+  ngOnInit() {
+    this.loggedUser = localStorage.getItem('loggedUser');
     this.loadPosts();
-  }
-
-  savePosts() {
-    localStorage.setItem("community_posts", JSON.stringify(this.posts));
   }
 
   loadPosts() {
@@ -100,16 +93,12 @@ export class CommunityComponent implements OnInit {
           ],
           showComments: false,
         },
-        {
-          author: "Tóth Anna",
-          date: new Date(),
-          content: "Valaki tudja, mikor jön a következő esemény?",
-          likes: 8,
-          comments: [],
-          showComments: false,
-        },
       ];
     }
+  }
+
+  savePosts() {
+    localStorage.setItem("community_posts", JSON.stringify(this.posts));
   }
 
   addPost() {
@@ -127,12 +116,14 @@ export class CommunityComponent implements OnInit {
       content: content,
       likes: 0,
       likesBy: [],
-      comments: []
+      comments: [],
     };
 
     this.posts.unshift(newPost);
     this.newPostContent = '';
+    this.savePosts(); 
   }
+
   likePost(post: any) {
     if (!this.loggedUser) {
       this.router.navigate(['/login']);
@@ -153,11 +144,8 @@ export class CommunityComponent implements OnInit {
       post.likes--;
       post.likesBy.splice(index, 1);
     }
-  }
 
-
-  toggleComments(post: Post) {
-    post.showComments = !post.showComments;
+    this.savePosts();
   }
 
   addComment(post: any, commentInput: HTMLInputElement) {
@@ -169,23 +157,19 @@ export class CommunityComponent implements OnInit {
     const text = commentInput.value.trim();
     if (!text) return;
 
-    if (!post.comments) {
-      post.comments = [];
-    }
+    if (!post.comments) post.comments = [];
 
     post.comments.push({
       author: this.loggedUser,
-      text: text
+      text: text,
     });
 
     commentInput.value = '';
+    this.savePosts();
   }
 
-
-  clearAll() {
-    if (confirm("Biztosan törlöd az összes bejegyzést?")) {
-      this.posts = [];
-      localStorage.removeItem("community_posts");
-    }
+  toggleComments(post: Post) {
+    post.showComments = !post.showComments;
   }
 }
+

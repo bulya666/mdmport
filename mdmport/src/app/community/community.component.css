@@ -329,7 +329,9 @@ button[mat-button][color="warn"] {
   color: var(--text);
   border-top: 1px solid var(--ring);
 }
-
+#avatar{
+  margin: 11.5px 0px 0px 10px;
+}
 .mdm-wrap {
   max-width: 1200px;
   margin: 0 auto;

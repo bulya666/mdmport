@@ -1,5 +1,5 @@
 <div class="topbar">
-	<a (click)="refresh()">
+	<a (click)="toStore()">
 		<div class="brand">
 			<img src="mdmlogo.png" alt="MDMPort logo" id="logo" />
 			<section class="mdm-brand">
@@ -21,18 +21,29 @@
 
 		<div class="nav-links" [class.show]="menuOpen">
 			<a routerLink="/community" class="btn1" (click)="closeMenu()">Közösség</a>
-			<a routerLink="/" class="btn1" (click)="closeMenu()">Áruház</a>
+			<a routerLink="/" class="btn1" (click)="closeMenu()" (click)="toStore()">Áruház</a>
             
             <a *ngIf="!loggedUser" routerLink="/login" class="btn1" (click)="closeMenu()">Bejelentkezés</a>
 
-            <div class="user-menu-container" *ngIf="loggedUser">
-            <button class="btn1 user-btn" (click)="toggleUserMenu()">{{ loggedUser }}</button>
-            <div class="user-menu" *ngIf="userMenuOpen">
-                <a routerLink="/cart" (click)="closeUserMenu()" class="user-menu-item">Kosár</a>
-                <a routerLink="/library" (click)="closeUserMenu()" class="user-menu-item">Könyvtár</a>
-                <a (click)="logout()" class="user-menu-item logout">Kijelentkezés</a>
-            </div>
-            </div>
+			<div class="user-menu-container" *ngIf="loggedUser">
+			<button class="user-btn" (click)="toggleUserMenu()">
+				<i class="fas fa-user-circle"></i>
+				<span class="username">{{ loggedUser }}</span>
+				<i class="fas fa-chevron-down chevron" [class.open]="userMenuOpen"></i>
+			</button>
+
+			<div class="user-menu" *ngIf="userMenuOpen">
+				<a routerLink="/cart" (click)="closeUserMenu()" class="user-menu-item">
+				<i class="fas fa-shopping-cart"></i> Kosár
+				</a>
+				<a routerLink="/library" (click)="closeUserMenu()" class="user-menu-item">
+				<i class="fas fa-book"></i> Könyvtár
+				</a>
+				<a (click)="logout()" class="user-menu-item logout">
+				<i class="fas fa-sign-out-alt"></i> Kijelentkezés
+				</a>
+			</div>
+			</div>
 		</div>
 
 	</div>

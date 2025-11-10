@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, tap } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api'; // backend címe
+  private apiUrl = 'http://localhost:3000/api';
   private loggedUserSubject = new BehaviorSubject<string | null>(null);
   loggedUser$ = this.loggedUserSubject.asObservable();
 
