@@ -713,7 +713,7 @@
   padding: 8px 10px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   transition: all 0.2s ease;
   box-shadow: 0 4px 14px rgba(155, 17, 30, 0.3);
 }
@@ -726,5 +726,27 @@
 
 .remove:active {
   transform: scale(0.98);
+  box-shadow: none;
+}
+
+.purchase{
+  background-color:#4caf50;
+  color:#fff;
+  font-weight:600;
+  border:none;
+  border-radius:6px;
+  padding:8px 16px;
+  cursor:pointer;
+  transition:background-color 0.2s;
+}
+
+.purchase:hover {
+  background: #00ff00;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 255, 13, 0.4);
+}
+
+.purchase:active {
+  transform: scale(0.5);
   box-shadow: none;
 }
