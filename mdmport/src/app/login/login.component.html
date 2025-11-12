@@ -1,10 +1,27 @@
-
 <main class="login-container">
-	<div class="form-container">
-		<h2>Bejelentkezés</h2>
-		<input [(ngModel)]="username" placeholder="Felhasználónév" />
-		<input [(ngModel)]="password" type="password" placeholder="Jelszó" />
-		<button mat-flat-button color="primary" (click)="login()">Bejelentkezés</button>
-		<p>Még nincs fiókod? <a (click)="switch()">Regisztrálj itt</a></p>
-	</div>
+  <div class="form-container">
+    <h2>Bejelentkezés</h2>
+
+    <form (ngSubmit)="login()">
+      <input
+        [(ngModel)]="username"
+        name="username"
+        placeholder="Felhasználónév"
+        required
+      />
+
+      <input
+        [(ngModel)]="password"
+        name="password"
+        type="password"
+        placeholder="Jelszó"
+        required
+      />
+
+      <button mat-flat-button color="primary" type="submit">
+        Bejelentkezés
+      </button>
+    </form>
+    <p>Még nincs fiókod? <a (click)="switch()">Regisztrálj itt</a></p>
+  </div>
 </main>

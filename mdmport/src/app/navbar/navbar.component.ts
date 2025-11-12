@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ApplicationRef, createComponent, inject, HostListener} from '@angular/core';
+import { Component, OnInit, ApplicationRef, createComponent, inject, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
   menuOpen = false;
   userMenuOpen = false;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.router.events.subscribe(event => {
@@ -48,13 +48,13 @@ export class NavbarComponent implements OnInit {
     this.userMenuOpen = false;
   }
 
-toStore() {
-  if (this.router.url === '/') {
-    window.location.reload();
-  } else {
-    this.router.navigate(['/']);
+  toStore() {
+    if (this.router.url === '/') {
+      window.location.reload();
+    } else {
+      this.router.navigate(['/']);
+    }
   }
-}
 
   logout() {
     const overlayRef = createComponent(LogoutOverlayComponent, { environmentInjector: this.appRef.injector });
@@ -73,7 +73,8 @@ toStore() {
       this.router.navigate(['/']).then(() => window.location.reload());
     }, 1500);
   }
-    @HostListener('document:click', ['$event'])
+
+  @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
     const target = event.target as HTMLElement;
     if (!target.closest('.user-menu-container')) {
