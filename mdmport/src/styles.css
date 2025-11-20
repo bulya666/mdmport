@@ -134,7 +134,7 @@ img {
   font-size: 0.95rem;
 }
 
-.buy {
+.check {
   background: var(--acc);
   border: none;
   color: #fff;
@@ -147,13 +147,13 @@ img {
   box-shadow: 0 4px 14px rgba(155, 17, 30, 0.3);
 }
 
-.buy:hover {
+.check:hover {
   background: #c81f28;
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(155, 17, 30, 0.4);
 }
 
-.buy:active {
+.check:active {
   transform: scale(0.98);
   box-shadow: none;
 }
@@ -274,4 +274,8 @@ img {
     width: 100%;
     text-align: center;
   }
+}
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.8s ease;
 }

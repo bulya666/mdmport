@@ -1,17 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RegisterComponent } from './register.component';
 
-describe('RegisterComponent', () => {
-  let component: RegisterComponent;
-  let fixture: ComponentFixture<RegisterComponent>;
+import { LogoutOverlayComponent } from './logout-overlay.component';
+
+describe('LogoutOverlayComponent', () => {
+  let component: LogoutOverlayComponent;
+  let fixture: ComponentFixture<LogoutOverlayComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RegisterComponent]
+      imports: [LogoutOverlayComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RegisterComponent);
+    fixture = TestBed.createComponent(LogoutOverlayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

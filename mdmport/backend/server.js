@@ -19,7 +19,6 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
-
 app.get('/api/games', async (req, res) => {
   try {
     const { tag, q } = req.query;
@@ -124,12 +123,83 @@ app.get('/api/gamephotos', async (req, res) => {
     res.status(500).json({ error: 'DB error' });
   }
 });
+// --- BEJELENTKEZÉS ---
+app.post('/api/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const [rows] = await pool.query(
+      'SELECT * FROM users WHERE username = ? AND password = ?',
+      [username, password]
+    );
+    if (rows.length === 0) {
+      return res.status(401).json({ success: false, message: 'Hibás adatok' });
+    }
+    res.json({ success: true, user: rows[0].username });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Szerver hiba' });
+  }
+});
 
+// --- REGISZTRÁCIÓ ---
+app.post('/api/register', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const [exists] = await pool.query(
+      'SELECT * FROM users WHERE username = ?',
+      [username]
+    );
+    if (exists.length > 0) {
+      return res
+        .status(409)
+        .json({ success: false, message: 'Felhasználó már létezik' });
+    }
+    await pool.query('INSERT INTO users (username, password) VALUES (?, ?)', [
+      username,
+      password,
+    ]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Szerver hiba' });
+  }
+});
+
+// Egyedi felhasználó lekérése felhasználónév alapján
+app.get('/api/users/byname/:username', async (req, res) => {
+  try {
+    const username = req.params.username;
+    console.log('🔹 Lekérdezett user:', username);
+
+    const [rows] = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
+    if (rows.length === 0) {
+      console.log('⚠️ Nincs ilyen user');
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    console.log('✅ Talált user:', rows[0]);
+    res.json(rows[0]);
+  } catch (err) {
+    console.error('❌ DB hiba:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Egyedi felhasználóhoz tartozó ownedg rekordok lekérése userID alapján
+app.get('/api/ownedg/:userid', async (req, res) => {
+  try {
+    const userid = req.params.userid;
+    const [rows] = await pool.query('SELECT * FROM ownedg WHERE userid = ?', [userid]);
+    res.json(rows);
+  } catch (err) {
+    console.error('❌ DB hiba (ownedg):', err);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`mdmport API fut: http://localhost:${PORT}/api/games`);
     console.log(`mdmport API fut: http://localhost:${PORT}/api/users`);
   console.log(`mdmport API fut: http://localhost:${PORT}/api/ownedg`);
     console.log(`mdmport API fut: http://localhost:${PORT}/api/gamephotos`);
-
 });

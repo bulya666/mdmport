@@ -1,120 +1,45 @@
-<div class="topbar">
-  <a (click)="refresh()">
-    <div class="brand">
-      <img src="mdmlogo.png" alt="MDMPort logo" id="logo">
-      <section class="mdm-brand">
-        <div class="mdm-logo" aria-label="mdmport kezdőlap">mdm<span>port</span></div>
-      </section>
-    </div>
-  </a>
 
-  <div class="search">
-    <input id="search" placeholder="Játékok keresése...">
-  </div>
-
-  <div class="top-actions">
-
-    <button class="hamburger" [class.active]="menuOpen" (click)="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-
-    <div class="nav-links" [class.show]="menuOpen">
-      <a routerLink="/community" class="btn1" (click)="closeMenu()">Közösség</a>
-      <a routerLink="/" class="btn1" (click)="closeMenu()" (click)="refresh()">Áruház</a>
-      <a routerLink="/login" class="btn1" (click)="closeMenu()">Bejelentkezés</a>
-    </div>
-
-  </div>
-
-</div>
 <main class="container">
-  <section class="hero">
-    <div class="tabs">
-      <div class="tab" data-filter="all" tabindex="-1">Ajánlott</div>
-      <div class="tab" data-filter="free">Ingyenes</div>
-      <div class="tab" data-filter="top">Top eladások</div>
-    </div>
-    <div class="controls">
-      <span class="tag">MDMPort minden jog fenntartva.</span>
-    </div>
-  </section>
+	<section class="hero">
+		<div class="tabs">
+			<div class="tab" data-filter="all" tabindex="-1">Ajánlott</div>
+			<div class="tab" data-filter="free">Ingyenes</div>
+			<div class="tab" data-filter="top">Top eladások</div>
+		</div>
+		<div class="controls">
+			<span class="tag">MDMPort minden jog fenntartva.</span>
+		</div>
+	</section>
 
-  <section id="catalog" class="grid" aria-live="polite"></section>
+	<section id="catalog" class="grid" aria-live="polite"></section>
 </main>
 
 <div id="modal" class="modal-backdrop" role="dialog" aria-hidden="true">
-  <div class="modal" role="document">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-      <h2 id="m-title">Játék címe</h2>
-      <button class="close" id="m-close">Bezár</button>
-    </div>
-    <div class="modal-grid">
-      <div>
-        <img id="m-cover" src="" alt="">
-        <p id="m-desc" style="margin-top:8px;color:#cfe6ff"></p>
-      </div>
-      <aside>
-        <p class="muted">Ár</p>
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-          <div id="m-price" style="font-weight:700;font-size:20px;color:#bff39b">Ingyen</div>
-          <button class="buy">Kosárba</button>
-        </div>
-        <p class="muted">Képek</p>
-        <div id="m-shots" style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"></div>
-      </aside>
-    </div>
-  </div>
+	<div class="modal" role="document">
+		<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+			<h2 id="m-title">Játék címe</h2>
+			<button class="close" id="m-close">Bezár</button>
+		</div>
+		<div class="modal-grid">
+			<div>
+				<img id="m-cover" src="" alt="" />
+				<p id="m-desc" style="margin-top:8px;color:#cfe6ff"></p>
+			</div>
+			<aside>
+				<p class="muted">Ár</p>
+				<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+					<div id="m-price" style="font-weight:700;font-size:20px;color:#bff39b">Ingyen</div>
+					<button class="buy">Kosárba</button>
+				</div>
+				<p class="muted">Képek</p>
+				<div id="m-shots" style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"></div>
+			</aside>
+		</div>
+	</div>
 </div>
+
 <div id="lightbox">
-  <button id="lb-prev">⟨</button>
-  <img id="lightbox-img" src="" alt="big shot">
-  <button id="lb-next">⟩</button>
+	<button id="lb-prev">⟨</button>
+	<img id="lightbox-img" src="" alt="big shot" />
+	<button id="lb-next">⟩</button>
 </div>
-
-<footer class="mdm-footer" role="contentinfo" aria-label="Oldal lábléc">
-  <div class="mdm-wrap">
-    <section class="mdm-brand">
-      <a routerLink="" class="mdm-logo" aria-label="mdmport kezdőlap">mdm<span>port</span></a>
-      <p class="mdm-tag">Fedezd fel. Gyűjts. Játssz. – egy helyen a kedvenceid, hírek és ajánlatok.</p>
-      <div class="mdm-badges" aria-label="Minőségi jelvények">
-        <span class="badge">🎮 1 200+ játék</span>
-        <span class="badge">⚡ Gyors letöltés</span>
-        <span class="badge">🛡️ Biztonságos</span>
-      </div>
-    </section>
-
-    <nav class="mdm-columns" aria-label="Lábléc navigáció">
-      <div class="col">
-        <h3>Felfedezés</h3>
-        <ul>
-          <li><a routerLink="/">Top listák</a></li>
-          <li><a routerLink="/">Ingyenes játékok</a></li>
-          <li><a routerLink="/">Akciók</a></li>
-          <li><a routerLink="/">Ajánlott</a></li>
-        </ul>
-      </div>
-      <div class="col">
-        <h3>Közösség</h3>
-        <ul>
-          <li><a href="#">Hírek & cikkek</a></li>
-          <li><a href="#">Események</a></li>
-          <li><a href="#">Támogatás</a></li>
-        </ul>
-      </div>
-      <div class="col">
-        <h3>Fiók</h3>
-        <ul>
-          <li><a href="#">Bejelentkezés</a></li>
-          <li><a href="#">Regisztráció</a></li>
-          <li><a href="#">Vásárlásaim</a></li>
-          <li><a href="#">Beállítások</a></li>
-        </ul>
-      </div>
-      <div class="col">
-        <h3>Jog & info</h3>
-      </div>
-    </nav>
-  </div>
-</footer>

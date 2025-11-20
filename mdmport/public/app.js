@@ -204,14 +204,14 @@
           <div class="muted">${escapeHtml(g.desc)}</div>
           <div class="price-row">
             <div class="price">${escapeHtml(g.price)}</div>
-            <button class="buy" data-id="${g.id}">Megnézem</button>
+            <button class="check" data-id="${g.id}">Megnézem</button>
           </div>
         </div>
       </article>`
       )
       .join("");
 
-    catalog.querySelectorAll(".buy").forEach(btn =>
+    catalog.querySelectorAll(".check").forEach(btn =>
       btn.addEventListener("click", e => {
         const id = Number(e.currentTarget.dataset.id);
         openModal(GAMES.find(x => x.id === id));

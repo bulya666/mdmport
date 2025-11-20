@@ -1,154 +1,3 @@
-.topbar {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 12px 20px;
-  background-color: #081A30;
-  background-image: linear-gradient(180deg, #081A30 0%, #081A30 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-#logo {
-  width: 55px;
-  height: 41px;
-  filter: none;
-  opacity: 1;
-  mix-blend-mode: normal;
-}
-
-.search {
-  margin-left: 20px;
-  flex: 1;
-  max-width: 720px;
-}
-
-.search input {
-  width: 100%;
-  padding: 10px 14px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(255, 255, 255, 0.02);
-  color: inherit;
-}
-
-.top-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-}
-
-.btn1 {
-  background: none;
-  border: none;
-  font-size: 16px;
-  color: white;
-  cursor: pointer;
-  padding: 5px 10px;
-  text-decoration: none;
-  font-weight: 600;
-  position: relative;
-}
-
-.btn1::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%) scaleX(0);
-  transform-origin: center;
-  width: 100%;
-  height: 2px;
-  background-color: rgba(146, 24, 24, 0.829);
-  transition: transform 0.3s ease;
-}
-
-.btn1:hover::after {
-  transform: translateX(-50%) scaleX(1);
-}
-
-.btn1:hover {
-  color: rgba(146, 24, 24, 0.829);
-}
-
-.hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 32px;
-  height: 28px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  position: relative;
-  z-index: 100;
-}
-
-.hamburger span {
-  display: block;
-  width: 100%;
-  height: 3px;
-  background-color: white;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-.hamburger.active span:nth-child(1) {
-  transform: rotate(45deg) translateY(8px);
-}
-
-.hamburger.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger.active span:nth-child(3) {
-  transform: rotate(-45deg) translateY(-8px);
-}
-
-.nav-links {
-  display: flex;
-  gap: 15px;
-}
-
-@media (max-width: 768px) {
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    background: rgba(8, 26, 48, 0.97);
-    position: absolute;
-    top: 60px;
-    right: 0;
-    width: 180px;
-    border-radius: 8px 0 0 8px;
-    padding: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    z-index: 90;
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-  }
-
-  .nav-links.show {
-    display: flex;
-    max-height: 400px;
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .hamburger {
-    display: flex;
-  }
-}
-
 .register-container {
   display: flex;
   flex-direction: column;
@@ -156,10 +5,24 @@
   justify-content: center;
   min-height: calc(100vh - 220px);
   padding: 40px 20px;
-  /* background: radial-gradient(circle at top, #0a1524 0%, #040b12 100%); */
 }
-
-.form-container {
+input, button {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 10px;
+  font-size: 1em;
+}
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #0056b3;
+}
+form{
   background: #1a1a1a;
   border: 2px solid #e60000;
   border-radius: 10px;
@@ -169,14 +32,14 @@
   box-shadow: 0 0 20px #e60000;
 }
 
-.form-container h2 {
+form h2 {
   color: #e60000;
   margin-bottom: 20px;
-  font-size: 35px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif
+  font-size: 30px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.form-container input {
+form input {
   display: block;
   width: 100%;
   padding: 12px;
@@ -187,7 +50,7 @@
   color: #fff;
 }
 
-.form-container button {
+form button {
   background: #e60000;
   border: none;
   color: #fff;
@@ -200,160 +63,15 @@
   transition: 0.3s;
 }
 
-.form-container button:hover {
+form button:hover {
   background: #ff1a1a;
 }
 
-.form-container a {
+form a {
   color: #e60000;
   text-decoration: none;
 }
 
-.form-container a:hover {
+form a:hover {
   text-decoration: underline;
-}
-
-p {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 14px;
-}
-
-.back-btn {
-  background: transparent;
-  border: 1px solid #e60000;
-  color: #e60000;
-  padding: 8px 16px;
-  border-radius: 6px;
-  margin-top: 20px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.back-btn:hover {
-  background: #e60000;
-  color: #fff;
-}
-
-.mdm-footer {
-  background: var(--bg);
-  color: var(--text);
-  border-top: 1px solid var(--ring);
-}
-
-.mdm-wrap {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  display: grid;
-  gap: 40px;
-}
-
-.mdm-brand {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.mdm-logo {
-  font-weight: 800;
-  font-size: 28px;
-  letter-spacing: .3px;
-  color: var(--text);
-  text-decoration: none;
-}
-
-.mdm-logo span {
-  color: var(--acc);
-}
-
-.mdm-tag {
-  margin: .6rem 0 1rem;
-  color: var(--muted);
-  max-width: 52ch;
-}
-
-.mdm-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.badge {
-  background: var(--bg-soft);
-  color: var(--text);
-  border: 1px solid var(--ring);
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-}
-
-.mdm-columns {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
-}
-
-.mdm-columns h3 {
-  font-size: 14px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  margin-bottom: 10px;
-}
-
-.mdm-columns ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 8px;
-}
-
-.mdm-columns a {
-  color: var(--text);
-  text-decoration: none;
-  opacity: .9;
-}
-
-.mdm-columns a:hover {
-  opacity: 1;
-  text-decoration: underline;
-}
-
-.btn {
-  background: var(--acc);
-  color: #081018;
-  border: none;
-  padding: 12px 14px;
-  border-radius: 12px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.btn:hover {
-  filter: brightness(1.05);
-}
-
-.mdm-bottom {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid var(--ring);
-  padding-top: 20px;
-}
-
-
-.to-top {
-  background: var(--bg-soft);
-  border: 1px solid var(--ring);
-  color: var(--text);
-  padding: 10px 12px;
-  border-radius: 12px;
-  cursor: pointer;
-}
-
-.to-top:hover {
-  border-color: var(--acc);
 }
