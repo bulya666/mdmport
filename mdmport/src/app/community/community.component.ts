@@ -40,24 +40,9 @@ interface Member {
 @Component({
   selector: "app-community",
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule , MatIconModule, MatTabsModule, MatListModule, FormsModule, MatFormFieldModule, MatInputModule, MatExpansionModule, RouterLink],
+  imports: [CommonModule, MatCardModule, MatButtonModule , MatIconModule, MatTabsModule, MatListModule, FormsModule, MatFormFieldModule, MatInputModule, MatExpansionModule],
   templateUrl: './community.component.html',
-  styleUrl: './community.component.css'
-
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTabsModule,
-    MatListModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatExpansionModule,
-  ],
-  templateUrl: "./community.component.html",
-  styleUrl: "./community.component.css", 
+  styleUrl: './community.component.css',
 })
 
 export class CommunityComponent implements OnInit {

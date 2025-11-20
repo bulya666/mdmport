@@ -13,6 +13,25 @@
 
 	<section id="catalog" class="grid" aria-live="polite"></section>
 </main>
+<div
+  class="toast"
+  *ngIf="toastVisible"
+  [ngClass]="toastType"
+>
+  <div class="toast-message">
+    {{ toastMessage }}
+  </div>
+
+  <div class="toast-actions" *ngIf="toastWithActions">
+    <button class="btn-outline" (click)="continueShopping()">
+      Vásárlás folytatása
+    </button>
+    <button class="btn-primary" (click)="goToCart()">
+      Irány a kosár
+    </button>
+  </div>
+</div>
+
 
 <div id="modal" class="modal-backdrop" role="dialog" aria-hidden="true">
 	<div class="modal" role="document">
@@ -29,7 +48,7 @@
 				<p class="muted">Ár</p>
 				<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
 					<div id="m-price" style="font-weight:700;font-size:20px;color:#bff39b">Ingyen</div>
-					<button class="buy">Kosárba</button>
+					<button class="buy" (click)="addToCart()">Kosárba</button>
 				</div>
 				<p class="muted">Képek</p>
 				<div id="m-shots" style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"></div>
@@ -43,3 +62,4 @@
 	<img id="lightbox-img" src="" alt="big shot" />
 	<button id="lb-next">⟩</button>
 </div>
+<div id="popup-box" class="popup hidden"></div>
