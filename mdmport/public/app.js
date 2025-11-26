@@ -40,7 +40,6 @@
 
     if (!catalog) return console.error("Hiányzik a #catalog elem!");
 
-    // Tabkezelés
     tabs.forEach(t =>
       t.addEventListener("click", () => {
         if (t.classList.contains("active")) return;
@@ -51,17 +50,14 @@
     );
     if (tabs.length) tabs[0].classList.add("active");
 
-    // Keresés debounce-elve
     if (search) search.addEventListener("input", debounce(applyFilter, 150));
 
-    // Modal bezárás
     if (mClose) mClose.addEventListener("click", closeModal);
     if (modal)
       modal.addEventListener("click", e => {
         if (e.target === modal) closeModal();
       });
 
-    // Lightbox vezérlés
     if (lightbox)
       lightbox.addEventListener("click", e => {
         if (e.target === lightbox) lightbox.style.display = "none";
@@ -77,7 +73,6 @@
         showLightbox(currentIndex + 1);
       });
 
-    // Billentyűvezérlés lightboxhoz
     document.addEventListener("keydown", e => {
       if (lightbox && lightbox.style.display === "flex") {
         if (e.key === "ArrowLeft") showLightbox(currentIndex - 1);
@@ -86,11 +81,10 @@
       }
     });
 
-    bindFooterLinks(); // Footer linkek, pl. "Akciók"
-    loadGames(); // API-ból betöltés
+    bindFooterLinks();
+    loadGames(); 
   }
 
-  // Footer linkek kezelése (Ajánlott, Top, Ingyenes, Akciók)
   function bindFooterLinks() {
     const links = Array.from(document.querySelectorAll("a"));
     const map = {
@@ -99,7 +93,6 @@
       all: "ajánlott"
     };
 
-    // normál tab linkek
     Object.entries(map).forEach(([key, txt]) => {
       const link = links.find(a =>
         a.textContent.trim().toLowerCase().includes(txt)
@@ -116,20 +109,18 @@
         });
     });
 
-    // külön az "Akciók" link — nincs hozzá tab
     const akcioLink = links.find(a =>
       a.textContent.trim().toLowerCase().includes("akció")
     );
     if (akcioLink) {
       akcioLink.addEventListener("click", e => {
         e.preventDefault();
-        tabs.forEach(x => x.classList.remove("active")); // levesszük az actívet
-        showNoSalesCard(); // külön funkció a megjelenítésre
+        tabs.forEach(x => x.classList.remove("active")); 
+        showNoSalesCard();
       });
     }
   }
 
-  // Akciók kártya megjelenítése (önállóan)
   function showNoSalesCard() {
     animateCatalog(() => {
     catalog.innerHTML = `
@@ -152,7 +143,6 @@
     });
   }
 
-  // Keresés és szűrés animációval
   function applyFilter() {
     if (!search || !tabs) return;
 
@@ -171,8 +161,7 @@
         const query = q.toLowerCase();
         out = out.filter(
           g =>
-            g.title.toLowerCase().includes(query) ||
-            g.desc.toLowerCase().includes(query)
+            g.title.toLowerCase().includes(query) 
         );
       }
 
@@ -180,7 +169,6 @@
     });
   }
 
-  // 🧠 Debounce (a keresés optimalizálására)
   function debounce(fn, ms) {
     let timeout;
     return function (...args) {
@@ -189,7 +177,6 @@
     };
   }
 
-  // 🎨 Lista kirajzolása
   function renderList(list) {
     catalog.innerHTML = list
       .map(
@@ -219,7 +206,6 @@
     );
   }
 
-  // 🧾 Játékadatok betöltése
   async function loadGames() {
     try {
       const [gamesRes, photosRes] = await Promise.all([
@@ -257,7 +243,6 @@
     }
   }
 
-  // 🪟 Modal funkciók
   function openModal(game) {
     if (!game || !modal) return;
     mTitle.textContent = game.title;
@@ -288,7 +273,6 @@
     modal.style.display = "none";
   }
 
-  // 💡 Lightbox vezérlés
   function showLightbox(index) {
     if (!lightbox || !lightboxImg) return;
     if (index < 0) index = currentShots.length - 1;
@@ -298,7 +282,6 @@
     lightbox.style.display = "flex";
   }
 
-  // 🧰 HTML escaping helper
   function escapeHtml(s) {
     return (s + "").replace(/[&<>"']/g, c =>
       ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]

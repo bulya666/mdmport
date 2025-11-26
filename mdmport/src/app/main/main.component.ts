@@ -44,7 +44,6 @@ private showToast(
   this.toastWithActions = withActions;
   this.toastVisible = true;
 
-  // ha nincs gomb (hibák), automatikus eltűnés
   if (!withActions) {
     if (this.toastTimeout) {
       clearTimeout(this.toastTimeout);

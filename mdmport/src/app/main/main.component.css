@@ -331,6 +331,62 @@
   border-radius: 8px;
 }
 
+.logout {
+  color: #ff6b6b;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  z-index: 10000;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 320px;
+}
+
+.toast.success {
+  background: #022c22;
+  color: #d1fae5;
+}
+
+.toast.error {
+  background: #7f1d1d;
+  color: #fecaca;
+}
+
+.toast-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.toast-actions .btn-outline,
+.toast-actions .btn-primary {
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  border: none;
+}
+
+.toast-actions .btn-outline {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: inherit;
+}
+
+.toast-actions .btn-primary {
+  background: #22c55e;
+  color: #022c22;
+  font-weight: 600;
+}
 @media (max-width: 980px) {
   .mdm-cta {
     grid-template-columns: 1fr;
@@ -535,61 +591,4 @@
   .hamburger {
     display: flex;
   }
-}
-
-.logout {
-  color: #ff6b6b;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.toast {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  padding: 14px 18px;
-  border-radius: 10px;
-  font-size: 14px;
-  z-index: 10000;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-width: 320px;
-}
-
-.toast.success {
-  background: #022c22;
-  color: #d1fae5;
-}
-
-.toast.error {
-  background: #7f1d1d;
-  color: #fecaca;
-}
-
-.toast-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-.toast-actions .btn-outline,
-.toast-actions .btn-primary {
-  cursor: pointer;
-  border-radius: 6px;
-  padding: 6px 10px;
-  font-size: 13px;
-  border: none;
-}
-
-.toast-actions .btn-outline {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.3);
-  color: inherit;
-}
-
-.toast-actions .btn-primary {
-  background: #22c55e;
-  color: #022c22;
-  font-weight: 600;
 }
