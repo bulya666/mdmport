@@ -930,3 +930,172 @@ button[mat-button][color="warn"] {
     transform: translateY(0);
   }
 }
+
+/* ARTICLES WRAPPER */
+
+.articles-wrapper {
+  margin: 40px auto;
+  max-width: 1000px;
+  padding: 0 16px;
+  color: #fff;
+}
+
+.articles-wrapper h2 {
+  font-size: 30px; /* nagyobb */
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #fff; /* fehér */
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4); /* enyhe árnyék a kiemeléshez */
+}
+
+/* ARTICLES GRID */
+
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.article-card {
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.04), rgba(12, 18, 30, 0.95));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.article-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(229, 62, 82, 0.7);
+  border-color: #e53e50;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.06), rgba(12, 18, 30, 0.98));
+}
+
+.article-card mat-card-title {
+  font-weight: 700;
+  font-size: 18px;
+  color: #ff4d4d;
+  margin-bottom: 8px;
+}
+
+.article-card mat-card-content p {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #fff;
+}
+
+/* MODAL BACKDROP */
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(8, 26, 48, 0.92);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+}
+
+/* MODAL */
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(12, 18, 30, 0.97);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 20px 50px rgba(229, 62, 82, 0.85);
+  padding: 24px 32px;
+  max-width: 600px;
+  width: 90%;
+  z-index: 1001;
+  animation: modalFadeIn 0.22s ease-out;
+}
+
+.modal-content h2 {
+  font-size: 22px;
+  color: #ff4d4d;
+  margin-bottom: 12px;
+}
+
+.modal-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+.modal-content hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, #ff4d4d, rgba(255, 77, 77, 0.5));
+  margin: 12px 0 16px 0;
+  border-radius: 1px;
+}
+
+.close-btn {
+  background: linear-gradient(135deg, #c72f42, #e53e50);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.14s ease, filter 0.18s ease;
+}
+
+.close-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.close-btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* MODAL ANIMATION */
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .articles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal {
+    padding: 20px;
+  }
+}
+
+/* ARTICLE CARD IMAGE */
+.article-card img {
+  width: 100%;
+  height: 160px; /* fix magasság a uniform megjelenéshez */
+  object-fit: cover; /* lefedi a konténert anélkül, hogy torzulna */
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+/* MODAL IMAGE */
+.modal-content img {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}

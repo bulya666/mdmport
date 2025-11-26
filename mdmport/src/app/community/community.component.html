@@ -6,6 +6,7 @@
 
   <div class="articles-grid">
     <mat-card *ngFor="let article of featuredArticles" class="article-card" (click)="openModal(article)">
+      <img [src]="article.imageUrl" alt="{{ article.title }} kép">
       <mat-card-title>{{ article.title }}</mat-card-title>
       <mat-card-content>
         <p>{{ article.summary }}</p>
@@ -19,10 +20,13 @@
 <div class="modal" *ngIf="modalOpen">
   <div class="modal-content">
     <h2>{{ selectedArticle?.title }}</h2>
+    <hr>
+    <img [src]="selectedArticle?.imageUrl" alt="{{ selectedArticle?.title }} kép">
     <p>{{ selectedArticle?.fullText }}</p>
     <button class="close-btn" (click)="closeModal()">Bezárás</button>
   </div>
 </div>
+
 
   <mat-card class="new-post">
     <mat-card-title>Új bejegyzés</mat-card-title>
