@@ -1,60 +1,81 @@
-
 <div class="community-page">
-	<h1>Közösség</h1>
+  <h1>Közösség</h1>
+	
+<div class="articles-wrapper">
+  <h2>Ajánlott gaming cikkek</h2>
 
-	<mat-card class="new-post">
-		<mat-card-title>Új bejegyzés</mat-card-title>
-		<mat-card-content>
-			<mat-form-field appearance="outline" class="w-full">
-				<textarea matInput placeholder="Oszd meg gondolataid..." [(ngModel)]="newPostContent"></textarea>
-			</mat-form-field>
-		</mat-card-content>
-		<mat-card-actions>
-			<button mat-raised-button color="primary" (click)="addPost()">Közzététel</button>
-		</mat-card-actions>
-	</mat-card>
-
-	<mat-tab-group>
-		<mat-tab label="Bejegyzések">
-			<div class="posts">
-				<mat-card *ngFor="let post of posts" class="post-card">
-					<mat-card-header>
-						<div mat-card-avatar class="user-avatar"><i class="fas fa-user-circle" id="avatar"></i></div>
-						<mat-card-title style="padding-top: 8px;">{{ post.author }}</mat-card-title>
-						<mat-card-subtitle>{{ post.date | date:'medium' }}</mat-card-subtitle>
-					</mat-card-header>
-
-					<mat-card-content>
-						<p>{{ post.content }}</p>
-					</mat-card-content>
-
-					<mat-card-actions>
-						<button mat-button color="primary" (click)="likePost(post)"><mat-icon>thumb_up</mat-icon> {{ post.likes }}</button>
-						<button mat-button (click)="toggleComments(post)">
-							<mat-icon>comment</mat-icon>
-							{{ post.showComments ? 'Hozzászólások elrejtése' : 'Hozzászólások megtekintése' }} ({{ post.comments.length }})
-						</button>
-					</mat-card-actions>
-
-					<div *ngIf="post.showComments" class="comments">
-						<mat-list>
-							<mat-list-item *ngFor="let c of post.comments">
-								<mat-icon matListIcon>person</mat-icon>
-								<div matLine><b>{{ c.author }}</b></div>
-								<div matLine>{{ c.text }}</div>
-							</mat-list-item>
-						</mat-list>
-
-						<div class="add-comment">
-							<input matInput #commentInput placeholder="Írj hozzászólást..." />
-							<button mat-icon-button color="primary" (click)="addComment(post, commentInput)">
-								<mat-icon>send</mat-icon>
-							</button>
-						</div>
-					</div>
-				</mat-card>
-			</div>
-		</mat-tab>
-	</mat-tab-group>
+  <div class="articles-grid">
+    <mat-card *ngFor="let article of featuredArticles" class="article-card" (click)="openModal(article)">
+      <mat-card-title>{{ article.title }}</mat-card-title>
+      <mat-card-content>
+        <p>{{ article.summary }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
 
+<div class="modal-backdrop" *ngIf="modalOpen" (click)="closeModal()"></div>
+
+<div class="modal" *ngIf="modalOpen">
+  <div class="modal-content">
+    <h2>{{ selectedArticle?.title }}</h2>
+    <p>{{ selectedArticle?.fullText }}</p>
+    <button class="close-btn" (click)="closeModal()">Bezárás</button>
+  </div>
+</div>
+
+  <mat-card class="new-post">
+    <mat-card-title>Új bejegyzés</mat-card-title>
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="w-full">
+        <textarea matInput placeholder="Oszd meg gondolataid..." [(ngModel)]="newPostContent"></textarea>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="addPost()">Közzététel</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-tab-group>
+    <mat-tab label="Bejegyzések">
+      <div class="posts">
+        <mat-card *ngFor="let post of posts" class="post-card">
+          <mat-card-header>
+            <div mat-card-avatar class="user-avatar"><i class="fas fa-user-circle" id="avatar"></i></div>
+            <mat-card-title style="padding-top: 8px;">{{ post.author }}</mat-card-title>
+            <mat-card-subtitle>{{ post.date | date:'medium' }}</mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+            <p>{{ post.content }}</p>
+          </mat-card-content>
+
+          <mat-card-actions>
+            <button mat-button color="primary" (click)="likePost(post)"><mat-icon>thumb_up</mat-icon> {{ post.likes }}</button>
+            <button mat-button (click)="toggleComments(post)">
+              <mat-icon>comment</mat-icon>
+              {{ post.showComments ? 'Hozzászólások elrejtése' : 'Hozzászólások megtekintése' }} ({{ post.comments.length }})
+            </button>
+          </mat-card-actions>
+
+          <div *ngIf="post.showComments" class="comments">
+            <mat-list>
+              <mat-list-item *ngFor="let c of post.comments">
+                <mat-icon matListIcon>person</mat-icon>
+                <div matLine><b>{{ c.author }}</b></div>
+                <div matLine>{{ c.text }}</div>
+              </mat-list-item>
+            </mat-list>
+
+            <div class="add-comment">
+              <input matInput #commentInput placeholder="Írj hozzászólást..." />
+              <button mat-icon-button color="primary" (click)="addComment(post, commentInput)">
+                <mat-icon>send</mat-icon>
+              </button>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
