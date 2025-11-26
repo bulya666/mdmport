@@ -11,6 +11,9 @@ namespace mdmAdmin.Data
     public class AppDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Game> Games { get; set; }
+        public DbSet<GamePhoto> GamePhotos { get; set; }
+        public DbSet<Ownedg> Ownedg { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
