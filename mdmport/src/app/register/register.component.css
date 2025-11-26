@@ -1,77 +1,214 @@
+/* REGISZTRÁCIÓ – KONTÉNER */
 .register-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - 220px);
   padding: 40px 20px;
+  overflow: hidden;
 }
-input, button {
+
+/* háttér glow, ugyanaz a vibe mint login */
+.register-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top, rgba(230, 0, 0, 0.22), transparent 60%),
+    radial-gradient(circle at bottom, rgba(0, 0, 0, 0.9), #05070b);
+  z-index: -2;
+}
+
+.register-container::after {
+  content: "";
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230, 0, 0, 0.32), transparent 70%);
+  filter: blur(6px);
+  opacity: 0.6;
+  z-index: -1;
+}
+
+/* FORM CARD */
+
+.register-container form {
+  background: rgba(6, 10, 18, 0.96);
+  border-radius: 18px;
+  padding: 32px 28px 26px;
   width: 100%;
-  margin-bottom: 12px;
-  padding: 10px;
-  font-size: 1em;
-}
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-button:hover {
-  background-color: #0056b3;
-}
-form{
-  background: #1a1a1a;
-  border: 2px solid #e60000;
-  border-radius: 10px;
-  padding: 30px;
+  max-width: 380px;
   text-align: center;
-  width: 320px;
-  box-shadow: 0 0 20px #e60000;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.02);
 }
 
-form h2 {
-  color: #e60000;
-  margin-bottom: 20px;
-  font-size: 30px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+/* piros keret + conic glow */
+.register-container form::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 180deg,
+    #e60000,
+    #ff4d4d,
+    #e60000,
+    #550000,
+    #e60000
+  );
+  opacity: 0.55;
+  z-index: -1;
 }
 
-form input {
+.register-container form::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: radial-gradient(circle at top, #0a0f18, #05070b);
+  z-index: -1;
+}
+
+/* CÍM */
+
+.register-container form h2 {
+  color: #ffffff;
+  margin-bottom: 18px;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.register-container form h2::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  transform: translateX(-50%);
+  width: 52px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff4d4d, #e60000);
+}
+
+/* ŰRLAP MEZŐK */
+
+.register-container form input {
   display: block;
   width: 100%;
-  padding: 12px;
-  margin: 12px 0;
-  border: 1px solid #e60000;
-  border-radius: 5px;
-  background: #000;
-  color: #fff;
+  padding: 11px 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.9);
+  color: #f5f5f5;
+  font-size: 14px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    transform 0.15s ease;
 }
 
-form button {
-  background: #e60000;
+.register-container form input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.register-container form input:hover {
+  border-color: rgba(230, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.96);
+}
+
+.register-container form input:focus {
+  border-color: #e60000;
+  box-shadow: 0 0 0 1px rgba(230, 0, 0, 0.4), 0 0 16px rgba(230, 0, 0, 0.45);
+  transform: translateY(-1px);
+}
+
+/* GOMBOK */
+
+.register-container form button {
+  background: linear-gradient(135deg, #e60000, #ff3333);
   border: none;
   color: #fff;
-  padding: 12px;
+  padding: 11px 14px;
   width: 100%;
-  margin-top: 15px;
+  margin-top: 14px;
   cursor: pointer;
-  font-weight: bold;
-  border-radius: 5px;
-  transition: 0.3s;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.9),
+    0 0 18px rgba(230, 0, 0, 0.6);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
 }
 
-form button:hover {
-  background: #ff1a1a;
+.register-container form button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow:
+    0 14px 32px rgba(0, 0, 0, 0.9),
+    0 0 22px rgba(255, 51, 51, 0.75);
 }
 
-form a {
-  color: #e60000;
+.register-container form button:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.8),
+    0 0 10px rgba(230, 0, 0, 0.6);
+}
+
+/* AL-SZÖVEGEK / LINK */
+
+.register-container form p {
+  margin-top: 16px;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 13px;
+}
+
+.register-container form a {
+  color: #ff4d4d;
   text-decoration: none;
+  font-weight: 500;
+  position: relative;
 }
 
-form a:hover {
-  text-decoration: underline;
+.register-container form a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: #ff4d4d;
+  transition: width 0.2s ease;
+}
+
+.register-container form a:hover::after {
+  width: 100%;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 480px) {
+  .register-container form {
+    padding: 26px 20px 22px;
+    border-radius: 16px;
+  }
 }

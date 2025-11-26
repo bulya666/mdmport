@@ -17,12 +17,28 @@
   gap: 10px;
 }
 
-.tab {
+.tabs {
+  display: flex;
+  gap: 10px;
+}
+
+.tab {            
+  color: #fff;
+  position: relative;
   padding: 8px 12px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.02);
   cursor: pointer;
   user-select: none;
+}
+
+.tab.active {
+  background: #9b111e;                
+  transform: translateY(-2px);    
+}
+
+.tab.active::after {
+  transform: translateX(-50%) scaleX(1);
 }
 
 .grid {

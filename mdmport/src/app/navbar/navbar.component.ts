@@ -55,7 +55,16 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(['/']);
     }
   }
-
+  goToCommunity() {
+      if (this.router.url === '/community') {
+      window.location.reload();
+      }
+    }
+    goToLogin() {
+      if (this.router.url === '/login') {
+        window.location.reload();
+      }
+    }
   logout() {
     const overlayRef = createComponent(LogoutOverlayComponent, { environmentInjector: this.appRef.injector });
     this.appRef.attachView(overlayRef.hostView);

@@ -10,19 +10,42 @@
 }
 
 .brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform .25s ease, filter .25s ease;
 }
 
 #logo {
-    width: 55px;
-    height: 41px;
+  height: 32px;
+  transition: transform .25s ease, filter .25s ease;
 }
 
-.brand h1 {
-    font-size: 18px;
-    letter-spacing: 0.6px;
+
+.brand:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.brand:hover #logo {
+  transform: rotate(-3deg) scale(1.05);
+}
+
+.brand:active {
+  transform: translateY(1px) scale(0.97);
+  filter: brightness(0.9);
+}
+
+.mdm-logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  transition: letter-spacing .25s ease, transform .25s ease;
+}
+
+.brand:hover .mdm-logo {
+  letter-spacing: 1px;
+  transform: scale(1.02);
 }
 
 .search {

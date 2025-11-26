@@ -1,23 +1,26 @@
-
-
 .mdm-footer {
-  background: var(--bg);
+  background: radial-gradient(circle at top left, var(--bg-soft), var(--bg));
   color: var(--text);
   border-top: 1px solid var(--ring);
+  box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.25);
 }
 
+/* WRAP */
 .mdm-wrap {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 40px 20px 24px;
   display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   gap: 40px;
+  align-items: flex-start;
 }
 
+/* BRAND BLOKK */
 .mdm-brand {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .mdm-logo {
@@ -26,18 +29,52 @@
   letter-spacing: 0.3px;
   color: var(--text);
   text-decoration: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transform-origin: left center;
+  transition: transform 0.25s ease, letter-spacing 0.25s ease;
 }
 
 .mdm-logo span {
   color: var(--acc);
 }
 
-.mdm-tag {
-  margin: 0.6rem 0 1rem;
-  color: var(--muted);
-  max-width: 52ch;
+/* apró pöcök a logo alatt */
+.mdm-logo::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 26px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--acc);
+  transform-origin: left;
+  transform: scaleX(0.4);
+  opacity: 0.8;
+  transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
+.mdm-logo:hover {
+  transform: translateY(-1px) scale(1.02);
+  letter-spacing: 0.8px;
+}
+
+.mdm-logo:hover::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.mdm-tag {
+  margin: 0.6rem 0 1.1rem;
+  color: var(--muted);
+  max-width: 52ch;
+  line-height: 1.5;
+}
+
+/* BADGE-K */
 .mdm-badges {
   display: flex;
   flex-wrap: wrap;
@@ -48,11 +85,44 @@
   background: var(--bg-soft);
   color: var(--text);
   border: 1px solid var(--ring);
-  padding: 6px 10px;
+  padding: 6px 12px;
   border-radius: 999px;
   font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
+.badge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.12), transparent);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.02);
+  border-color: var(--acc);
+}
+
+.badge:hover::before {
+  opacity: 1;
+}
+
+/* KOLUMNÁK */
 .mdm-columns {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -60,11 +130,11 @@
 }
 
 .mdm-columns h3 {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--muted);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 10px;
+  letter-spacing: 0.12em;
+  margin-bottom: 12px;
 }
 
 .mdm-columns ul {
@@ -72,17 +142,102 @@
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 8px;
+  gap: 6px;
+}
+
+/* LÁBLINK EK, pöcök anim + finom slide */
+.mdm-columns li {
+  position: relative;
 }
 
 .mdm-columns a {
   color: var(--text);
   text-decoration: none;
-  opacity: 0.9;
+  opacity: 0.8;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 0;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.mdm-columns a::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--acc);
+  transform: scale(0);
+  opacity: 0;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.mdm-columns a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 0;
+  background: var(--acc);
+  border-radius: 999px;
+  transition: width 0.2s ease;
 }
 
 .mdm-columns a:hover {
   opacity: 1;
-  text-decoration: underline;
-  
+  transform: translateX(2px);
+}
+
+.mdm-columns a:hover::before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.mdm-columns a:hover::after {
+  width: 100%;
+}
+
+/* AL-FOOTER: alsó sor, ha kell */
+.mdm-footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 20px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .mdm-wrap {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .mdm-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .mdm-wrap {
+    padding: 28px 16px 18px;
+  }
+  .mdm-columns {
+    grid-template-columns: 1fr 1fr;
+  }
+  .mdm-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
