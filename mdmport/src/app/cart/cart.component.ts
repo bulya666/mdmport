@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from "../services/auth.service";
 
 interface CartItem {
@@ -22,6 +22,15 @@ export class CartComponent implements OnInit {
   menuOpen = false;
   cartItems: CartItem[] = [];
 
+  toastMessage = '';
+  toastVisible = false;
+  toastType: 'success' | 'error' = 'success';
+  toastWithActions = false;
+  private toastTimeout: any;
+
+  loadingPopup = false;
+  loadingDone = false;
+
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit() {
@@ -29,11 +38,10 @@ export class CartComponent implements OnInit {
     this.loadCart();
   }
 
-loadCart() {
-  const saved = localStorage.getItem('cart');
-  this.cartItems = saved ? JSON.parse(saved) : [];
-  console.log("Betöltött kosár:", this.cartItems);
-}
+  loadCart() {
+    const saved = localStorage.getItem('cart');
+    this.cartItems = saved ? JSON.parse(saved) : [];
+  }
 
   saveCart() {
     localStorage.setItem('cart', JSON.stringify(this.cartItems));
@@ -49,28 +57,74 @@ loadCart() {
   }
 
   purchase() {
-    this.cartItems = [];
-    localStorage.removeItem('cart');
+    this.loadingPopup = true;
+    this.loadingDone = false;
+
+    setTimeout(() => {
+      this.loadingDone = true;
+
+      setTimeout(() => {
+        this.loadingPopup = false;
+        this.cartItems = [];
+        localStorage.removeItem('cart');
+
+        this.showToast(
+          `Sikeres vásárlás.`,
+          "success",
+          false
+        );
+
+        this.router.navigate(['/']);
+      }, 900);
+    }, 1800);
   }
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
+
+  private showToast(
+    message: string,
+    type: 'success' | 'error' = 'success',
+    withActions: boolean = false
+  ) {
+    this.toastMessage = message;
+    this.toastType = type;
+    this.toastWithActions = withActions;
+    this.toastVisible = true;
+
+    if (!withActions) {
+      if (this.toastTimeout) clearTimeout(this.toastTimeout);
+      this.toastTimeout = setTimeout(() => {
+        this.toastVisible = false;
+      }, 2200);
+    }
   }
-  closeMenu() {
-    this.menuOpen = false;
-  }
-  refresh() {
-    this.loadCart();
-  }
-  toggleUserMenu() {
-    this.userMenuOpen = !this.userMenuOpen;
-  }
-  closeUserMenu() {
-    this.userMenuOpen = false;
-  }
+
+  toggleMenu() { this.menuOpen = !this.menuOpen; }
+  closeMenu() { this.menuOpen = false; }
+  refresh() { this.loadCart(); }
+  toggleUserMenu() { this.userMenuOpen = !this.userMenuOpen; }
+  closeUserMenu() { this.userMenuOpen = false; }
   logout() {
     this.auth.logout();
     this.loggedUser = null;
     this.closeMenu();
     this.router.navigate(['/']);
   }
+
+startPurchase() {
+  this.loadingPopup = true;
+  this.loadingDone = false;
+}
+
+finishPurchase() {
+  this.loadingDone = true;
+
+  setTimeout(() => {
+    this.loadingPopup = false;
+    this.cartItems = [];
+    localStorage.removeItem('cart');
+
+    this.showToast(`Sikeres vásárlás.`, "success", false);
+    this.router.navigate(['/']);
+  }, 900);
+}
+
 }
