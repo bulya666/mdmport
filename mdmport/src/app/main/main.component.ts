@@ -69,6 +69,7 @@ closeModal() {
 }
 
 addToCart() {
+  const user = document.getElementById() 
   const titleEl = document.getElementById("m-title") as HTMLElement;
   const priceEl = document.getElementById("m-price") as HTMLElement;
   const imageEl = document.getElementById("m-cover") as HTMLImageElement;
