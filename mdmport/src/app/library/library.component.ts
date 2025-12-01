@@ -1,51 +1,80 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { forkJoin } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import { CommonModule } from '@angular/common';
+interface Game {
+  id: number;
+  title: string;
+  tag: string[];
+  price: number;
+  desc: string;
+  thumbnail: string;
+}
+
+interface User {
+  id: number;
+  username: string;
+  password: string;
+}
+
+interface Owned {
+  id: number;
+  userid: number;
+  gameid: number;
+}
 
 @Component({
   selector: 'app-library',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './library.component.html',
-  styleUrls: ['./library.component.css']
 })
 export class LibraryComponent implements OnInit {
-  games: any[] = [];
-  selectedGame: any | null = null;
+  games: Game[] = [];
+  selectedGame: Game | null = null;
   gameShots: any[] = [];
-  private apiUrl = 'http://localhost:3000/api';
 
-  constructor(private http: HttpClient, private auth: AuthService) {}
+  private api = 'http://localhost:3000/api';
+
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    const username = this.auth.getLoggedUser();
-    if (!username) return console.error('Nincs bejelentkezett felhasználó!');
+    // Itt azt használd, amire a login komponens menti a nevet (pl. 'loggedUser')
+    const username = localStorage.getItem('loggedUser');
+    if (!username) {
+      this.games = [];
+      return;
+    }
 
-    // 1. Lekérjük a usert
-    this.http.get<any>(`${this.apiUrl}/users/byname/${username}`).subscribe(user => {
-      // 2. Lekérjük a felhasználó owned játékait
-      this.http.get<any[]>(`${this.apiUrl}/ownedg/${user.id}`).subscribe(owned => {
-        if (!owned.length) return console.log('Nincsenek owned játékok');
-        const gameIds = owned.map(o => o.gameid);
+    // 1) user lekérése név alapján
+    this.http.get<User>(`${this.api}/users/byname/${username}`)
+      .subscribe(user => {
+        const userId = user.id;
 
-        // 3. Lekérjük az összes játékot
-        this.http.get<any[]>(`${this.apiUrl}/games`).subscribe(allGames => {
-          this.games = allGames.filter(g => gameIds.includes(g.id));
-          console.log('Játékok betöltve:', this.games);
-        });
+        // 2) ownedg rekordok lekérése userID alapján
+        this.http.get<Owned[]>(`${this.api}/ownedg/${userId}`)
+          .subscribe(owned => {
+            const ownedIds = new Set(owned.map(o => o.gameid));
+
+            if (ownedIds.size === 0) {
+              this.games = [];
+              return;
+            }
+
+            // 3) összes játék, majd szűrés a user által birtokolt gameid-kre
+            this.http.get<Game[]>(`${this.api}/games`)
+              .subscribe(allGames => {
+                this.games = allGames.filter(g => ownedIds.has(g.id));
+              });
+          });
       });
-    });
   }
 
-  openModal(game: any): void {
+  openModal(game: Game) {
     this.selectedGame = game;
-    // Lekérjük a képeket
-    this.http.get<any[]>(`${this.apiUrl}/gamephotos?gameid=${game.id}`).subscribe(
-      photos => this.gameShots = photos,
-      err => console.error('Hiba a képek betöltésénél', err)
-    );
+    // ha később kell, itt lehet a gameShots-ot is betölteni
   }
 
-  closeModal(): void {
+  closeModal() {
     this.selectedGame = null;
     this.gameShots = [];
   }

@@ -41,6 +41,8 @@ interface Article {
 title: string;
 image: string;
 summary: string;
+fullText: string;
+imageUrl: string;
 }
 
 @Component({
@@ -54,35 +56,29 @@ export class CommunityComponent implements OnInit {
   loggedUser: string | null = null;
   posts: Post[] = [];
   newPostContent = "";
-
-
-
-  allArticles: Article[] = [
-    { title: 'Cyberpunk 2077 – Új DLC elemzés', image: 'assets/articles/cp2077.jpg', summary: 'A legújabb kiegészítő játékmenetbeli változásai.' },
-    { title: 'Elden Ring – Top 10 build', image: 'assets/articles/elden.jpg', summary: 'A legerősebb és legjátszhatóbb karakter setupok.' },
-    { title: 'Call of Duty meta breakdown', image: 'assets/articles/cod.jpg', summary: 'Az aktuális fegyver META részletes bontása.' },
-    { title: 'Fortnite Chapter 5 – Mit hoz az új szezon?', image: 'assets/articles/fortnite.jpg', summary: 'Mechanikák, map update és balance.' },
-    { title: 'GTA 6 – Legújabb szivárgások', image: 'assets/articles/gta6.jpg', summary: 'A megjelenés körüli pletykák elemzése.' },
-    { title: 'Valorant – Agent tier list', image: 'assets/articles/val.jpg', summary: 'Verseny meta és karakter erősségek.' },
-    { title: 'League of Legends – Patch 14.x elemzés', image: 'assets/articles/lol.jpg', summary: 'A legfontosabb változtatások hatása.' },
-    { title: 'Apex Legends – Movement tech tippek', image: 'assets/articles/apex.jpg', summary: 'Speciális mozgási trükkök részletesen.' },
-    { title: 'Assassin’s Creed Shadows – Mit tudunk eddig?', image: 'assets/articles/ac.jpg', summary: 'Történeti keret, karakterek és játékmenet.' },
-    { title: 'The Witcher 4 fejlesztési hírek', image: 'assets/articles/witcher4.jpg', summary: 'A projekt állapota és várható irányok.' },
-    { title: 'Overwatch 2 – Balance update', image: 'assets/articles/ow.jpg', summary: 'Meta-shake és hős frissítések.' },
-    { title: 'Helldivers 2 tippek és stratégiák', image: 'assets/articles/helldivers.jpg', summary: 'Hatékony kooperáció és build ajánlások.' }
-  ];
-
-  featuredArticles: Article[] = [];
-  modalOpen = false;
-  selectedArticle: Article | null = null;
-  articles: Article[] = [];
-
   constructor(private router: Router, private auth: AuthService) {}
+
+//  allArticles: Article[] = [
+//   { 
+//     title: 'Cyberpunk 2077 – Új DLC elemzés', 
+//     summary: 'A legújabb kiegészítő bemutatása röviden.', 
+//     fullText: 'A legújabb DLC részletesen bemutatja a játékmenet változásait, új küldetéseket, fegyvereket és karakteropciókat. Elemzésünkben kitérünk a játékélményre, karakterfejlődésre és a stratégiákra, amik a játékban használhatók.' 
+//   },
+//   { 
+//     title: 'Elden Ring – Top 10 build', 
+//     summary: 'A legerősebb build-ek röviden.', 
+//     fullText: 'Ebben a cikkben részletesen bemutatjuk a legerősebb és legjátszhatóbb karakter build-eket, taktikai tippekkel és felszerelés javaslatokkal. Tartalmazza a PvE és PvP optimalizált build-eket is.' 
+//   },
+//   { 
+//     title: 'Call of Duty meta breakdown', 
+//     summary: 'Fegyver META összefoglaló.', 
+//     fullText: 'Átfogó elemzés az aktuális fegyver META-ról, karakterek hatékonyságáról és a legjobb stratégiákról, hogy versenyképes maradhass a játékban. Tippeket adunk fegyverválasztáshoz és perk kombinációkhoz.' 
+//   }
+// ];
 
   ngOnInit() {
     this.loggedUser = localStorage.getItem('loggedUser');
     this.loadPosts();
-    this.featuredArticles = this.getRandomArticles(3);
   }
 
   loadPosts() {
@@ -190,58 +186,21 @@ export class CommunityComponent implements OnInit {
     post.showComments = !post.showComments;
   }
 
-  getRandomArticles(count: number): Article[] {
-    const shuffled = [...this.allArticles].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
-  }
+// ------------ cikk
 
-  openModal(article: Article): void {
-    this.selectedArticle = article;
-    this.modalOpen = true;
-  }
+//   openModal(article: Article): void {
+//     this.selectedArticle = article;
+//     this.modalOpen = true;
+//  }
 
-  closeModal(): void {
-    this.modalOpen = false;
-    this.selectedArticle = null;
-  }
+//   closeModal(): void {
+//    this.modalOpen = false;
+//    this.selectedArticle = null;
+
+//    featuredArticles: Article[] = this.getRandomArticles(3);
+//  }
 }
 
 
 
 
-
-// interface Article {
-//   title: string;
-//   summary: string;
-//   fullText: string; // új mező a hosszabb szöveghez
-// }
-
-// allArticles: Article[] = [
-//   { 
-//     title: 'Cyberpunk 2077 – Új DLC elemzés', 
-//     summary: 'A legújabb kiegészítő bemutatása röviden.', 
-//     fullText: 'A legújabb DLC részletesen bemutatja a játékmenet változásait, új küldetéseket, fegyvereket és karakteropciókat. Elemzésünkben kitérünk a játékélményre, karakterfejlődésre és a stratégiákra, amik a játékban használhatók.' 
-//   },
-//   { 
-//     title: 'Elden Ring – Top 10 build', 
-//     summary: 'A legerősebb build-ek röviden.', 
-//     fullText: 'Ebben a cikkben részletesen bemutatjuk a legerősebb és legjátszhatóbb karakter build-eket, taktikai tippekkel és felszerelés javaslatokkal. Tartalmazza a PvE és PvP optimalizált build-eket is.' 
-//   },
-//   { 
-//     title: 'Call of Duty meta breakdown', 
-//     summary: 'Fegyver META összefoglaló.', 
-//     fullText: 'Átfogó elemzés az aktuális fegyver META-ról, karakterek hatékonyságáról és a legjobb stratégiákról, hogy versenyképes maradhass a játékban. Tippeket adunk fegyverválasztáshoz és perk kombinációkhoz.' 
-//   }
-// ];
-
-// featuredArticles: Article[] = this.getRandomArticles(3);
-
-// openModal(article: Article): void {
-//   this.selectedArticle = article;
-//   this.modalOpen = true;
-// }
-
-// closeModal(): void {
-//   this.modalOpen = false;
-//   this.selectedArticle = null;
-// }

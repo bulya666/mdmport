@@ -72,6 +72,10 @@ addToCart() {
   const titleEl = document.getElementById("m-title") as HTMLElement;
   const priceEl = document.getElementById("m-price") as HTMLElement;
   const imageEl = document.getElementById("m-cover") as HTMLImageElement;
+  
+  if (!this.loggedUser){
+    this.router.navigate(["login"]);
+  }
 
   if (!titleEl || !priceEl || !imageEl || !imageEl.src) {
     this.showToast("Hiba történt a játék hozzáadásakor.", "error");

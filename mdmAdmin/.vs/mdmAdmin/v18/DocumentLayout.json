@@ -53,8 +53,7 @@
               "ToolTip": "C:\\Users\\bulya\\OneDrive\\Documents\\mdmport\\mdmAdmin\\mdmAdmin\\MainWindow.xaml",
               "RelativeToolTip": "mdmAdmin\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-11-26T08:53:40.073Z",
-              "IsPinned": true,
+              "WhenOpened": "2025-11-29T12:05:15.308Z",
               "EditorCaption": ""
             },
             {
@@ -66,7 +65,7 @@
               "ToolTip": "C:\\Users\\bulya\\OneDrive\\Documents\\mdmport\\mdmAdmin\\mdmAdmin\\App.xaml",
               "RelativeToolTip": "mdmAdmin\\App.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-11-26T11:16:47.849Z",
+              "WhenOpened": "2025-11-29T12:05:15.461Z",
               "EditorCaption": ""
             },
             {
@@ -79,7 +78,7 @@
               "RelativeToolTip": "mdmAdmin\\Models\\Ownedg.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T11:02:57.529Z"
+              "WhenOpened": "2025-11-29T12:05:15.464Z"
             },
             {
               "$type": "Document",
@@ -91,7 +90,7 @@
               "RelativeToolTip": "mdmAdmin\\Models\\GamePhoto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T11:02:44.58Z"
+              "WhenOpened": "2025-11-29T12:05:15.466Z"
             },
             {
               "$type": "Document",
@@ -103,7 +102,7 @@
               "RelativeToolTip": "mdmAdmin\\Models\\Game.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T11:02:26.224Z"
+              "WhenOpened": "2025-11-29T12:05:15.468Z"
             },
             {
               "$type": "Document",
@@ -115,7 +114,7 @@
               "RelativeToolTip": "mdmAdmin\\MainWindow.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAALsAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T09:06:22.707Z"
+              "WhenOpened": "2025-11-29T12:05:15.47Z"
             },
             {
               "$type": "Document",
@@ -127,7 +126,7 @@
               "RelativeToolTip": "mdmAdmin\\Data\\AppDbContext.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T09:05:07.045Z"
+              "WhenOpened": "2025-11-29T12:05:15.471Z"
             },
             {
               "$type": "Document",
@@ -139,7 +138,7 @@
               "RelativeToolTip": "mdmAdmin\\Models\\User.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T08:59:17.838Z"
+              "WhenOpened": "2025-11-29T12:05:15.473Z"
             }
           ]
         }
