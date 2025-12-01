@@ -1,6 +1,8 @@
+// library.component.ts
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+
 interface Game {
   id: number;
   title: string;
@@ -27,54 +29,49 @@ interface Owned {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './library.component.html',
+  styleUrls: ['./library.component.css'],
 })
 export class LibraryComponent implements OnInit {
   games: Game[] = [];
   selectedGame: Game | null = null;
-  gameShots: any[] = [];
+  gameShots: string[] = [];
 
   private api = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    // Itt azt használd, amire a login komponens menti a nevet (pl. 'loggedUser')
     const username = localStorage.getItem('loggedUser');
     if (!username) {
       this.games = [];
       return;
     }
 
-    // 1) user lekérése név alapján
-    this.http.get<User>(`${this.api}/users/byname/${username}`)
-      .subscribe(user => {
-        const userId = user.id;
+    this.http.get<User>(`${this.api}/users/byname/${username}`).subscribe(user => {
+      const userId = user.id;
 
-        // 2) ownedg rekordok lekérése userID alapján
-        this.http.get<Owned[]>(`${this.api}/ownedg/${userId}`)
-          .subscribe(owned => {
-            const ownedIds = new Set(owned.map(o => o.gameid));
+      this.http.get<Owned[]>(`${this.api}/ownedg/${userId}`).subscribe(owned => {
+        const ownedIds = new Set(owned.map(o => o.gameid));
 
-            if (ownedIds.size === 0) {
-              this.games = [];
-              return;
-            }
+        if (ownedIds.size === 0) {
+          this.games = [];
+          return;
+        }
 
-            // 3) összes játék, majd szűrés a user által birtokolt gameid-kre
-            this.http.get<Game[]>(`${this.api}/games`)
-              .subscribe(allGames => {
-                this.games = allGames.filter(g => ownedIds.has(g.id));
-              });
-          });
+        this.http.get<Game[]>(`${this.api}/games`).subscribe(allGames => {
+          this.games = allGames.filter(g => ownedIds.has(g.id));
+        });
       });
+    });
   }
 
-  openModal(game: Game) {
+  openModal(game: Game): void {
     this.selectedGame = game;
-    // ha később kell, itt lehet a gameShots-ot is betölteni
+    // ha majd kell, itt lehet gameShots-ot is betölteni az API-ból
+    this.gameShots = [];
   }
 
-  closeModal() {
+  closeModal(): void {
     this.selectedGame = null;
     this.gameShots = [];
   }

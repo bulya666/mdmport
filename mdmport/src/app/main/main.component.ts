@@ -2,6 +2,7 @@ import { Component, AfterViewInit, OnInit } from "@angular/core";
 import { Router} from "@angular/router";
 import { AuthService } from "../services/auth.service";
 import { CommonModule } from "@angular/common";
+
 @Component({
   selector: "app-main",
   standalone: true,
@@ -9,6 +10,7 @@ import { CommonModule } from "@angular/common";
   templateUrl: "./main.component.html",
   styleUrl: "./main.component.css",
 })
+
 export class MainComponent implements AfterViewInit, OnInit {
   menuOpen = false;
   loggedUser: string | null = null;
@@ -21,6 +23,7 @@ export class MainComponent implements AfterViewInit, OnInit {
     this.auth.loggedUser$.subscribe(username => {
       this.loggedUser = username;
     });
+    console.log("Logged user in main component:", this.loggedUser);
   }
   ngAfterViewInit(): void {
     if ((window as any).initGameCatalog) {
@@ -73,9 +76,6 @@ addToCart() {
   const priceEl = document.getElementById("m-price") as HTMLElement;
   const imageEl = document.getElementById("m-cover") as HTMLImageElement;
   
-  if (!this.loggedUser){
-    this.router.navigate(["login"]);
-  }
 
   if (!titleEl || !priceEl || !imageEl || !imageEl.src) {
     this.showToast("Hiba történt a játék hozzáadásakor.", "error");

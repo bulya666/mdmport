@@ -1,5 +1,5 @@
 <!-- library.component.html -->
-<div class="library-wrapper" *ngIf="games; else loadingTpl">
+<div class="library-wrapper">
   <div class="library-header">
     <div>
       <div class="library-title">
@@ -11,7 +11,7 @@
           <span class="pill-dot"></span>
           <span>Bejelentkezett felhasználó</span>
         </div>
-        <div class="pill" *ngIf="games?.length">
+        <div class="pill" *ngIf="games.length">
           <span>{{ games.length }}</span>
           <span>játék a könyvtárban</span>
         </div>
@@ -31,7 +31,7 @@
           <div class="thumb-overlay"></div>
           <div class="thumb-chip">Saját játék</div>
           <div class="thumb-price">
-            {{ game.price | number : '1.0-0' }} Ft
+            {{ game.price }} Ft
           </div>
         </div>
 
@@ -44,7 +44,7 @@
             {{ game.desc }}
           </p>
 
-          <div class="tag-row" *ngIf="game.tag?.length">
+          <div class="tag-row" *ngIf="game.tag && game.tag.length">
             <span
               class="tag-chip"
               *ngFor="let t of game.tag"
@@ -75,23 +75,16 @@
       könyvtáradban.
     </div>
     <div class="empty-highlight">
-      <span> Tipp: </span>
-      <span>nézz körül az áruházban, és add hozzá az első címedet. </span>
+      <span>Tipp:</span>
+      <span>nézz körül az áruházban, és add hozzá az első címedet.</span>
     </div>
-  </div>
-</ng-template>
-
-<ng-template #loadingTpl>
-  <div class="loading">
-    <div class="loading-spinner"></div>
-    <span>Könyvtár betöltése…</span>
   </div>
 </ng-template>
 
 <!-- MODAL -->
 <div
   class="modal-backdrop"
-  *ngIf="selectedGame"
+  *ngIf="selectedGame as g"
   (click)="closeModal()"
 >
   <div
@@ -101,8 +94,8 @@
     <div class="modal-media">
       <div class="modal-main-shot">
         <img
-          [src]="selectedGame?.thumbnail"
-          [alt]="selectedGame?.title"
+          [src]="g.thumbnail"
+          [alt]="g.title"
         />
       </div>
       <div class="modal-main-gradient"></div>
@@ -113,13 +106,13 @@
         </div>
         <div class="pill">
           <span>Játékazonosító:</span>
-          <span>#{{ selectedGame?.id }}</span>
+          <span>#{{ g.id }}</span>
         </div>
       </div>
 
       <div
         class="thumb-strip"
-        *ngIf="gameShots?.length"
+        *ngIf="gameShots.length"
       >
         <div
           class="thumb-strip-item"
@@ -137,12 +130,12 @@
       <div class="modal-header">
         <div>
           <h2 class="modal-title">
-            {{ selectedGame?.title }}
+            {{ g.title }}
           </h2>
-          <div class="modal-tags" *ngIf="selectedGame?.tag?.length">
+          <div class="modal-tags" *ngIf="g.tag && g.tag.length">
             <span
               class="modal-tag"
-              *ngFor="let t of selectedGame?.tag"
+              *ngFor="let t of g.tag"
             >
               {{ t }}
             </span>
@@ -159,16 +152,16 @@
 
       <div
         class="modal-desc"
-        *ngIf="selectedGame?.desc"
+        *ngIf="g.desc"
       >
-        {{ selectedGame?.desc }}
+        {{ g.desc }}
       </div>
 
       <div class="modal-price-row">
         <div>
           <div>Játék ára</div>
           <div class="modal-price">
-            <span>{{ selectedGame?.price | number : '1.0-0' }}</span>
+            <span>{{ g.price }}</span>
             <span class="currency">Ft</span>
           </div>
         </div>
@@ -194,3 +187,10 @@
     </div>
   </div>
 </div>
+
+<ng-template #loadingTpl>
+  <div class="loading">
+    <div class="loading-spinner"></div>
+    <span>Könyvtár betöltése…</span>
+  </div>
+</ng-template>
