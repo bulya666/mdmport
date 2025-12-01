@@ -19,11 +19,7 @@ export class MainComponent implements AfterViewInit, OnInit {
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.loggedUser = sessionStorage.getItem('user');
-    this.auth.loggedUser$.subscribe(username => {
-      this.loggedUser = username;
-    });
-    console.log("Logged user in main component:", this.loggedUser);
+    this.loggedUser = localStorage.getItem('loggedUser');
   }
   ngAfterViewInit(): void {
     if ((window as any).initGameCatalog) {
@@ -36,6 +32,7 @@ toastVisible = false;
 toastType: 'success' | 'error' = 'success';
 toastWithActions = false;
 private toastTimeout: any;
+loadingRedirect = false;
 
 private showToast(
   message: string,
@@ -76,6 +73,19 @@ addToCart() {
   const priceEl = document.getElementById("m-price") as HTMLElement;
   const imageEl = document.getElementById("m-cover") as HTMLImageElement;
   
+
+if (!this.loggedUser) {
+  this.showToast("Kérjük, jelentkezzen be a kosárhoz adáshoz.", "error");
+
+  this.loadingRedirect = true; 
+
+  setTimeout(() => {
+    this.router.navigate(['/login']);
+  }, 1500);
+
+  return;
+}
+
 
   if (!titleEl || !priceEl || !imageEl || !imageEl.src) {
     this.showToast("Hiba történt a játék hozzáadásakor.", "error");

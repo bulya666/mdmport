@@ -12,6 +12,7 @@
 	</section>
 
 	<section id="catalog" class="grid" aria-live="polite"></section>
+	
 </main>
 <div
   class="toast"
@@ -55,6 +56,10 @@
 			</aside>
 		</div>
 	</div>
+	<div *ngIf="loadingRedirect" class="redirect-loader">
+  <div class="spinner"></div>
+  <p>Átirányítás...</p>
+</div>
 </div>
 
 <div id="lightbox">
@@ -63,3 +68,5 @@
 	<button id="lb-next">⟩</button>
 </div>
 <div id="popup-box" class="popup hidden"></div>
+
+

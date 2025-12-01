@@ -112,7 +112,40 @@ app.get('/api/ownedg', async (req, res) => {
   }
 });
 
-// 🔹 Összes kép lekérése a gamephotos táblából
+
+app.post('/api/ownedg', async (req, res) => {
+  console.log('POST /api/ownedg body:', req.body);
+  const { userid, gameid } = req.body;
+  console.log('userid:', userid, 'gameid:', gameid);
+  try {
+    const { userid, gameid } = req.body;
+
+    if (!userid || !gameid) {
+      return res.status(400).json({ error: 'Hiányzó userid vagy gameid' });
+    }
+
+    const [exists] = await pool.query(
+      'SELECT id FROM ownedg WHERE userid = ? AND gameid = ?',
+      [userid, gameid]
+    );
+
+    if (exists.length > 0) {
+      return res.json({ success: true, message: 'Már megvan ez a játék a felhasználónak' });
+    }
+
+    await pool.query(
+      'INSERT INTO ownedg (userid, gameid) VALUES (?, ?)',
+      [userid, gameid]
+    );
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error('❌ DB hiba (POST /api/ownedg):', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 app.get('/api/gamephotos', async (req, res) => {
   try {
     const sql = 'SELECT id, gameid, pic FROM gamephotos ORDER BY gameid, id';
@@ -123,7 +156,8 @@ app.get('/api/gamephotos', async (req, res) => {
     res.status(500).json({ error: 'DB error' });
   }
 });
-// --- BEJELENTKEZÉS ---
+
+
 app.post('/api/login', async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -141,7 +175,7 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-// --- REGISZTRÁCIÓ ---
+
 app.post('/api/register', async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -165,7 +199,7 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-// Egyedi felhasználó lekérése felhasználónév alapján
+
 app.get('/api/users/byname/:username', async (req, res) => {
   try {
     const username = req.params.username;

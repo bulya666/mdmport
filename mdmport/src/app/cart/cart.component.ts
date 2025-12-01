@@ -2,11 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from "../services/auth.service";
+import { HttpClient } from '@angular/common/http';
+import { forkJoin } from 'rxjs';
 
-interface CartItem {
+export interface CartItem {
+  id: number;  
   name: string;
   price: number;
   image: string;
+}
+
+interface User {
+  id: number;
+  username: string;
 }
 
 @Component({
@@ -21,6 +29,8 @@ export class CartComponent implements OnInit {
   userMenuOpen = false;
   menuOpen = false;
   cartItems: CartItem[] = [];
+  loadingPopup = false;
+  loadingDone = false;
 
   toastMessage = '';
   toastVisible = false;
@@ -28,13 +38,11 @@ export class CartComponent implements OnInit {
   toastWithActions = false;
   private toastTimeout: any;
 
-  loadingPopup = false;
-  loadingDone = false;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router, private _http: HttpClient) {}
 
   ngOnInit() {
-    this.loggedUser = this.auth.getLoggedUser();
+    this.loggedUser = localStorage.getItem('loggedUser');
     this.loadCart();
   }
 
@@ -48,37 +56,62 @@ export class CartComponent implements OnInit {
   }
 
   removeFromCart(item: CartItem) {
-    this.cartItems = this.cartItems.filter(i => i !== item);
-    this.saveCart();
+    this.cartItems = this.cartItems.filter(i => i.id !== item.id);
   }
 
   getTotal(): number {
-    return this.cartItems.reduce((sum, i) => sum + i.price, 0);
+    return this.cartItems.reduce((sum, item) => sum + item.price, 0);
   }
 
-  purchase() {
-    this.loadingPopup = true;
-    this.loadingDone = false;
+purchase() {
+  this.loadingPopup = true;
+  this.loadingDone = false;
 
-    setTimeout(() => {
-      this.loadingDone = true;
+  const username = localStorage.getItem('loggedUser');
+  if (!username) {
+    this.loadingPopup = false;
+    alert('Vásárláshoz be kell jelentkezni.');
+    return;
+  }
 
-      setTimeout(() => {
-        this.loadingPopup = false;
-        this.cartItems = [];
-        localStorage.removeItem('cart');
+  this._http.get<User>(`http://localhost:3000/api/users/byname/${username}`)
+    .subscribe({
+      next: (user) => {
+        const userid = user.id;
 
-        this.showToast(
-          `Sikeres vásárlás.`,
-          "success",
-          false
+        const requests = this.cartItems.map(item =>
+          this._http.post('http://localhost:3000/api/ownedg', {
+            userid: userid,
+            gameid: item.id
+          })
         );
 
-        this.router.navigate(['/']);
-      }, 900);
-    }, 1800);
-  }
+        forkJoin(requests).subscribe({
+          next: () => {
+            this.loadingDone = true;
+            this.cartItems = [];
+            localStorage.removeItem('cart');   // kosár ürítése
 
+            setTimeout(() => {
+              this.loadingPopup = false;
+              this.showToast('Sikeres vásárlás, játékok hozzáadva a fiókodhoz.', 'success');
+              this.router.navigate(['/']);
+            }, 1500);
+          },
+          error: (err) => {
+            console.error(err);
+            this.loadingPopup = false;
+            alert('Hiba történt a fizetés közben.');
+          }
+        });
+      },
+      error: (err) => {
+        console.error(err);
+        this.loadingPopup = false;
+        alert('Felhasználó nem található vagy szerver hiba.');
+      }
+    });
+}
   private showToast(
     message: string,
     type: 'success' | 'error' = 'success',
