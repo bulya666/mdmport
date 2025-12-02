@@ -11,7 +11,10 @@ export interface CartItem {
   price: number;
   image: string;
 }
-
+interface Game {
+  id: number;
+  title: string;
+}
 interface User {
   id: number;
   username: string;
@@ -56,7 +59,11 @@ export class CartComponent implements OnInit {
   }
 
   removeFromCart(item: CartItem) {
-    this.cartItems = this.cartItems.filter(i => i.id !== item.id);
+    const index = this.cartItems.indexOf(item);
+    if (index > -1) {
+      this.cartItems.splice(index, 1);
+    }
+    localStorage.setItem('cart', JSON.stringify(this.cartItems));
   }
 
   getTotal(): number {
@@ -79,31 +86,52 @@ purchase() {
       next: (user) => {
         const userid = user.id;
 
-        const requests = this.cartItems.map(item =>
-          this._http.post('http://localhost:3000/api/ownedg', {
-            userid: userid,
-            gameid: item.id
-          })
-        );
+        this._http.get<Game[]>('http://localhost:3000/api/games')
+          .subscribe({
+            next: (games) => {
+              const requests = this.cartItems.map(item => {
+                const game = games.find(g => g.title === item.name);
+                if (!game) {
+                  console.error('Nincs ilyen játék az adatbázisban:', item.name);
+                  return null;
+                }
+                return this._http.post('http://localhost:3000/api/ownedg', {
+                  userid: userid,
+                  gameid: game.id
+                });
+              }).filter(r => r !== null);
 
-        forkJoin(requests).subscribe({
-          next: () => {
-            this.loadingDone = true;
-            this.cartItems = [];
-            localStorage.removeItem('cart');   // kosár ürítése
+              if (requests.length === 0) {
+                this.loadingPopup = false;
+                alert('Nem találtam a játékokat az adatbázisban.');
+                return;
+              }
 
-            setTimeout(() => {
+              forkJoin(requests).subscribe({
+                next: () => {
+                  this.loadingDone = true;
+                  this.cartItems = [];
+                  localStorage.removeItem('cart');
+
+                  setTimeout(() => {
+                    this.loadingPopup = false;
+                    this.showToast('Sikeres vásárlás, játékok hozzáadva a fiókodhoz.', 'success');
+                    this.router.navigate(['/']);
+                  }, 2000);
+                },
+                error: (err) => {
+                  console.error('Hiba az ownedg mentésnél:', err);
+                  this.loadingPopup = false;
+                  alert('Hiba történt a fizetés közben.');
+                }
+              });
+            },
+            error: (err) => {
+              console.error('Hiba a games lekérésnél:', err);
               this.loadingPopup = false;
-              this.showToast('Sikeres vásárlás, játékok hozzáadva a fiókodhoz.', 'success');
-              this.router.navigate(['/']);
-            }, 1500);
-          },
-          error: (err) => {
-            console.error(err);
-            this.loadingPopup = false;
-            alert('Hiba történt a fizetés közben.');
-          }
-        });
+              alert('Hiba történt a játékok lekérésekor.');
+            }
+          });
       },
       error: (err) => {
         console.error(err);
@@ -112,6 +140,8 @@ purchase() {
       }
     });
 }
+
+
   private showToast(
     message: string,
     type: 'success' | 'error' = 'success',

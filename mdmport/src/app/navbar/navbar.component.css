@@ -277,8 +277,6 @@
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* ========= USER MENU ========= */
-
 .user-menu {
   position: absolute;
   top: calc(100% + 10px);
@@ -327,9 +325,6 @@
     transform: translateY(0);
   }
 }
-
-
-/* ========= USER BUTTON ========= */
 
 .user-menu-container {
   position: relative;

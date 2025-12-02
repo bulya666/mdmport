@@ -20,10 +20,11 @@
 		</button>
 
 		<div class="nav-links" [class.show]="menuOpen">
-			<a routerLink="/community" class="btn1" (click)="closeMenu()" (click)="goToCommunity()">Közösség</a>
+
 			<a routerLink="/" class="btn1" (click)="closeMenu()" (click)="toStore()">Áruház</a>
-            
+            <a routerLink="/community" class="btn1" (click)="closeMenu()" (click)="goToCommunity()">Közösség</a>
             <a *ngIf="!loggedUser" routerLink="/login" class="btn1" (click)="closeMenu()" (click)="goToLogin()">Bejelentkezés</a>
+
 
 			<div class="user-menu-container" *ngIf="loggedUser">
 			<button class="user-btn" (click)="toggleUserMenu()">

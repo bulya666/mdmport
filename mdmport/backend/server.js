@@ -114,12 +114,8 @@ app.get('/api/ownedg', async (req, res) => {
 
 
 app.post('/api/ownedg', async (req, res) => {
-  console.log('POST /api/ownedg body:', req.body);
-  const { userid, gameid } = req.body;
-  console.log('userid:', userid, 'gameid:', gameid);
   try {
     const { userid, gameid } = req.body;
-
     if (!userid || !gameid) {
       return res.status(400).json({ error: 'Hiányzó userid vagy gameid' });
     }
@@ -128,7 +124,6 @@ app.post('/api/ownedg', async (req, res) => {
       'SELECT id FROM ownedg WHERE userid = ? AND gameid = ?',
       [userid, gameid]
     );
-
     if (exists.length > 0) {
       return res.json({ success: true, message: 'Már megvan ez a játék a felhasználónak' });
     }
