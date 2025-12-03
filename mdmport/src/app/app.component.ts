@@ -7,6 +7,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { CommonModule } from '@angular/common';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,

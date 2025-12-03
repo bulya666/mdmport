@@ -157,13 +157,23 @@ app.post('/api/login', async (req, res) => {
   try {
     const { username, password } = req.body;
     const [rows] = await pool.query(
-      'SELECT * FROM users WHERE username = ? AND password = ?',
-      [username, password]
+      'SELECT * FROM users WHERE username = ?',
+      [username]
     );
+
     if (rows.length === 0) {
       return res.status(401).json({ success: false, message: 'Hibás adatok' });
     }
-    res.json({ success: true, user: rows[0].username });
+
+    const user = rows[0];
+
+
+    const ok = await bcrypt.compare(password, user.password);
+    if (!ok) {
+      return res.status(401).json({ success: false, message: 'Hibás adatok' });
+    }
+
+    res.json({ success: true, user: user.username });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: 'Szerver hiba' });
@@ -171,9 +181,13 @@ app.post('/api/login', async (req, res) => {
 });
 
 
+
+const bcrypt = require('bcrypt');  
+
 app.post('/api/register', async (req, res) => {
   try {
     const { username, password } = req.body;
+
     const [exists] = await pool.query(
       'SELECT * FROM users WHERE username = ?',
       [username]
@@ -183,16 +197,22 @@ app.post('/api/register', async (req, res) => {
         .status(409)
         .json({ success: false, message: 'Felhasználó már létezik' });
     }
-    await pool.query('INSERT INTO users (username, password) VALUES (?, ?)', [
-      username,
-      password,
-    ]);
+
+    const hashed = await bcrypt.hash(password, 12);
+
+    await pool.query(
+      'INSERT INTO users (username, password) VALUES (?, ?)',
+      [username, hashed]
+    );
+
     res.json({ success: true });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: 'Szerver hiba' });
   }
 });
+
+
 
 
 app.get('/api/users/byname/:username', async (req, res) => {
@@ -225,6 +245,33 @@ app.get('/api/ownedg/:userid', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+const nodemailer = require('nodemailer');
+
+app.post('/send-mail', async (req, res) => {
+  const { name, email, subject, message } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'businessmdmport@gmail.com',
+      pass: 'APP_PASSWORD'   // Google App Password szükséges
+    }
+  });
+
+  await transporter.sendMail({
+    from: `"${name}" <${email}>`,
+    to: 'businessmdmport@gmail.com',
+    subject,
+    text:
+      `Név: ${name}\n` +
+      `Feladó e-mail: ${email}\n\n` +
+      `Üzenet:\n${message}`
+  });
+
+  res.json({ status: 'ok' });
+});
+
 
 app.listen(PORT, () => {
   console.log(`mdmport API fut: http://localhost:${PORT}/api/games`);

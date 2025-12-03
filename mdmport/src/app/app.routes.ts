@@ -6,6 +6,9 @@ import { CommunityComponent } from './community/community.component';
 import { CartComponent } from './cart/cart.component';
 import { LibraryComponent } from './library/library.component';
 import { SettingsComponent } from './settings/settings.component';
+import { ImpresszumComponent } from './impresszum/impresszum.component';
+import { AszfComponent } from './aszf/aszf.component';
+import { KapcsolatComponent } from './kapcsolat/kapcsolat.component';
 
 export const routes: Routes = [
     {path:"", component:MainComponent},
@@ -15,4 +18,7 @@ export const routes: Routes = [
     {path:"cart", component:CartComponent},
     {path:"library", component:LibraryComponent},  
     {path: 'settings',component: SettingsComponent},
+    {path: 'impresszum', component: ImpresszumComponent},
+    {path: 'aszf', component: AszfComponent},
+    {path: 'kapcsolat', component: KapcsolatComponent},
 ];
