@@ -941,11 +941,11 @@ button[mat-button][color="warn"] {
 }
 
 .articles-wrapper h2 {
-  font-size: 30px; /* nagyobb */
+  font-size: 30px; 
   font-weight: 700;
   margin-bottom: 20px;
-  color: #fff; /* fehér */
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4); /* enyhe árnyék a kiemeléshez */
+  color: #fff; 
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 /* ARTICLES GRID */
@@ -960,29 +960,63 @@ button[mat-button][color="warn"] {
   background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.04), rgba(12, 18, 30, 0.95));
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 16px;
-  padding: 16px;
+  padding: 21px;
   cursor: pointer;
   transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
 
+.articles-grid .article-card:hover border {
+  animation: outLineMove 6s ease infinite;
+  background: linear-gradient(270deg, #ff0000, #ff7f7f, #ffffff, #ff7f7f, #ff0000);
+  background-size: 600% 600%;
+}
+
+@keyframes outLineMove {
+  0%   { background-position: 0% 50%; }
+  20%  { background-position: 20% 50%; }
+  40%  { background-position: 40% 50%; }
+  60%  { background-position: 60% 50%; }
+  80%  { background-position: 80% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 .article-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 18px 40px rgba(229, 62, 82, 0.7);
+  box-shadow: 0 18px 40px rgba(229, 62, 82, 0.2);
   border-color: #e53e50;
-  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.06), rgba(12, 18, 30, 0.98));
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.01), #0c121efa);
 }
 
 .article-card mat-card-title {
   font-weight: 700;
-  font-size: 18px;
+  font-size: 20px;
   color: #ff4d4d;
   margin-bottom: 8px;
 }
 
 .article-card mat-card-content p {
-  font-size: 15px;
+  font-size: 18px;
   line-height: 1.5;
   color: #fff;
+}
+
+.articles-grid .article-card hr {
+  border: none;
+  height: 3px;
+  border-radius: 2px;
+  margin: 12px 0 16px 0;
+  background: linear-gradient(270deg, #ff0000, #ff2121fa, #0c121efa, #ff2121fa, #ff0000);
+  background-size: 600% 600%;
+  animation: gradientMove 8s ease infinite;
+}
+
+@keyframes gradientMove {
+  0%   { background-position: 0% 50%; }
+  20%  { background-position: 20% 50%; }
+  40%  { background-position: 40% 50%; }
+  60%  { background-position: 60% 50%; }
+  80%  { background-position: 80% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* MODAL BACKDROP */
@@ -1008,7 +1042,7 @@ button[mat-button][color="warn"] {
   background: rgba(12, 18, 30, 0.97);
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 20px 50px rgba(229, 62, 82, 0.85);
+  box-shadow: 0 20px 50px rgba(229, 62, 82, 0.5);
   padding: 24px 32px;
   max-width: 600px;
   width: 90%;
@@ -1082,20 +1116,9 @@ button[mat-button][color="warn"] {
   }
 }
 
-/* ARTICLE CARD IMAGE */
-.article-card img {
-  width: 100%;
-  height: 160px; /* fix magasság a uniform megjelenéshez */
-  object-fit: cover; /* lefedi a konténert anélkül, hogy torzulna */
-  border-radius: 12px;
-  margin-bottom: 12px;
-}
-
-/* MODAL IMAGE */
-.modal-content img {
-  width: 100%;
-  max-height: 250px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 16px;
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
 }
