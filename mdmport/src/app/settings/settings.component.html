@@ -1,0 +1,49 @@
+<div class="settings-card">
+  <h2>Beállítások</h2>
+  <p class="subtitle">Itt tudod személyre szabni az oldalt.</p>
+
+  <form [formGroup]="form" class="settings-form">
+    <!-- Téma -->
+    <section class="settings-section">
+      <h3>Téma</h3>
+      <div class="option-row">
+        <label>
+          <input type="radio" formControlName="theme" value="light" />
+          Világos
+        </label>
+        <label>
+          <input type="radio" formControlName="theme" value="dark" />
+          Sötét
+        </label>
+      </div>
+    </section>
+
+    <section class="settings-section">
+      <h3>Elrendezés sűrűsége</h3>
+      <div class="option-row">
+        <label>
+          <input type="radio" formControlName="density" value="comfortable" />
+          Kényelmes
+        </label>
+        <label>
+          <input type="radio" formControlName="density" value="compact" />
+          Kompakt
+        </label>
+      </div>
+    </section>
+    
+    <section class="settings-section">
+      <h3>Tippek</h3>
+      <label class="switch-row">
+        <input type="checkbox" formControlName="showTips" />
+        <span>Mutasd az oktató tippeket az oldalon</span>
+      </label>
+    </section>
+
+    <div class="actions">
+      <button type="button" (click)="resetToDefaults()">
+        Alapértelmezett beállítások
+      </button>
+    </div>
+  </form>
+</div>
