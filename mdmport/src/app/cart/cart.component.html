@@ -60,3 +60,22 @@
 
   </div>
 </div>
+<!-- notification overlay -->
+<div class="notification" 
+     *ngIf="notification.visible" 
+     [ngClass]="notification.type">
+  <div class="notification-inner">
+    <div class="notification-icon">
+      <span *ngIf="notification.type === 'success'">✔</span>
+      <span *ngIf="notification.type === 'error'">✖</span>
+      <span *ngIf="notification.type === 'warning'">⚠</span>
+      <span *ngIf="notification.type === 'info'">ℹ</span>
+    </div>
+    <div class="notification-text">
+      {{ notification.message }}
+    </div>
+    <button class="notification-close" (click)="notification.visible = false">
+      ✕
+    </button>
+  </div>
+</div>

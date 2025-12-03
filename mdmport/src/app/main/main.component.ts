@@ -1,6 +1,5 @@
 import { Component, AfterViewInit, OnInit } from "@angular/core";
 import { Router} from "@angular/router";
-import { AuthService } from "../services/auth.service";
 import { CommonModule } from "@angular/common";
 
 @Component({
@@ -15,8 +14,14 @@ export class MainComponent implements AfterViewInit, OnInit {
   menuOpen = false;
   loggedUser: string | null = null;
   userMenuOpen = false;
+  toastMessage = '';
+  toastVisible = false;
+  toastType: 'success' | 'error' = 'success';
+  toastWithActions = false;
+  private toastTimeout: any;
+  loadingRedirect = false;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.loggedUser = localStorage.getItem('loggedUser');
@@ -27,12 +32,7 @@ export class MainComponent implements AfterViewInit, OnInit {
     };
   }
 
-toastMessage = '';
-toastVisible = false;
-toastType: 'success' | 'error' = 'success';
-toastWithActions = false;
-private toastTimeout: any;
-loadingRedirect = false;
+
 
 private showToast(
   message: string,
@@ -74,32 +74,32 @@ addToCart() {
   const imageEl = document.getElementById("m-cover") as HTMLImageElement;
   
 
-if (!this.loggedUser) {
-  this.showToast("Kérjük, jelentkezzen be a kosárhoz adáshoz.", "error");
+    if (!this.loggedUser) {
+      this.showToast("Kérjük, jelentkezzen be a kosárhoz adáshoz.", "error");
 
-  this.loadingRedirect = true; 
+      this.loadingRedirect = true; 
 
-  setTimeout(() => {
-    this.router.navigate(['/login']);
-  }, 1500);
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      }, 1500);
 
-  return;
-}
+      return;
+    }
 
 
-  if (!titleEl || !priceEl || !imageEl || !imageEl.src) {
-    this.showToast("Hiba történt a játék hozzáadásakor.", "error");
-    return;
-  }
+    if (!titleEl || !priceEl || !imageEl || !imageEl.src) {
+      this.showToast("Hiba történt a játék hozzáadásakor.", "error");
+      return;
+    }
 
   const title = titleEl.innerText.trim();
   const priceText = priceEl.innerText.trim();
   const image = imageEl.src;
 
-  if (!title || title.toLowerCase().includes("játék címe")) {
-    this.showToast("Érvénytelen játékcím.", "error");
-    return;
-  }
+    if (!title || title.toLowerCase().includes("játék címe")) {
+      this.showToast("Érvénytelen játékcím.", "error");
+      return;
+    }
 
   const price =
     priceText.toLowerCase().includes("ingyen") ||
@@ -129,29 +129,4 @@ if (!this.loggedUser) {
 
 }
 
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-  }
-
-  closeMenu(): void {
-    this.menuOpen = false;
-  }
-
-  refresh() {
-    window.location.reload();
-  }
-
-
-  toggleUserMenu() {
-    this.userMenuOpen = !this.userMenuOpen;
-  }
-
-  closeUserMenu() {
-    this.userMenuOpen = false;
-  }
-
-  toCart() {
-    this.router.navigate(["/cart"]);
-  }
-  
 }

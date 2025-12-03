@@ -686,6 +686,21 @@
   z-index: 1000;
 }
 
+.success-snack { 
+  background: #4caf50; 
+  color: white; 
+}
+
+.error-snack { 
+  background: #f44336; 
+  color: white; 
+}
+
+.info-snack { 
+  background: #2196f3; 
+  color: white; 
+}
+
 .user-menu-item {
   color: #fff;
   padding: 10px 16px;
@@ -763,4 +778,49 @@
 @keyframes spin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
+}
+.notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  max-width: 360px;
+  animation: slide-in 0.3s ease-out;
+}
+
+.notification-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  color: #fff;
+  font-size: 14px;
+}
+
+.notification-icon {
+  font-size: 18px;
+}
+
+.notification-text {
+  flex: 1;
+}
+
+.notification-close {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.notification.success  .notification-inner { background: linear-gradient(135deg, #00c853, #64dd17); }
+.notification.error    .notification-inner { background: linear-gradient(135deg, #d50000, #ff1744); }
+.notification.warning  .notification-inner { background: linear-gradient(135deg, #ff9100, #ffc400); color: #222; }
+.notification.info     .notification-inner { background: linear-gradient(135deg, #2962ff, #448aff); }
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

@@ -41,6 +41,11 @@ export class CartComponent implements OnInit {
   toastWithActions = false;
   private toastTimeout: any;
 
+  notification = {
+    visible: false,
+    message: '',
+    type: 'info' as 'info' | 'success' | 'warning' | 'error'
+  };
 
   constructor(private auth: AuthService, private router: Router, private _http: HttpClient) {}
 
@@ -49,6 +54,16 @@ export class CartComponent implements OnInit {
     this.loadCart();
   }
 
+  showMessage(message: string, type: 'info' | 'success' | 'warning' | 'error' = 'info') {
+    this.notification.message = message;
+    this.notification.type = type;
+    this.notification.visible = true;
+
+    setTimeout(() => {
+      this.notification.visible = false;
+    }, 3000);
+  }
+  
   loadCart() {
     const saved = localStorage.getItem('cart');
     this.cartItems = saved ? JSON.parse(saved) : [];
@@ -77,33 +92,47 @@ purchase() {
   const username = localStorage.getItem('loggedUser');
   if (!username) {
     this.loadingPopup = false;
-    alert('Vásárláshoz be kell jelentkezni.');
+    this.showMessage('Vásárláshoz be kell jelentkezni.', 'warning');
     return;
   }
 
-  this._http.get<User>(`http://localhost:3000/api/users/byname/${username}`)
-    .subscribe({
-      next: (user) => {
-        const userid = user.id;
+  this._http.get<User>(`http://localhost:3000/api/users/byname/${username}`).subscribe({
+    next: (user) => {
+      const userid = user.id;
 
-        this._http.get<Game[]>('http://localhost:3000/api/games')
-          .subscribe({
+      this._http.get<any[]>(`http://localhost:3000/api/ownedg/${userid}`).subscribe({
+        next: (owned) => {
+          const ownedIds = owned.map(o => o.gameid);
+
+          this._http.get<Game[]>('http://localhost:3000/api/games').subscribe({
             next: (games) => {
-              const requests = this.cartItems.map(item => {
+
+              const requests: any[] = [];
+
+              this.cartItems = this.cartItems.filter(item => {
                 const game = games.find(g => g.title === item.name);
                 if (!game) {
-                  console.error('Nincs ilyen játék az adatbázisban:', item.name);
-                  return null;
+                  return true;
                 }
-                return this._http.post('http://localhost:3000/api/ownedg', {
-                  userid: userid,
-                  gameid: game.id
-                });
-              }).filter(r => r !== null);
+
+                if (ownedIds.includes(game.id)) {
+                  console.log(`Már birtokolja: ${game.title}`);
+                  this.showMessage(`Már birtoklod: ${game.title}, törölve a kosárból.`, 'info');
+                  return false;
+                }
+                requests.push(
+                  this._http.post('http://localhost:3000/api/ownedg', {
+                    userid: userid,
+                    gameid: game.id
+                  })
+                );
+                return true;
+              });
+              localStorage.setItem('cart', JSON.stringify(this.cartItems));
 
               if (requests.length === 0) {
                 this.loadingPopup = false;
-                alert('Nem találtam a játékokat az adatbázisban.');
+                this.showMessage('A kosárban lévő játékokból van birtokolt.', 'info');
                 return;
               }
 
@@ -115,79 +144,32 @@ purchase() {
 
                   setTimeout(() => {
                     this.loadingPopup = false;
-                    this.showToast('Sikeres vásárlás, játékok hozzáadva a fiókodhoz.', 'success');
+                    this.showMessage('Sikeres vásárlás, új játékok hozzáadva.', 'success');
                     this.router.navigate(['/']);
                   }, 2000);
                 },
-                error: (err) => {
-                  console.error('Hiba az ownedg mentésnél:', err);
+                error: () => {
                   this.loadingPopup = false;
-                  alert('Hiba történt a fizetés közben.');
+                  this.showMessage('Hiba történt a fizetés közben.', 'error');
                 }
               });
             },
-            error: (err) => {
-              console.error('Hiba a games lekérésnél:', err);
+            error: () => {
               this.loadingPopup = false;
-              alert('Hiba történt a játékok lekérésekor.');
+              this.showMessage('Nem sikerült lekérni a játékokat.', 'error');
             }
           });
-      },
-      error: (err) => {
-        console.error(err);
-        this.loadingPopup = false;
-        alert('Felhasználó nem található vagy szerver hiba.');
-      }
-    });
-}
-
-
-  private showToast(
-    message: string,
-    type: 'success' | 'error' = 'success',
-    withActions: boolean = false
-  ) {
-    this.toastMessage = message;
-    this.toastType = type;
-    this.toastWithActions = withActions;
-    this.toastVisible = true;
-
-    if (!withActions) {
-      if (this.toastTimeout) clearTimeout(this.toastTimeout);
-      this.toastTimeout = setTimeout(() => {
-        this.toastVisible = false;
-      }, 2200);
+        },
+        error: () => {
+          this.loadingPopup = false;
+          this.showMessage('Nem sikerült lekérni a birtokolt játékokat.', 'error');
+        }
+      });
+    },
+    error: () => {
+      this.loadingPopup = false;
+      this.showMessage('Nem sikerült lekérni a felhasználót.', 'error');
     }
-  }
-
-  toggleMenu() { this.menuOpen = !this.menuOpen; }
-  closeMenu() { this.menuOpen = false; }
-  refresh() { this.loadCart(); }
-  toggleUserMenu() { this.userMenuOpen = !this.userMenuOpen; }
-  closeUserMenu() { this.userMenuOpen = false; }
-  logout() {
-    this.auth.logout();
-    this.loggedUser = null;
-    this.closeMenu();
-    this.router.navigate(['/']);
-  }
-
-startPurchase() {
-  this.loadingPopup = true;
-  this.loadingDone = false;
+  });
 }
-
-finishPurchase() {
-  this.loadingDone = true;
-
-  setTimeout(() => {
-    this.loadingPopup = false;
-    this.cartItems = [];
-    localStorage.removeItem('cart');
-
-    this.showToast(`Sikeres vásárlás.`, "success", false);
-    this.router.navigate(['/']);
-  }, 900);
-}
-
 }
