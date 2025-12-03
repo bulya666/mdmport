@@ -37,7 +37,7 @@ onSubmit() {
     return;
   }
 
-  this.http.post('https://localhost/send-mail', this.contactForm.value)
+  this.http.post('http://localhost:3000/send-mail', this.contactForm.value)
     .subscribe(() => {
       this.submitted = true;
       this.contactForm.reset();

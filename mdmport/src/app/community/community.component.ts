@@ -27,16 +27,6 @@ interface Post {
   showComments?: boolean;
 }
 
-interface GalleryImage {
-  src: string;
-  alt: string;
-}
-
-interface Member {
-  name: string;
-  role: string;
-}
-
 interface Article {
   id: number;
   title: string;

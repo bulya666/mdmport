@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     }).subscribe({
       next: (res) => {
         if (res?.success) {
-          this.toast.show('Sikeres bejelentkezés! ✅', 'success');
+          this.toast.show('Sikeres bejelentkezés!', 'success');
           localStorage.setItem('loggedUser', res.user);
             setTimeout(() => {
                 this.router.navigate(['/']).then(() => {

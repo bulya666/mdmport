@@ -63,10 +63,7 @@ goToCart() {
   this.router.navigate(['/cart']);
 }
 
-closeModal() {
-  const modal = document.getElementById("modal");
-  modal?.setAttribute("aria-hidden", "true");
-}
+
 
 addToCart() {
   const titleEl = document.getElementById("m-title") as HTMLElement;
@@ -126,7 +123,10 @@ addToCart() {
     "success",
     true
   );
-
+    const modal = document.getElementById('modal') as HTMLElement | null;
+  if (modal) {
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+  }
 }
-
 }

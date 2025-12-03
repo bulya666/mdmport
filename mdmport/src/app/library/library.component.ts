@@ -1,4 +1,3 @@
-// library.component.ts
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -67,7 +66,6 @@ export class LibraryComponent implements OnInit {
 
   openModal(game: Game): void {
     this.selectedGame = game;
-    // ha majd kell, itt lehet gameShots-ot is betölteni az API-ból
     this.gameShots = [];
   }
 

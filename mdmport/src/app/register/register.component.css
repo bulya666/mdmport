@@ -1,4 +1,4 @@
-/* REGISZTRÁCIÓ – KONTÉNER */
+
 .register-container {
   position: relative;
   display: flex;
@@ -10,7 +10,6 @@
   overflow: hidden;
 }
 
-/* háttér glow, ugyanaz a vibe mint login */
 .register-container::before {
   content: "";
   position: absolute;
@@ -33,8 +32,6 @@
   z-index: -1;
 }
 
-/* FORM CARD */
-
 .register-container form {
   background: rgba(6, 10, 18, 0.96);
   border-radius: 18px;
@@ -49,7 +46,6 @@
     0 0 0 1px rgba(255, 255, 255, 0.02);
 }
 
-/* piros keret + conic glow */
 .register-container form::before {
   content: "";
   position: absolute;
@@ -76,8 +72,6 @@
   z-index: -1;
 }
 
-/* CÍM */
-
 .register-container form h2 {
   color: #ffffff;
   margin-bottom: 18px;
@@ -99,8 +93,6 @@
   border-radius: 999px;
   background: linear-gradient(90deg, #ff4d4d, #e60000);
 }
-
-/* ŰRLAP MEZŐK */
 
 .register-container form input {
   display: block;
@@ -134,8 +126,6 @@
   box-shadow: 0 0 0 1px rgba(230, 0, 0, 0.4), 0 0 16px rgba(230, 0, 0, 0.45);
   transform: translateY(-1px);
 }
-
-/* GOMBOK */
 
 .register-container form button {
   background: linear-gradient(135deg, #e60000, #ff3333);
@@ -174,8 +164,6 @@
     0 0 10px rgba(230, 0, 0, 0.6);
 }
 
-/* AL-SZÖVEGEK / LINK */
-
 .register-container form p {
   margin-top: 16px;
   color: rgba(255, 255, 255, 0.65);
@@ -204,7 +192,6 @@
   width: 100%;
 }
 
-/* RESPONSIVE */
 
 @media (max-width: 480px) {
   .register-container form {

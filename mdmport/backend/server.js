@@ -2,13 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2/promise');
-
+ 
 const app = express();
 app.use(cors());
 app.use(express.json());
-
+ 
 const PORT = process.env.PORT || 3000;
-
+ 
 const pool = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
@@ -18,14 +18,14 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0
 });
-
+ 
 app.get('/api/games', async (req, res) => {
   try {
     const { tag, q } = req.query;
     let sql = `SELECT id, title, tag, price, \`desc\` AS \`desc\`, thumbnail FROM games`;
     const where = [];
     const params = [];
-
+ 
     if (tag && tag !== 'all') {
       where.push('tag LIKE ?');
       params.push(`%${tag}%`);
@@ -38,7 +38,7 @@ app.get('/api/games', async (req, res) => {
       sql += ' WHERE ' + where.join(' AND ');
     }
     sql += ' ORDER BY id ASC';
-
+ 
     const [rows] = await pool.query(sql, params);
     const parsed = rows.map(r => ({
       id: r.id,
@@ -54,72 +54,72 @@ app.get('/api/games', async (req, res) => {
     res.status(500).json({ error: 'DB error' });
   }
 });
-
+ 
 app.get('/api/users', async (req, res) => {
   try {
     const { q } = req.query;
-
+ 
     let sql = `SELECT id, username, password FROM users`;
     const params = [];
-
+ 
     if (q) {
       sql += ` WHERE username LIKE ?`;
       params.push(`%${q}%`);
     }
-
+ 
     sql += ` ORDER BY id ASC`;
-
+ 
     const [rows] = await pool.query(sql, params);
-
+ 
     res.json(rows);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'DB error' });
   }
 });
-
-
+ 
+ 
 app.get('/api/ownedg', async (req, res) => {
   try {
     const { userid, gameid } = req.query;
-
+ 
     let sql = `SELECT id, userid, gameid FROM ownedg`;
     const params = [];
     const conditions = [];
-
+ 
     if (userid) {
       conditions.push(`userid = ?`);
       params.push(userid);
     }
-
+ 
     if (gameid) {
       conditions.push(`gameid = ?`);
       params.push(gameid);
     }
-
+ 
     if (conditions.length) {
       sql += ` WHERE ` + conditions.join(' AND ');
     }
-
+ 
     sql += ` ORDER BY id ASC`;
-
+ 
     const [rows] = await pool.query(sql, params);
-
+ 
     res.json(rows);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'DB error' });
   }
 });
-
-
+ 
+ 
 app.post('/api/ownedg', async (req, res) => {
   try {
     const { userid, gameid } = req.body;
     if (!userid || !gameid) {
       return res.status(400).json({ error: 'Hiányzó userid vagy gameid' });
     }
-
+ 
     const [exists] = await pool.query(
       'SELECT id FROM ownedg WHERE userid = ? AND gameid = ?',
       [userid, gameid]
@@ -127,20 +127,20 @@ app.post('/api/ownedg', async (req, res) => {
     if (exists.length > 0) {
       return res.json({ success: true, message: 'Már megvan ez a játék a felhasználónak' });
     }
-
+ 
     await pool.query(
       'INSERT INTO ownedg (userid, gameid) VALUES (?, ?)',
       [userid, gameid]
     );
-
+ 
     res.json({ success: true });
   } catch (err) {
-    console.error('❌ DB hiba (POST /api/ownedg):', err);
+    console.error('DB hiba (POST /api/ownedg):', err);
     res.status(500).json({ error: err.message });
   }
 });
-
-
+ 
+ 
 app.get('/api/gamephotos', async (req, res) => {
   try {
     const sql = 'SELECT id, gameid, pic FROM gamephotos ORDER BY gameid, id';
@@ -151,8 +151,8 @@ app.get('/api/gamephotos', async (req, res) => {
     res.status(500).json({ error: 'DB error' });
   }
 });
-
-
+ 
+ 
 app.post('/api/login', async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -160,34 +160,34 @@ app.post('/api/login', async (req, res) => {
       'SELECT * FROM users WHERE username = ?',
       [username]
     );
-
+ 
     if (rows.length === 0) {
       return res.status(401).json({ success: false, message: 'Hibás adatok' });
     }
-
+ 
     const user = rows[0];
-
-
+ 
+ 
     const ok = await bcrypt.compare(password, user.password);
     if (!ok) {
       return res.status(401).json({ success: false, message: 'Hibás adatok' });
     }
-
+ 
     res.json({ success: true, user: user.username });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: 'Szerver hiba' });
   }
 });
-
-
-
+ 
+ 
+ 
 const bcrypt = require('bcrypt');  
-
+ 
 app.post('/api/register', async (req, res) => {
   try {
     const { username, password } = req.body;
-
+ 
     const [exists] = await pool.query(
       'SELECT * FROM users WHERE username = ?',
       [username]
@@ -197,82 +197,94 @@ app.post('/api/register', async (req, res) => {
         .status(409)
         .json({ success: false, message: 'Felhasználó már létezik' });
     }
-
+ 
     const hashed = await bcrypt.hash(password, 12);
-
+ 
     await pool.query(
       'INSERT INTO users (username, password) VALUES (?, ?)',
       [username, hashed]
     );
-
+ 
     res.json({ success: true });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: 'Szerver hiba' });
   }
 });
-
-
-
-
+ 
+ 
+ 
+ 
 app.get('/api/users/byname/:username', async (req, res) => {
   try {
     const username = req.params.username;
-    console.log('🔹 Lekérdezett user:', username);
-
+    console.log('Lekérdezett user:', username);
+ 
     const [rows] = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
     if (rows.length === 0) {
-      console.log('⚠️ Nincs ilyen user');
+      console.log('Nincs ilyen user');
       return res.status(404).json({ error: 'User not found' });
     }
-
-    console.log('✅ Talált user:', rows[0]);
+ 
+    console.log('Talált user:', rows[0]);
     res.json(rows[0]);
   } catch (err) {
-    console.error('❌ DB hiba:', err);
+    console.error('DB hiba:', err);
     res.status(500).json({ error: err.message });
   }
 });
+ 
 
-// Egyedi felhasználóhoz tartozó ownedg rekordok lekérése userID alapján
 app.get('/api/ownedg/:userid', async (req, res) => {
   try {
     const userid = req.params.userid;
     const [rows] = await pool.query('SELECT * FROM ownedg WHERE userid = ?', [userid]);
     res.json(rows);
   } catch (err) {
-    console.error('❌ DB hiba (ownedg):', err);
+    console.error('DB hiba (ownedg):', err);
     res.status(500).json({ error: err.message });
   }
 });
-
+ 
 const nodemailer = require('nodemailer');
-
+ 
 app.post('/send-mail', async (req, res) => {
   const { name, email, subject, message } = req.body;
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'businessmdmport@gmail.com',
-      pass: 'APP_PASSWORD'   // Google App Password szükséges
-    }
-  });
-
-  await transporter.sendMail({
-    from: `"${name}" <${email}>`,
-    to: 'businessmdmport@gmail.com',
-    subject,
-    text:
-      `Név: ${name}\n` +
-      `Feladó e-mail: ${email}\n\n` +
-      `Üzenet:\n${message}`
-  });
-
-  res.json({ status: 'ok' });
+ 
+  if (!name || !email || !subject || !message) {
+    return res.status(400).json({ status: 'error', message: 'Hiányzó mezők' });
+  }
+ 
+  try {
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.rackhost.hu',
+      port: 465,
+      secure: true, 
+      auth: {
+        user: 'mdmport@leleszedgar.hu',
+        pass: 'mdmport2026'
+      }
+    });
+ 
+    await transporter.sendMail({
+      from: `"${name}" <mdmport@leleszedgar.hu>`,
+      replyTo: email,
+      to: 'mdmport@leleszedgar.hu',
+      subject,
+      text:
+        `Név: ${name}\n` +
+        `Feladó e-mail: ${email}\n\n` +
+        `Üzenet:\n${message}`
+    });
+ 
+    res.json({ status: 'ok' });
+  } catch (err) {
+    console.error('❌ SMTP hiba:', err);
+    res.status(500).json({ status: 'error', message: 'Levélküldési hiba' });
+  }
 });
-
-
+ 
+ 
 app.listen(PORT, () => {
   console.log(`mdmport API fut: http://localhost:${PORT}/api/games`);
     console.log(`mdmport API fut: http://localhost:${PORT}/api/users`);

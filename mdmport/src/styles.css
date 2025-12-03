@@ -196,7 +196,6 @@ img {
   font-size:1.1rem;
 }
 
-/* global styles.css (projekt gyökér) */
 .mat-mdc-tab-header {
   padding-top: 8px;
 }
@@ -292,7 +291,6 @@ img {
   color: var(--muted);
 }
 
-/* --- Kapcsolat űrlap (dark, a többi UI-hoz igazítva) --- */
 
 .form-grid {
   display: grid;
@@ -362,7 +360,7 @@ textarea.form-control.ng-invalid.ng-touched {
   color: var(--muted);
 }
 
-/* gomb – a buy/purchase stílushoz hangolva */
+
 
 .btn-primary {
   border: none;
@@ -377,7 +375,6 @@ textarea.form-control.ng-invalid.ng-touched {
   align-items: center;
   gap: 8px;
   box-shadow: 0 6px 18px rgba(0, 255, 13, 0.3);
-  margin-top: 16px;
   transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.12s ease;
 }
 
@@ -392,7 +389,6 @@ textarea.form-control.ng-invalid.ng-touched {
   box-shadow: none;
 }
 
-/* siker üzenet – illeszkedik a notification success-hez */
 
 .alert-success {
   margin-top: 14px;
@@ -403,7 +399,6 @@ textarea.form-control.ng-invalid.ng-touched {
   font-size: 0.86rem;
 }
 
-/* animáció, mobil */
 
 @keyframes fadeInUp {
   from {
