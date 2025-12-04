@@ -1,56 +1,85 @@
 <div class="community-page">
-<div class="articles-wrapper">
-  <h2>Ajánlott gaming cikkek</h2>
 
-  <div class="articles-grid">
-    <mat-card *ngFor="let article of featuredArticles"
-              class="article-card"
-              (click)="openModal(article)">
-      <mat-card-title>{{ article.title }}</mat-card-title>
-      <hr>
-      <mat-card-content>
-        <p>{{ article.summary }}</p>
-      </mat-card-content>
-    </mat-card>
+  <div class="articles-wrapper">
+    <h2>Ajánlott gaming cikkek</h2>
+    <div class="articles-grid">
+      <mat-card *ngFor="let article of featuredArticles"
+                class="article-card"
+                (click)="openModal(article)">
+        <mat-card-title>{{ article.title }}</mat-card-title>
+        <hr>
+        <mat-card-content>
+          <p>{{ article.summary }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
-</div>
 
-<div class="modal-backdrop" *ngIf="modalOpen" (click)="closeModal()"></div>
+  <!-- MODAL BACKDROP -->
+  <div
+    class="modal-backdrop"
+    *ngIf="modalOpen"
+    (click)="closeModal()">
+  </div>
 
-<div class="modal" *ngIf="modalOpen">
-  <div class="modal-content">
+  <!-- MODAL -->
+  <div
+    class="modal"
+    *ngIf="modalOpen"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="selectedArticle?.title"
+    tabindex="-1"
+    (keydown.escape)="closeModal()">
 
-    <div class="modal-left">
-      <h2>{{ selectedArticle?.title }}</h2>
-      <hr>
-      <p>{{ selectedArticle?.fullText }}</p>
+    <div class="modal-content">
+      <div class="modal-left">
+        <h2>{{ selectedArticle?.title }}</h2>
+        <hr>
+        <p>{{ selectedArticle?.fullText }}</p>
 
-      <div class="modal-actions">
-        <button mat-raised-button color="primary" (click)="likeArticle(selectedArticle!)">
-          <mat-icon>thumb_up</mat-icon> {{ selectedArticle?.likes }}
-        </button>
+        <div class="modal-actions">
+          <button
+            mat-raised-button
+            color="primary"
+            class="like-btn"
+            (click)="likeArticle(selectedArticle!)">
+            <mat-icon>thumb_up</mat-icon>
+            <span>{{ selectedArticle?.likes }}</span>
+          </button>
 
-        <button class="close-btn" (click)="closeModal()">Bezárás</button>
+          <button class="close-btn" type="button" (click)="closeModal()">
+            Bezárás
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-right" *ngIf="selectedArticle?.image">
+        <img [src]="selectedArticle?.image" alt="">
       </div>
     </div>
-
-    <div class="modal-right">
-      <img [src]="selectedArticle?.image" alt="">
-    </div>
-
   </div>
-</div>
 
-
+  <!-- ÚJ BEJEGYZÉS -->
   <mat-card class="new-post">
     <mat-card-title>Új bejegyzés</mat-card-title>
     <mat-card-content>
       <mat-form-field appearance="outline" class="w-full">
-        <textarea matInput placeholder="Oszd meg gondolataid..." [(ngModel)]="newPostContent"></textarea>
+        <textarea
+          matInput
+          placeholder="Oszd meg gondolataid..."
+          [(ngModel)]="newPostContent">
+        </textarea>
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="addPost()">Közzététel</button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addPost()"
+        [disabled]="!newPostContent.trim()">
+        Közzététel
+      </button>
     </mat-card-actions>
   </mat-card>
 
@@ -59,9 +88,15 @@
       <div class="posts">
         <mat-card *ngFor="let post of posts" class="post-card">
           <mat-card-header>
-            <div mat-card-avatar class="user-avatar"><i class="fas fa-user-circle" id="avatar"></i></div>
-            <mat-card-title style="padding-top: 8px;">{{ post.author }}</mat-card-title>
-            <mat-card-subtitle>{{ post.date | date:'medium' }}</mat-card-subtitle>
+            <div mat-card-avatar class="user-avatar">
+              <i class="fas fa-user-circle" id="avatar"></i>
+            </div>
+            <mat-card-title style="padding-top: 8px;">
+              {{ post.author }}
+            </mat-card-title>
+            <mat-card-subtitle>
+              {{ post.date | date:'medium' }}
+            </mat-card-subtitle>
           </mat-card-header>
 
           <mat-card-content>
@@ -69,10 +104,22 @@
           </mat-card-content>
 
           <mat-card-actions>
-            <button mat-button color="primary" (click)="likePost(post)"><mat-icon>thumb_up</mat-icon> {{ post.likes }}</button>
-            <button mat-button (click)="toggleComments(post)">
+            <button
+              mat-button
+              color="primary"
+              class="post-like-btn"
+              (click)="likePost(post)">
+              <mat-icon>thumb_up</mat-icon>
+              <span>{{ post.likes }}</span>
+            </button>
+
+            <button
+              mat-button
+              type="button"
+              (click)="toggleComments(post)">
               <mat-icon>comment</mat-icon>
-              {{ post.showComments ? 'Hozzászólások elrejtése' : 'Hozzászólások megtekintése' }} ({{ post.comments.length }})
+              {{ post.showComments ? 'Hozzászólások elrejtése' : 'Hozzászólások megtekintése' }}
+              ({{ post.comments.length }})
             </button>
           </mat-card-actions>
 
@@ -86,8 +133,16 @@
             </mat-list>
 
             <div class="add-comment">
-              <input matInput #commentInput placeholder="Írj hozzászólást..." />
-              <button mat-icon-button color="primary" (click)="addComment(post, commentInput)">
+              <input
+                matInput
+                #commentInput
+                placeholder="Írj hozzászólást..."
+                (keydown.enter)="addComment(post, commentInput)">
+              <button
+                mat-icon-button
+                color="primary"
+                type="button"
+                (click)="addComment(post, commentInput)">
                 <mat-icon>send</mat-icon>
               </button>
             </div>

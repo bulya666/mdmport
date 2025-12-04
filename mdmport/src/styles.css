@@ -26,7 +26,11 @@ img {
 }
 
 :root {
-  --bg: #0b0d10; 
+--bg: linear-gradient(
+  180deg,
+  rgba(6, 18, 34, 1) 0%,
+  rgba(6, 18, 34, 1) 100%
+);
   --bg-soft: #101319; 
   --text: #e5e7eb; 
   --muted: #9aa3af; 
@@ -403,11 +407,6 @@ textarea.form-control.ng-invalid.ng-touched {
   font-size: 0.86rem;
 }
 
-body.theme-dark {
-  --bg-elevated: #020617;
-  --text: #e5e7eb;
-  --muted: #9ca3af;
-}
 
 /* ---- SŰRŰSÉG ---- */
 body.density-comfortable .grid,
@@ -555,4 +554,55 @@ body.theme-light .topbar {
 .fade-out {
   opacity: 0;
   transition: opacity 0.8s ease;
+}
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  background: #111827;
+  border-radius: 10px;
+  padding: 8px 0;
+  box-shadow: 0 10px 25px rgba(0,0,0,.5);
+  display: none;
+  z-index: 50;
+}
+
+.search-dropdown.visible {
+  display: block;
+}
+
+.search-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.search-item:hover {
+  background: #1f2937;
+}
+
+.search-item-thumb img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.search-item-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.search-item-desc {
+  font-size: 12px;
+  opacity: .7;
+}
+
+.search-item-price {
+  margin-left: auto;
+  font-size: 13px;
 }

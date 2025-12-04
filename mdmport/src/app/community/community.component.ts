@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -208,14 +208,21 @@ export class CommunityComponent implements OnInit {
       .slice(0, count);
   }
 
-    openModal(article: Article): void {
+  openModal(article: any) {
     this.selectedArticle = article;
     this.modalOpen = true;
+    document.body.classList.add('modal-open');
+    setTimeout(() => {
+      const modal = document.querySelector('.modal') as HTMLElement | null;
+      modal?.focus();
+    });
   }
 
-  closeModal(): void {
+
+  closeModal() {
     this.modalOpen = false;
     this.selectedArticle = null;
+    document.body.classList.remove('modal-open');
   }
 
   likeArticle(article: Article) {

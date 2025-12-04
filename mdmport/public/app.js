@@ -5,7 +5,8 @@
   let lightbox, lightboxImg, lbPrev, lbNext;
   let currentShots = [];
   let currentIndex = 0;
- 
+  let searchDropdown;
+
   function animateCatalog(callback) {
     if (!catalog) return callback();
     catalog.style.transition = "opacity 0.35s ease, transform 0.35s ease";
@@ -19,7 +20,7 @@
       });
     }, 250);
   }
- 
+
   function init() {
     catalog = document.getElementById("catalog");
     search = document.getElementById("search");
@@ -35,9 +36,10 @@
     lightboxImg = document.getElementById("lightbox-img");
     lbPrev = document.getElementById("lb-prev");
     lbNext = document.getElementById("lb-next");
- 
+    searchDropdown = document.getElementById("search-dropdown");
+
     if (!catalog) return console.error("Hiányzik a #catalog elem!");
- 
+
     tabs.forEach(t =>
       t.addEventListener("click", () => {
         if (t.classList.contains("active")) return;
@@ -47,15 +49,33 @@
       })
     );
     if (tabs.length) tabs[0].classList.add("active");
- 
-    if (search) search.addEventListener("input", debounce(applyFilter, 150));
- 
+
+    if (search) {
+      search.addEventListener("input", debounce(applyFilter, 150));
+
+      search.addEventListener("focus", () => {
+        if (search.value.trim()) {
+          showSearchDropdown(GAMES);
+        }
+      });
+    }
+
+    document.addEventListener("click", e => {
+      if (
+        searchDropdown &&
+        e.target !== search &&
+        !searchDropdown.contains(e.target)
+      ) {
+        hideSearchDropdown();
+      }
+    });
+
     if (mClose) mClose.addEventListener("click", closeModal);
     if (modal)
       modal.addEventListener("click", e => {
         if (e.target === modal) closeModal();
       });
- 
+
     if (lightbox)
       lightbox.addEventListener("click", e => {
         if (e.target === lightbox) lightbox.style.display = "none";
@@ -70,7 +90,7 @@
         e.stopPropagation();
         showLightbox(currentIndex + 1);
       });
- 
+
     document.addEventListener("keydown", e => {
       if (lightbox && lightbox.style.display === "flex") {
         if (e.key === "ArrowLeft") showLightbox(currentIndex - 1);
@@ -78,11 +98,11 @@
         if (e.key === "Escape") lightbox.style.display = "none";
       }
     });
- 
+
     bindFooterLinks();
-    loadGames(); 
+    loadGames();
   }
- 
+
   function bindFooterLinks() {
     const links = Array.from(document.querySelectorAll("a"));
     const map = {
@@ -90,7 +110,7 @@
       free: "ingyenes",
       all: "ajánlott"
     };
- 
+
     Object.entries(map).forEach(([key, txt]) => {
       const link = links.find(a =>
         a.textContent.trim().toLowerCase().includes(txt)
@@ -106,29 +126,29 @@
           applyFilter();
         });
     });
- 
+
     const akcioLink = links.find(a =>
       a.textContent.trim().toLowerCase().includes("akció")
     );
     if (akcioLink) {
       akcioLink.addEventListener("click", e => {
         e.preventDefault();
-        tabs.forEach(x => x.classList.remove("active")); 
+        tabs.forEach(x => x.classList.remove("active"));
         showNoSalesCard();
       });
     }
   }
- 
+
   function showNoSalesCard() {
     animateCatalog(() => {
-    catalog.innerHTML = `
-  <div class="no-sales">
-    <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png" alt="no sales">
-    <h2>Jelenleg nincsenek akciók</h2>
-    <p>Térj vissza később, hátha új ajánlatok érkeznek</p>
-  </div>
-`;
- 
+      catalog.innerHTML = `
+        <div class="no-sales">
+          <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png" alt="no sales">
+          <h2>Jelenleg nincsenek akciók</h2>
+          <p>Térj vissza később, hátha új ajánlatok érkeznek</p>
+        </div>
+      `;
+
       requestAnimationFrame(() => {
         const card = catalog.querySelector(".no-sales");
         if (card) {
@@ -140,62 +160,112 @@
       });
     });
   }
- 
+
   function applyFilter() {
     if (!search || !tabs) return;
- 
+
     animateCatalog(() => {
       const q = search.value.trim().toLowerCase();
       const activeTab = document.querySelector(".tab.active");
       const filter = activeTab ? activeTab.dataset.filter : "all";
- 
+
       let out = GAMES.filter(g => {
         if (filter === "all") return true;
         if (Array.isArray(g.tag)) return g.tag.includes(filter);
         return g.tag === filter;
       });
- 
+
       if (q) {
         const query = q.toLowerCase();
-        out = out.filter(
-          g =>
-            g.title.toLowerCase().includes(query) 
+        out = out.filter(g =>
+          g.title.trim().toLowerCase().startsWith(query)
         );
       }
- 
+
       renderList(out);
+      showSearchDropdown(out);
     });
   }
- 
+
+  function hideSearchDropdown() {
+    if (!searchDropdown) return;
+    searchDropdown.innerHTML = "";
+    searchDropdown.classList.remove("visible");
+  }
+
+  function showSearchDropdown(list) {
+    if (!searchDropdown || !search) return;
+
+    const q = search.value.trim().toLowerCase();
+    if (!q) {
+      hideSearchDropdown();
+      return;
+    }
+
+    const top = list.slice(0, 5);
+    if (!top.length) {
+      hideSearchDropdown();
+      return;
+    }
+
+    searchDropdown.innerHTML = top
+      .map(
+        g => `
+        <div class="search-item" data-id="${g.id}">
+          <div class="search-item-thumb">
+            <img src="${g.thumb}" alt="${escapeHtml(g.title)}">
+          </div>
+          <div class="search-item-main">
+            <div class="search-item-title">${escapeHtml(g.title)}</div>
+            <div class="search-item-desc">${escapeHtml(g.desc)}</div>
+          </div>
+          <div class="search-item-price">${escapeHtml(g.price)}</div>
+        </div>
+      `
+      )
+      .join("");
+
+    searchDropdown.classList.add("visible");
+
+    searchDropdown.querySelectorAll(".search-item").forEach(el => {
+      el.addEventListener("click", () => {
+        const id = Number(el.dataset.id);
+        const game = GAMES.find(g => g.id === id);
+        if (game) openModal(game);
+        hideSearchDropdown();
+      });
+    });
+  }
+
   function debounce(fn, ms) {
     let timeout;
     return function (...args) {
       clearTimeout(timeout);
       timeout = setTimeout(() => fn.apply(this, args), ms);
     };
-  };
+  }
 
   function renderList(list) {
     catalog.innerHTML = list
       .map(
         g => `
-      <article class="card">
-        <div class="thumb">
-          <img src="${g.thumb}" alt="${escapeHtml(g.title)} screenshot"
-               style="width:100%;height:100%;object-fit:cover">
-        </div>
-        <div class="meta">
-          <h3>${escapeHtml(g.title)}</h3>
-          <div class="muted">${escapeHtml(g.desc)}</div>
-          <div class="price-row">
-            <div class="price">${escapeHtml(g.price)}</div>
-            <button class="check" data-id="${g.id}"">Megnézem</button>
+        <article class="card">
+          <div class="thumb">
+            <img src="${g.thumb}" alt="${escapeHtml(g.title)} screenshot"
+                 style="width:100%;height:100%;object-fit:cover">
           </div>
-        </div>
-      </article>`
+          <div class="meta">
+            <h3>${escapeHtml(g.title)}</h3>
+            <div class="muted">${escapeHtml(g.desc)}</div>
+            <div class="price-row">
+              <div class="price">${escapeHtml(g.price)}</div>
+              <button class="check" data-id="${g.id}">Megnézem</button>
+            </div>
+          </div>
+        </article>`
       )
       .join("");
- 
+
     catalog.querySelectorAll(".check").forEach(btn =>
       btn.addEventListener("click", e => {
         const id = Number(e.currentTarget.dataset.id);
@@ -203,26 +273,26 @@
       })
     );
   }
- 
+
   async function loadGames() {
     try {
       const [gamesRes, photosRes] = await Promise.all([
         fetch("/api/games"),
         fetch("/api/gamephotos"),
       ]);
- 
+
       if (!gamesRes.ok || !photosRes.ok) throw new Error("API hiba.");
- 
+
       const [gamesData, photosData] = await Promise.all([
         gamesRes.json(),
         photosRes.json(),
       ]);
- 
+
       const photoMap = photosData.reduce((acc, p) => {
         (acc[p.gameid] ||= []).push(`/images/${p.pic}`);
         return acc;
       }, {});
- 
+
       GAMES = gamesData.map(g => ({
         id: g.id,
         title: g.title || "Ismeretlen játék",
@@ -232,7 +302,7 @@
         thumb: g.thumbnail || "https://via.placeholder.com/200x120?text=No+Image",
         shots: photoMap[g.id] || [],
       }));
- 
+
       applyFilter();
     } catch (err) {
       console.error("Betöltési hiba:", err);
@@ -240,7 +310,7 @@
         "<p style='color:red'>Nem sikerült betölteni az adatokat az API-ból.</p>";
     }
   }
- 
+
   function openModal(game) {
     if (!game || !modal) return;
     mTitle.textContent = game.title;
@@ -249,7 +319,7 @@
     mPrice.textContent = game.price;
     mShots.innerHTML = "";
     currentShots = game.shots;
- 
+
     game.shots.forEach((s, idx) => {
       const i = document.createElement("img");
       i.src = s;
@@ -263,14 +333,14 @@
       i.addEventListener("click", () => showLightbox(idx));
       mShots.appendChild(i);
     });
- 
+
     modal.style.display = "flex";
   }
- 
+
   function closeModal() {
     modal.style.display = "none";
   }
- 
+
   function showLightbox(index) {
     if (!lightbox || !lightboxImg) return;
     if (index < 0) index = currentShots.length - 1;
@@ -279,12 +349,12 @@
     lightboxImg.src = currentShots[currentIndex];
     lightbox.style.display = "flex";
   }
- 
+
   function escapeHtml(s) {
     return (s + "").replace(/[&<>"']/g, c =>
       ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]
     );
   }
- 
+
   global.initGameCatalog = init;
 })(window);

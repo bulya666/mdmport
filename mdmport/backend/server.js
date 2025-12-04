@@ -57,16 +57,33 @@ app.get('/api/games', async (req, res) => {
 
 app.get('/api/games/:id', async (req, res) => {
   try {
-    const gameId = req.params.id;
-    const sql = `SELECT id, title, tag, price, \`desc\` AS \`desc\`, thumbnail FROM games WHERE id = ?`;
+    const gameId = Number(req.params.id);
+
+    if (!Number.isInteger(gameId) || gameId <= 0) {
+      return res.status(400).json({ error: 'Invalid ID' });
+    }
+
+    const sql = `
+      SELECT  id, title, tag, price, \`desc\` AS \`desc\`, thumbnail
+      FROM games
+      WHERE id = ?
+      LIMIT 1
+    `;
+
     const [rows] = await pool.query(sql, [gameId]);
-    console.log('Lekérdezett játék ID:', rows[0].id);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'Not found' });
+    }
+
+    return res.json(rows[0]);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'DB error' });
+    console.error('DB error:', err);
+    return res.status(500).json({ error: 'DB error' });
   }
 });
- 
+
+
 app.get('/api/users', async (req, res) => {
   try {
     const { q } = req.query;
