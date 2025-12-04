@@ -23,9 +23,9 @@ const pool = mysql.createPool({
 });
  async function findSqlFile() {
   const candidates = [
+    path.resolve(__dirname, 'mdmport_db.sql'),
     path.resolve(process.cwd(), 'mdmport_db.sql'),
-    path.resolve(__dirname, '..', 'mdmport_db.sql'),
-    path.resolve(__dirname, 'mdmport_db.sql')
+    path.resolve(__dirname, '..', 'mdmport_db.sql')
   ];
   for (const p of candidates) {
     try {
@@ -73,8 +73,8 @@ async function loadDatabaseFromSqlFile() {
   }
 }
 
-async function dumpDatabaseToSqlFile(outFilename = 'mdmport_db_dump.sql') {
-  const outPath = path.resolve(process.cwd(), outFilename);
+async function dumpDatabaseToSqlFile(outFilename = 'mdmport_db.sql') {
+  const outPath = path.resolve(__dirname, outFilename);
   console.log('Dumping DB to', outPath);
   try {
     await mysqldump({
