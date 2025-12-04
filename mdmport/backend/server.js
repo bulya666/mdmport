@@ -54,6 +54,18 @@ app.get('/api/games', async (req, res) => {
     res.status(500).json({ error: 'DB error' });
   }
 });
+
+app.get('/api/games/:id', async (req, res) => {
+  try {
+    const gameId = req.params.id;
+    const sql = `SELECT id, title, tag, price, \`desc\` AS \`desc\`, thumbnail FROM games WHERE id = ?`;
+    const [rows] = await pool.query(sql, [gameId]);
+    console.log('Lekérdezett játék ID:', rows[0].id);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'DB error' });
+  }
+});
  
 app.get('/api/users', async (req, res) => {
   try {

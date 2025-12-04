@@ -20,11 +20,14 @@ export class MainComponent implements AfterViewInit, OnInit {
   toastWithActions = false;
   private toastTimeout: any;
   loadingRedirect = false;
+  featured: any = null;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.loggedUser = localStorage.getItem('loggedUser');
+    this.loadFeatured();
+
   }
   ngAfterViewInit(): void {
     if ((window as any).initGameCatalog) {
@@ -32,7 +35,21 @@ export class MainComponent implements AfterViewInit, OnInit {
     };
   }
 
+async loadFeatured() {
+  var randomId = Math.floor(Math.random() * 8) + 1;
 
+  fetch(`/api/games/${randomId}`)
+    .then(r => r.json())
+    .then(data => {
+      this.featured = data;
+      const f = this.featured;
+      (document.getElementById('f-title') as HTMLElement).innerText = f.title;
+      (document.getElementById('f-desc') as HTMLElement).innerText = f.desc;
+      (document.getElementById('f-cover') as HTMLImageElement).src = f.thumbnail;
+      (document.getElementById('f-price') as HTMLElement).innerText =
+        f.price == 0 ? 'INGYEN' : f.price;
+    });
+}
 
 private showToast(
   message: string,

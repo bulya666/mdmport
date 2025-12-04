@@ -1,33 +1,43 @@
 <div class="community-page">
 <div class="articles-wrapper">
-    <h2>Ajánlott gaming cikkek</h2>
+  <h2>Ajánlott gaming cikkek</h2>
 
-    <div class="articles-grid">
-      <mat-card *ngFor="let article of featuredArticles" class="article-card" (click)="openModal(article)">
-        <mat-card-title>{{ article.title }}</mat-card-title>
-        <hr>
-        <mat-card-content>
-          <p>{{ article.summary }}</p>
-        </mat-card-content>
-      </mat-card>
-    </div>
+  <div class="articles-grid">
+    <mat-card *ngFor="let article of featuredArticles"
+              class="article-card"
+              (click)="openModal(article)">
+      <mat-card-title>{{ article.title }}</mat-card-title>
+      <hr>
+      <mat-card-content>
+        <p>{{ article.summary }}</p>
+      </mat-card-content>
+    </mat-card>
   </div>
+</div>
 
-  <div class="modal-backdrop" *ngIf="modalOpen" (click)="closeModal()"></div>
+<div class="modal-backdrop" *ngIf="modalOpen" (click)="closeModal()"></div>
 
 <div class="modal" *ngIf="modalOpen">
   <div class="modal-content">
-    <h2>{{ selectedArticle?.title }}</h2>
-    <hr>
-    <p>{{ selectedArticle?.fullText }}</p>
 
-    <div class="modal-actions">
-      <button mat-raised-button color="primary" (click)="likeArticle(selectedArticle!)">
-        <mat-icon>thumb_up</mat-icon> {{ selectedArticle?.likes }}
-      </button>
+    <div class="modal-left">
+      <h2>{{ selectedArticle?.title }}</h2>
+      <hr>
+      <p>{{ selectedArticle?.fullText }}</p>
 
-      <button class="close-btn" (click)="closeModal()">Bezárás</button>
+      <div class="modal-actions">
+        <button mat-raised-button color="primary" (click)="likeArticle(selectedArticle!)">
+          <mat-icon>thumb_up</mat-icon> {{ selectedArticle?.likes }}
+        </button>
+
+        <button class="close-btn" (click)="closeModal()">Bezárás</button>
+      </div>
     </div>
+
+    <div class="modal-right">
+      <img [src]="selectedArticle?.image" alt="">
+    </div>
+
   </div>
 </div>
 

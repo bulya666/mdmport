@@ -158,6 +158,10 @@ img {
   box-shadow: none;
 }
 
+.mat-card-subtitle-text-color {
+  color: #005cbb;
+}
+
 .no-sales {
   display:flex;
   flex-direction:column;
