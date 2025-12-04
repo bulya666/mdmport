@@ -2,7 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2/promise');
- 
+ const fs = require('fs').promises;
+const path = require('path');
+const mysqldump = require('mysqldump');
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -18,7 +21,97 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0
 });
- 
+ async function findSqlFile() {
+  const candidates = [
+    path.resolve(process.cwd(), 'mdmport_db.sql'),
+    path.resolve(__dirname, '..', 'mdmport_db.sql'),
+    path.resolve(__dirname, 'mdmport_db.sql')
+  ];
+  for (const p of candidates) {
+    try {
+      const stat = await fs.stat(p);
+      if (stat.isFile()) return p;
+    } catch (e) {
+      // ignore
+    }
+  }
+  return null;
+}
+
+async function loadDatabaseFromSqlFile() {
+    const sqlPath = await findSqlFile();
+  if (!sqlPath) {
+    console.log('No mdmport_db.sql found, skipping DB import.');
+    return;
+  }
+
+    const [rows] = await pool.query(
+      'SELECT COUNT(*) AS cnt FROM information_schema.tables WHERE table_schema = DATABASE()'
+    );
+    const count = rows && rows[0] && rows[0].cnt ? Number(rows[0].cnt) : 0;
+
+    if (count > 0 && !process.env.FORCE_DB_IMPORT) {
+      console.log(`Database already has ${count} table(s). Skipping import. Set FORCE_DB_IMPORT=1 to force re-import.`);
+      return;
+    }
+  console.log('Loading DB from', sqlPath);
+  try {
+    const sql = await fs.readFile(sqlPath, 'utf8');
+    // create a connection that allows multiple statements for import
+    const conn = await mysql.createConnection({
+      host: process.env.DB_HOST || 'localhost',
+      user: process.env.DB_USER || 'root',
+      password: process.env.DB_PASSWORD || '',
+      database: process.env.DB_NAME || 'mdmport_db',
+      multipleStatements: true
+    });
+    await conn.query(sql);
+    await conn.end();
+    console.log('Database import finished.');
+  } catch (err) {
+    console.error('Error importing SQL file:', err);
+  }
+}
+
+async function dumpDatabaseToSqlFile(outFilename = 'mdmport_db_dump.sql') {
+  const outPath = path.resolve(process.cwd(), outFilename);
+  console.log('Dumping DB to', outPath);
+  try {
+    await mysqldump({
+      connection: {
+        host: process.env.DB_HOST || 'localhost',
+        user: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || '',
+        database: process.env.DB_NAME || 'mdmport_db',
+      },
+      dumpToFile: outPath
+    });
+    console.log('Database dump finished:', outPath);
+  } catch (err) {
+    console.error('Error dumping DB:', err);
+  }
+}
+
+let shuttingDown = false;
+async function gracefulShutdown(code = 0) {
+  if (shuttingDown) return;
+  shuttingDown = true;
+  try {
+    await dumpDatabaseToSqlFile();
+  } catch (e) {
+    console.error('Error during graceful shutdown dump:', e);
+  } finally {
+    process.exit(code);
+  }
+}
+
+process.on('SIGINT', () => gracefulShutdown(0));
+process.on('SIGTERM', () => gracefulShutdown(0));
+process.on('uncaughtException', async (err) => {
+  console.error('Uncaught exception:', err);
+  await gracefulShutdown(1);
+});
+
 app.get('/api/games', async (req, res) => {
   try {
     const { tag, q } = req.query;
@@ -314,9 +407,22 @@ app.post('/send-mail', async (req, res) => {
 });
  
  
-app.listen(PORT, () => {
+const server = app.listen(PORT, async () => {
   console.log(`mdmport API fut: http://localhost:${PORT}/api/games`);
-    console.log(`mdmport API fut: http://localhost:${PORT}/api/users`);
+  console.log(`mdmport API fut: http://localhost:${PORT}/api/users`);
   console.log(`mdmport API fut: http://localhost:${PORT}/api/ownedg`);
-    console.log(`mdmport API fut: http://localhost:${PORT}/api/gamephotos`);
+  console.log(`mdmport API fut: http://localhost:${PORT}/api/gamephotos`);
+  try {
+    await loadDatabaseFromSqlFile();
+  } catch (e) {
+    console.error('Startup DB load error:', e);
+  }
+});
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`Port ${PORT} already in use. Indítsd másik porton (pl. PORT=3001) vagy állítsd le a foglaló folyamatot.`);
+  } else {
+    console.error('Server error:', err);
+  }
 });
