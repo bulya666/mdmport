@@ -403,6 +403,63 @@ textarea.form-control.ng-invalid.ng-touched {
   font-size: 0.86rem;
 }
 
+body.theme-dark {
+  --bg-elevated: #020617;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+}
+
+/* ---- SŰRŰSÉG ---- */
+body.density-comfortable .grid,
+body.density-comfortable .list {
+  gap: 16px;
+}
+
+body.density-compact .grid,
+body.density-compact .list {
+  gap: 6px;
+}
+
+/* ---- TIPPEK ---- */
+body.show-tips .tip {
+  display: block;
+}
+body:not(.show-tips) .tip {
+  display: none;
+}
+
+/* ---- ALAP FELÜLET SZÍNEZÉSE ---- */
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* navbar + fő konténer alapjai a meglévő HTML-hez igazítva */
+.topbar {
+  background: #020617;
+  color: #e5e7eb;
+}
+
+body.theme-light .topbar {
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+.container {
+  background: transparent;
+}
+
+/* kártyák, settings */
+.settings-card,
+.card,
+.modal {
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+
+/* meglévő elemekre (hero, grid stb.) is érvényes lesz a szín */
+
 
 @keyframes fadeInUp {
   from {

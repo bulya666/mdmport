@@ -1,66 +1,75 @@
 import { Injectable } from '@angular/core';
 
-export type Theme = 'light' | 'dark';
 export type Density = 'comfortable' | 'compact';
 
-export interface AppSettings {
-  theme: Theme;
+export interface Settings {
   density: Density;
   showTips: boolean;
 }
 
-const STORAGE_KEY = 'app-settings-v1';
+const STORAGE_KEY = 'mdmport-settings';
+
+const DEFAULT_SETTINGS: Settings = {
+  density: 'comfortable',
+  showTips: true,
+};
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
-  private settings: AppSettings = this.load();
+  private _settings: Settings = this.loadFromStorage();
 
-  get current(): AppSettings {
-    return this.settings;
+  get settings(): Settings {
+    return this._settings;
   }
 
-  update(partial: Partial<AppSettings>) {
-    this.settings = { ...this.settings, ...partial };
-    this.save();
-    this.applyToDocument();
+  update(partial: Partial<Settings>) {
+    this._settings = { ...this._settings, ...partial };
+    this.saveToStorage(this._settings);
+    this.applyToDom(this._settings);
   }
 
-  private load(): AppSettings {
+  resetToDefaults() {
+    this._settings = { ...DEFAULT_SETTINGS };
+    this.saveToStorage(this._settings);
+    this.applyToDom(this._settings);
+  }
+
+  // ---- privát ----
+
+  private loadFromStorage(): Settings {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) {
-        return {
-          theme: 'dark',
-          density: 'comfortable',
-          showTips: true,
-        };
+        this.applyToDom(DEFAULT_SETTINGS);
+        return { ...DEFAULT_SETTINGS };
       }
-      const parsed = JSON.parse(raw) as AppSettings;
-      return {
-        theme: parsed.theme ?? 'dark',
-        density: parsed.density ?? 'comfortable',
-        showTips: parsed.showTips ?? true,
+      const parsed = JSON.parse(raw) as Settings;
+      const merged: Settings = {
+        ...DEFAULT_SETTINGS,
+        ...parsed,
       };
+      this.applyToDom(merged);
+      return merged;
     } catch {
-      return {
-        theme: 'dark',
-        density: 'comfortable',
-        showTips: true,
-      };
+      this.applyToDom(DEFAULT_SETTINGS);
+      return { ...DEFAULT_SETTINGS };
     }
   }
 
-  private save() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(this.settings));
+  private saveToStorage(settings: Settings) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
   }
 
-  /** opcionális: body class-ek beállítása */
-  applyToDocument() {
+  private applyToDom(settings: Settings) {
     const body = document.body;
-    body.classList.toggle('theme-dark', this.settings.theme === 'dark');
-    body.classList.toggle('theme-light', this.settings.theme === 'light');
 
-    body.classList.toggle('density-compact', this.settings.density === 'compact');
-    body.classList.toggle('density-comfortable', this.settings.density === 'comfortable');
+    body.classList.remove('density-comfortable', 'density-compact');
+    body.classList.add(`density-${settings.density}`);
+
+    if (settings.showTips) {
+      body.classList.add('show-tips');
+    } else {
+      body.classList.remove('show-tips');
+    }
   }
 }

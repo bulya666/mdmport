@@ -1,22 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
-import { SettingsService } from '../services/settings.service';
-
-export type Theme = 'light' | 'dark';
-export type Density = 'comfortable' | 'compact';
-
-export interface Settings {
-  theme: Theme;
-  density: Density;
-  showTips: boolean;
-}
-
-export const DEFAULT_SETTINGS: Settings = {
-  theme: 'dark',
-  density: 'comfortable',
-  showTips: true,
-};
+import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { SettingsService, Settings, Density } from '../services/settings.service';
 
 @Component({
   selector: 'app-settings',
@@ -29,31 +14,34 @@ export class SettingsComponent implements OnInit {
   private fb = inject(FormBuilder);
   private settingsService = inject(SettingsService);
 
-  form = this.fb.group({
-    theme: ['dark'],
-    density: ['comfortable'],
-    showTips: [true],
-  });
+  form!: FormGroup;
 
   ngOnInit(): void {
-    const current = this.settingsService.current;
-    this.form.patchValue(current);
+    const current = this.settingsService.settings;
 
-    this.form.valueChanges.subscribe(value => {
-      if (!value) return;
-      this.settingsService.update({
-        theme: value.theme as any,
-        density: value.density as any,
+    this.form = this.fb.group({
+      density: [current.density as Density],
+      showTips: [current.showTips],
+    });
+
+    this.form.valueChanges.subscribe((value: any) => {
+      const patch: Partial<Settings> = {
+        density: value.density as Density,
         showTips: !!value.showTips,
-      });
+      };
+      this.settingsService.update(patch);
     });
   }
 
   resetToDefaults() {
-    this.form.setValue({
-      theme: 'dark',
-      density: 'comfortable',
-      showTips: true,
-    });
+    this.settingsService.resetToDefaults();
+    const def = this.settingsService.settings;
+    this.form.setValue(
+      {
+        density: def.density,
+        showTips: def.showTips,
+      },
+      { emitEvent: false }
+    );
   }
 }
