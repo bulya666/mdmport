@@ -216,7 +216,7 @@ body.modal-open {
 }
 
 .community-page {
-  max-width: 1100px;
+  max-width: 1500px;
   margin: 40px auto 80px;
   padding: 0 16px;
   color: #fff;
@@ -727,7 +727,7 @@ button[mat-button][color="warn"] {
   inset: 0;
   border-radius: inherit;
   border: 2px solid transparent;
-  background: linear-gradient(270deg, #ff0000, #ff7f7f, #ffffff, #ff7f7f, #ff0000);
+  background: linear-gradient(270deg, #002aff, #4000c0, #1700a9, #4000c0, #002aff);
   background-size: 600% 600%;
   opacity: 0;
   transition: opacity .18s ease;
@@ -765,7 +765,7 @@ button[mat-button][color="warn"] {
   height: 3px;
   border-radius: 2px;
   margin: 12px 0 16px 0;
-  background: linear-gradient(270deg, #0011ff, #ff2121fa, #0011ff, #ff2121fa, #0011ff);
+  background: linear-gradient(270deg, #002aff, #4000c0, #1700a9, #4000c0, #002aff);
   background-size: 600% 600%;
   animation: gradientMove 8s ease infinite;
 }
