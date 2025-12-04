@@ -50,14 +50,21 @@ async function loadDatabaseFromSqlFile() {
     );
     const count = rows && rows[0] && rows[0].cnt ? Number(rows[0].cnt) : 0;
 
-    if (count > 0 && !process.env.FORCE_DB_IMPORT) {
-      console.log(`Database already has ${count} table(s). Skipping import. Set FORCE_DB_IMPORT=1 to force re-import.`);
-      return;
-    }
+    const force = ['1', 'true', 'yes'].includes((process.env.FORCE_DB_IMPORT || '').toString().toLowerCase());
+    console.log('FORCE_DB_IMPORT raw=', process.env.FORCE_DB_IMPORT, ' => force=', force);
+
+if (count > 0 && force) {
+  console.log('FORCE_DB_IMPORT -> táblák ürítése');
+  await pool.query('SET FOREIGN_KEY_CHECKS=0');
+  await pool.query('TRUNCATE TABLE gamephotos');
+  await pool.query('TRUNCATE TABLE ownedg');
+  await pool.query('TRUNCATE TABLE games');
+  await pool.query('TRUNCATE TABLE users');
+  await pool.query('SET FOREIGN_KEY_CHECKS=1');
+}
   console.log('Loading DB from', sqlPath);
   try {
     const sql = await fs.readFile(sqlPath, 'utf8');
-    // create a connection that allows multiple statements for import
     const conn = await mysql.createConnection({
       host: process.env.DB_HOST || 'localhost',
       user: process.env.DB_USER || 'root',
