@@ -19,8 +19,64 @@ const pool = mysql.createPool({
   database: process.env.DB_NAME || 'mdmport_db',
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
+  multipleStatements: true  
 });
+const SQL_FILE = path.join(__dirname, 'mdmport_db.sql');
+
+async function isDatabaseEmpty() {
+  const conn = await pool.getConnection();
+  try {
+    const [rows] = await conn.query('SELECT COUNT(*) AS cnt FROM games');
+    return rows[0].cnt === 0;
+  } catch (err) {
+    console.error('Hiba az adatbázis ellenőrzésekor:', err);
+    // hiba esetén inkább NE importáljunk
+    return false;
+  } finally {
+    conn.release();
+  }
+}
+
+async function loadSqlOnStart() {
+  try {
+    const empty = await isDatabaseEmpty();
+    if (!empty) {
+      console.log('Adatbázis már tartalmaz adatot, SQL import kihagyva.');
+      return;
+    }
+
+    const sql = await fs.readFile(SQL_FILE, 'utf8');
+    const conn = await pool.getConnection();
+    await conn.query(sql);
+    conn.release();
+
+    console.log('Adatbázis inicializálva a mdmport_db.sql alapján (üres DB-ből).');
+  } catch (err) {
+    console.error('Hiba az SQL betöltésekor:', err);
+  }
+}
+
+
+async function dumpSqlOnShutdown() {
+  try {
+    await mysqldump({
+      connection: {
+        host: process.env.DB_HOST || 'localhost',
+        user: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || '',
+        database: process.env.DB_NAME || 'mdmport_db',
+      },
+      dumpToFile: SQL_FILE
+    });
+    console.log('Adatbázis elmentve a mdmport_db.sql fájlba');
+  } catch (err) {
+    console.error('Hiba a dump készítésekor:', err);
+  } finally {
+    process.exit(0);
+  }
+}
+
 
 app.get('/api/games', async (req, res) => {
   try {
@@ -315,11 +371,24 @@ app.post('/send-mail', async (req, res) => {
     res.status(500).json({ status: 'error', message: 'Levélküldési hiba' });
   }
 });
- 
- 
-app.listen(PORT, () => {
-  console.log(`mdmport API fut: http://localhost:${PORT}/api/games`);
-  console.log(`mdmport API fut: http://localhost:${PORT}/api/users`);
-  console.log(`mdmport API fut: http://localhost:${PORT}/api/ownedg`);
-  console.log(`mdmport API fut: http://localhost:${PORT}/api/gamephotos`);
+
+loadSqlOnStart().finally(() => {
+  app.listen(PORT, () => {
+    console.log(`mdmport API fut: http://localhost:${PORT}/api/games`);
+    console.log(`mdmport API fut: http://localhost:${PORT}/api/users`);
+    console.log(`mdmport API fut: http://localhost:${PORT}/api/ownedg`);
+    console.log(`mdmport API fut: http://localhost:${PORT}/api/gamephotos`);
+  });
 });
+
+let shuttingDown = false;
+
+function handleShutdown(signal) {
+  if (shuttingDown) return;
+  shuttingDown = true;
+  console.log(`Kapott jel: ${signal}, adatbázis mentése...`);
+  dumpSqlOnShutdown();
+}
+
+process.on('SIGINT', handleShutdown);
+process.on('SIGTERM', handleShutdown);
