@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-export type Density = 'comfortable' | 'compact';
+export type Density = "comfortable" | "compact";
 
 export interface Settings {
   density: Density;
   showTips: boolean;
 }
 
-const STORAGE_KEY = 'mdmport-settings';
+const STORAGE_KEY = "mdmport-settings";
 
 const DEFAULT_SETTINGS: Settings = {
-  density: 'comfortable',
+  density: "comfortable",
   showTips: true,
 };
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class SettingsService {
   private _settings: Settings = this.loadFromStorage();
 
@@ -33,8 +33,6 @@ export class SettingsService {
     this.saveToStorage(this._settings);
     this.applyToDom(this._settings);
   }
-
-  // ---- privát ----
 
   private loadFromStorage(): Settings {
     try {
@@ -63,13 +61,13 @@ export class SettingsService {
   private applyToDom(settings: Settings) {
     const body = document.body;
 
-    body.classList.remove('density-comfortable', 'density-compact');
+    body.classList.remove("density-comfortable", "density-compact");
     body.classList.add(`density-${settings.density}`);
 
     if (settings.showTips) {
-      body.classList.add('show-tips');
+      body.classList.add("show-tips");
     } else {
-      body.classList.remove('show-tips');
+      body.classList.remove("show-tips");
     }
   }
 }

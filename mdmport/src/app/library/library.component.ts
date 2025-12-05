@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { CommonModule } from "@angular/common";
 
 interface Game {
   id: number;
@@ -24,44 +24,48 @@ interface Owned {
 }
 
 @Component({
-  selector: 'app-library',
+  selector: "app-library",
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './library.component.html',
-  styleUrls: ['./library.component.css'],
+  templateUrl: "./library.component.html",
+  styleUrls: ["./library.component.css"],
 })
 export class LibraryComponent implements OnInit {
   games: Game[] = [];
   selectedGame: Game | null = null;
   gameShots: string[] = [];
 
-  private api = 'http://localhost:3000/api';
+  private api = "http://localhost:3000/api";
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    const username = localStorage.getItem('loggedUser');
+    const username = localStorage.getItem("loggedUser");
     if (!username) {
       this.games = [];
       return;
     }
 
-    this.http.get<User>(`${this.api}/users/byname/${username}`).subscribe(user => {
-      const userId = user.id;
+    this.http
+      .get<User>(`${this.api}/users/byname/${username}`)
+      .subscribe((user) => {
+        const userId = user.id;
 
-      this.http.get<Owned[]>(`${this.api}/ownedg/${userId}`).subscribe(owned => {
-        const ownedIds = new Set(owned.map(o => o.gameid));
+        this.http
+          .get<Owned[]>(`${this.api}/ownedg/${userId}`)
+          .subscribe((owned) => {
+            const ownedIds = new Set(owned.map((o) => o.gameid));
 
-        if (ownedIds.size === 0) {
-          this.games = [];
-          return;
-        }
+            if (ownedIds.size === 0) {
+              this.games = [];
+              return;
+            }
 
-        this.http.get<Game[]>(`${this.api}/games`).subscribe(allGames => {
-          this.games = allGames.filter(g => ownedIds.has(g.id));
-        });
+            this.http.get<Game[]>(`${this.api}/games`).subscribe((allGames) => {
+              this.games = allGames.filter((g) => ownedIds.has(g.id));
+            });
+          });
       });
-    });
   }
 
   openModal(game: Game): void {

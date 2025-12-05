@@ -1,43 +1,38 @@
 <main class="container">
 
+  <div class="ajanlott">
+    <h2>Ajánlott játék</h2>
+    <section class="featured">
+      <div class="featured-grid">
 
-<div class="ajanlott">
-  <h2>Ajánlott játék</h2>
-  <section class="featured">
-    <div class="featured-grid">
-      
-      <div class="featured-info">
-        <h1 id="f-title"></h1>
-        <p id="f-desc"></p>
-        <div class="featured-price" id="f-price"></div>
-        <button class="buy" (click)="RecomendedAddToCart()">Kosárba</button>
+        <div class="featured-info">
+          <h1 id="f-title"></h1>
+          <p id="f-desc"></p>
+          <div class="featured-price" id="f-price"></div>
+          <button class="buy" (click)="RecomendedAddToCart()">Kosárba</button>
+        </div>
+        <div class="featured-cover">
+          <img id="f-cover" src="">
+        </div>
       </div>
-      <div class="featured-cover">
-        <img id="f-cover" src="">
-      </div>
+    </section>
+  </div>
+
+  <section class="hero">
+    <div class="tabs">
+      <div class="tab" data-filter="all" tabindex="-1">Ajánlott</div>
+      <div class="tab" data-filter="free">Ingyenes</div>
+      <div class="tab" data-filter="top">Top eladások</div>
+    </div>
+    <div class="controls">
+      <span class="tag">MDMPort minden jog fenntartva.</span>
     </div>
   </section>
-</div>
 
-	<section class="hero">
-		<div class="tabs">
-			<div class="tab" data-filter="all" tabindex="-1">Ajánlott</div>
-			<div class="tab" data-filter="free">Ingyenes</div>
-			<div class="tab" data-filter="top">Top eladások</div>
-		</div>
-		<div class="controls">
-			<span class="tag">MDMPort minden jog fenntartva.</span>
-		</div>
-	</section>
+  <section id="catalog" class="grid" aria-live="polite"></section>
 
-	<section id="catalog" class="grid" aria-live="polite"></section>
-	
 </main>
-<div
-  class="toast"
-  *ngIf="toastVisible"
-  [ngClass]="toastType"
->
+<div class="toast" *ngIf="toastVisible" [ngClass]="toastType">
   <div class="toast-message">
     {{ toastMessage }}
   </div>
@@ -52,40 +47,37 @@
   </div>
 </div>
 
-
 <div id="modal" class="modal-backdrop" role="dialog" aria-hidden="true">
-	<div class="modal" role="document">
-		<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-			<h2 id="m-title">Játék címe</h2>
-			<button class="close" id="m-close">Bezár</button>
-		</div>
-		<div class="modal-grid">
-			<div>
-				<img id="m-cover" src="" alt="" />
-				<p id="m-desc" style="margin-top:8px;color:#cfe6ff"></p>
-			</div>
-			<aside>
-				<p class="muted">Ár</p>
-				<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-					<div id="m-price" style="font-weight:700;font-size:20px;color:#bff39b">Ingyen</div>
-					<button class="buy" (click)="addToCart()">Kosárba</button>
-				</div>
-				<p class="muted">Képek</p>
-				<div id="m-shots" style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"></div>
-			</aside>
-		</div>
-	</div>
-	<div *ngIf="loadingRedirect" class="redirect-loader">
-  <div class="spinner"></div>
-  <p>Átirányítás...</p>
-</div>
+  <div class="modal" role="document">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <h2 id="m-title">Játék címe</h2>
+      <button class="close" id="m-close">Bezár</button>
+    </div>
+    <div class="modal-grid">
+      <div>
+        <img id="m-cover" src="" alt="" />
+        <p id="m-desc" style="margin-top:8px;color:#cfe6ff"></p>
+      </div>
+      <aside>
+        <p class="muted">Ár</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <div id="m-price" style="font-weight:700;font-size:20px;color:#bff39b">Ingyen</div>
+          <button class="buy" (click)="addToCart()">Kosárba</button>
+        </div>
+        <p class="muted">Képek</p>
+        <div id="m-shots" style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"></div>
+      </aside>
+    </div>
+  </div>
+  <div *ngIf="loadingRedirect" class="redirect-loader">
+    <div class="spinner"></div>
+    <p>Átirányítás...</p>
+  </div>
 </div>
 
 <div id="lightbox">
-	<button id="lb-prev">⟨</button>
-	<img id="lightbox-img" src="" alt="big shot" />
-	<button id="lb-next">⟩</button>
+  <button id="lb-prev">⟨</button>
+  <img id="lightbox-img" src="" alt="big shot" />
+  <button id="lb-next">⟩</button>
 </div>
 <div id="popup-box" class="popup hidden"></div>
-
-

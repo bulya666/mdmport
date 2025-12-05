@@ -4,18 +4,15 @@
       <h2>Kosár</h2>
 
       <div *ngIf="cartItems.length > 0; else emptyCart">
-        <div
-          *ngFor="let item of cartItems"
-          style="display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;border-bottom:1px solid #2a2a2a;padding-bottom:12px"
-        >
-        <div>
-          <img
+        <div *ngFor="let item of cartItems" style="display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;border-bottom:1px solid #2a2a2a;padding-bottom:12px">
+          <div>
+            <img
             id="m-cover"
             [src]="item.image"
             alt="{{ item.name }}"
             style="width:200px;max-width:100%;border-radius:6px;object-fit:cover;display:block;margin-bottom:8px"
           />
-        </div>
+          </div>
 
           <div style="flex:1">
             <h3 style="margin:0 0 6px 0">{{ item.name }}</h3>
@@ -31,11 +28,9 @@
           <p style="margin:0;font-weight:700;color:#bff39b">
             Összesen: ${{ getTotal().toFixed(2) }}
           </p>
-        <button (click)="purchase()" class="purchase"
-                onmouseover="this.style.backgroundColor='#43a047'"
-                onmouseout="this.style.backgroundColor='#4caf50'">
-          Vásárlás
-        </button> 
+          <button (click)="purchase()" class="purchase" onmouseover="this.style.backgroundColor='#43a047'" onmouseout="this.style.backgroundColor='#4caf50'">
+            Vásárlás
+          </button>
 
         </div>
       </div>
@@ -60,10 +55,8 @@
 
   </div>
 </div>
-<!-- notification overlay -->
-<div class="notification" 
-     *ngIf="notification.visible" 
-     [ngClass]="notification.type">
+
+<div class="notification" *ngIf="notification.visible" [ngClass]="notification.type">
   <div class="notification-inner">
     <div class="notification-icon">
       <span *ngIf="notification.type === 'success'">✔</span>

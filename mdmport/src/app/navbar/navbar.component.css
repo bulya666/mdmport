@@ -1,12 +1,12 @@
 .topbar {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 12px 20px;
-    background: linear-gradient(180deg,
-            rgba(8, 26, 48, 1) 0%,
-            rgba(8, 26, 48, 1) 100%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 20px;
+  background: linear-gradient(180deg,
+      rgba(8, 26, 48, 1) 0%,
+      rgba(8, 26, 48, 1) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .brand {
@@ -21,7 +21,6 @@
   height: 32px;
   transition: transform .25s ease, filter .25s ease;
 }
-
 
 .brand:hover {
   transform: translateY(-2px);
@@ -74,7 +73,7 @@
   backdrop-filter: blur(6px);
   color: white;
   font-size: 15px;
-  transition: 
+  transition:
     border-color .25s ease,
     background .25s ease,
     box-shadow .25s ease;
@@ -96,79 +95,79 @@
 }
 
 .top-actions {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    position: relative;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  position: relative;
 }
 
 .btn1 {
-    position: relative;
-    background: none;
-    border: none;
-    font-size: 16px;
-    color: white;
-    cursor: pointer;
-    padding: 10px 20px;
-    outline: none;
-    font-weight: 600;
-    text-decoration: none;
+  position: relative;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  padding: 10px 20px;
+  outline: none;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 .btn1::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%) scaleX(0);
-    transform-origin: center;
-    width: 100%;
-    height: 2px;
-    background-color: rgba(146, 24, 24, 0.829);
-    transition: transform 0.3s ease;
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  width: 100%;
+  height: 2px;
+  background-color: rgba(146, 24, 24, 0.829);
+  transition: transform 0.3s ease;
 }
 
 .btn1:hover::after {
-    transform: translateX(-50%) scaleX(1);
+  transform: translateX(-50%) scaleX(1);
 }
 
 .btn1:hover {
-    color: rgba(146, 24, 24, 0.829);
+  color: rgba(146, 24, 24, 0.829);
 }
 
 .hamburger {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 32px;
-    height: 28px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    position: relative;
-    z-index: 100;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 100;
 }
 
 .hamburger span {
-    display: block;
-    width: 100%;
-    height: 3px;
-    background-color: white;
-    border-radius: 2px;
-    transition: all 0.3s ease;
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
 }
 
 .hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translateY(8px);
+  transform: rotate(45deg) translateY(8px);
 }
 
 .hamburger.active span:nth-child(2) {
-    opacity: 0;
+  opacity: 0;
 }
 
 .hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translateY(-8px);
+  transform: rotate(-45deg) translateY(-8px);
 }
 
 .nav-links {
@@ -182,7 +181,7 @@
 .nav-links a {
   position: relative;
   font-weight: 600;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255, 255, 255, 0.75);
   text-decoration: none;
   padding: 6px 4px;
   transition: color .25s ease, transform .25s ease;
@@ -211,15 +210,15 @@
 
 
 .mdm-logo {
-    font-weight: 800;
-    font-size: 28px;
-    letter-spacing: 0.3px;
-    color: var(--text);
-    text-decoration: none;
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: 0.3px;
+  color: var(--text);
+  text-decoration: none;
 }
 
 .mdm-logo span {
-    color: var(--acc);
+  color: var(--acc);
 }
 
 .user-menu {
@@ -265,6 +264,7 @@
     opacity: 0;
     transform: translateY(-6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -319,6 +319,7 @@
     opacity: 0;
     transform: translateY(-6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -411,7 +412,7 @@
   border-radius: 10px;
   padding: 8px 0;
   margin-top: 6px;
-  box-shadow: 0 18px 40px rgba(0,0,0,.6);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, .6);
   display: none;
   z-index: 999;
 }
@@ -429,7 +430,7 @@
 }
 
 .search-item:hover {
-  background: rgba(55,65,81,0.8);
+  background: rgba(55, 65, 81, 0.8);
 }
 
 .search-item-thumb {
@@ -487,6 +488,7 @@
     opacity: 0;
     transform: translateY(-5px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -548,107 +550,104 @@
   .hamburger {
     display: flex;
   }
-.user-btn {
-  position: relative;
-  background: none;
-  border: none;
-  font-size: 16px;
-  color: white;
-  cursor: pointer;
-  padding: 5px 15px 10px;
-  outline: none;
-  font-weight: 800;
-  text-decoration: none;
-  left: 0%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
-/* Menü */
-.user-menu {
-  position: absolute;
-  left: 0px;
-  right: 0px;
-  top: 60px;
-  background: rgba(8, 26, 48, 1);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-  min-width: 200px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-  overflow: hidden; /* hogy a padding animálható legyen */
-}
+  .user-btn {
+    position: relative;
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    padding: 5px 15px 10px;
+    outline: none;
+    font-weight: 800;
+    text-decoration: none;
+    left: 0%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-/* Menü elemek */
-.user-menu-item {
-  color: #f1f5f9;
-  padding: 12px 18px;
-  text-decoration: none;
-  font-size: 15px;
-  font-weight: 500;
-  display: flex;
-  justify-content: space-between;
-  transition:
-    background 0.22s ease,
-    padding-left 0.22s ease,
-    color 0.22s ease;
-}
-
-.user-menu-item:hover {
-  background: rgba(255, 255, 255, 0.12);
-  padding-left: 24px;
-  color: #fff;
-}
-
-/* Logout gomb külön stílusban, ha kell */
-.user-menu-item.logout {
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  margin-top: 4px;
-}
-
-/* Chevron animáció */
-.chevron {
-  transition: transform 0.3s ease;
-}
-
-.chevron.open {
-  transform: rotate(180deg);
-}
-
-/* Reszponzív: kisebb képernyőn a menü teljes szélesség */
-@media (max-width: 768px) {
   .user-menu {
-    left: 0;
-    right: 0;
-    top: 50px;
-    min-width: 100%;
-    border-radius: 0;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 60px;
+    background: rgba(8, 26, 48, 1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    overflow: hidden;
   }
 
   .user-menu-item {
-    padding: 14px 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .brand h1 {
-    display: none;
-  }
-  .btn {
-    padding: 10px 12px;
-    font-size: 14px;
-  }
-
-  .mdm-social .ico {
-    width: 36px;
-    height: 36px;
+    color: #f1f5f9;
+    padding: 12px 18px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    transition:
+      background 0.22s ease,
+      padding-left 0.22s ease,
+      color 0.22s ease;
   }
 
-  .mdm-logo {
-    font-size: 22px;
+  .user-menu-item:hover {
+    background: rgba(255, 255, 255, 0.12);
+    padding-left: 24px;
+    color: #fff;
   }
-}
+
+  .user-menu-item.logout {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 4px;
+  }
+
+  .chevron {
+    transition: transform 0.3s ease;
+  }
+
+  .chevron.open {
+    transform: rotate(180deg);
+  }
+
+  @media (max-width: 768px) {
+    .user-menu {
+      left: 0;
+      right: 0;
+      top: 50px;
+      min-width: 100%;
+      border-radius: 0;
+    }
+
+    .user-menu-item {
+      padding: 14px 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .brand h1 {
+      display: none;
+    }
+
+    .btn {
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+
+    .mdm-social .ico {
+      width: 36px;
+      height: 36px;
+    }
+
+    .mdm-logo {
+      font-size: 22px;
+    }
+  }
 }

@@ -1,5 +1,5 @@
 <div class="topbar">
-	<a (click)="toStore()">
+  <a (click)="toStore()">
 		<div class="brand">
 			<img src="mdmlogo.png" alt="MDMPort logo" id="logo" />
 			<section class="mdm-brand">
@@ -8,49 +8,49 @@
 		</div>
 	</a>
 
-	<div class="search">
-		<input id="search" placeholder="⌕ Játékok keresése..." />
-		 <div id="search-dropdown" class="search-dropdown"></div>
-	</div>
+  <div class="search">
+    <input id="search" placeholder="⌕ Játékok keresése..." />
+    <div id="search-dropdown" class="search-dropdown"></div>
+  </div>
 
-	<div class="top-actions">
-		<button class="hamburger" [class.active]="menuOpen" (click)="toggleMenu()">
-			<span></span>
-			<span></span>
-			<span></span>
-		</button>
+  <div class="top-actions">
+    <button class="hamburger" [class.active]="menuOpen" (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
-		<div class="nav-links" [class.show]="menuOpen">
+    <div class="nav-links" [class.show]="menuOpen">
 
-			<a routerLink="/" class="btn1" (click)="closeMenu()" (click)="toStore()">Áruház</a>
-            <a routerLink="/community" class="btn1" (click)="closeMenu()" (click)="goToCommunity()">Közösség</a>
-			<a routerLink="/kapcsolat" class="btn1" (click)="closeMenu()">Kapcsolat</a>
-            <a *ngIf="!loggedUser" routerLink="/login" class="btn1" (click)="closeMenu()" (click)="goToLogin()">Bejelentkezés</a>
+      <a routerLink="/" class="btn1" (click)="closeMenu()" (click)="toStore()">Áruház</a>
+      <a routerLink="/community" class="btn1" (click)="closeMenu()" (click)="goToCommunity()">Közösség</a>
+      <a routerLink="/kapcsolat" class="btn1" (click)="closeMenu()">Kapcsolat</a>
+      <a *ngIf="!loggedUser" routerLink="/login" class="btn1" (click)="closeMenu()" (click)="goToLogin()">Bejelentkezés</a>
 
 
-			<div class="user-menu-container" *ngIf="loggedUser">
-			<button class="user-btn" (click)="toggleUserMenu()">
-				<i class="fas fa-user-circle"></i>
-				<span class="username">{{ loggedUser }}</span>
-				<i class="fas fa-chevron-down chevron" [class.open]="userMenuOpen"></i>
-			</button>
+      <div class="user-menu-container" *ngIf="loggedUser">
+        <button class="user-btn" (click)="toggleUserMenu()">
+          <i class="fas fa-user-circle"></i>
+          <span class="username">{{ loggedUser }}</span>
+          <i class="fas fa-chevron-down chevron" [class.open]="userMenuOpen"></i>
+        </button>
 
-			<div class="user-menu" *ngIf="userMenuOpen">
-				<a routerLink="/cart" (click)="closeUserMenu()" class="user-menu-item">
+        <div class="user-menu" *ngIf="userMenuOpen">
+          <a routerLink="/cart" (click)="closeUserMenu()" class="user-menu-item">
 				<i class="fas fa-shopping-cart"></i> Kosár
 				</a>
-				<a routerLink="/library" (click)="closeUserMenu()" class="user-menu-item">
+          <a routerLink="/library" (click)="closeUserMenu()" class="user-menu-item">
 				<i class="fas fa-book"></i> Könyvtár
 				</a>
-				<a routerLink="/settings" (click)="closeUserMenu()" class="user-menu-item">
+          <a routerLink="/settings" (click)="closeUserMenu()" class="user-menu-item">
 				<i class="fas fa-cog"></i> Beállítások
 				</a>
-				<a (click)="logout()" class="user-menu-item logout">
+          <a (click)="logout()" class="user-menu-item logout">
 				<i class="fas fa-sign-out-alt"></i> Kijelentkezés
 				</a>
-			</div>
-			</div>
-		</div>
+        </div>
+      </div>
+    </div>
 
-	</div>
+  </div>
 </div>

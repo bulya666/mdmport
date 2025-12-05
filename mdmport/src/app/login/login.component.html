@@ -3,20 +3,9 @@
     <h2>Bejelentkezés</h2>
 
     <form (ngSubmit)="login()">
-      <input
-        [(ngModel)]="username"
-        name="username"
-        placeholder="Felhasználónév"
-        required
-      />
+      <input [(ngModel)]="username" name="username" placeholder="Felhasználónév" required />
 
-      <input
-        [(ngModel)]="password"
-        name="password"
-        type="password"
-        placeholder="Jelszó"
-        required
-      />
+      <input [(ngModel)]="password" name="password" type="password" placeholder="Jelszó" required />
 
       <button mat-flat-button color="primary" type="submit">
         Bejelentkezés

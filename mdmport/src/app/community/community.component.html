@@ -1,11 +1,9 @@
 <div class="community-page">
 
   <div class="articles-wrapper">
-    <h2>Ajánlott gaming cikkek</h2>
+    <h2>Ajánlott cikkek</h2>
     <div class="articles-grid">
-      <mat-card *ngFor="let article of featuredArticles"
-                class="article-card"
-                (click)="openModal(article)">
+      <mat-card *ngFor="let article of featuredArticles" class="article-card" (click)="openModal(article)">
         <mat-card-title>{{ article.title }}</mat-card-title>
         <hr>
         <mat-card-content>
@@ -15,22 +13,10 @@
     </div>
   </div>
 
-  <!-- MODAL BACKDROP -->
-  <div
-    class="modal-backdrop"
-    *ngIf="modalOpen"
-    (click)="closeModal()">
+  <div class="modal-backdrop" *ngIf="modalOpen" (click)="closeModal()">
   </div>
 
-  <!-- MODAL -->
-  <div
-    class="modal"
-    *ngIf="modalOpen"
-    role="dialog"
-    aria-modal="true"
-    [attr.aria-label]="selectedArticle?.title"
-    tabindex="-1"
-    (keydown.escape)="closeModal()">
+  <div class="modal" *ngIf="modalOpen" role="dialog" aria-modal="true" [attr.aria-label]="selectedArticle?.title" tabindex="-1" (keydown.escape)="closeModal()">
 
     <div class="modal-content">
       <div class="modal-left">
@@ -39,11 +25,7 @@
         <p>{{ selectedArticle?.fullText }}</p>
 
         <div class="modal-actions">
-          <button
-            mat-raised-button
-            color="primary"
-            class="like-btn"
-            (click)="likeArticle(selectedArticle!)">
+          <button mat-raised-button color="primary" class="like-btn" (click)="likeArticle(selectedArticle!)">
             <mat-icon>thumb_up</mat-icon>
             <span>{{ selectedArticle?.likes }}</span>
           </button>
@@ -60,24 +42,16 @@
     </div>
   </div>
 
-  <!-- ÚJ BEJEGYZÉS -->
   <mat-card class="new-post">
     <mat-card-title>Új bejegyzés</mat-card-title>
     <mat-card-content>
       <mat-form-field appearance="outline" class="w-full">
-        <textarea
-          matInput
-          placeholder="Oszd meg gondolataid..."
-          [(ngModel)]="newPostContent">
+        <textarea matInput placeholder="Oszd meg gondolataid..." [(ngModel)]="newPostContent">
         </textarea>
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="addPost()"
-        [disabled]="!newPostContent.trim()">
+      <button mat-raised-button color="primary" (click)="addPost()" [disabled]="!newPostContent.trim()">
         Közzététel
       </button>
     </mat-card-actions>
@@ -104,19 +78,12 @@
           </mat-card-content>
 
           <mat-card-actions>
-            <button
-              mat-button
-              color="primary"
-              class="post-like-btn"
-              (click)="likePost(post)">
+            <button mat-button color="primary" class="post-like-btn" (click)="likePost(post)">
               <mat-icon>thumb_up</mat-icon>
               <span>{{ post.likes }}</span>
             </button>
 
-            <button
-              mat-button
-              type="button"
-              (click)="toggleComments(post)">
+            <button mat-button type="button" (click)="toggleComments(post)">
               <mat-icon>comment</mat-icon>
               {{ post.showComments ? 'Hozzászólások elrejtése' : 'Hozzászólások megtekintése' }}
               ({{ post.comments.length }})
@@ -133,16 +100,8 @@
             </mat-list>
 
             <div class="add-comment">
-              <input
-                matInput
-                #commentInput
-                placeholder="Írj hozzászólást..."
-                (keydown.enter)="addComment(post, commentInput)">
-              <button
-                mat-icon-button
-                color="primary"
-                type="button"
-                (click)="addComment(post, commentInput)">
+              <input matInput #commentInput placeholder="Írj hozzászólást..." (keydown.enter)="addComment(post, commentInput)">
+              <button mat-icon-button color="primary" type="button" (click)="addComment(post, commentInput)">
                 <mat-icon>send</mat-icon>
               </button>
             </div>

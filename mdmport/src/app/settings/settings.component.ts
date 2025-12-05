@@ -1,14 +1,18 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import { SettingsService, Settings, Density } from '../services/settings.service';
+import { Component, OnInit, inject } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { ReactiveFormsModule, FormBuilder, FormGroup } from "@angular/forms";
+import {
+  SettingsService,
+  Settings,
+  Density,
+} from "../services/settings.service";
 
 @Component({
-  selector: 'app-settings',
+  selector: "app-settings",
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css'],
+  templateUrl: "./settings.component.html",
+  styleUrls: ["./settings.component.css"],
 })
 export class SettingsComponent implements OnInit {
   private fb = inject(FormBuilder);
@@ -41,7 +45,7 @@ export class SettingsComponent implements OnInit {
         density: def.density,
         showTips: def.showTips,
       },
-      { emitEvent: false }
+      { emitEvent: false },
     );
   }
 }

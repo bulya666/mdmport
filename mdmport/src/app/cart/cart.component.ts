@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule, NgIf } from '@angular/common';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { CommonModule, NgIf } from "@angular/common";
+import { Router } from "@angular/router";
 import { AuthService } from "../services/auth.service";
-import { HttpClient } from '@angular/common/http';
-import { forkJoin } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { forkJoin } from "rxjs";
 
 export interface CartItem {
-  id: number;  
+  id: number;
   name: string;
   price: number;
   image: string;
@@ -21,11 +21,11 @@ interface User {
 }
 
 @Component({
-  selector: 'app-cart',
+  selector: "app-cart",
   standalone: true,
   imports: [CommonModule, NgIf],
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  templateUrl: "./cart.component.html",
+  styleUrls: ["./cart.component.css"],
 })
 export class CartComponent implements OnInit {
   loggedUser: string | null = null;
@@ -35,26 +35,33 @@ export class CartComponent implements OnInit {
   loadingPopup = false;
   loadingDone = false;
 
-  toastMessage = '';
+  toastMessage = "";
   toastVisible = false;
-  toastType: 'success' | 'error' = 'success';
+  toastType: "success" | "error" = "success";
   toastWithActions = false;
   private toastTimeout: any;
 
   notification = {
     visible: false,
-    message: '',
-    type: 'info' as 'info' | 'success' | 'warning' | 'error'
+    message: "",
+    type: "info" as "info" | "success" | "warning" | "error",
   };
 
-  constructor(private auth: AuthService, private router: Router, private _http: HttpClient) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private _http: HttpClient,
+  ) {}
 
   ngOnInit() {
-    this.loggedUser = localStorage.getItem('loggedUser');
+    this.loggedUser = localStorage.getItem("loggedUser");
     this.loadCart();
   }
 
-  showMessage(message: string, type: 'info' | 'success' | 'warning' | 'error' = 'info') {
+  showMessage(
+    message: string,
+    type: "info" | "success" | "warning" | "error" = "info",
+  ) {
     this.notification.message = message;
     this.notification.type = type;
     this.notification.visible = true;
@@ -63,14 +70,14 @@ export class CartComponent implements OnInit {
       this.notification.visible = false;
     }, 3000);
   }
-  
+
   loadCart() {
-    const saved = localStorage.getItem('cart');
+    const saved = localStorage.getItem("cart");
     this.cartItems = saved ? JSON.parse(saved) : [];
   }
 
   saveCart() {
-    localStorage.setItem('cart', JSON.stringify(this.cartItems));
+    localStorage.setItem("cart", JSON.stringify(this.cartItems));
   }
 
   removeFromCart(item: CartItem) {
@@ -78,98 +85,124 @@ export class CartComponent implements OnInit {
     if (index > -1) {
       this.cartItems.splice(index, 1);
     }
-    localStorage.setItem('cart', JSON.stringify(this.cartItems));
+    localStorage.setItem("cart", JSON.stringify(this.cartItems));
   }
 
   getTotal(): number {
     return this.cartItems.reduce((sum, item) => sum + item.price, 0);
   }
 
-purchase() {
-  this.loadingPopup = true;
-  this.loadingDone = false;
+  purchase() {
+    this.loadingPopup = true;
+    this.loadingDone = false;
 
-  const username = localStorage.getItem('loggedUser');
-  if (!username) {
-    this.loadingPopup = false;
-    this.showMessage('Vásárláshoz be kell jelentkezni.', 'warning');
-    return;
-  }
+    const username = localStorage.getItem("loggedUser");
+    if (!username) {
+      this.loadingPopup = false;
+      this.showMessage("Vásárláshoz be kell jelentkezni.", "warning");
+      return;
+    }
 
-  this._http.get<User>(`http://localhost:3000/api/users/byname/${username}`).subscribe({
-    next: (user) => {
-      const userid = user.id;
+    this._http
+      .get<User>(`http://localhost:3000/api/users/byname/${username}`)
+      .subscribe({
+        next: (user) => {
+          const userid = user.id;
 
-      this._http.get<any[]>(`http://localhost:3000/api/ownedg/${userid}`).subscribe({
-        next: (owned) => {
-          const ownedIds = owned.map(o => o.gameid);
+          this._http
+            .get<any[]>(`http://localhost:3000/api/ownedg/${userid}`)
+            .subscribe({
+              next: (owned) => {
+                const ownedIds = owned.map((o) => o.gameid);
 
-          this._http.get<Game[]>('http://localhost:3000/api/games').subscribe({
-            next: (games) => {
+                this._http
+                  .get<Game[]>("http://localhost:3000/api/games")
+                  .subscribe({
+                    next: (games) => {
+                      const requests: any[] = [];
 
-              const requests: any[] = [];
+                      this.cartItems = this.cartItems.filter((item) => {
+                        const game = games.find((g) => g.title === item.name);
+                        if (!game) {
+                          return true;
+                        }
 
-              this.cartItems = this.cartItems.filter(item => {
-                const game = games.find(g => g.title === item.name);
-                if (!game) {
-                  return true;
-                }
+                        if (ownedIds.includes(game.id)) {
+                          console.log(`Már birtokolja: ${game.title}`);
+                          this.showMessage(
+                            `Már birtoklod: ${game.title}, törölve a kosárból.`,
+                            "info",
+                          );
+                          return false;
+                        }
+                        requests.push(
+                          this._http.post("http://localhost:3000/api/ownedg", {
+                            userid: userid,
+                            gameid: game.id,
+                          }),
+                        );
+                        return true;
+                      });
+                      localStorage.setItem(
+                        "cart",
+                        JSON.stringify(this.cartItems),
+                      );
 
-                if (ownedIds.includes(game.id)) {
-                  console.log(`Már birtokolja: ${game.title}`);
-                  this.showMessage(`Már birtoklod: ${game.title}, törölve a kosárból.`, 'info');
-                  return false;
-                }
-                requests.push(
-                  this._http.post('http://localhost:3000/api/ownedg', {
-                    userid: userid,
-                    gameid: game.id
-                  })
-                );
-                return true;
-              });
-              localStorage.setItem('cart', JSON.stringify(this.cartItems));
+                      if (requests.length === 0) {
+                        this.loadingPopup = false;
+                        this.showMessage(
+                          "A kosárban lévő játékokból van birtokolt.",
+                          "info",
+                        );
+                        return;
+                      }
 
-              if (requests.length === 0) {
+                      forkJoin(requests).subscribe({
+                        next: () => {
+                          this.loadingDone = true;
+                          this.cartItems = [];
+                          localStorage.removeItem("cart");
+
+                          setTimeout(() => {
+                            this.loadingPopup = false;
+                            this.showMessage(
+                              "Sikeres vásárlás, új játékok hozzáadva.",
+                              "success",
+                            );
+                            this.router.navigate(["/"]);
+                          }, 2000);
+                        },
+                        error: () => {
+                          this.loadingPopup = false;
+                          this.showMessage(
+                            "Hiba történt a fizetés közben.",
+                            "error",
+                          );
+                        },
+                      });
+                    },
+                    error: () => {
+                      this.loadingPopup = false;
+                      this.showMessage(
+                        "Nem sikerült lekérni a játékokat.",
+                        "error",
+                      );
+                    },
+                  });
+              },
+              error: () => {
                 this.loadingPopup = false;
-                this.showMessage('A kosárban lévő játékokból van birtokolt.', 'info');
-                return;
-              }
-
-              forkJoin(requests).subscribe({
-                next: () => {
-                  this.loadingDone = true;
-                  this.cartItems = [];
-                  localStorage.removeItem('cart');
-
-                  setTimeout(() => {
-                    this.loadingPopup = false;
-                    this.showMessage('Sikeres vásárlás, új játékok hozzáadva.', 'success');
-                    this.router.navigate(['/']);
-                  }, 2000);
-                },
-                error: () => {
-                  this.loadingPopup = false;
-                  this.showMessage('Hiba történt a fizetés közben.', 'error');
-                }
-              });
-            },
-            error: () => {
-              this.loadingPopup = false;
-              this.showMessage('Nem sikerült lekérni a játékokat.', 'error');
-            }
-          });
+                this.showMessage(
+                  "Nem sikerült lekérni a birtokolt játékokat.",
+                  "error",
+                );
+              },
+            });
         },
         error: () => {
           this.loadingPopup = false;
-          this.showMessage('Nem sikerült lekérni a birtokolt játékokat.', 'error');
-        }
+          this.showMessage("Nem sikerült lekérni a felhasználót.", "error");
+        },
       });
-    },
-    error: () => {
-      this.loadingPopup = false;
-      this.showMessage('Nem sikerült lekérni a felhasználót.', 'error');
-    }
-  });
-}
+  }
 }

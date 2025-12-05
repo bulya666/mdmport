@@ -1,4 +1,3 @@
-
 .register-container {
   position: relative;
   display: flex;
@@ -51,14 +50,12 @@
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  background: conic-gradient(
-    from 180deg,
-    #e60000,
-    #ff4d4d,
-    #e60000,
-    #550000,
-    #e60000
-  );
+  background: conic-gradient(from 180deg,
+      #e60000,
+      #ff4d4d,
+      #e60000,
+      #550000,
+      #e60000);
   opacity: 0.55;
   z-index: -1;
 }
@@ -191,7 +188,6 @@
 .register-container form a:hover::after {
   width: 100%;
 }
-
 
 @media (max-width: 480px) {
   .register-container form {

@@ -1,11 +1,6 @@
-/* ====== GLOBAL HELPER ====== */
-
 body.modal-open {
   overflow: hidden;
 }
-
-/* ====== TOPBAR ====== */
-
 .topbar {
   display: flex;
   align-items: center;
@@ -191,7 +186,7 @@ body.modal-open {
   transition: all 0.3s ease;
 }
 
-.hamburger span + span {
+.hamburger span+span {
   margin-top: 5px;
 }
 
@@ -206,8 +201,6 @@ body.modal-open {
 .hamburger.active span:nth-child(3) {
   transform: rotate(-45deg) translateY(-8px);
 }
-
-/* ====== LAYOUT ====== */
 
 .container {
   max-width: 1200px;
@@ -228,8 +221,6 @@ body.modal-open {
   font-weight: 700;
   color: #ffffff;
 }
-
-/* ====== NEW POST ====== */
 
 .new-post {
   margin: 40px 0 24px;
@@ -288,8 +279,6 @@ textarea::placeholder,
   color: rgba(255, 255, 255, 0.6);
 }
 
-/* MAT BUTTONS */
-
 button[mat-raised-button][color="primary"] {
   background: linear-gradient(135deg, #c72f42, #e53e50) !important;
   color: #fff !important;
@@ -322,8 +311,6 @@ button[mat-raised-button][color="primary"]:active {
 button[mat-button][color="warn"] {
   color: #f99;
 }
-
-/* ====== POSTS LIST ====== */
 
 .posts {
   display: grid;
@@ -367,8 +354,6 @@ button[mat-button][color="warn"] {
   transform: translateY(1px) scale(0.96);
 }
 
-/* ====== COMMENTS ====== */
-
 .user-avatar {
   background-color: #9b111e;
   border-radius: 50%;
@@ -393,13 +378,14 @@ button[mat-button][color="warn"] {
 
 .comments mat-list-item {
   display: flex;
+  height: auto;
   align-items: flex-start;
-  gap: 14px;
+  gap: 17px;
   background: rgba(15, 20, 32, 0.96);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
-  padding: 14px 16px;
-  margin-bottom: 10px;
+  padding: 24px 16px;
+  margin-bottom: 20px;
   color: #ffffff;
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.7);
   transition:
@@ -469,13 +455,9 @@ button[mat-button][color="warn"] {
   transform: translateY(-1px);
 }
 
-/* ====== TABS ====== */
-
 .mat-mdc-tab-label-content {
   color: #ffffff !important;
 }
-
-/* ====== FOOTER (MDM) ====== */
 
 .mdm-footer {
   background: var(--bg);
@@ -604,8 +586,6 @@ button[mat-button][color="warn"] {
   transform: translateY(-1px);
 }
 
-/* ====== USER MENU ====== */
-
 .user-menu-container {
   position: relative;
   display: inline-block;
@@ -680,12 +660,10 @@ button[mat-button][color="warn"] {
   background: rgba(255, 107, 107, 0.12);
 }
 
-/* ====== ARTICLES GRID & CARDS ====== */
-
 .articles-wrapper {
   margin: 40px auto 20px;
   max-width: 1800px;
-  width: 95%;
+  width: 100%;
   padding: 0 20px;
   color: #fff;
 }
@@ -770,8 +748,6 @@ button[mat-button][color="warn"] {
   animation: gradientMove 8s ease infinite;
 }
 
-/* ====== MODAL ====== */
-
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -839,10 +815,8 @@ button[mat-button][color="warn"] {
   width: 100%;
   border-radius: 12px;
   object-fit: cover;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
 }
-
-/* Modal actions */
 
 .modal-actions {
   display: flex;
@@ -878,24 +852,56 @@ button[mat-button][color="warn"] {
   transform: translateY(-1px);
 }
 
-/* ====== ANIMATIONS ====== */
-
 @keyframes gradientMove {
-  0%   { background-position: 0% 50%; }
-  20%  { background-position: 20% 50%; }
-  40%  { background-position: 40% 50%; }
-  60%  { background-position: 60% 50%; }
-  80%  { background-position: 80% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  20% {
+    background-position: 20% 50%;
+  }
+
+  40% {
+    background-position: 40% 50%;
+  }
+
+  60% {
+    background-position: 60% 50%;
+  }
+
+  80% {
+    background-position: 80% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes outLineMove {
-  0%   { background-position: 0% 50%; }
-  20%  { background-position: 20% 50%; }
-  40%  { background-position: 40% 50%; }
-  60%  { background-position: 60% 50%; }
-  80%  { background-position: 80% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  20% {
+    background-position: 20% 50%;
+  }
+
+  40% {
+    background-position: 40% 50%;
+  }
+
+  60% {
+    background-position: 60% 50%;
+  }
+
+  80% {
+    background-position: 80% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes fadeIn {
@@ -903,6 +909,7 @@ button[mat-button][color="warn"] {
     opacity: 0;
     transform: translateY(-6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -914,6 +921,7 @@ button[mat-button][color="warn"] {
     opacity: 0;
     transform: translate(-50%, -48%);
   }
+
   to {
     opacity: 1;
     transform: translate(-50%, -50%);
@@ -925,13 +933,12 @@ button[mat-button][color="warn"] {
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-
-/* ====== RESPONSIVE ====== */
 
 @media (max-width: 980px) {
   .mdm-cta {
@@ -1091,6 +1098,7 @@ button[mat-button][color="warn"] {
 }
 
 @media (min-width: 1440px) {
+
   .container,
   .mdm-wrap {
     max-width: 1320px;

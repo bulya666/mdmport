@@ -16,11 +16,7 @@
 
   <ng-container *ngIf="games.length > 0; else emptyTpl">
     <div class="library-grid">
-      <article
-        class="game-card"
-        *ngFor="let game of games"
-        (click)="openModal(game)"
-      >
+      <article class="game-card" *ngFor="let game of games" (click)="openModal(game)">
         <div class="thumb-wrapper">
           <img [src]="game.thumbnail" [alt]="game.title" />
           <div class="thumb-overlay"></div>
@@ -44,7 +40,7 @@
               class="tag-chip"
               *ngFor="let t of game.tag"
             >
-              {{ t }}
+            {{ t }}
             </span>
           </div>
 
@@ -76,15 +72,8 @@
   </div>
 </ng-template>
 
-<div
-  class="modal-backdrop"
-  *ngIf="selectedGame as g"
-  (click)="closeModal()"
->
-  <div
-    class="modal"
-    (click)="$event.stopPropagation()"
-  >
+<div class="modal-backdrop" *ngIf="selectedGame as g" (click)="closeModal()">
+  <div class="modal" (click)="$event.stopPropagation()">
     <div class="modal-media">
       <div class="modal-main-shot">
         <img
@@ -104,14 +93,8 @@
         </div>
       </div>
 
-      <div
-        class="thumb-strip"
-        *ngIf="gameShots.length"
-      >
-        <div
-          class="thumb-strip-item"
-          *ngFor="let shot of gameShots; index as i"
-        >
+      <div class="thumb-strip" *ngIf="gameShots.length">
+        <div class="thumb-strip-item" *ngFor="let shot of gameShots; index as i">
           <img [src]="shot" alt="Screenshot {{ i + 1 }}" />
           <span class="thumb-strip-label">
             Shot {{ i + 1 }}
@@ -131,23 +114,16 @@
               class="modal-tag"
               *ngFor="let t of g.tag"
             >
-              {{ t }}
+            {{ t }}
             </span>
           </div>
         </div>
-        <button
-          type="button"
-          class="close-btn"
-          (click)="closeModal()"
-        >
+        <button type="button" class="close-btn" (click)="closeModal()">
           ✕
         </button>
       </div>
 
-      <div
-        class="modal-desc"
-        *ngIf="g.desc"
-      >
+      <div class="modal-desc" *ngIf="g.desc">
         {{ g.desc }}
       </div>
 
@@ -162,18 +138,11 @@
       </div>
 
       <div class="modal-cta">
-        <button
-          type="button"
-          class="btn-primary"
-        >
+        <button type="button" class="btn-primary">
           <span class="btn-icon">▶</span>
           <span>Indítás</span>
         </button>
-        <button
-          type="button"
-          class="btn-ghost"
-          (click)="closeModal()"
-        >
+        <button type="button" class="btn-ghost" (click)="closeModal()">
           <span class="btn-icon">⬤</span>
           <span>Vissza a könyvtárhoz</span>
         </button>

@@ -1,17 +1,24 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, ApplicationRef, createComponent, inject, HostListener } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { RouterLink } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-import { LogoutOverlayComponent } from '../logout-overlay/logout-overlay.component';
-import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from "@angular/common";
+import {
+  Component,
+  OnInit,
+  ApplicationRef,
+  createComponent,
+  inject,
+  HostListener,
+} from "@angular/core";
+import { Router, NavigationEnd } from "@angular/router";
+import { RouterLink } from "@angular/router";
+import { AuthService } from "../services/auth.service";
+import { LogoutOverlayComponent } from "../logout-overlay/logout-overlay.component";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
+  selector: "app-navbar",
+  templateUrl: "./navbar.component.html",
+  styleUrls: ["./navbar.component.css"],
   standalone: true,
-  imports: [CommonModule, RouterLink, MatIconModule]
+  imports: [CommonModule, RouterLink, MatIconModule],
 })
 export class NavbarComponent implements OnInit {
   private appRef = inject(ApplicationRef);
@@ -21,15 +28,15 @@ export class NavbarComponent implements OnInit {
   menuOpen = false;
   userMenuOpen = false;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-    this.router.events.subscribe(event => {
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.loggedUser = localStorage.getItem('loggedUser');
+        this.loggedUser = localStorage.getItem("loggedUser");
       }
     });
-    this.loggedUser = localStorage.getItem('loggedUser');
+    this.loggedUser = localStorage.getItem("loggedUser");
   }
 
   toggleMenu() {
@@ -49,44 +56,46 @@ export class NavbarComponent implements OnInit {
   }
 
   toStore() {
-    if (this.router.url === '/') {
+    if (this.router.url === "/") {
       window.location.reload();
     } else {
-      this.router.navigate(['/']);
+      this.router.navigate(["/"]);
     }
   }
   goToCommunity() {
-      if (this.router.url === '/community') {
+    if (this.router.url === "/community") {
       window.location.reload();
-      }
     }
-    goToLogin() {
-      if (this.router.url === '/login') {
-        window.location.reload();
-      }
+  }
+  goToLogin() {
+    if (this.router.url === "/login") {
+      window.location.reload();
     }
+  }
   logout() {
-    const overlayRef = createComponent(LogoutOverlayComponent, { environmentInjector: this.appRef.injector });
+    const overlayRef = createComponent(LogoutOverlayComponent, {
+      environmentInjector: this.appRef.injector,
+    });
     this.appRef.attachView(overlayRef.hostView);
     document.body.appendChild(overlayRef.location.nativeElement);
 
     setTimeout(() => {
       this.auth.logout();
       this.closeMenu();
-      localStorage.removeItem('loggedUser');
+      localStorage.removeItem("loggedUser");
       this.loggedUser = null;
 
       this.appRef.detachView(overlayRef.hostView);
       overlayRef.destroy();
 
-      this.router.navigate(['/']).then(() => window.location.reload());
+      this.router.navigate(["/"]).then(() => window.location.reload());
     }, 1500);
   }
 
-  @HostListener('document:click', ['$event'])
+  @HostListener("document:click", ["$event"])
   onClickOutside(event: MouseEvent) {
     const target = event.target as HTMLElement;
-    if (!target.closest('.user-menu-container')) {
+    if (!target.closest(".user-menu-container")) {
       this.userMenuOpen = false;
     }
   }
