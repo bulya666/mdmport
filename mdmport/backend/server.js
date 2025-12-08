@@ -258,7 +258,30 @@ app.get('/api/gamephotos', async (req, res) => {
     res.status(500).json({ error: 'DB error' });
   }
 });
- 
+
+app.get('/api/gamephotos/:gameid', async (req, res) => {
+    try {
+        const gameId = req.params.gameid;
+
+        const sql = `
+            SELECT pic
+            FROM gamephotos
+            WHERE gameid = ?
+            ORDER BY id
+            LIMIT 1
+        `;
+
+        const [rows] = await pool.query(sql, [gameId]);
+
+        if (rows.length === 0) {
+            return res.json({ pic: null });
+        }
+
+        res.json({ pic: rows[0].pic });
+    } catch (error) {
+        res.status(500).json({ error: 'Hiba történt a lekérdezés során.' });
+    }
+});
  
 app.post('/api/login', async (req, res) => {
   try {
