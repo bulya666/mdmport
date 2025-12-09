@@ -40,7 +40,7 @@ export class KapcsolatComponent {
     }
 
     this.http
-      .post("http://localhost:3000/send-mail", this.contactForm.value)
+      .post("http://localhost:3000/api/send-mail", this.contactForm.value)
       .subscribe(() => {
         this.submitted = true;
         this.contactForm.reset();

@@ -123,23 +123,19 @@ export class CartComponent implements OnInit {
 
                       this.cartItems = this.cartItems.filter((item) => {
                         const game = games.find((g) => g.title === item.name);
-                        if (!game) {
-                          return true;
-                        }
+                        if (!game) return true;
 
                         if (ownedIds.includes(game.id)) {
-                          console.log(`Már birtokolja: ${game.title}`);
-                          this.showMessage(
-                            `Már birtoklod: ${game.title}, törölve a kosárból.`,
-                            "info",
-                          );
-                          return false;
+                          this.showMessage(`Már birtoklod: ${game.title}`, "info");
+                          return false; // töröljük a kosárból
                         }
+
+                        // CSAK akkor adjuk hozzá a requestekhez, ha még nincs meg
                         requests.push(
                           this._http.post("http://localhost:3000/api/ownedg", {
                             userid: userid,
                             gameid: game.id,
-                          }),
+                          })
                         );
                         return true;
                       });
@@ -157,29 +153,45 @@ export class CartComponent implements OnInit {
                         return;
                       }
 
-                      forkJoin(requests).subscribe({
-                        next: () => {
-                          this.loadingDone = true;
-                          this.cartItems = [];
-                          localStorage.removeItem("cart");
+                     // cart.component.ts → purchase() → a forkJoin rész
+                  forkJoin(requests).subscribe({
+                    next: (responses: any[]) => {
+                      // Ellenőrizzük, van-e már birtokolt játék a válaszok között
+                      const alreadyOwnedGames = responses
+                        .filter(r => r.status === 409 || (r.alreadyOwned && !r.success))
+                        .map(r => r.message || 'Ismeretlen játék');
 
-                          setTimeout(() => {
-                            this.loadingPopup = false;
-                            this.showMessage(
-                              "Sikeres vásárlás, új játékok hozzáadva.",
-                              "success",
-                            );
-                            this.router.navigate(["/"]);
-                          }, 2000);
-                        },
-                        error: () => {
-                          this.loadingPopup = false;
-                          this.showMessage(
-                            "Hiba történt a fizetés közben.",
-                            "error",
-                          );
-                        },
-                      });
+                      if (alreadyOwnedGames.length > 0) {
+                        this.showMessage(
+                          `Ezeket a játékokat már birtoklod: ${alreadyOwnedGames.join(', ')}`,
+                          "warning"
+                        );
+                      }
+
+                      // Sikeres vásárlások
+                      const successful = responses.filter(r => r.success);
+                      if (successful.length > 0) {
+                        this.showMessage(
+                          `${successful.length} játék sikeresen megvásárolva!`,
+                          "success"
+                        );
+                      }
+
+                      this.loadingDone = true;
+                      this.cartItems = [];
+                      localStorage.removeItem("cart");
+
+                      setTimeout(() => {
+                        this.loadingPopup = false;
+                        this.router.navigate(["/"]);
+                      }, 2000);
+                    },
+                    error: (err) => {
+                      console.error('Vásárlási hiba:', err);
+                      this.loadingPopup = false;
+                      this.showMessage("Hiba történt a fizetés közben.", "error");
+                    }
+                  });
                     },
                     error: () => {
                       this.loadingPopup = false;
