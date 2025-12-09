@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 37 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 39 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: gamephotos
@@ -589,6 +589,22 @@ VALUES
     36,
     'teszt12',
     '$2b$12$SLIS6yqYoKWrXxoXtzmhx.B2CBEu6BeDOFtcUaAyBF80sSBVTNECm'
+  );
+INSERT INTO
+  `users` (`id`, `username`, `password`)
+VALUES
+  (
+    37,
+    'teszt41',
+    '$2b$12$lXP2cU2islif6VZLY6btzuBYy7hGEah/w29TX9WSv2VEN/pi8pusK'
+  );
+INSERT INTO
+  `users` (`id`, `username`, `password`)
+VALUES
+  (
+    38,
+    'Bulya12',
+    '$2b$12$U36mPYAT6sSC3GggjFo/U.7ZUOM94lkgEeZIiiqpHjvlSxLLyGCwG'
   );
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

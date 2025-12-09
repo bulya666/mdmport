@@ -1,12 +1,68 @@
 <div class="register-container">
-  <form (ngSubmit)="register()">
-	<h2>Regisztráció</h2>
-    <input type="text" [(ngModel)]="username" name="username" required placeholder="Felhasználónév:">
+  <form (ngSubmit)="register()" novalidate>
+    <h2>Regisztráció</h2>
 
-    <input type="password" [(ngModel)]="password" name="password" required placeholder="Jelszó:">
+    <div class="input-group">
+      <label for="username">Felhasználónév</label>
+      <input
+        id="username"
+        type="text"
+        [(ngModel)]="username"
+        name="username"
+        required
+        placeholder="Felhasználónév"
+        (input)="validateUsername()"
+      />
+      <div *ngIf="usernameError" class="error-message">{{ usernameError }}</div>
+    </div>
 
-    <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required placeholder="Jelszó újra:">
+    <div class="input-group password-group">
+      <label for="password">Jelszó</label>
+      <div class="password-wrapper">
+        <input
+          id="password"
+          [type]="showPassword ? 'text' : 'password'"
+          [(ngModel)]="password"
+          name="password"
+          required
+          placeholder="Jelszó"
+          (input)="checkPasswordStrength()"
+        />
+        <button type="button" class="toggle-password" (click)="togglePassword()">
+          <i class="{{ showPassword ? 'fas fa-eye-slash' : 'fas fa-eye' }}"></i>
+        </button>
+      </div>
+      <div class="password-strength">
+        <div class="strength-bar" [ngClass]="strengthClass" [style.width.%]="passwordStrength"></div>
+        <span class="strength-text">{{ strengthText }}</span>
+      </div>
+      <div *ngIf="passwordError" class="error-message">{{ passwordError }}</div>
+    </div>
 
-    <button type="submit">Regisztrálok</button>
+    <div class="input-group password-group">
+      <label for="confirmPassword">Jelszó újra</label>
+      <div class="password-wrapper">
+        <input
+          id="confirmPassword"
+          [type]="showConfirm ? 'text' : 'password'"
+          [(ngModel)]="confirmPassword"
+          name="confirmPassword"
+          required
+          placeholder="Jelszó újra"
+        />
+        <button type="button" class="toggle-password" (click)="toggleConfirm()">
+          <i class="{{ showConfirm ? 'fas fa-eye-slash' : 'fas fa-eye' }}"></i>
+        </button>
+      </div>
+      <div *ngIf="confirmError" class="error-message">{{ confirmError }}</div>
+    </div>
+
+    <button type="submit" [disabled]="isLoading" class="submit-btn">
+      {{ isLoading ? 'Regisztrálás...' : 'Regisztrálok' }}
+    </button>
+
+    <p class="login-link">
+      Már van fiókod? <a routerLink="/login">Bejelentkezés</a>
+    </p>
   </form>
 </div>
