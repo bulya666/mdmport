@@ -155,8 +155,6 @@ export class CartComponent implements OnInit {
 
                         requests.push(req$);
                       }
-
-                      // Frissítjük a kosarat azokkal az elemekkel, amelyeknél nem találtunk játékot
                       this.cartItems = remainingCart;
                       localStorage.setItem("cart", JSON.stringify(this.cartItems));
 
@@ -191,12 +189,15 @@ export class CartComponent implements OnInit {
                           }
 
                           this.loadingDone = true;
-                          // csak a sikeresek kerültek a DB-be → töröljük a lokális kosarat
+                          if(this.loadingPopup = true){
+                            setTimeout(()=>{
+                              this.loadingPopup = false;
+                            },2000)
+                          };
                           this.cartItems = [];
                           localStorage.removeItem("cart");
                         },
                         error: (err) => {
-                          // Ennek nem kéne lefutnia, mert catchError mindent kezel — de legyen fallback
                           console.error('forkJoin hiba:', err);
                           this.loadingPopup = false;
                           this.showMessage("Váratlan hiba történt a vásárlás közben.", "error");

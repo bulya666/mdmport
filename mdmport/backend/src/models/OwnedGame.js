@@ -33,9 +33,8 @@ static async getByUserId(userid) {
   );
   return rows;
 }
-        // src/models/OwnedGame.js
         static async add(userid, gameid) {
-        // FONTOS: userid és gameid legyen szám és érvényes!
+
         userid = Number(userid);
         gameid = Number(gameid);
 
@@ -44,33 +43,34 @@ static async getByUserId(userid) {
         }
 
         console.log(`[OwnedGame.add] Próbáljuk hozzáadni: user=${userid}, game=${gameid}`);
-       try {
-      // Atomi beszúrás: csak akkor szúr be, ha még nincs ilyen sor
-      const sql = `
-        INSERT INTO ownedg (userid, gameid)
-        SELECT ?, ?
-        FROM DUAL
-        WHERE NOT EXISTS (
-          SELECT 1 FROM ownedg WHERE userid = ? AND gameid = ?
-        )
-      `;
-      const [result] = await pool.query(sql, [userid, gameid, userid, gameid]);
+        const sql = 'INSERT IGNORE INTO ownedg (userid, gameid) VALUES (?, ?)';
+        const params = [userid, gameid];
+        const maxRetries = 3;
+        let attempt = 0;
+ while (true) {
+          try {
+            const [result] = await pool.query(sql, params);
 
-      if (result.affectedRows === 0) {
-        console.log(`[OwnedGame.add] Már létezik: user=${userid}, game=${gameid}`);
-        return { alreadyOwned: true };
-      }
+            if (result.affectedRows === 0) {
+              console.log(`[OwnedGame.add] Már létezik: user=${userid}, game=${gameid}`);
+              return { alreadyOwned: true };
+            }
 
-      console.log(`[OwnedGame.add] Hozzáadva: user=${userid}, game=${gameid}`);
-      return { alreadyOwned: false };
-    } catch (err) {
-      // Ha van unique index és mégis duplikát hiba jön, jelöljük már birtokoltnak
-      if (err && err.code === 'ER_DUP_ENTRY') {
-        return { alreadyOwned: true };
-      }
-      throw err;
+            console.log(`[OwnedGame.add] Hozzáadva: user=${userid}, game=${gameid}`);
+            return { alreadyOwned: false };
+          } catch (err) {
+            if (err && err.code === 'ER_LOCK_DEADLOCK' && attempt < maxRetries) {
+              attempt++;
+              const delay = 50 * Math.pow(2, attempt);
+              console.warn(`[OwnedGame.add] Deadlock, retry ${attempt}/${maxRetries} after ${delay}ms`);
+              await new Promise(r => setTimeout(r, delay));
+              continue;
+            }
+            throw err;
+          }
+        }
     }
   }
-}
+
 
 module.exports = OwnedGame;
