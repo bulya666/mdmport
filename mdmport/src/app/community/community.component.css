@@ -1,16 +1,13 @@
-/* COMMUNITY PAGE – OPTIMIZED CYBERPUNK RED (V2.0) */
-/* Mindent átgondoltam: kisebb padding, jobb responsivity, plusz funkciók mint parallax és toggle animációk */
-
 .community-page {
   max-width: 1600px;
   margin: 0 auto;
   padding: 0 16px 80px;
   color: #e0e0ff;
   position: relative;
-  overflow-x: hidden; /* Hogy ne lógjon ki semmi */
+  overflow-x: hidden;
 }
 
-/* PLUSZ FUNKCIÓ: Finom parallax háttér (scroll-ra mozog kicsit) */
+/* Parallax háttér */
 .community-page::before {
   content: '';
   position: fixed;
@@ -21,27 +18,14 @@
   background: radial-gradient(circle at center, rgba(255, 0, 102, 0.1), transparent 70%);
   background-size: 200% 200%;
   z-index: -1;
-  transform: translateY(var(--scroll-parallax, 0));
-  transition: transform 0.5s ease-out;
 }
 
-/* Sötét mód toggle animáció (ha body.dark class van) */
-body.dark .community-page {
-  color: #f0f0ff;
-  animation: modeToggle 0.8s ease;
-}
-
-@keyframes modeToggle {
-  0% { filter: brightness(0.8) saturate(1.2); }
-  100% { filter: brightness(1) saturate(1); }
-}
-
+/* Cím */
 .community-page h2 {
-  font-size: clamp(28px, 5vw, 36px); /* Responsive font size */
+  font-size: clamp(28px, 5vw, 36px);
   font-weight: 900;
   letter-spacing: 1px;
   background: linear-gradient(90deg, #ff3366, #ff0066, #cc0033);
-  background-clip: border-box;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 20px rgba(255, 0, 102, 0.4);
@@ -61,34 +45,29 @@ body.dark .community-page {
   box-shadow: 0 0 15px #ff3366;
 }
 
-/* AJÁNLOTT CIKKEK GRID – Optimalizált, responsive */
-.articles-wrapper {
-  margin-top: 32px;
-}
-
+/* GRID – 3 oszlop × 2 sor = 6 cikk */
 .articles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Kisebb min-width, hogy több férjen */
-  gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: auto;
+  gap: 28px;
   padding: 16px 0;
 }
 
-/* PLUSZ FUNKCIÓ: Loading spinner a gridhez (ha van .loading class) */
-.articles-grid.loading::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 60px;
-  height: 60px;
-  border: 6px solid #ff3366;
-  border-top-color: transparent;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  transform: translate(-50%, -50%);
-  z-index: 5;
+/* Mobil nézetre */
+@media (max-width: 1200px) {
+  .articles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
+@media (max-width: 700px) {
+  .articles-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* CIKK KÁRTYA */
 .article-card {
   background: linear-gradient(145deg, rgba(20, 25, 45, 0.95), rgba(10, 15, 35, 0.98));
   border: 1px solid rgba(255, 51, 102, 0.25);
@@ -96,34 +75,16 @@ body.dark .community-page {
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 
+  box-shadow:
     0 8px 24px rgba(0, 0, 0, 0.5),
     0 0 15px rgba(255, 51, 102, 0.1);
   position: relative;
-  min-height: 280px; /* Hogy ne legyen túl kicsi */
-}
-
-.article-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  padding: 1.5px;
-  background: linear-gradient(45deg, #ff3366, #660033, #ff0066);
-  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  -webkit-mask-composite: destination-out;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.article-card:hover::before {
-  opacity: 1;
+  min-height: 250px;
 }
 
 .article-card:hover {
   transform: translateY(-8px) scale(1.01);
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.7),
     0 0 30px rgba(255, 51, 102, 0.4);
 }
@@ -131,21 +92,10 @@ body.dark .community-page {
 .article-card mat-card-title {
   font-size: clamp(18px, 3vw, 22px);
   font-weight: 800;
-  color: #ffffff;
   padding: 20px 20px 0;
   background: linear-gradient(to right, #ff6b9d, #ff3366);
-   background-clip: border-box;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.article-card hr {
-  height: 3px;
-  background: linear-gradient(90deg, #ff3366, transparent);
-  border: none;
-  margin: 12px 20px;
-  border-radius: 2px;
-  box-shadow: 0 0 10px #ff3366;
 }
 
 .article-card mat-card-content p {
@@ -155,7 +105,15 @@ body.dark .community-page {
   padding: 0 20px 20px;
 }
 
-/* MODAL – Responsive, full screen mobilon */
+.article-card hr {
+  height: 3px;
+  background: linear-gradient(90deg, #ff3366, transparent);
+  border: none;
+  margin: 12px 20px;
+  border-radius: 2px;
+}
+
+/* MODAL */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -173,53 +131,26 @@ body.dark .community-page {
   background: linear-gradient(135deg, rgba(15, 20, 40, 0.98), rgba(10, 15, 30, 0.98));
   border: 1.5px solid #ff3366;
   border-radius: 24px;
-  max-width: 1200px;
+  max-width: 900px;
   width: 95%;
   max-height: 85vh;
   overflow-y: auto;
-  box-shadow: 
+  box-shadow:
     0 0 60px rgba(255, 51, 102, 0.5),
     0 24px 60px rgba(0, 0, 0, 0.8);
   z-index: 1001;
-  animation: modalPop 0.4s ease forwards;
-  backdrop-filter: blur(16px);
 }
 
 .modal-content {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 32px;
-  padding: 40px;
-}
-
-@media (max-width: 900px) {
-  .modal-content {
-    grid-template-columns: 1fr;
-    padding: 24px;
-  }
-  .modal {
-    width: 98%;
-    max-height: 95vh;
-  }
+  padding: 32px;
 }
 
 .modal-left h2 {
   font-size: clamp(24px, 4vw, 32px);
   font-weight: 900;
   background: linear-gradient(90deg, #ff3366, #ff6699);
-   background-clip: border-box;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 12px;
-  text-shadow: 0 0 20px rgba(255, 51, 102, 0.4);
-}
-
-.modal-left hr {
-  height: 4px;
-  background: linear-gradient(90deg, #ff3366, transparent);
-  border: none;
-  margin: 16px 0;
-  box-shadow: 0 0 15px #ff3366;
 }
 
 .modal-left p {
@@ -228,39 +159,14 @@ body.dark .community-page {
   color: #e6e6ff;
 }
 
-.modal-right img {
-  border-radius: 16px;
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6);
-  border: 1.5px solid rgba(255, 51, 102, 0.3);
-  transition: transform 0.3s ease;
-  max-width: 100%;
-  height: auto;
-}
-
-.modal-right img:hover {
-  transform: scale(1.02);
-}
-
-/* PLUSZ FUNKCIÓ: Pulzáló like btn hover */
+/* BUTTONS */
 .like-btn {
   background: linear-gradient(135deg, #ff3366, #cc0033) !important;
   color: white !important;
   font-weight: 700;
   border-radius: 50px;
   padding: 10px 24px !important;
-  box-shadow: 0 8px 20px rgba(255, 51, 102, 0.5) !important;
   transition: all 0.3s ease !important;
-}
-
-.like-btn:hover {
-  transform: translateY(-3px) scale(1.03) !important;
-  box-shadow: 0 16px 32px rgba(255, 51, 102, 0.7) !important;
-  animation: pulseBtn 1.2s infinite ease-in-out;
-}
-
-@keyframes pulseBtn {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.15); }
 }
 
 .close-btn {
@@ -270,26 +176,23 @@ body.dark .community-page {
   padding: 10px 24px;
   border-radius: 50px;
   font-weight: 600;
-  transition: all 0.3s ease;
 }
 
 .close-btn:hover {
-  background: rgba(255, 51, 102, 0.15);
+  background: rgba(255, 51, 102, 0.1);
   border-color: #ff3366;
-  color: white;
-  transform: translateY(-2px);
+  box-shadow: 0 0 12px #ff3366;
 }
 
-/* ÚJ POSZT & POSZTOK – Optimalizált padding */
+/* ÚJ BEJEGYZÉS ÉS BEJEGYZÉSEK */
+
 .new-post {
   background: linear-gradient(145deg, rgba(20, 30, 50, 0.98), rgba(15, 20, 40, 0.98));
   border: 1.5px solid rgba(255, 51, 102, 0.3);
   border-radius: 20px;
   padding: 24px;
   margin: 48px 0 32px;
-  box-shadow: 
-    0 16px 40px rgba(0, 0, 0, 0.7),
-    0 0 20px rgba(255, 51, 102, 0.15);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 51, 102, 0.15);
   backdrop-filter: blur(10px);
 }
 
@@ -318,10 +221,8 @@ textarea[matInput]:focus {
   border-color: #ff3366;
   box-shadow: 0 0 20px rgba(255, 51, 102, 0.4);
   background: rgba(15, 20, 40, 0.98);
-}
 
-/* POSZTOK – Gap csökkentve, hogy több férjen */
-.posts {
+}.posts {
   display: grid;
   gap: 20px;
 }
@@ -384,6 +285,10 @@ textarea[matInput]:focus {
   background: rgba(30, 40, 70, 0.9);
   border-color: #ff3366;
   transform: translateX(4px);
+}
+
+.mat-mdc-text-field-wrapper {
+  width: 600%;
 }
 
 /* ANIMÁCIÓK – Finomabbak, nem túl durvák */
