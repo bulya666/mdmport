@@ -42,12 +42,11 @@ CREATE TABLE IF NOT EXISTS `ownedg` (
   `userid` int(11) NOT NULL,
   `gameid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uq_ownedg_user_game` (`userid`, `gameid`),
   KEY `userid` (`userid`),
   KEY `gameid` (`gameid`),
   CONSTRAINT `ownedg_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`id`),
   CONSTRAINT `ownedg_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `games` (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 91 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 66 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users
@@ -58,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 46 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: gamephotos
@@ -409,11 +408,15 @@ VALUES
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
+  (38, 28, 4);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
   (39, 28, 3);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (38, 28, 4);
+  (40, 28, 7);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
@@ -425,11 +428,11 @@ VALUES
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (40, 28, 7);
+  (43, 28, 8);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (43, 28, 8);
+  (44, 30, 6);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
@@ -441,6 +444,22 @@ VALUES
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
+  (47, 30, 12);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (48, 30, 10);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (49, 30, 9);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (50, 30, 11);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
   (51, 30, 3);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
@@ -449,27 +468,11 @@ VALUES
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (44, 30, 6);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
   (53, 30, 8);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (49, 30, 9);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (48, 30, 10);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (50, 30, 11);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (47, 30, 12);
+  (54, 33, 8);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
@@ -477,19 +480,7 @@ VALUES
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (61, 33, 3);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (60, 33, 5);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
   (56, 33, 7);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (54, 33, 8);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
@@ -505,119 +496,27 @@ VALUES
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
+  (60, 33, 5);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (61, 33, 3);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
   (62, 34, 2);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (63, 38, 1);
+  (63, 35, 4);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (64, 38, 2);
+  (64, 35, 9);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (65, 38, 12);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (66, 39, 1);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (67, 39, 11);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (70, 43, 1);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (71, 43, 2);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (76, 43, 3);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (72, 43, 4);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (68, 43, 5);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (69, 43, 6);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (75, 43, 7);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (74, 43, 9);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (73, 43, 10);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (78, 44, 1);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (84, 44, 2);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (86, 44, 4);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (80, 44, 5);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (77, 44, 6);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (79, 44, 7);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (81, 44, 8);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (85, 44, 10);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (82, 44, 11);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (83, 44, 12);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (88, 45, 2);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (89, 45, 7);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (90, 45, 9);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (87, 45, 11);
+  (65, 35, 2);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: users
@@ -684,88 +583,8 @@ INSERT INTO
 VALUES
   (
     35,
-    'teszt5',
-    '$2b$12$0VouLhJ3IeOmNvOdJrIpguc0aPY/oyjAd3WjiT8/Ad4XFHiG.QQwy'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    36,
-    'teszt1',
-    '$2b$12$x6CIPgjhp4THHLyZIuCLW.MkqXGyRVynw9uxOCKyWXFGuqoq8CoAC'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    37,
-    'teszt3',
-    '$2b$12$uIMo/3MWS.jlS.bzMlExSe4JOEjp0283PdbQpHdJzVPzfDw3m4dXu'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    38,
-    'test',
-    '$2b$12$JYU6.byCqRtaeZv.LJzJ9OaM6QQ.qnXX6ro9ysRTwHN4DSeN0gwIC'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    39,
-    'test1',
-    '$2b$12$dj.gUMzDGT9AReMWKcAWJ.6pLOSd7Kka0pdwPlxNyh3qaIeTAaS8.'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    40,
-    'Helo',
-    '$2b$12$CplJed8YqfQ.cu3dh2Z83ed7xVI0xtQl4.9d7M3hvjhTaFPBXGpLC'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    41,
-    'Helo1',
-    '$2b$12$z01nif91hK3wfatEqAj.LeqB4yCsWvi75iG/E9rMqRuhw/OHE9APG'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    42,
-    'teszt',
-    '$2b$12$Z//4HFFpyGeli7oIelqLhuROsn/9gfSSBR9pSqjx2JA0f4bB03qfK'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    43,
-    'Helo12',
-    '$2b$12$YhAshX2QeH/EZvm1Hvy88OY/olhTv5azIr8y39CsJRvPz1HxNBUXW'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    44,
-    'Teszt100',
-    '$2b$12$R0f0vICeMLlf9tIQ4D8cSu.X5qIUB6n/weNFN/CSXh51uMplrcO4O'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    45,
-    'asdasdasd',
-    '$2b$12$Dc5gsvCXKrsCapTeE23OIeZJJzZH4aghuskfeHdiFpC.jcP/1Huie'
+    'Bulya56',
+    '$2b$12$76btRu79XmPbNDYJXSKr/O0q7LxMb9ChNBLBmsrFzzd5WkccW6j/u'
   );
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
