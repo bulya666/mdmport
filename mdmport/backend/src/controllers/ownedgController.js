@@ -28,7 +28,7 @@ exports.addOwnedGame = async (req, res) => {
 
     if (result.alreadyOwned) {
       // EZ A FONTOS: már birtokolja → 409 Conflict
-      return res.status(409).json({
+      return res.json({
         success: false,
         alreadyOwned: true,
         message: 'Már birtoklod ezt a játékot'

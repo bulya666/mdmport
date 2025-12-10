@@ -45,8 +45,9 @@ CREATE TABLE IF NOT EXISTS `ownedg` (
   KEY `userid` (`userid`),
   KEY `gameid` (`gameid`),
   CONSTRAINT `ownedg_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`id`),
-  CONSTRAINT `ownedg_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `games` (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 65 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+  CONSTRAINT `ownedg_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `games` (`id`),
+  UNIQUE KEY `ux_ownedg_user_game` (`userid`,`gameid`)
+) ENGINE = InnoDB AUTO_INCREMENT = 64 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users
@@ -57,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 39 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: gamephotos
@@ -508,11 +509,7 @@ VALUES
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (63, 36, 11);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (64, 36, 4);
+  (63, 35, 4);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: users
@@ -579,32 +576,8 @@ INSERT INTO
 VALUES
   (
     35,
-    'teszt5',
-    '$2b$12$0VouLhJ3IeOmNvOdJrIpguc0aPY/oyjAd3WjiT8/Ad4XFHiG.QQwy'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    36,
-    'teszt12',
-    '$2b$12$SLIS6yqYoKWrXxoXtzmhx.B2CBEu6BeDOFtcUaAyBF80sSBVTNECm'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    37,
-    'teszt41',
-    '$2b$12$lXP2cU2islif6VZLY6btzuBYy7hGEah/w29TX9WSv2VEN/pi8pusK'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    38,
-    'Bulya12',
-    '$2b$12$U36mPYAT6sSC3GggjFo/U.7ZUOM94lkgEeZIiiqpHjvlSxLLyGCwG'
+    'Bulya56',
+    '$2b$12$76btRu79XmPbNDYJXSKr/O0q7LxMb9ChNBLBmsrFzzd5WkccW6j/u'
   );
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

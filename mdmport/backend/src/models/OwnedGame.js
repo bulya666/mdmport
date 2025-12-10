@@ -44,25 +44,33 @@ static async getByUserId(userid) {
         }
 
         console.log(`[OwnedGame.add] Próbáljuk hozzáadni: user=${userid}, game=${gameid}`);
+       try {
+      // Atomi beszúrás: csak akkor szúr be, ha még nincs ilyen sor
+      const sql = `
+        INSERT INTO ownedg (userid, gameid)
+        SELECT ?, ?
+        FROM DUAL
+        WHERE NOT EXISTS (
+          SELECT 1 FROM ownedg WHERE userid = ? AND gameid = ?
+        )
+      `;
+      const [result] = await pool.query(sql, [userid, gameid, userid, gameid]);
 
-        const [exists] = await pool.query(
-            'SELECT id FROM ownedg WHERE userid = ? AND gameid = ?',
-            [userid, gameid]
-        );
+      if (result.affectedRows === 0) {
+        console.log(`[OwnedGame.add] Már létezik: user=${userid}, game=${gameid}`);
+        return { alreadyOwned: true };
+      }
 
-        if (exists.length > 0) {
-            console.log(`[OwnedGame.add] Már létezik: user=${userid}, game=${gameid}`);
-            return { alreadyOwned: true };
-        }
-
-        await pool.query(
-            'INSERT INTO ownedg (userid, gameid) VALUES (?, ?)',
-            [userid, gameid]
-        );
-
-        console.log(`[OwnedGame.add] Sikeresen hozzáadva: user=${userid}, game=${gameid}`);
-        return { alreadyOwned: false };
-        }
+      console.log(`[OwnedGame.add] Hozzáadva: user=${userid}, game=${gameid}`);
+      return { alreadyOwned: false };
+    } catch (err) {
+      // Ha van unique index és mégis duplikát hiba jön, jelöljük már birtokoltnak
+      if (err && err.code === 'ER_DUP_ENTRY') {
+        return { alreadyOwned: true };
+      }
+      throw err;
+    }
+  }
 }
 
 module.exports = OwnedGame;

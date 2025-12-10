@@ -3,7 +3,8 @@ import { CommonModule, NgIf } from "@angular/common";
 import { Router } from "@angular/router";
 import { AuthService } from "../services/auth.service";
 import { HttpClient } from "@angular/common/http";
-import { forkJoin } from "rxjs";
+import { forkJoin, of } from "rxjs";
+import { catchError, map } from 'rxjs/operators';
 
 export interface CartItem {
   id: number;
@@ -115,99 +116,102 @@ export class CartComponent implements OnInit {
               next: (owned) => {
                 const ownedIds = owned.map((o) => o.gameid);
 
-                this._http
-                  .get<Game[]>("http://localhost:3000/api/games")
+                this._http.get<Game[]>("http://localhost:3000/api/games")
                   .subscribe({
                     next: (games) => {
                       const requests: any[] = [];
+                      const remainingCart: CartItem[] = [];
 
-                      this.cartItems = this.cartItems.filter((item) => {
-                        const game = games.find((g) => g.title === item.name);
-                        if (!game) return true;
+                      for (const item of this.cartItems) {
+                        const name = (item.name || "").toString().trim().toLowerCase();
+                        const game = games.find(g => (g.title || "").toString().trim().toLowerCase() === name);
+
+                        if (!game) {
+                          remainingCart.push(item);
+                          continue;
+                        }
 
                         if (ownedIds.includes(game.id)) {
                           this.showMessage(`Már birtoklod: ${game.title}`, "info");
-                          return false; // töröljük a kosárból
+                          continue;
                         }
-
-                        // CSAK akkor adjuk hozzá a requestekhez, ha még nincs meg
-                        requests.push(
-                          this._http.post("http://localhost:3000/api/ownedg", {
-                            userid: userid,
-                            gameid: game.id,
-                          })
+                        
+                        const req$ = this._http.post("http://localhost:3000/api/ownedg", {
+                          userid: userid,
+                          gameid: game.id,
+                        }).pipe(
+                          map((res: any) => ({
+                            success: !!res?.success,
+                            alreadyOwned: !!res?.alreadyOwned,
+                            message: res?.message || null
+                          })),
+                          catchError((err) => of({
+                            success: false,
+                            error: true,
+                            status: err?.status,
+                            message: err?.error?.message || 'Hálózati / szerver hiba'
+                          }))
                         );
-                        return true;
-                      });
-                      localStorage.setItem(
-                        "cart",
-                        JSON.stringify(this.cartItems),
-                      );
+
+                        requests.push(req$);
+                      }
+
+                      // Frissítjük a kosarat azokkal az elemekkel, amelyeknél nem találtunk játékot
+                      this.cartItems = remainingCart;
+                      localStorage.setItem("cart", JSON.stringify(this.cartItems));
 
                       if (requests.length === 0) {
                         this.loadingPopup = false;
-                        this.showMessage(
-                          "A kosárban lévő játékokból van birtokolt.",
-                          "info",
-                        );
+                        this.showMessage("A kosárban lévő játékok közül nincs új vásárolható cím.", "info");
                         return;
                       }
 
-                     // cart.component.ts → purchase() → a forkJoin rész
-                  forkJoin(requests).subscribe({
-                    next: (responses: any[]) => {
-                      // Ellenőrizzük, van-e már birtokolt játék a válaszok között
-                      const alreadyOwnedGames = responses
-                        .filter(r => r.status === 409 || (r.alreadyOwned && !r.success))
-                        .map(r => r.message || 'Ismeretlen játék');
+                      forkJoin(requests).subscribe({
+                        next: (responses: any[]) => {
+                          const alreadyOwnedGames = responses
+                            .filter(r => r.alreadyOwned)
+                            .map(r => r.message || 'Ismeretlen játék');
 
-                      if (alreadyOwnedGames.length > 0) {
-                        this.showMessage(
-                          `Ezeket a játékokat már birtoklod: ${alreadyOwnedGames.join(', ')}`,
-                          "warning"
-                        );
-                      }
+                          const failed = responses.filter(r => !r.success && !r.alreadyOwned);
+                          const successCount = responses.filter(r => r.success).length;
 
-                      // Sikeres vásárlások
-                      const successful = responses.filter(r => r.success);
-                      if (successful.length > 0) {
-                        this.showMessage(
-                          `${successful.length} játék sikeresen megvásárolva!`,
-                          "success"
-                        );
-                      }
+                          if (alreadyOwnedGames.length > 0) {
+                            this.showMessage(
+                              `Ezeket a játékokat már birtoklod: ${alreadyOwnedGames.join(', ')}`,
+                              "warning"
+                            );
+                          }
 
-                      this.loadingDone = true;
-                      this.cartItems = [];
-                      localStorage.removeItem("cart");
+                          if (failed.length > 0) {
+                            this.showMessage(`${failed.length} vásárlás sikertelen (hiba).`, "error");
+                          }
 
-                      setTimeout(() => {
-                        this.loadingPopup = false;
-                        this.router.navigate(["/"]);
-                      }, 2000);
-                    },
-                    error: (err) => {
-                      console.error('Vásárlási hiba:', err);
-                      this.loadingPopup = false;
-                      this.showMessage("Hiba történt a fizetés közben.", "error");
-                    }
-                  });
+                          if (successCount > 0) {
+                            this.showMessage(`${successCount} játék sikeresen megvásárolva!`, "success");
+                          }
+
+                          this.loadingDone = true;
+                          // csak a sikeresek kerültek a DB-be → töröljük a lokális kosarat
+                          this.cartItems = [];
+                          localStorage.removeItem("cart");
+                        },
+                        error: (err) => {
+                          // Ennek nem kéne lefutnia, mert catchError mindent kezel — de legyen fallback
+                          console.error('forkJoin hiba:', err);
+                          this.loadingPopup = false;
+                          this.showMessage("Váratlan hiba történt a vásárlás közben.", "error");
+                        }
+                      });
                     },
                     error: () => {
                       this.loadingPopup = false;
-                      this.showMessage(
-                        "Nem sikerült lekérni a játékokat.",
-                        "error",
-                      );
+                      this.showMessage("Nem sikerült lekérni a játékokat.", "error");
                     },
                   });
               },
               error: () => {
                 this.loadingPopup = false;
-                this.showMessage(
-                  "Nem sikerült lekérni a birtokolt játékokat.",
-                  "error",
-                );
+                this.showMessage("Nem sikerült lekérni a birtokolt játékokat.", "error");
               },
             });
         },
