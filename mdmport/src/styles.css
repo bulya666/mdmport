@@ -8,11 +8,8 @@
 
 html, body {
   margin: 0;
-  height: 100%;
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background: var(--bg);
-  color: var(--text);
-  min-width: 400px;
+  min-width: 800px;
 }
 
 a {
@@ -26,11 +23,11 @@ img {
 }
 
 :root {
---bg: linear-gradient(
-  180deg,
-  rgba(6, 18, 34, 1) 0%,
-  rgba(6, 18, 34, 1) 100%
-);
+--bg:
+  radial-gradient(circle at 20% 30%, rgba(0, 200, 255, 0.18), transparent 55%),
+  radial-gradient(circle at 80% 70%, rgba(255, 45, 85, 0.22), transparent 60%),
+  radial-gradient(circle at 60% 20%, rgba(180, 0, 255, 0.15), transparent 65%),
+  linear-gradient(135deg, #050912, #0a1422 40%, #050912);
   --bg-soft: #101319; 
   --text: #e5e7eb; 
   --muted: #9aa3af; 
@@ -39,15 +36,6 @@ img {
   --card: #12151b;
 }
 
-:root.light {
-  --bg: #ffffff; 
-  --bg-soft: #f6f7f9; 
-  --text: #0f172a; 
-  --muted: #475569; 
-  --acc: #9B111E; 
-  --ring: #d0d7e2; 
-  --card: #ffffff; 
-}
 
 .catalog {
   width: 100%;

@@ -79,7 +79,7 @@ export class RegisterComponent {
       this.strengthClass = 'very-strong';
     }
 
-    this.passwordError = p.length < 8 ? 'A jelszónak legalább 8 karakternek kell lennie!' : null;
+    this.passwordError = p.length < 8 ? 'A jelszónak legalább 8 karakternek kell lennie és tartalmaznia kell idegen karaktert a biztonság érdekében!' : null;
   }
 
   togglePassword() {

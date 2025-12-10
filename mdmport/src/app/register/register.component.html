@@ -1,5 +1,6 @@
 <div class="register-container">
   <form (ngSubmit)="register()" novalidate>
+    <img src="mdmlogo_m.png" alt="" id="logo">
     <h2>Regisztráció</h2>
 
     <div class="input-group">
@@ -25,7 +26,7 @@
           [(ngModel)]="password"
           name="password"
           required
-          placeholder="Jelszó"
+          placeholder="**********"
           (input)="checkPasswordStrength()"
         />
         <button type="button" class="toggle-password" (click)="togglePassword()">
@@ -48,7 +49,7 @@
           [(ngModel)]="confirmPassword"
           name="confirmPassword"
           required
-          placeholder="Jelszó újra"
+          placeholder="**********"
         />
         <button type="button" class="toggle-password" (click)="toggleConfirm()">
           <i class="{{ showConfirm ? 'fas fa-eye-slash' : 'fas fa-eye' }}"></i>

@@ -1,4 +1,4 @@
-/* login.component.css – 100% ugyanaz a stílus, mint a register */
+
 .login-container {
   position: relative;
   display: flex;
@@ -8,15 +8,13 @@
   min-height: calc(100vh - 220px);
   padding: 40px 20px;
   overflow: hidden;
-  background: #05070b;
+  background: inherit;
 }
 
 .login-container::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at top, rgba(230, 0, 0, 0.22), transparent 60%),
-    radial-gradient(circle at bottom, rgba(0, 0, 0, 0.9), #05070b);
   z-index: -2;
 }
 
@@ -26,7 +24,6 @@
   width: 520px;
   height: 520px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(230, 0, 0, 0.32), transparent 70%);
   filter: blur(6px);
   opacity: 0.6;
   z-index: -1;
@@ -34,7 +31,11 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
+#logo{
+  margin: auto;
+  width: 20%;
+  margin-bottom: 10px;
+}
 .login-container form {
   background: rgba(6, 10, 18, 0.96);
   border-radius: 18px;
@@ -46,6 +47,7 @@
   overflow: hidden;
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.02);
   animation: fadeIn 0.5s ease-in-out;
+  border: 2px solid rgba(230, 0, 0, 0.32);
 }
 
 @keyframes fadeIn {
@@ -58,7 +60,6 @@
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  background: conic-gradient(from 180deg, #e60000, #ff4d4d, #e60000, #550000, #e60000);
   opacity: 0.55;
   z-index: -1;
 }
@@ -86,15 +87,14 @@
   content: '';
   position: absolute;
   left: 50%;
-  bottom: -8px;
+  bottom: -2px;
   transform: translateX(-50%);
-  width: 52px;
+  width: 200px;
   height: 3px;
   border-radius: 999px;
   background: linear-gradient(90deg, #ff4d4d, #e60000);
 }
 
-/* Újrahasznosítjuk ugyanazokat az input stílusokat */
 .input-group {
   margin-bottom: 16px;
   text-align: left;
