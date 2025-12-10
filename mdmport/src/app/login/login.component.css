@@ -1,3 +1,4 @@
+/* login.component.css – 100% ugyanaz a stílus, mint a register */
 .login-container {
   position: relative;
   display: flex;
@@ -7,62 +8,63 @@
   min-height: calc(100vh - 220px);
   padding: 40px 20px;
   overflow: hidden;
+  background: #05070b;
 }
 
 .login-container::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at top, rgba(230, 0, 0, 0.22), transparent 60%),
+  background: radial-gradient(circle at top, rgba(230, 0, 0, 0.22), transparent 60%),
     radial-gradient(circle at bottom, rgba(0, 0, 0, 0.9), #05070b);
-  opacity: 1;
   z-index: -2;
 }
 
 .login-container::after {
-  content: "";
+  content: '';
   position: absolute;
-  width: 480px;
-  height: 480px;
+  width: 520px;
+  height: 520px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(230, 0, 0, 0.32), transparent 70%);
   filter: blur(6px);
   opacity: 0.6;
   z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.form-container {
+.login-container form {
   background: rgba(6, 10, 18, 0.96);
   border-radius: 18px;
-  padding: 32px 28px 26px;
+  padding: 32px 28px 32px;
   width: 100%;
-  max-width: 360px;
+  max-width: 380px;
   text-align: center;
   position: relative;
   overflow: hidden;
-  box-shadow:
-    0 18px 45px rgba(0, 0, 0, 0.8),
-    0 0 0 1px rgba(255, 255, 255, 0.02);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.02);
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-.form-container::before {
-  content: "";
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.login-container form::before {
+  content: '';
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  background: conic-gradient(from 180deg,
-      #e60000,
-      #ff4d4d,
-      #e60000,
-      #550000,
-      #e60000);
+  background: conic-gradient(from 180deg, #e60000, #ff4d4d, #e60000, #550000, #e60000);
   opacity: 0.55;
   z-index: -1;
 }
 
-.form-container::after {
-  content: "";
+.login-container form::after {
+  content: '';
   position: absolute;
   inset: 1px;
   border-radius: inherit;
@@ -70,35 +72,43 @@
   z-index: -1;
 }
 
-.form-container h2 {
+.login-container form h2 {
   color: #ffffff;
-  margin-bottom: 18px;
-  font-size: 26px;
+  margin-bottom: 28px;
+  font-size: 24px;
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   position: relative;
 }
 
-.form-container h2::after {
-  content: "";
+.login-container form h2::after {
+  content: '';
   position: absolute;
   left: 50%;
   bottom: -8px;
   transform: translateX(-50%);
-  width: 42px;
+  width: 52px;
   height: 3px;
   border-radius: 999px;
   background: linear-gradient(90deg, #ff4d4d, #e60000);
 }
 
-.form-container form {
-  margin-top: 22px;
-  display: grid;
-  gap: 12px;
+/* Újrahasznosítjuk ugyanazokat az input stílusokat */
+.input-group {
+  margin-bottom: 16px;
+  text-align: left;
 }
 
-.form-container input {
+.input-group label {
+  display: block;
+  color: #ffffff;
+  font-size: 14px;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.input-group input {
   display: block;
   width: 100%;
   padding: 11px 12px;
@@ -108,80 +118,105 @@
   color: #f5f5f5;
   font-size: 14px;
   outline: none;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease,
-    transform 0.15s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, transform 0.15s ease;
 }
 
-.form-container input::placeholder {
+.input-group input::placeholder {
   color: rgba(255, 255, 255, 0.35);
 }
 
-.form-container input:hover {
+.input-group input:hover {
   border-color: rgba(230, 0, 0, 0.7);
   background: rgba(0, 0, 0, 0.96);
 }
 
-.form-container input:focus {
+.input-group input:focus {
   border-color: #e60000;
   box-shadow: 0 0 0 1px rgba(230, 0, 0, 0.4), 0 0 16px rgba(230, 0, 0, 0.45);
   transform: translateY(-1px);
 }
 
-.form-container button[type="submit"] {
+.password-wrapper {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  font-size: 16px;
+  transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+  color: #e60000;
+}
+
+.error-message {
+  color: #ff4d4d;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.submit-btn {
   background: linear-gradient(135deg, #e60000, #ff3333);
   border: none;
   color: #fff;
   padding: 11px 14px;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 24px;
   cursor: pointer;
   font-weight: 700;
   font-size: 14px;
   border-radius: 999px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.9),
-    0 0 18px rgba(230, 0, 0, 0.6);
-  transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    filter 0.18s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.9), 0 0 18px rgba(230, 0, 0, 0.6);
+  transition: all 0.18s ease;
 }
 
-.form-container button[type="submit"]:hover {
+.submit-btn:hover {
   transform: translateY(-1px);
   filter: brightness(1.05);
-  box-shadow:
-    0 14px 32px rgba(0, 0, 0, 0.9),
-    0 0 22px rgba(255, 51, 51, 0.75);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.9), 0 0 22px rgba(255, 51, 51, 0.75);
 }
 
-.form-container button[type="submit"]:active {
+.submit-btn:active {
   transform: translateY(1px) scale(0.98);
-  box-shadow:
-    0 4px 14px rgba(0, 0, 0, 0.8),
-    0 0 10px rgba(230, 0, 0, 0.6);
 }
 
-.form-container p {
-  margin-top: 16px;
-  color: rgba(255, 255, 255, 0.65);
+.submit-btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.register-link {
+  margin-top: rgba(255, 255, 255, 0.65);
   font-size: 13px;
+  margin-top: 20px;
 }
 
-.form-container a {
+.register-link a {
   color: #ff4d4d;
   text-decoration: none;
   font-weight: 500;
   position: relative;
+  transition: color 0.2s ease;
 }
 
-.form-container a::after {
-  content: "";
+.register-link a:hover {
+  color: #e60000;
+}
+
+.register-link a::after {
+  content: '';
   position: absolute;
   left: 0;
   bottom: -2px;
@@ -191,117 +226,17 @@
   transition: width 0.2s ease;
 }
 
-.form-container a:hover::after {
+.register-link a:hover::after {
   width: 100%;
 }
 
-.back-btn {
-  background: transparent;
-  border: 1px solid rgba(230, 0, 0, 0.7);
-  color: #ff4d4d;
-  padding: 8px 18px;
-  border-radius: 999px;
-  margin-top: 16px;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 500;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    transform 0.15s ease,
-    box-shadow 0.2s ease;
-}
-
-.back-btn:hover {
-  background: rgba(230, 0, 0, 0.14);
-  color: #ffffff;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
-  transform: translateY(-1px);
-}
-
-.back-btn:active {
-  transform: translateY(1px) scale(0.98);
-}
-
-.toast-success,
-.toast-error {
-  font-weight: 500;
-  border-radius: 8px;
-  animation: fadeInOut 3s ease-in-out;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7);
-}
-
-.toast-success {
-  background-color: #4caf50;
-  color: #fff;
-}
-
-.toast-error {
-  background-color: #f44336;
-  color: #fff;
-}
-
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.96);
-  }
-
-  10% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
-  90% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.96);
-  }
-}
-
-@media (max-width: 768px) {
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    background: rgba(8, 26, 48, 0.97);
-    position: absolute;
-    top: 60px;
-    right: 0;
-    width: 200px;
-    border-radius: 12px 0 0 12px;
-    padding: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    z-index: 90;
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-    transform: translateY(-10px);
-    backdrop-filter: blur(10px);
-    transition:
-      max-height 0.3s ease,
-      opacity 0.3s ease,
-      transform 0.3s ease;
-  }
-
-  .nav-links.show {
-    display: flex;
-    max-height: 420px;
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .hamburger {
-    display: flex;
-  }
-}
-
 @media (max-width: 480px) {
-  .form-container {
-    padding: 26px 20px 22px;
+  .login-container form {
+    padding: 26px 20px;
     border-radius: 16px;
+  }
+
+  .login-container form h2 {
+    font-size: 22px;
   }
 }
