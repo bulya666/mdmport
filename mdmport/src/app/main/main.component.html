@@ -1,22 +1,29 @@
 <main class="container">
 
-  <div class="ajanlott">
-    <h2>Ajánlott játék</h2>
-    <section class="featured">
-      <div class="featured-grid">
+<div class="ajanlott">
+  <h2>Ajánlott játék</h2>
 
-        <div class="featured-info">
-          <h1 id="f-title"></h1>
-          <p id="f-desc"></p>
-          <div class="featured-price" id="f-price"></div>
-          <button class="buy" (click)="RecomendedAddToCart()">Kosárba</button>
-        </div>
-        <div class="featured-cover">
-          <img id="f-cover" src="">
-        </div>
+  <div class="featured">
+    <div class="featured-grid">
+      <div class="featured-info">
+        <h1 id="f-title">Játék címe</h1>
+        <p id="f-desc">Rövid, ütős leírás ami két-három sorban elfér és megfogja a látogatót.</p>
+        
+        <div class="featured-price" id="f-price">14 990 Ft</div>
+        
+        <button class="buy-cta" (click)="RecomendedAddToCart()">
+          <span>Kosárba</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M17 11l-5 5-5-5M17 7l-5 5-5-5"/>
+          </svg>
+        </button>
       </div>
-    </section>
+      <div class="featured-cover">
+        <img id="f-cover" src="" alt="Ajánlott játék borító" loading="lazy" />
+      </div>
+    </div>
   </div>
+</div>
 
   <section class="hero">
     <div class="tabs">
@@ -24,8 +31,13 @@
       <div class="tab" data-filter="free">Ingyenes</div>
       <div class="tab" data-filter="top">Top eladások</div>
     </div>
-    <div class="controls">
-      <span class="tag">MDMPort minden jog fenntartva.</span>
+    <div class="hero-meta">
+      <div class="copyright-tag">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-8.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 2.1-1.43 1.38 0 1.9.66 1.94 1.64h1.71c-.05-1.34-.87-2.57-2.49-2.97V5h-3v1.64c-1.25.38-2.4 1.36-2.4 2.93 0 1.88 1.62 2.51 3.12 2.87 1.94.47 2.38 1.09 2.38 1.78 0 .76-.64 1.41-2.2 1.41-1.62 0-2.23-.79-2.3-1.64H7.36c.07 1.48 1.02 2.72 2.73 3.08V19h3v-1.64c1.28-.1 2.46-.78 2.46-2.93 0-2.08-1.75-2.72-3.24-3.05z"/>
+        </svg>
+        <span>MDMPort – Minden jog fenntartva 2025</span>
+      </div>
     </div>
   </section>
 
