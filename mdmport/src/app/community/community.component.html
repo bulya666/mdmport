@@ -1,46 +1,44 @@
 <div class="community-page">
 
-  <div class="articles-wrapper">
-    <h2>Ajánlott cikkek</h2>
-    <div class="articles-grid">
-      <mat-card *ngFor="let article of featuredArticles" class="article-card" (click)="openModal(article)">
+<div class="articles-container">
+  <h2>Ajánlott cikkek</h2>
+  <div class="articles-grid">
+    <mat-card *ngFor="let article of featuredArticles" class="article-card" (click)="openModal(article)">
+      <div class="article-image" *ngIf="article.image">
+        <img [src]="article.image" alt="">
+      </div>
+      <div class="article-body">
         <mat-card-title>{{ article.title }}</mat-card-title>
         <hr>
         <mat-card-content>
           <p>{{ article.summary }}</p>
         </mat-card-content>
-      </mat-card>
-    </div>
-  </div>
-
-  <div class="modal-backdrop" *ngIf="modalOpen" (click)="closeModal()">
-  </div>
-
-  <div class="modal" *ngIf="modalOpen" role="dialog" aria-modal="true" [attr.aria-label]="selectedArticle?.title" tabindex="-1" (keydown.escape)="closeModal()">
-
-    <div class="modal-content">
-      <div class="modal-left">
-        <h2>{{ selectedArticle?.title }}</h2>
-        <hr>
-        <p>{{ selectedArticle?.fullText }}</p>
-
-        <div class="modal-actions">
-          <button mat-raised-button color="primary" class="like-btn" (click)="likeArticle(selectedArticle!)">
-            <mat-icon>thumb_up</mat-icon>
-            <span>{{ selectedArticle?.likes }}</span>
-          </button>
-
-          <button class="close-btn" type="button" (click)="closeModal()">
-            Bezárás
-          </button>
-        </div>
       </div>
+    </mat-card>
+  </div>
+</div>
 
-      <div class="modal-right" *ngIf="selectedArticle?.image">
-        <img [src]="selectedArticle?.image" alt="">
+<div class="modal-backdrop" *ngIf="modalOpen" (click)="closeModal()"></div>
+
+<div class="modal" *ngIf="modalOpen" role="dialog" aria-modal="true" tabindex="-1" [attr.aria-label]="selectedArticle?.title" (keydown.escape)="closeModal()">
+  <div class="modal-content">
+    <div class="modal-left">
+      <h2>{{ selectedArticle?.title }}</h2>
+      <hr>
+      <p>{{ selectedArticle?.fullText }}</p>
+      <div class="modal-actions">
+        <button mat-raised-button color="primary" class="like-btn" (click)="likeArticle(selectedArticle!)">
+          <mat-icon>thumb_up</mat-icon>
+          <span>{{ selectedArticle?.likes }}</span>
+        </button>
+        <button class="close-btn" type="button" (click)="closeModal()">Bezárás</button>
       </div>
     </div>
+    <div class="modal-right" *ngIf="selectedArticle?.image">
+      <img [src]="selectedArticle?.image" alt="">
+    </div>
   </div>
+</div>
 
   <mat-card class="new-post">
     <mat-card-title>Új bejegyzés</mat-card-title>
