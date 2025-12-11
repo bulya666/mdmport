@@ -9,7 +9,11 @@ import { RouterLink } from "@angular/router";
   styleUrl: './footer.component.css'
 })
 export class FooterComponent {
-  onClickScrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  scrollToTop(smooth = true) {
+    window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }, 120);
   }
 }

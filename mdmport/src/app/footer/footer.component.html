@@ -14,35 +14,35 @@
       <div class="col">
         <h3>Felfedezés</h3>
         <ul>
-          <li><a routerLink="/">Top listák</a></li>
-          <li><a routerLink="/">Ingyenes játékok</a></li>
-          <li><a routerLink="/">Akciók</a></li>
-          <li><a routerLink="/">Ajánlott</a></li>
+          <li><a routerLink="/" (click)="scrollToTop()">Top listák</a></li>
+          <li><a routerLink="/" (click)="scrollToTop()">Ingyenes játékok</a></li>
+          <li><a routerLink="/" (click)="scrollToTop()">Akciók</a></li>
+          <li><a routerLink="/" (click)="scrollToTop()">Ajánlott</a></li>
         </ul>
       </div>
       <div class="col">
         <h3>Közösség</h3>
         <ul>
-          <li><a routerLink="community">Hírek & cikkek</a></li>
-          <li><a routerLink="community">Események</a></li>
-          <li><a href="#">Támogatás</a></li>
+          <li><a routerLink="community" (click)="scrollToTop()">Hírek & cikkek</a></li>
+          <li><a routerLink="community" (click)="scrollToTop()">Események</a></li>
+          <li><a href="#" (click)="scrollToTop()">Támogatás</a></li>
         </ul>
       </div>
       <div class="col">
         <h3>Fiók</h3>
         <ul>
-          <li><a routerLink="login"(click)="onClickScrollToTop()">Bejelentkezés</a></li>
-          <li><a routerLink="register" (click)="onClickScrollToTop()">Regisztráció</a></li>
-          <li><a routerLink="library" (click)="onClickScrollToTop()">Vásárlásaim</a></li>
-          <li><a routerLink="settings" (click)="onClickScrollToTop()">Beállítások</a></li>
+          <li><a routerLink="login"(click)="scrollToTop()">Bejelentkezés</a></li>
+          <li><a routerLink="register" (click)="scrollToTop()">Regisztráció</a></li>
+          <li><a routerLink="library" (click)="scrollToTop()">Vásárlásaim</a></li>
+          <li><a routerLink="settings" (click)="scrollToTop()">Beállítások</a></li>
         </ul>
       </div>
       <div class="col">
         <h3>Jog &amp; info</h3>
         <ul>
-          <li><a routerLink="impresszum" (click)="onClickScrollToTop()">Impresszum</a></li>
-          <li><a routerLink="aszf" (click)="onClickScrollToTop()">Általános szerződési feltételek</a></li>
-          <li><a routerLink="kapcsolat" (click)="onClickScrollToTop()">Kapcsolat</a></li>
+          <li><a routerLink="impresszum" (click)="scrollToTop()">Impresszum</a></li>
+          <li><a routerLink="aszf" (click)="scrollToTop()">Általános szerződési feltételek</a></li>
+          <li><a routerLink="kapcsolat" (click)="scrollToTop()">Kapcsolat</a></li>
         </ul>
       </div>
     </nav>
