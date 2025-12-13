@@ -186,6 +186,9 @@ export class CartComponent implements OnInit {
 
                           if (successCount > 0) {
                             this.showMessage(`${successCount} játék sikeresen megvásárolva!`, "success");
+                            setTimeout(()=>{
+                              this.router.navigate(["/library"]);
+                            },2000)
                           }
 
                           this.loadingDone = true;
