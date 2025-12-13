@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `ownedg` (
   KEY `gameid` (`gameid`),
   CONSTRAINT `ownedg_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`id`),
   CONSTRAINT `ownedg_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `games` (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 66 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 65 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 36 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 37 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: gamephotos
@@ -508,15 +508,11 @@ VALUES
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (63, 35, 4);
+  (63, 36, 1);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (64, 35, 9);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (65, 35, 2);
+  (64, 36, 5);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: users
@@ -583,8 +579,16 @@ INSERT INTO
 VALUES
   (
     35,
-    'Bulya56',
-    '$2b$12$76btRu79XmPbNDYJXSKr/O0q7LxMb9ChNBLBmsrFzzd5WkccW6j/u'
+    'teszt5',
+    '$2b$12$0VouLhJ3IeOmNvOdJrIpguc0aPY/oyjAd3WjiT8/Ad4XFHiG.QQwy'
+  );
+INSERT INTO
+  `users` (`id`, `username`, `password`)
+VALUES
+  (
+    36,
+    'socike',
+    '$2b$12$t8Eqr4/5n.gXB.bH8oFcgO5KYajat37nsuiYRW4z8LcqIN3/KNSjC'
   );
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

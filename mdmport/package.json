@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "concurrently \"npm run update\" \"npm run server\" \"npm run client\" \"powershell -WindowStyle Hidden -Command \\\"Start-Process -FilePath 'C:\\\\xampp\\\\xampp_start.exe' -WindowStyle Hidden\\\"\"",
-    "update" : "npm update",
+    "prestart": "node ./scripts/ensure_update_once.js",
+    "start": "concurrently \"npm run server\" \"npm run client\" \"powershell -WindowStyle Hidden -Command \\\"Start-Process -FilePath 'C:\\\\xampp\\\\xampp_start.exe' -WindowStyle Hidden\\\"\"",
+    "update": "npm update",
     "client": "ng serve",
     "server": "node backend/src/server.js",
     "build": "ng build",

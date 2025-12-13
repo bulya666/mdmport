@@ -7,8 +7,11 @@ require('dotenv').config();
 const DB_NAME = process.env.DB_NAME || 'mdmport_db';
 const SQL_FILE = path.join(__dirname, '../../mdmport_db.sql');
 
+const DB_PORT = process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306;
+
 const pool = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
+  port: DB_PORT,
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
   database: DB_NAME,
@@ -18,9 +21,28 @@ const pool = mysql.createPool({
   multipleStatements: true
 });
 
+async function createConnectionWithRetry(options = {}, retries = 10, delayMs = 1000) {
+  let lastErr;
+  for (let i = 0; i < retries; i++) {
+    try {
+      return await mysql.createConnection(options);
+    } catch (err) {
+      lastErr = err;
+      if (i + 1 < retries) {
+        const wait = delayMs;
+        console.warn(`MySQL connection failed (attempt ${i + 1}/${retries}). Retrying in ${wait}ms...`);
+        await new Promise((r) => setTimeout(r, wait));
+      }
+    }
+  }
+  // after retries failed, throw the last error
+  throw lastErr;
+}
+
 async function ensureDatabaseExists() {
-  const connection = await mysql.createConnection({
+  const connection = await createConnectionWithRetry({
     host: process.env.DB_HOST || 'localhost',
+    port: DB_PORT,
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || ''
   });
