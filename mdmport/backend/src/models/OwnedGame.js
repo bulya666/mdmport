@@ -20,11 +20,11 @@ class OwnedGame {
     const [rows] = await pool.query(sql, params);
     return rows;
   }
-  // src/models/OwnedGame.js
+  
 static async getByUserId(userid) {
   userid = Number(userid);
   if (!userid || isNaN(userid)) {
-    return []; // vagy dobj hibát
+    return [];
   }
 
   const [rows] = await pool.query(

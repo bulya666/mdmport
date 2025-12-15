@@ -2,7 +2,6 @@ const { spawnSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-// marker file placed in the repository root (one level above this scripts folder)
 const MARKER = path.join(__dirname, '..', '.npm_update_done');
 
 function runUpdateOnce() {
@@ -13,7 +12,6 @@ function runUpdateOnce() {
 
   console.log('First start detected — running `npm update`...');
 
-  // run in repository root (parent of scripts folder)
   const repoRoot = path.join(__dirname, '..');
   const { execSync } = require('child_process');
   try {

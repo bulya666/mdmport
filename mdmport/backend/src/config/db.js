@@ -35,7 +35,6 @@ async function createConnectionWithRetry(options = {}, retries = 10, delayMs = 1
       }
     }
   }
-  // after retries failed, throw the last error
   throw lastErr;
 }
 
