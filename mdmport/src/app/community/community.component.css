@@ -201,7 +201,6 @@
 
 /* Komment szekció */
 .comments-section {
-  flex: 2;
   background: white;
   border-radius: 15px;
   padding: 1rem;
@@ -273,7 +272,7 @@
 
 /* Komment kártyák */
 .comments-list {
-  max-height: 3400px;
+  max-height: 900px;
   overflow-y: auto;
   padding-right: 0.5rem;
 }
@@ -404,5 +403,129 @@
   .article-card,
   .comment-card {
     padding: 1rem;
+  }
+}
+
+/* PAGINATION STYLES */
+.pagination-container {
+  margin-top: 40px;
+  padding: 20px 0;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-btn {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background-color: white;
+  color: #333;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.page-btn:hover:not(:disabled) {
+  background-color: #f0f0f0;
+  border-color: #2196F3;
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 5px;
+}
+
+.page-number {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  background-color: white;
+  color: #333;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.page-number:hover {
+  background-color: #f0f0f0;
+}
+
+.page-number.active {
+  background-color: #2196F3;
+  color: white;
+  border-color: #2196F3;
+  font-weight: bold;
+}
+
+.pagination-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #666;
+}
+
+.page-indicator {
+  font-weight: 500;
+  color: #2196F3;
+}
+
+/* ARTICLES LIST HEIGHT FIX */
+.articles-list {
+  min-height: 500px; /* Minimum magasság a lapozó gombok alatt */
+}
+
+/* RESPONSIVE PAGINATION */
+@media (max-width: 768px) {
+  .pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .page-numbers {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .page-btn {
+    order: 1;
+  }
+  
+  .next-btn {
+    order: 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-number {
+    width: 35px;
+    height: 35px;
+    font-size: 13px;
+  }
+  
+  .page-btn {
+    padding: 6px 12px;
+    font-size: 13px;
   }
 }

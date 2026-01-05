@@ -34,6 +34,13 @@ export class CommunityComponent implements OnInit {
   comments: Comment[] = [];
   filteredArticles: Article[] = [];
   
+  // PAGINATION változók
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  pagedArticles: Article[] = [];
+  totalPages: number = 1;
+  pages: number[] = [];
+  
   newComment = {
     author: '',
     content: '',
@@ -54,163 +61,185 @@ export class CommunityComponent implements OnInit {
   ngOnInit(): void {
     this.loadSampleData();
     this.filteredArticles = this.articles;
+    this.updatePagination();
   }
 
   loadSampleData(): void {
+    // 16 cikk létrehozása (4 oldalhoz)
     this.articles = [
-      {
-        id: 1,
-        title: 'Új játék frissítés érkezik héten',
-        content: 'A következő frissítés számos új funkciót és javítást hoz a játékosoknak. Várható dátum: péntek délután.',
-        category: 'game-updates',
-        author: 'Admin',
-        date: '2024-01-15',
-        likes: 42,
-        commentsCount: 8
-      },
-      {
-        id: 2,
-        title: 'Karácsonyi esemény kezdődik',
-        content: 'Idén is lesz karácsonyi eseményünk, ahol különleges jutalmakat szerezhettek.',
-        category: 'events',
-        author: 'EventManager',
-        date: '2024-01-10',
-        likes: 28,
-        commentsCount: 15
-      },
-      {
-        id: 3,
-        title: 'Új kezdők útmutató',
-        content: 'Készítettünk egy részletes útmutatót az új játékosok számára.',
-        category: 'guides',
-        author: 'GuideMaster',
-        date: '2024-01-05',
-        likes: 56,
-        commentsCount: 5
-      },
-      {
-  id: 4,
-  title: 'Haladó stratégiák PvP módhoz',
-  content: 'Ebben az útmutatóban bemutatjuk a leghatékonyabb PvP stratégiákat és karakterkombinációkat.',
-  category: 'guides',
-  author: 'GuideMaster',
-  date: '2024-01-18',
-  likes: 34,
-  commentsCount: 6
-},
-{
-  id: 5,
-  title: 'Gazdasági rendszer részletes magyarázata',
-  content: 'Ismerd meg a játék gazdasági rendszerét, a kereskedelmet és az erőforrás-menedzsmentet.',
-  category: 'guides',
-  author: 'EconomyExpert',
-  date: '2024-01-20',
-  likes: 41,
-  commentsCount: 9
-},
-{
-  id: 6,
-  title: 'Karakterfejlesztési útmutató',
-  content: 'Tippek és trükkök a hatékony karakterfejlesztéshez kezdőknek és haladóknak.',
-  category: 'guides',
-  author: 'GuideMaster',
-  date: '2024-01-22',
-  likes: 50,
-  commentsCount: 12
-},
-{
-  id: 7,
-  title: 'Szerverkarbantartás bejelentése',
-  content: 'Tervezett szerverkarbantartás lesz csütörtök hajnalban, rövid leállással.',
-  category: 'news',
-  author: 'Admin',
-  date: '2024-01-12',
-  likes: 18,
-  commentsCount: 4
-},
-{
-  id: 8,
-  title: 'Új moderátorok csatlakoztak',
-  content: 'Bemutatjuk az új moderátorokat, akik a közösség rendjéért felelnek.',
-  category: 'news',
-  author: 'CommunityManager',
-  date: '2024-01-16',
-  likes: 26,
-  commentsCount: 7
-},
-{
-  id: 9,
-  title: 'Közösségi szabályzat frissítése',
-  content: 'Frissítettük a közösségi irányelveket a jobb felhasználói élmény érdekében.',
-  category: 'news',
-  author: 'Admin',
-  date: '2024-01-19',
-  likes: 22,
-  commentsCount: 5
-},
-{
-  id: 10,
-  title: 'Januári balansz frissítés',
-  content: 'Több karakter és fegyver balanszolása történt a legutóbbi frissítésben.',
-  category: 'game-updates',
-  author: 'DevTeam',
-  date: '2024-01-14',
-  likes: 47,
-  commentsCount: 11
-},
-{
-  id: 11,
-  title: 'Új pálya érkezett a játékba',
-  content: 'Fedezd fel az új, havas tematikájú pályát egyedi kihívásokkal.',
-  category: 'game-updates',
-  author: 'DevTeam',
-  date: '2024-01-17',
-  likes: 63,
-  commentsCount: 14
-},
-{
-  id: 12,
-  title: 'Hibajavítások és optimalizálás',
-  content: 'Teljesítményjavítások és több kritikus hiba javítása történt.',
-  category: 'game-updates',
-  author: 'DevTeam',
-  date: '2024-01-21',
-  likes: 39,
-  commentsCount: 8
-},
-{
-  id: 13,
-  title: 'Hétvégi dupla XP esemény',
-  content: 'Egész hétvégén dupla tapasztalati pontot szerezhet minden játékos.',
-  category: 'events',
-  author: 'EventManager',
-  date: '2024-01-13',
-  likes: 72,
-  commentsCount: 19
-},
-{
-  id: 14,
-  title: 'Közösségi verseny indul',
-  content: 'Vegyél részt a közösségi versenyen és nyerj exkluzív jutalmakat.',
-  category: 'events',
-  author: 'EventManager',
-  date: '2024-01-18',
-  likes: 55,
-  commentsCount: 16
-},
-{
-  id: 15,
-  title: 'Valentin-napi esemény előzetes',
-  content: 'Különleges Valentin-napi kihívások és jutalmak érkeznek hamarosan.',
-  category: 'events',
-  author: 'EventManager',
-  date: '2024-01-23',
-  likes: 48,
-  commentsCount: 10
-}
-    ];
+  {
+    id: 11,
+    title: 'Új pálya érkezett a játékba',
+    content: 'Fedezd fel az új, havas tematikájú pályát egyedi kihívásokkal.',
+    category: 'game-updates',
+    author: 'DevTeam',
+    date: '2024-01-17',
+    likes: 63,
+    commentsCount: 14
+  },
+  {
+    id: 4,
+    title: 'Haladó stratégiák PvP módhoz',
+    content: 'Ebben az útmutatóban bemutatjuk a leghatékonyabb PvP stratégiákat és karakterkombinációkat.',
+    category: 'guides',
+    author: 'GuideMaster',
+    date: '2024-01-18',
+    likes: 34,
+    commentsCount: 6
+  },
+  {
+    id: 16,
+    title: 'Fejlesztői roadmap közzétéve',
+    content: 'Nyilvánossá tettük az év első felére vonatkozó fejlesztési terveket és prioritásokat.',
+    category: 'news',
+    author: 'DevTeam',
+    date: '2024-01-24',
+    likes: 31,
+    commentsCount: 9
+  },
+  {
+    id: 1,
+    title: 'Új játék frissítés érkezik héten',
+    content: 'A következő frissítés számos új funkciót és javítást hoz a játékosoknak. Várható dátum: péntek délután.',
+    category: 'game-updates',
+    author: 'Admin',
+    date: '2024-01-15',
+    likes: 42,
+    commentsCount: 8
+  },
+  {
+    id: 8,
+    title: 'Új moderátorok csatlakoztak',
+    content: 'Bemutatjuk az új moderátorokat, akik a közösség rendjéért felelnek.',
+    category: 'news',
+    author: 'CommunityManager',
+    date: '2024-01-16',
+    likes: 26,
+    commentsCount: 7
+  },
+  {
+    id: 13,
+    title: 'Hétvégi dupla XP esemény',
+    content: 'Egész hétvégén dupla tapasztalati pontot szerezhet minden játékos.',
+    category: 'events',
+    author: 'EventManager',
+    date: '2024-01-13',
+    likes: 72,
+    commentsCount: 19
+  },
+  {
+    id: 6,
+    title: 'Karakterfejlesztési útmutató',
+    content: 'Tippek és trükkök a hatékony karakterfejlesztéshez kezdőknek és haladóknak.',
+    category: 'guides',
+    author: 'GuideMaster',
+    date: '2024-01-22',
+    likes: 50,
+    commentsCount: 12
+  },
+  {
+    id: 2,
+    title: 'Karácsonyi esemény kezdődik',
+    content: 'Idén is lesz karácsonyi eseményünk, ahol különleges jutalmakat szerezhettek.',
+    category: 'events',
+    author: 'EventManager',
+    date: '2024-01-10',
+    likes: 28,
+    commentsCount: 15
+  },
+  {
+    id: 10,
+    title: 'Januári balansz frissítés',
+    content: 'Több karakter és fegyver balanszolása történt a legutóbbi frissítésben.',
+    category: 'game-updates',
+    author: 'DevTeam',
+    date: '2024-01-14',
+    likes: 47,
+    commentsCount: 11
+  },
+  {
+    id: 5,
+    title: 'Gazdasági rendszer részletes magyarázata',
+    content: 'Ismerd meg a játék gazdasági rendszerét, a kereskedelmet és az erőforrás-menedzsmentet.',
+    category: 'guides',
+    author: 'EconomyExpert',
+    date: '2024-01-20',
+    likes: 41,
+    commentsCount: 9
+  },
+  {
+    id: 14,
+    title: 'Közösségi verseny indul',
+    content: 'Vegyél részt a közösségi versenyen és nyerj exkluzív jutalmakat.',
+    category: 'events',
+    author: 'EventManager',
+    date: '2024-01-18',
+    likes: 55,
+    commentsCount: 16
+  },
+  {
+    id: 7,
+    title: 'Szerverkarbantartás bejelentése',
+    content: 'Tervezett szerverkarbantartás lesz csütörtök hajnalban, rövid leállással.',
+    category: 'news',
+    author: 'Admin',
+    date: '2024-01-12',
+    likes: 18,
+    commentsCount: 4
+  },
+  {
+    id: 3,
+    title: 'Új kezdők útmutató',
+    content: 'Készítettünk egy részletes útmutatót az új játékosok számára.',
+    category: 'guides',
+    author: 'GuideMaster',
+    date: '2024-01-05',
+    likes: 56,
+    commentsCount: 5
+  },
+  {
+    id: 12,
+    title: 'Hibajavítások és optimalizálás',
+    content: 'Teljesítményjavítások és több kritikus hiba javítása történt.',
+    category: 'game-updates',
+    author: 'DevTeam',
+    date: '2024-01-21',
+    likes: 39,
+    commentsCount: 8
+  },
+  {
+    id: 9,
+    title: 'Közösségi szabályzat frissítése',
+    content: 'Frissítettük a közösségi irányelveket a jobb felhasználói élmény érdekében.',
+    category: 'news',
+    author: 'Admin',
+    date: '2024-01-19',
+    likes: 22,
+    commentsCount: 5
+  },
+  {
+    id: 15,
+    title: 'Valentin-napi esemény előzetes',
+    content: 'Különleges Valentin-napi kihívások és jutalmak érkeznek hamarosan.',
+    category: 'events',
+    author: 'EventManager',
+    date: '2024-01-23',
+    likes: 48,
+    commentsCount: 10
+  },
+    {
+    id: 7,
+    title: 'Fontos bejelentése',
+    content: 'Tűz keletkezett a kádban, rövid leállás várható.',
+    category: 'news',
+    author: 'Admin',
+    date: '2024-03-12',
+    likes: 42,
+    commentsCount: 4
+  },
+];
 
-this.comments = [
+    this.comments = [
   {
     id: 1,
     author: 'Játékos1',
@@ -404,18 +433,62 @@ this.comments = [
   articleId: 1
 }
 ];
-
+}
+  // PAGINATION metódusok
+  updatePagination(): void {
+    // Oldalak számának kiszámítása
+    this.totalPages = Math.ceil(this.filteredArticles.length / this.itemsPerPage);
+    
+    // Oldal számok tömbje
+    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    
+    // Aktuális oldal cikkeinek kiválasztása
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.pagedArticles = this.filteredArticles.slice(startIndex, endIndex);
   }
 
-  // ÚJ METÓDUS: Cikk címének lekérdezése kommenthez
-  getArticleTitle(articleId: number): string {
-    const article = this.articles.find(a => a.id === articleId);
-    return article ? article.title : 'Ismeretlen cikk';
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.updatePagination();
+      
+      // Görgetés az oldal tetejére
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.goToPage(this.currentPage + 1);
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.goToPage(this.currentPage - 1);
+    }
+  }
+
+  // Helper metódusok a template-nek
+  getMin(a: number, b: number): number {
+    return Math.min(a, b);
+  }
+
+  getMax(a: number, b: number): number {
+    return Math.max(a, b);
+  }
+
+  getDisplayRange(): string {
+    const start = (this.currentPage - 1) * this.itemsPerPage + 1;
+    const end = Math.min(this.currentPage * this.itemsPerPage, this.filteredArticles.length);
+    return `${start} - ${end} / ${this.filteredArticles.length} cikk`;
+  }
+
+  // Szűrés metódus
   filterArticles(): void {
     if (this.selectedCategory === 'all') {
-      this.filteredArticles = this.articles;
+      this.filteredArticles = [...this.articles];
     } else {
       this.filteredArticles = this.articles.filter(article => 
         article.category === this.selectedCategory
@@ -430,6 +503,15 @@ this.comments = [
         article.author.toLowerCase().includes(term)
       );
     }
+    
+    this.currentPage = 1;
+    this.updatePagination();
+  }
+
+  // Meglévő metódusok maradnak...
+ getArticleTitle(articleId: number): string {
+    const article = this.articles.find(a => a.id === articleId);
+    return article ? article.title : 'Ismeretlen cikk';
   }
 
   getCommentsForArticle(articleId: number): Comment[] {
@@ -449,13 +531,11 @@ this.comments = [
       
       this.comments.push(newCommentObj);
       
-      // Növeld a cikk kommentjeinek számát
       const article = this.articles.find(a => a.id === this.newComment.articleId);
       if (article) {
         article.commentsCount++;
       }
       
-      // Reset form
       this.newComment.author = '';
       this.newComment.content = '';
     }

@@ -7,68 +7,115 @@
 
   <div class="community-content">
     <!-- Bal oldal: Cikkek -->
-    <main class="articles-section">
-      <!-- Szűrők -->
-      <div class="filters">
-        <div class="search-box">
-          <input 
-            type="text" 
-            [(ngModel)]="searchTerm" 
-            (input)="filterArticles()"
-            placeholder="Keresés cikkek között..."
-            class="search-input"
-          >
-          <span class="search-icon">🔍</span>
-        </div>
-        
-        <div class="category-filters">
-          <button 
-            *ngFor="let category of categories"
-            [class.active]="selectedCategory === category.id"
-            (click)="selectedCategory = category.id; filterArticles()"
-            class="category-btn"
-          >
-            {{ category.name }}
-          </button>
-        </div>
-      </div>
+<main class="articles-section">
+  <!-- Szűrők -->
+  <div class="filters">
+    <div class="search-box">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        (input)="filterArticles()"
+        placeholder="Keresés cikkek között..."
+        class="search-input"
+      >
+      <span class="search-icon">🔍</span>
+    </div>
+    
+    <div class="category-filters">
+      <button 
+        *ngFor="let category of categories"
+        [class.active]="selectedCategory === category.id"
+        (click)="selectedCategory = category.id; filterArticles()"
+        class="category-btn"
+      >
+        {{ category.name }}
+      </button>
+    </div>
+  </div>
 
-      <!-- Cikkek listája -->
-      <div class="articles-list">
-        <div *ngFor="let article of filteredArticles" class="article-card">
-          <div class="article-header">
-            <span 
-              class="article-category"
-              [style.backgroundColor]="getCategoryColor(article.category)"
-            >
-              {{ getCategoryName(article.category) }}
+  <!-- Cikkek listája -->
+  <div class="articles-list">
+    <div *ngFor="let article of pagedArticles" class="article-card">
+      <div class="article-header">
+        <span 
+          class="article-category"
+          [style.backgroundColor]="getCategoryColor(article.category)"
+        >
+          {{ getCategoryName(article.category) }}
+        </span>
+        <span class="article-date">{{ article.date }}</span>
+      </div>
+      
+      <h3 class="article-title">{{ article.title }}</h3>
+      <p class="article-content">{{ article.content }}</p>
+      
+      <div class="article-footer">
+        <div class="article-meta">
+          <span class="article-author">Írta: {{ article.author }}</span>
+          <div class="article-stats">
+            <button class="like-btn" (click)="likeArticle(article)">
+              👍 {{ article.likes }}
+            </button>
+            <span class="comments-count">
+              💬 {{ article.commentsCount }} hozzászólás
             </span>
-            <span class="article-date">{{ article.date }}</span>
           </div>
-          
-          <h3 class="article-title">{{ article.title }}</h3>
-          <p class="article-content">{{ article.content }}</p>
-          
-          <div class="article-footer">
-            <div class="article-meta">
-              <span class="article-author">Írta: {{ article.author }}</span>
-              <div class="article-stats">
-                <button class="like-btn" (click)="likeArticle(article)">
-                  👍 {{ article.likes }}
-                </button>
-                <span class="comments-count">
-                  💬 {{ article.commentsCount }} hozzászólás
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div *ngIf="filteredArticles.length === 0" class="no-results">
-          <p>Nincs találat a keresési feltételek alapján.</p>
         </div>
       </div>
-    </main>
+    </div>
+
+    <div *ngIf="pagedArticles.length === 0" class="no-results">
+      <p>Nincs találat a keresési feltételek alapján.</p>
+    </div>
+  </div>
+
+  <!-- PAGINATION - Lapozó gombok -->
+  <div *ngIf="filteredArticles.length > itemsPerPage" class="pagination-container">
+    <div class="pagination">
+      <!-- Előző oldal gomb -->
+      <button 
+        class="page-btn prev-btn" 
+        [disabled]="currentPage === 1"
+        (click)="prevPage()"
+      >
+        &laquo; Előző
+      </button>
+      
+      <!-- Oldalszámok -->
+      <div class="page-numbers">
+        <button 
+          *ngFor="let page of pages"
+          class="page-number"
+          [class.active]="page === currentPage"
+          (click)="goToPage(page)"
+        >
+          {{ page }}
+        </button>
+      </div>
+      
+      <!-- Következő oldal gomb -->
+      <button 
+        class="page-btn next-btn" 
+        [disabled]="currentPage === totalPages"
+        (click)="nextPage()"
+      >
+        Következő &raquo;
+      </button>
+    </div>
+    
+    <!-- Információ az oldalról -->
+    <div class="pagination-info">
+      <span>
+        {{ getMin(currentPage * itemsPerPage, filteredArticles.length) }} - 
+        {{ getMax((currentPage - 1) * itemsPerPage + 1, 1) }} / 
+        {{ filteredArticles.length }} cikk
+      </span>
+      <span class="page-indicator">
+        Oldal: {{ currentPage }} / {{ totalPages }}
+      </span>
+    </div>
+  </div>
+</main>
 
     <!-- Jobb oldal: Komment szekció -->
     <aside class="comments-section">
