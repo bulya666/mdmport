@@ -1,337 +1,408 @@
-.community-page {
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 0 16px 80px;
-  color: #e0e0ff;
-  position: relative;
-  overflow-x: hidden;
-}
-
-/* Parallax háttér */
-.community-page::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, rgba(255, 0, 102, 0.1), transparent 70%);
-  background-size: 200% 200%;
-  z-index: -1;
-}
-
-/* Cím */
-.community-page h2 {
-  font-size: clamp(28px, 5vw, 36px);
-  font-weight: 900;
-  letter-spacing: 1px;
-  background: linear-gradient(90deg, #ff3366, #ff0066, #cc0033);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(255, 0, 102, 0.4);
-  margin: 40px 0 24px;
-  position: relative;
-}
-
-.community-page h2::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, #ff3366, transparent);
-  border-radius: 3px;
-  box-shadow: 0 0 15px #ff3366;
-}
-
-/* GRID – 3 oszlop × 2 sor = 6 cikk */
-.articles-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: auto;
-  gap: 28px;
-  padding: 16px 0;
-}
-
-/* Mobil nézetre */
-@media (max-width: 1200px) {
-  .articles-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 700px) {
-  .articles-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* CIKK KÁRTYA */
-.article-card {
-  background: linear-gradient(145deg, rgba(20, 25, 45, 0.95), rgba(10, 15, 35, 0.98));
-  border: 1px solid rgba(255, 51, 102, 0.25);
-  border-radius: 20px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.5),
-    0 0 15px rgba(255, 51, 102, 0.1);
-  position: relative;
-  min-height: 250px;
-}
-
-.article-card:hover {
-  transform: translateY(-8px) scale(1.01);
-  box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.7),
-    0 0 30px rgba(255, 51, 102, 0.4);
-}
-
-.article-card mat-card-title {
-  font-size: clamp(18px, 3vw, 22px);
-  font-weight: 800;
-  padding: 20px 20px 0;
-  background: linear-gradient(to right, #ff6b9d, #ff3366);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.article-card mat-card-content p {
-  color: #ccd6f6;
-  font-size: 15px;
-  line-height: 1.6;
-  padding: 0 20px 20px;
-}
-
-.article-card hr {
-  height: 3px;
-  background: linear-gradient(90deg, #ff3366, transparent);
-  border: none;
-  margin: 12px 20px;
-  border-radius: 2px;
-}
-
-/* MODAL */
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(5, 10, 25, 0.92);
-  backdrop-filter: blur(12px);
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-out;
-}
-
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.98);
-  background: linear-gradient(135deg, rgba(15, 20, 40, 0.98), rgba(10, 15, 30, 0.98));
-  border: 1.5px solid #ff3366;
-  border-radius: 24px;
-  max-width: 900px;
-  width: 95%;
-  max-height: 85vh;
-  overflow-y: auto;
-  box-shadow:
-    0 0 60px rgba(255, 51, 102, 0.5),
-    0 24px 60px rgba(0, 0, 0, 0.8);
-  z-index: 1001;
-}
-
-.modal-content {
-  padding: 32px;
-}
-
-.modal-left h2 {
-  font-size: clamp(24px, 4vw, 32px);
-  font-weight: 900;
-  background: linear-gradient(90deg, #ff3366, #ff6699);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.modal-left p {
-  font-size: 16px;
-  line-height: 1.7;
-  color: #e6e6ff;
-}
-
-/* BUTTONS */
-.like-btn {
-  background: linear-gradient(135deg, #ff3366, #cc0033) !important;
-  color: white !important;
-  font-weight: 700;
-  border-radius: 50px;
-  padding: 10px 24px !important;
-  transition: all 0.3s ease !important;
-}
-
-.close-btn {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1.5px solid rgba(255, 51, 102, 0.4);
-  color: #ff6699;
-  padding: 10px 24px;
-  border-radius: 50px;
-  font-weight: 600;
-}
-
-.close-btn:hover {
-  background: rgba(255, 51, 102, 0.1);
-  border-color: #ff3366;
-  box-shadow: 0 0 12px #ff3366;
-}
-
-/* ÚJ BEJEGYZÉS ÉS BEJEGYZÉSEK */
-
-.new-post {
-  background: linear-gradient(145deg, rgba(20, 30, 50, 0.98), rgba(15, 20, 40, 0.98));
-  border: 1.5px solid rgba(255, 51, 102, 0.3);
-  border-radius: 20px;
-  padding: 24px;
-  margin: 48px 0 32px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 51, 102, 0.15);
-  backdrop-filter: blur(10px);
-}
-
-.new-post mat-card-title {
-  color: #ff6699;
-  font-size: 20px;
-  font-weight: 800;
-  margin-bottom: 16px;
-}
-
-textarea[matInput] {
-  background: rgba(10, 15, 30, 0.9);
-  border: 1.5px solid rgba(255, 51, 102, 0.25);
-  border-radius: 14px;
-  padding: 14px 16px;
-  color: #ffffff;
-  font-size: 15px;
-  transition: all 0.3s ease;
-  min-height: 100px;
-  resize: vertical;
-  width: 100%;
+/* Alap stílusok */
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-textarea[matInput]:focus {
-  border-color: #ff3366;
-  box-shadow: 0 0 20px rgba(255, 51, 102, 0.4);
-  background: rgba(15, 20, 40, 0.98);
-
-}.posts {
-  display: grid;
-  gap: 20px;
+.community-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  color: #333;
 }
 
-.post-card {
-  background: linear-gradient(145deg, rgba(18, 25, 45, 0.98), rgba(12, 18, 38, 0.98));
-  border: 1px solid rgba(255, 51, 102, 0.25);
-  border-radius: 20px;
-  padding: 24px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
-  transition: all 0.3s ease;
+/* Fejléc */
+.community-header {
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.community-header h1 {
+  color: white;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.community-header p {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+}
+
+/* Fő tartalom */
+.community-content {
+  display: flex;
+  max-width: 1400px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  gap: 2rem;
+}
+
+/* Cikkek szekció */
+.articles-section {
+  flex: 3;
+  border-radius: 15px;
+  padding: 1.5rem;
+}
+
+/* Szűrők */
+.filters {
+  margin-bottom: 2rem;
+}
+
+.search-box {
   position: relative;
-  overflow: hidden;
+  margin-bottom: 1rem;
 }
 
-.post-card::before {
-  content: '';
+.search-input {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 3rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 25px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.search-icon {
   position: absolute;
-  top: 0; left: 0;
-  width: 4px;
-  height: 100%;
-  background: linear-gradient(to bottom, #ff3366, #ff3366);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7f8c8d;
 }
 
-.post-card:hover::before {
-  opacity: 1;
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
-.post-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 
-    0 20px 48px rgba(0, 0, 0, 0.8),
-    0 0 24px rgba(255, 51, 102, 0.3);
+.category-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 20px;
+  background: #f5f5f5;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.9rem;
 }
 
-.post-card mat-card-title {
-  color: #ff6699;
-  font-weight: 700;
+.category-btn:hover {
+  background: #e0e0e0;
 }
 
-.post-card p {
-  font-size: 16px;
+.category-btn.active {
+  background: #667eea;
+  color: white;
+}
+
+/* Cikk kártyák */
+.articles-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.article-card {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 1.5rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-left: 4px solid #667eea;
+}
+
+.article-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.article-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.article-category {
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.article-date {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.article-title {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.article-content {
+  color: #555;
   line-height: 1.6;
-  color: #d0d0ff;
+  margin-bottom: 1rem;
 }
 
-/* KOMMENTEK – Kis padding, hogy elférjen */
-.comments mat-list-item {
-  background: rgba(20, 30, 50, 0.7);
-  border-radius: 14px;
-  padding: 16px;
-  margin: 8px 0;
-  border: 1px solid rgba(255, 51, 102, 0.15);
-  transition: all 0.3s ease;
+.article-footer {
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
 }
 
-.comments mat-list-item:hover {
-  background: rgba(30, 40, 70, 0.9);
-  border-color: #ff3366;
-  transform: translateX(4px);
+.article-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.mat-mdc-text-field-wrapper {
-  width: 600%;
+.article-author {
+  color: #7f8c8d;
+  font-size: 0.9rem;
 }
 
-/* ANIMÁCIÓK – Finomabbak, nem túl durvák */
-@keyframes modalPop {
-  0% {
-    transform: translate(-50%, -50%) scale(0.9);
-    opacity: 0.8;
+.article-stats {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.like-btn {
+  background: none;
+  border: 1px solid #ddd;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.like-btn:hover {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+.comments-count {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+/* Komment szekció */
+.comments-section {
+  flex: 2;
+  background: white;
+  border-radius: 15px;
+  padding: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.comments-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.comments-header h2 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+/* Új komment űrlap */
+.new-comment-form {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+}
+
+.new-comment-form h3 {
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 0.8rem;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit-btn:hover {
+  background: #5a67d8;
+}
+
+/* Komment kártyák */
+.comments-list {
+  max-height: 3400px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.comments-list h3 {
+  margin-bottom: 4rem;
+  color: #2c3e50;
+}
+
+.comment-card {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-left: 3px solid #764ba2;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.comment-author {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.comment-date {
+  color: #7f8c8d;
+  font-size: 0.8rem;
+}
+
+.comment-content {
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.comment-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.comment-article {
+  color: #7f8c8d;
+  font-size: 0.8rem;
+}
+
+/* Üres állapotok */
+.no-results,
+.no-comments {
+  text-align: center;
+  padding: 3rem;
+  color: #7f8c8d;
+  background: #f9f9f9;
+  border-radius: 10px;
+  border: 2px dashed #ddd;
+}
+
+/* Lábléc */
+.community-footer {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1.5rem;
+  text-align: center;
+  margin-top: 2rem;
+  color: #7f8c8d;
+  border-top: 1px solid #eee;
+}
+
+/* Reszponzív design */
+@media (max-width: 1024px) {
+  .community-content {
+    flex-direction: column;
   }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
+  
+  .articles-section,
+  .comments-section {
+    width: 100%;
   }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* MOBILE OPTIMALIZÁCIÓ – Minden stackelődik */
 @media (max-width: 768px) {
-  .articles-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+  .community-header h1 {
+    font-size: 2rem;
   }
-  .community-page {
-    padding: 0 8px 60px;
+  
+  .article-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
-  .new-post {
-    padding: 16px;
-    margin: 32px 0 24px;
+  
+  .article-stats {
+    width: 100%;
+    justify-content: space-between;
   }
-  .post-card {
-    padding: 16px;
+  
+  .category-filters {
+    justify-content: center;
   }
-  .modal-left h2 {
-    font-size: 24px;
+  
+  .comment-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
-  .modal-left p {
-    font-size: 15px;
+}
+
+@media (max-width: 480px) {
+  .community-header {
+    padding: 1.5rem 1rem;
+  }
+  
+  .community-content {
+    margin: 1rem auto;
+    padding: 0 0.5rem;
+  }
+  
+  .articles-section,
+  .comments-section {
+    padding: 1rem;
+  }
+  
+  .article-card,
+  .comment-card {
+    padding: 1rem;
   }
 }

@@ -1,108 +1,146 @@
-<div class="community-page">
+<div class="community-container">
+  <!-- Fejléc -->
+  <header class="community-header">
+    <h1>Közösségi Portál</h1>
+    <p>Maradj naprakész a legújabb hírekkel, frissítésekkel és közösségi eseményekkel</p>
+  </header>
 
-<div class="articles-container">
-  <h2>Ajánlott cikkek</h2>
-  <div class="articles-grid">
-    <mat-card *ngFor="let article of featuredArticles" class="article-card" (click)="openModal(article)">
-      <div class="article-image" *ngIf="article.image">
-        <img [src]="article.image" alt="">
+  <div class="community-content">
+    <!-- Bal oldal: Cikkek -->
+    <main class="articles-section">
+      <!-- Szűrők -->
+      <div class="filters">
+        <div class="search-box">
+          <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            (input)="filterArticles()"
+            placeholder="Keresés cikkek között..."
+            class="search-input"
+          >
+          <span class="search-icon">🔍</span>
+        </div>
+        
+        <div class="category-filters">
+          <button 
+            *ngFor="let category of categories"
+            [class.active]="selectedCategory === category.id"
+            (click)="selectedCategory = category.id; filterArticles()"
+            class="category-btn"
+          >
+            {{ category.name }}
+          </button>
+        </div>
       </div>
-      <div class="article-body">
-        <mat-card-title>{{ article.title }}</mat-card-title>
-        <hr>
-        <mat-card-content>
-          <p>{{ article.summary }}</p>
-        </mat-card-content>
-      </div>
-    </mat-card>
-  </div>
-</div>
 
-<div class="modal-backdrop" *ngIf="modalOpen" (click)="closeModal()"></div>
-
-<div class="modal" *ngIf="modalOpen" role="dialog" aria-modal="true" tabindex="-1" [attr.aria-label]="selectedArticle?.title" (keydown.escape)="closeModal()">
-  <div class="modal-content">
-    <div class="modal-left">
-      <h2>{{ selectedArticle?.title }}</h2>
-      <hr>
-      <p>{{ selectedArticle?.fullText }}</p>
-      <div class="modal-actions">
-        <button mat-raised-button color="primary" class="like-btn" (click)="likeArticle(selectedArticle!)">
-          <mat-icon>thumb_up</mat-icon>
-          <span>{{ selectedArticle?.likes }}</span>
-        </button>
-        <button class="close-btn" type="button" (click)="closeModal()">Bezárás</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-  <mat-card class="new-post">
-    <mat-card-title>Új bejegyzés</mat-card-title>
-    <mat-card-content>
-      <mat-form-field appearance="outline" class="w-full">
-        <textarea matInput placeholder="Oszd meg gondolataid..." [(ngModel)]="newPostContent">
-        </textarea>
-      </mat-form-field>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="addPost()" [disabled]="!newPostContent.trim()">
-        Közzététel
-      </button>
-    </mat-card-actions>
-  </mat-card>
-
-  <mat-tab-group>
-    <mat-tab label="Bejegyzések">
-      <div class="posts">
-        <mat-card *ngFor="let post of posts" class="post-card">
-          <mat-card-header>
-            <div mat-card-avatar class="user-avatar">
-              <i class="fas fa-user-circle" id="avatar"></i>
-            </div>
-            <mat-card-title style="padding-top: 8px;">
-              {{ post.author }}
-            </mat-card-title>
-            <mat-card-subtitle>
-              {{ post.date | date:'medium' }}
-            </mat-card-subtitle>
-          </mat-card-header>
-
-          <mat-card-content>
-            <p>{{ post.content }}</p>
-          </mat-card-content>
-
-          <mat-card-actions>
-            <button mat-button color="primary" class="post-like-btn" (click)="likePost(post)">
-              <mat-icon>thumb_up</mat-icon>
-              <span>{{ post.likes }}</span>
-            </button>
-
-            <button mat-button type="button" (click)="toggleComments(post)">
-              <mat-icon>comment</mat-icon>
-              {{ post.showComments ? 'Hozzászólások elrejtése' : 'Hozzászólások megtekintése' }}
-              ({{ post.comments.length }})
-            </button>
-          </mat-card-actions>
-
-          <div *ngIf="post.showComments" class="comments">
-            <mat-list>
-              <mat-list-item *ngFor="let c of post.comments">
-                <mat-icon matListIcon>person</mat-icon>
-                <div matLine><b>{{ c.author }}</b></div>
-                <div matLine>{{ c.text }}</div>
-              </mat-list-item>
-            </mat-list>
-
-            <div class="add-comment">
-              <input matInput #commentInput placeholder="Írj hozzászólást..." (keydown.enter)="addComment(post, commentInput)">
-              <button mat-icon-button color="primary" type="button" (click)="addComment(post, commentInput)">
-                <mat-icon>send</mat-icon>
-              </button>
+      <!-- Cikkek listája -->
+      <div class="articles-list">
+        <div *ngFor="let article of filteredArticles" class="article-card">
+          <div class="article-header">
+            <span 
+              class="article-category"
+              [style.backgroundColor]="getCategoryColor(article.category)"
+            >
+              {{ getCategoryName(article.category) }}
+            </span>
+            <span class="article-date">{{ article.date }}</span>
+          </div>
+          
+          <h3 class="article-title">{{ article.title }}</h3>
+          <p class="article-content">{{ article.content }}</p>
+          
+          <div class="article-footer">
+            <div class="article-meta">
+              <span class="article-author">Írta: {{ article.author }}</span>
+              <div class="article-stats">
+                <button class="like-btn" (click)="likeArticle(article)">
+                  👍 {{ article.likes }}
+                </button>
+                <span class="comments-count">
+                  💬 {{ article.commentsCount }} hozzászólás
+                </span>
+              </div>
             </div>
           </div>
-        </mat-card>
+        </div>
+
+        <div *ngIf="filteredArticles.length === 0" class="no-results">
+          <p>Nincs találat a keresési feltételek alapján.</p>
+        </div>
       </div>
-    </mat-tab>
-  </mat-tab-group>
+    </main>
+
+    <!-- Jobb oldal: Komment szekció -->
+    <aside class="comments-section">
+      <div class="comments-header">
+        <h2>💬 Hozzászólások</h2>
+        <p>Vedd részt a beszélgetésben!</p>
+      </div>
+
+      <!-- Új hozzászólás űrlap -->
+      <div class="new-comment-form">
+        <h3>Új hozzászólás írása</h3>
+        <div class="form-group">
+          <input 
+            type="text" 
+            [(ngModel)]="newComment.author"
+            placeholder="Neved"
+            class="form-input"
+          >
+        </div>
+        <div class="form-group">
+          <select [(ngModel)]="newComment.articleId" class="form-select">
+            <option *ngFor="let article of articles" [value]="article.id">
+              {{ article.title }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <textarea 
+            [(ngModel)]="newComment.content"
+            placeholder="Írd meg hozzászólásodat..."
+            rows="4"
+            class="form-textarea"
+          ></textarea>
+        </div>
+        <button (click)="addComment()" class="submit-btn">
+          Hozzászólás küldése
+        </button>
+      </div>
+
+<!-- Kommentek szekció -->
+<div class="comments-section">
+  <h3>Kommentek</h3>
+  
+  <div class="comments-list">
+    <div *ngFor="let comment of comments" class="comment-card">
+      <div class="comment-header">
+        <span class="comment-author">{{ comment.author }}</span>
+        <span class="comment-date">{{ comment.date }}</span>
+      </div>
+      
+      <!-- JAVÍTOTT RÉSZ: metódushívással -->
+      <div class="comment-article">
+        Cikk: {{ getArticleTitle(comment.articleId) }}
+      </div>
+      
+      <div class="comment-content">{{ comment.content }}</div>
+      
+      <div class="comment-footer">
+        <button class="like-btn" (click)="likeComment(comment)">
+          👍 {{ comment.likes }}
+        </button>
+      </div>
+    </div>
+    
+    <div *ngIf="comments.length === 0" class="no-comments">
+      Nincsenek kommentek még.
+    </div>
+  </div>
+
+
+  <!-- Lábléc -->
+  <footer class="community-footer">
+    <p>© 2026 MDMPort | Minden jog fenntartva</p>
+  </footer>
 </div>
