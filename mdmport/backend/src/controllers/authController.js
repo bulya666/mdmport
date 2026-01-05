@@ -10,6 +10,9 @@ exports.login = async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).json({ success: false, message: 'Hibás adatok' });
 
+    req.session.userId = user.id;
+    req.session.username = user.username;
+
     res.json({ success: true, user: user.username });
   } catch (err) {
     console.error(err);
@@ -29,4 +32,8 @@ exports.register = async (req, res) => {
     console.error(err);
     res.status(500).json({ success: false, message: 'Szerver hiba' });
   }
+};
+
+exports.logout = (req, res) => {
+  req.session.destroy(() => res.sendStatus(204));
 };
