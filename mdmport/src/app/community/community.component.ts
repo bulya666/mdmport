@@ -66,12 +66,6 @@ export class CommunityComponent implements OnInit {
     { id: 'events', name: 'Események' }
   ];
 
-  // Kiválasztott cikk a modalhoz
-  public selectedArticleId: number | null = null;
-  showModal: boolean = false;
-  modalCommentAuthor: string = '';
-  modalCommentContent: string = '';
-
   ngOnInit(): void {
     // Minta adat betöltése
     this.loadSampleData();
@@ -357,52 +351,12 @@ export class CommunityComponent implements OnInit {
     return this.comments.filter(comment => comment.articleId === articleId);
   }
 
-  // Cikkre kattintás a modal megnyitásához
-  openArticleModal(articleId: number): void {
-    this.selectedArticleId = articleId;
-    this.showModal = true;
-  }
-
-  closeModal(): void {
-    this.showModal = false;
-    this.selectedArticleId = null;
-  }
-
-  public openModal(id: number): void {
-    this.selectedArticleId = id;
-    this.showModal = true;
-  }
-
-  public getSelectedArticleContent(): string {
-  const article = this.articles.find(a => a.id === this.selectedArticleId);
-  return article ? article.content : 'A cikk nem található.';
-}
-
-  // Új komment a modalban
-  addModalComment(): void {
-    if (this.modalCommentAuthor.trim() && this.modalCommentContent.trim() && this.selectedArticleId !== null) {
-      const newComment: Comment = {
-        id: this.comments.length + 1,
-        author: this.modalCommentAuthor,
-        content: this.modalCommentContent,
-        date: new Date().toISOString().split('T')[0],
-        likes: 0,
-        articleId: this.selectedArticleId
-      };
-      this.comments.push(newComment);
-      const article = this.articles.find(a => a.id === this.selectedArticleId);
-      if (article) {
-        article.commentsCount++;
-      }
-      this.modalCommentAuthor = '';
-      this.modalCommentContent = '';
-    }
-  }
-
   // Komment kedvelése
   likeComment(comment: Comment): void {
     comment.likes++;
   }
+
+  
 
   // Kategória név lekérdezése
   getCategoryName(category: string): string {

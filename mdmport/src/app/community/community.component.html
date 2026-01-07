@@ -51,49 +51,6 @@
             <span class="article-date">{{ article.date }}</span>
           </div>
 
-            <!-- Módális ablak a cikk megnyitásához -->
-            <div *ngIf="showModal" class="modal-overlay">
-              <div class="modal-content">
-                <button class="close-btn" (click)="closeModal()">Zár</button>
-                <div class="modal-body">
-                  <!-- Bal oldal: cikk -->
-                  <div class="modal-left">
-                    <h3>{{ getArticleTitle(selectedArticleId!) }}</h3>
-                    <p>{{ (articles.find(a => a.id === selectedArticleId!))?.content }}</p>
-                  </div>
-                  <!-- Jobb oldal: kommentek -->
-                  <div class="modal-right">
-                    <h4>Hozzászólások</h4>
-                    <div class="comments-list-modal">
-                      <div *ngFor="let comment of getCommentsForSelectedArticle()" class="comment-card">
-                        <div class="comment-header">
-                          <span class="comment-author">{{ comment.author }}</span>
-                          <span class="comment-date">{{ comment.date }}</span>
-                        </div>
-                        <div class="comment-content">{{ comment.content }}</div>
-                        <div class="comment-footer">
-                          <button class="like-btn" (click)="likeComment(comment)">
-                            👍 {{ comment.likes }}
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Új komment írása modalban -->
-                    <div class="new-comment-form">
-                      <h4>Új hozzászólás</h4>
-                      <div class="form-group">
-                        <input type="text" [(ngModel)]="modalCommentAuthor" placeholder="Neved" class="form-input" />
-                      </div>
-                      <div class="form-group">
-                        <textarea [(ngModel)]="modalCommentContent" rows="3" placeholder="Hozzászólás" class="form-textarea"></textarea>
-                      </div>
-                      <button (click)="addModalComment()" class="submit-btn">Hozzászólás küldése</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           <!-- Cikk címe és tartalma -->
           <h3 class="article-title">{{ article.title }}</h3>
           <p class="article-content">{{ article.content }}</p>
@@ -105,7 +62,7 @@
               <span class="article-author">Írta: {{ article.author }}</span>
               <div class="article-stats">
                 <!-- Like gomb -->
-                <button class="like-btn" (click)="likeArticle(article)">
+                <button class="like-btn">
                   👍 {{ article.likes }}
                 </button>
                 <!-- Hozzászólások száma -->
@@ -200,10 +157,6 @@
             class="form-textarea"
           ></textarea>
         </div>
-        <!-- Küldés gomb -->
-        <button (click)="addComment()" class="submit-btn">
-          Hozzászólás küldése
-        </button>
       </div>
 
       <!-- Kommentek listája -->

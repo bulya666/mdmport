@@ -57,37 +57,27 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.logout = (req, res) => {
+exports.logout = function (req, res) {
+  const sid = req.sessionID;
+  req.session.destroy(() => {
+    if (req) {
 
-  if (req.session) {
-    store.destroy(req.sessionID, (err) => {
-      if (err) {
-        console.error('Session destroy hiba az adatbázisban:', err);
-      }
-    });
-  }
-
-  req.session.destroy((err) => {
-    if (err) {
-      console.error('Session destroy hiba:', err);
-      return res.status(500).json({ success: false, message: 'Kijelentkezés sikertelen' });
+    }
+    else{
+      console.error('Session destroy error:', err);
+      return res.status(500).json({ success: false, message: 'Logout failed' });
     }
 
-    res.clearCookie('connect.sid'); 
+    // clear cookie (default név: connect.sid)
+    res.clearCookie('connect.sid', { path: '/' });
 
-    res.status(204).send(); 
-  });
-};
-
-exports.getCurrentUser = (req, res) => {
-  if (!req.session.userId || !req.session.username) {
-    return res.status(401).json({ success: false, message: 'Nem vagy bejelentkezve' });
-  }
-
-  res.json({
-    success: true,
-    user: {
-      username: req.session.username,
+    const store = req.sessionStore;
+    if (store && typeof store.destroy === 'function') {
+      store.destroy(sid, (e) => {
+        if (e) console.error('Failed to destroy session in store:', e);
+      });
     }
+
+    return res.json({ success: true });
   });
 };

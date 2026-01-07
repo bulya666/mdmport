@@ -46,18 +46,18 @@ CREATE TABLE IF NOT EXISTS `ownedg` (
   KEY `gameid` (`gameid`),
   CONSTRAINT `ownedg_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`id`),
   CONSTRAINT `ownedg_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `games` (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 63 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 71 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: sessions
 # ------------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `sessions` (
-  `session_id` varchar(128) NOT NULL,
+  `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `expires` int(11) unsigned NOT NULL,
-  `data` mediumtext DEFAULT NULL,
+  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`session_id`)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_bin;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 36 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 37 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: gamephotos
@@ -516,6 +516,38 @@ INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
   (62, 34, 2);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (63, 35, 4);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (64, 35, 9);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (65, 35, 2);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (66, 36, 6);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (67, 28, 9);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (68, 28, 10);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (69, 28, 11);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (70, 28, 12);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: sessions
@@ -525,41 +557,17 @@ INSERT INTO
   `sessions` (`session_id`, `expires`, `data`)
 VALUES
   (
-    '-U4b5OCpkD92YErFxct2YQK3B_VQLm6y',
-    1767781615,
-    '{\"cookie\":{\"originalMaxAge\":3600000,\"expires\":\"2026-01-07T10:26:54.870Z\",\"httpOnly\":true,\"path\":\"/\",\"sameSite\":\"lax\"},\"userId\":28,\"username\":\"Admin\"}'
+    '9o3f0yjTH8hQXod0R71VFPxps1UA0VOH',
+    1767786402,
+    '{\"cookie\":{\"originalMaxAge\":3600000,\"expires\":\"2026-01-07T11:46:41.612Z\",\"httpOnly\":true,\"path\":\"/\",\"sameSite\":\"lax\"},\"userId\":28,\"username\":\"Admin\"}'
   );
 INSERT INTO
   `sessions` (`session_id`, `expires`, `data`)
 VALUES
   (
-    'NyWgZI61GVgM69rUp_cXUMForqGXm_e6',
-    1767781485,
-    '{\"cookie\":{\"originalMaxAge\":3600000,\"expires\":\"2026-01-07T10:24:44.983Z\",\"httpOnly\":true,\"path\":\"/\",\"sameSite\":\"lax\"},\"userId\":28,\"username\":\"Admin\"}'
-  );
-INSERT INTO
-  `sessions` (`session_id`, `expires`, `data`)
-VALUES
-  (
-    'bpFvusgjmxRL7QQkdoo0N4aAYjT_frhl',
-    1767781748,
-    '{\"cookie\":{\"originalMaxAge\":3600000,\"expires\":\"2026-01-07T10:29:08.262Z\",\"httpOnly\":true,\"path\":\"/\",\"sameSite\":\"lax\"},\"userId\":28,\"username\":\"Admin\"}'
-  );
-INSERT INTO
-  `sessions` (`session_id`, `expires`, `data`)
-VALUES
-  (
-    'mqncRggW8gF7wdoyWwLgMn1w8T7oNJR3',
-    1767781844,
-    '{\"cookie\":{\"originalMaxAge\":3600000,\"expires\":\"2026-01-07T10:30:44.237Z\",\"httpOnly\":true,\"path\":\"/\",\"sameSite\":\"lax\"},\"userId\":28,\"username\":\"Admin\"}'
-  );
-INSERT INTO
-  `sessions` (`session_id`, `expires`, `data`)
-VALUES
-  (
-    'qHF_AZlul8W2fNK6L4UlbfdL5l9fqTAs',
-    1767781866,
-    '{\"cookie\":{\"originalMaxAge\":3600000,\"expires\":\"2026-01-07T10:31:06.075Z\",\"httpOnly\":true,\"path\":\"/\",\"sameSite\":\"lax\"},\"userId\":28,\"username\":\"Admin\"}'
+    'fIh6-kMLlh_xPaa0hpcXh1kN3NcC28Re',
+    1767786597,
+    '{\"cookie\":{\"originalMaxAge\":3600000,\"expires\":\"2026-01-07T11:49:56.893Z\",\"httpOnly\":true,\"path\":\"/\",\"sameSite\":\"lax\"},\"userId\":28,\"username\":\"Admin\"}'
   );
 
 # ------------------------------------------------------------
@@ -627,8 +635,16 @@ INSERT INTO
 VALUES
   (
     35,
-    'teszt5',
-    '$2b$12$0VouLhJ3IeOmNvOdJrIpguc0aPY/oyjAd3WjiT8/Ad4XFHiG.QQwy'
+    'Bulya56',
+    '$2b$12$76btRu79XmPbNDYJXSKr/O0q7LxMb9ChNBLBmsrFzzd5WkccW6j/u'
+  );
+INSERT INTO
+  `users` (`id`, `username`, `password`)
+VALUES
+  (
+    36,
+    'ani12',
+    '$2b$12$P0fMBNb0gRai.HHNBDooHOX9cjIyVmomR/XItgR0U6Y3INGx8axWO'
   );
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

@@ -27,7 +27,6 @@ router.get('/gamephotos/:gameid', photosCtrl.getPhotoByGameId);
 router.post('/login', authCtrl.login);
 router.post('/register', authCtrl.register);
 router.post("/logout", authCtrl.logout);
-router.get('/me', authCtrl.getCurrentUser);
 
 router.post('/send-mail', mailCtrl.sendMail);
 
