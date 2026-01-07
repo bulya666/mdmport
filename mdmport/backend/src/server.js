@@ -1,14 +1,4 @@
 require('dotenv').config();
-
-console.log('Teljes betöltött env változólista:');
-console.log(require('dotenv').config().parsed);
-
-console.log('SESSION_SECRET from env:', process.env.SESSION_SECRET);
-console.log('Current working directory:', process.cwd());
-console.log('Env file loaded:', require('dotenv').config().parsed ? 'YES' : 'NO');
-
-console.log('SESSION_SECRET közvetlenül:', process.env.SESSION_SECRET);
-
 const express = require('express');
 const cors = require('cors');
 const { loadSqlOnStart, dumpSqlOnShutdown } = require('./config/db');

@@ -5,13 +5,14 @@ const { pool } = require("./db");
 const store = new MySQLStore(
   {
     createDatabaseTable: true,
+    charset: 'utf8mb4_bin'
   },
   pool 
 );
 
 module.exports = session({
   secret: process.env.SESSION_SECRET,
-  resave: false,
+  resave: true,
   saveUninitialized: false,
   store,
   cookie: {

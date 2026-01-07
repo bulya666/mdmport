@@ -6,7 +6,6 @@ require('dotenv').config();
 
 const DB_NAME = process.env.DB_NAME || 'mdmport_db';
 const SQL_FILE = path.join(__dirname, '../../mdmport_db.sql');
-
 const DB_PORT = process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306;
 
 const pool = mysql.createPool({
@@ -49,7 +48,7 @@ async function ensureDatabaseExists() {
   await connection.query(`
     CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`
     DEFAULT CHARACTER SET utf8mb4
-    COLLATE utf8mb4_general_ci
+    COLLATE utf8mb4_bin;
   `);
   await connection.end();
 }
