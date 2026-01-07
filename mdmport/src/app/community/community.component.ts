@@ -353,7 +353,6 @@ export class CommunityComponent implements OnInit {
 ];
   featuredArticles: Article[] = [];
   articleColumns: Article[][] = [];
-  modalOpen = false;
   selectedArticle: Article | null = null;
   selectedArticleImages: string[] = [];
   selectedArticlePrice: string = "Ingyen";
@@ -380,18 +379,6 @@ export class CommunityComponent implements OnInit {
     }
 
     return result;
-  }
-
-  async openModal(article: Article) {
-    this.selectedArticle = article;
-    this.modalOpen = true;
-    document.body.classList.add("modal-open");
-  }
-
-  closeModal() {
-    this.modalOpen = false;
-    this.selectedArticle = null;
-    document.body.classList.remove("modal-open");
   }
 
   likeArticle(article: Article) {

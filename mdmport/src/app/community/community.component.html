@@ -3,7 +3,7 @@
 <div class="articles-container">
   <h2>Ajánlott cikkek</h2>
   <div class="articles-grid">
-    <mat-card *ngFor="let article of featuredArticles" class="article-card" (click)="openModal(article)">
+    <mat-card *ngFor="let article of featuredArticles" class="article-card">
       <div class="article-image" *ngIf="article.image">
         <img [src]="article.image" alt="">
       </div>
@@ -15,25 +15,6 @@
         </mat-card-content>
       </div>
     </mat-card>
-  </div>
-</div>
-
-<div class="modal-backdrop" *ngIf="modalOpen" (click)="closeModal()"></div>
-
-<div class="modal" *ngIf="modalOpen" role="dialog" aria-modal="true" tabindex="-1" [attr.aria-label]="selectedArticle?.title" (keydown.escape)="closeModal()">
-  <div class="modal-content">
-    <div class="modal-left">
-      <h2>{{ selectedArticle?.title }}</h2>
-      <hr>
-      <p>{{ selectedArticle?.fullText }}</p>
-      <div class="modal-actions">
-        <button mat-raised-button color="primary" class="like-btn" (click)="likeArticle(selectedArticle!)">
-          <mat-icon>thumb_up</mat-icon>
-          <span>{{ selectedArticle?.likes }}</span>
-        </button>
-        <button class="close-btn" type="button" (click)="closeModal()">Bezárás</button>
-      </div>
-    </div>
   </div>
 </div>
 
