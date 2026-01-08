@@ -3,11 +3,11 @@ const express = require('express');
 const cors = require('cors');
 const { loadSqlOnStart, dumpSqlOnShutdown } = require('./config/db');
 const apiRoutes = require('./routes/api');
-const sessionConfig = require('./config/session');
+
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(sessionConfig);
+
 app.use('/api', apiRoutes);
 
 const PORT = process.env.PORT || 3000;

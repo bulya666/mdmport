@@ -1,6 +1,5 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const { pool } = require("../config/db");
 
 exports.login = async (req, res) => {
   try {
@@ -11,32 +10,7 @@ exports.login = async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).json({ success: false, message: 'Hibás adatok' });
 
-    req.session.userId = user.id;
-    req.session.username = user.username;
-
-    console.log('Session tartalma mentés előtt:', req.session);
-    console.log('Session sikeresen elmentve, tartalom:', req.session);
-
-    req.session.regenerate((err) => {
-      if (err) {
-        console.error('Session regenerate hiba:', err);
-        return res.status(500).json({ success: false, message: 'Szerver hiba' });
-      }
-
-      req.session.userId = user.id;
-      req.session.username = user.username;
-
-      req.session.touch();
-
-      req.session.save(async(err) => {
-        if (err) {
-          console.error('Session save hiba:', err);
-          return res.status(500).json({ success: false, message: 'Szerver hiba' });
-        }
-        
-        res.json({ success: true, user: user.username });
-      });
-    });
+    res.json({ success: true, user: user.username });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: 'Szerver hiba' });
@@ -55,29 +29,4 @@ exports.register = async (req, res) => {
     console.error(err);
     res.status(500).json({ success: false, message: 'Szerver hiba' });
   }
-};
-
-exports.logout = function (req, res) {
-  const sid = req.sessionID;
-  req.session.destroy(() => {
-    if (req) {
-
-    }
-    else{
-      console.error('Session destroy error:', err);
-      return res.status(500).json({ success: false, message: 'Logout failed' });
-    }
-
-    // clear cookie (default név: connect.sid)
-    res.clearCookie('connect.sid', { path: '/' });
-
-    const store = req.sessionStore;
-    if (store && typeof store.destroy === 'function') {
-      store.destroy(sid, (e) => {
-        if (e) console.error('Failed to destroy session in store:', e);
-      });
-    }
-
-    return res.json({ success: true });
-  });
 };
