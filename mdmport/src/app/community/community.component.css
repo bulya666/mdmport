@@ -53,16 +53,16 @@ body {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 200px;
+  width: 2000px;
   height: 4px;
-  background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.507), transparent);
   border-radius: 2px;
 }
 
 .community-header h1 {
   font-size: 3.5rem;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.507) 0%, #c72222 50%, rgba(255, 0, 0, 0.507) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -76,10 +76,10 @@ body {
   content: '';
   position: absolute;
   bottom: -10px;
-  left: 25%;
-  width: 50%;
+  left: -10%;
+  width: 120%;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #667eea, transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.507), transparent);
   border-radius: 3px;
 }
 
