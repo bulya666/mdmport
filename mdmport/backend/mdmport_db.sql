@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `ownedg` (
   KEY `gameid` (`gameid`),
   CONSTRAINT `ownedg_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`id`),
   CONSTRAINT `ownedg_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `games` (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 66 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 71 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 38 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 41 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: gamephotos
@@ -429,6 +429,26 @@ INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
   (43, 28, 8);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (66, 38, 7);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (67, 38, 1);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (68, 38, 9);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (69, 38, 11);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (70, 38, 12);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: users
@@ -441,6 +461,30 @@ VALUES
     28,
     'Admin',
     '$2b$12$LxKFdUGTxSax1OQRj8o/1uqx1CwfwSeEfsOQNk.OSVJmVAlVYJtWO'
+  );
+INSERT INTO
+  `users` (`id`, `username`, `password`)
+VALUES
+  (
+    38,
+    'Bulya',
+    '$2b$12$gv2XUPQYIeBAc3dPn/jVSO8hpmdZWXLub7tAGwu9.hW8TNZjHVkOK'
+  );
+INSERT INTO
+  `users` (`id`, `username`, `password`)
+VALUES
+  (
+    39,
+    'Szakacs',
+    '$2b$12$wl0TyjcupGDoQlyt3JdgXuaNQxT48xQJUStQcE.SVyQyjQUEmI6Zy'
+  );
+INSERT INTO
+  `users` (`id`, `username`, `password`)
+VALUES
+  (
+    40,
+    'Marci',
+    '$2b$12$nevQMoKcFS9qM6UXj7oT8.rbD781b1AA8cboe5gzcJAVIHusgsYIi'
   );
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
