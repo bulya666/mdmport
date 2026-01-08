@@ -53,7 +53,10 @@
   opacity: 0.8;
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
-
+:host {
+  display: block;
+  margin-top: auto;
+}
 .mdm-logo:hover {
   transform: translateY(-1px) scale(1.02);
   letter-spacing: 0.8px;

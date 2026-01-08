@@ -20,3 +20,11 @@ exports.getUserByUsername = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.me = async (req, res) => {
+  const user = await User.findById(req.session.userId);
+  res.json({
+    id: user.id,
+    username: user.username
+  });
+};

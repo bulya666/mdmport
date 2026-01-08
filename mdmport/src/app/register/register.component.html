@@ -58,6 +58,23 @@
       <div *ngIf="confirmError" class="error-message">{{ confirmError }}</div>
     </div>
 
+        <!-- ÁSZF elfogadás checkbox -->
+    <div class="input-group terms-group">
+      <div class="terms-checkbox">
+        <input
+          type="checkbox"
+          id="acceptTerms"
+          [(ngModel)]="acceptedTerms"
+          name="acceptTerms"
+          required
+        />
+        <label for="acceptTerms">
+          Elfogadom az <a href="/aszf" target="_blank" class="terms-link">Általános Szerződési Feltételeket</a>
+        </label>
+      </div>
+      <div *ngIf="termsError" class="error-message">{{ termsError }}</div>
+    </div>
+
     <button type="submit" [disabled]="isLoading" class="submit-btn">
       {{ isLoading ? 'Regisztrálás...' : 'Regisztrálok' }}
     </button>

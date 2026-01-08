@@ -1,337 +1,1209 @@
-.community-page {
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 0 16px 80px;
-  color: #e0e0ff;
-  position: relative;
-  overflow-x: hidden;
-}
-
-/* Parallax háttér */
-.community-page::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, rgba(255, 0, 102, 0.1), transparent 70%);
-  background-size: 200% 200%;
-  z-index: -1;
-}
-
-/* Cím */
-.community-page h2 {
-  font-size: clamp(28px, 5vw, 36px);
-  font-weight: 900;
-  letter-spacing: 1px;
-  background: linear-gradient(90deg, #ff3366, #ff0066, #cc0033);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(255, 0, 102, 0.4);
-  margin: 40px 0 24px;
-  position: relative;
-}
-
-.community-page h2::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, #ff3366, transparent);
-  border-radius: 3px;
-  box-shadow: 0 0 15px #ff3366;
-}
-
-/* GRID – 3 oszlop × 2 sor = 6 cikk */
-.articles-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: auto;
-  gap: 28px;
-  padding: 16px 0;
-}
-
-/* Mobil nézetre */
-@media (max-width: 1200px) {
-  .articles-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 700px) {
-  .articles-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* CIKK KÁRTYA */
-.article-card {
-  background: linear-gradient(145deg, rgba(20, 25, 45, 0.95), rgba(10, 15, 35, 0.98));
-  border: 1px solid rgba(255, 51, 102, 0.25);
-  border-radius: 20px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.5),
-    0 0 15px rgba(255, 51, 102, 0.1);
-  position: relative;
-  min-height: 250px;
-}
-
-.article-card:hover {
-  transform: translateY(-8px) scale(1.01);
-  box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.7),
-    0 0 30px rgba(255, 51, 102, 0.4);
-}
-
-.article-card mat-card-title {
-  font-size: clamp(18px, 3vw, 22px);
-  font-weight: 800;
-  padding: 20px 20px 0;
-  background: linear-gradient(to right, #ff6b9d, #ff3366);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.article-card mat-card-content p {
-  color: #ccd6f6;
-  font-size: 15px;
-  line-height: 1.6;
-  padding: 0 20px 20px;
-}
-
-.article-card hr {
-  height: 3px;
-  background: linear-gradient(90deg, #ff3366, transparent);
-  border: none;
-  margin: 12px 20px;
-  border-radius: 2px;
-}
-
-/* MODAL */
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(5, 10, 25, 0.92);
-  backdrop-filter: blur(12px);
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-out;
-}
-
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.98);
-  background: linear-gradient(135deg, rgba(15, 20, 40, 0.98), rgba(10, 15, 30, 0.98));
-  border: 1.5px solid #ff3366;
-  border-radius: 24px;
-  max-width: 900px;
-  width: 95%;
-  max-height: 85vh;
-  overflow-y: auto;
-  box-shadow:
-    0 0 60px rgba(255, 51, 102, 0.5),
-    0 24px 60px rgba(0, 0, 0, 0.8);
-  z-index: 1001;
-}
-
-.modal-content {
-  padding: 32px;
-}
-
-.modal-left h2 {
-  font-size: clamp(24px, 4vw, 32px);
-  font-weight: 900;
-  background: linear-gradient(90deg, #ff3366, #ff6699);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.modal-left p {
-  font-size: 16px;
-  line-height: 1.7;
-  color: #e6e6ff;
-}
-
-/* BUTTONS */
-.like-btn {
-  background: linear-gradient(135deg, #ff3366, #cc0033) !important;
-  color: white !important;
-  font-weight: 700;
-  border-radius: 50px;
-  padding: 10px 24px !important;
-  transition: all 0.3s ease !important;
-}
-
-.close-btn {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1.5px solid rgba(255, 51, 102, 0.4);
-  color: #ff6699;
-  padding: 10px 24px;
-  border-radius: 50px;
-  font-weight: 600;
-}
-
-.close-btn:hover {
-  background: rgba(255, 51, 102, 0.1);
-  border-color: #ff3366;
-  box-shadow: 0 0 12px #ff3366;
-}
-
-/* ÚJ BEJEGYZÉS ÉS BEJEGYZÉSEK */
-
-.new-post {
-  background: linear-gradient(145deg, rgba(20, 30, 50, 0.98), rgba(15, 20, 40, 0.98));
-  border: 1.5px solid rgba(255, 51, 102, 0.3);
-  border-radius: 20px;
-  padding: 24px;
-  margin: 48px 0 32px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 51, 102, 0.15);
-  backdrop-filter: blur(10px);
-}
-
-.new-post mat-card-title {
-  color: #ff6699;
-  font-size: 20px;
-  font-weight: 800;
-  margin-bottom: 16px;
-}
-
-textarea[matInput] {
-  background: rgba(10, 15, 30, 0.9);
-  border: 1.5px solid rgba(255, 51, 102, 0.25);
-  border-radius: 14px;
-  padding: 14px 16px;
-  color: #ffffff;
-  font-size: 15px;
-  transition: all 0.3s ease;
-  min-height: 100px;
-  resize: vertical;
-  width: 100%;
+/* Alap reset */
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-textarea[matInput]:focus {
-  border-color: #ff3366;
-  box-shadow: 0 0 20px rgba(255, 51, 102, 0.4);
-  background: rgba(15, 20, 40, 0.98);
-
-}.posts {
-  display: grid;
-  gap: 20px;
+/* Háttérgradients */
+body {
+  background-color: #0a0a1a;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(0, 200, 255, 0.18), transparent 55%),
+    radial-gradient(circle at 80% 70%, rgba(255, 45, 85, 0.22), transparent 60%),
+    radial-gradient(circle at 60% 20%, rgba(180, 0, 255, 0.15), transparent 65%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  min-height: 100vh;
 }
 
-.post-card {
-  background: linear-gradient(145deg, rgba(18, 25, 45, 0.98), rgba(12, 18, 38, 0.98));
-  border: 1px solid rgba(255, 51, 102, 0.25);
+/* Közösségi konténer */
+.community-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  color: #e0e0ff;
+}
+
+/* ==================== FEJLÉC - MODERN MINIMALISTA ==================== */
+.community-header {
+  background: rgba(10, 10, 26, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 4rem 2rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.15);
+}
+
+.community-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+  z-index: -1;
+}
+
+.community-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent);
+  border-radius: 2px;
+}
+
+.community-header h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  letter-spacing: -1px;
+  position: relative;
+  display: inline-block;
+}
+
+.community-header h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 25%;
+  width: 50%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #667eea, transparent);
+  border-radius: 3px;
+}
+
+.community-header .subtitle {
+  color: #b0b0ff;
+  font-size: 1.3rem;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.community-header .stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2.2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.3rem;
+}
+
+.stat-label {
+  color: #8888cc;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ==================== FŐ TARTALOM ==================== */
+.community-content {
+  display: flex;
+  max-width: 1400px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  gap: 2rem;
+}
+
+/* ==================== CIKKEK SZEKCIÓ ==================== */
+.articles-section {
+  flex: 3;
   border-radius: 20px;
-  padding: 24px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
-  transition: all 0.3s ease;
+  padding: 2rem;
+  background: rgba(10, 10, 26, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Szűrők */
+.filters {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.search-box {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3.5rem;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s;
+  background: rgba(20, 20, 40, 0.6);
+  color: #e0e0ff;
+  backdrop-filter: blur(5px);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  background: rgba(25, 25, 50, 0.8);
+}
+
+.search-input::placeholder {
+  color: #8888cc;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #667eea;
+  font-size: 1.2rem;
+}
+
+/* Kategória gombok */
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.category-btn {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 25px;
+  background: rgba(20, 20, 40, 0.6);
+  color: #b0b0ff;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+  font-weight: 500;
+  backdrop-filter: blur(5px);
+}
+
+.category-btn:hover {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
+  border-color: #667eea;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.category-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* Cikk lista */
+.articles-list {
+  display: grid;
+  gap: 1.5rem;
+  min-height: 500px;
+}
+
+/* Cikk kártyák */
+.article-card {
+  background: linear-gradient(135deg, rgba(20, 20, 40, 0.7) 0%, rgba(30, 30, 60, 0.5) 100%);
+  border-radius: 16px;
+  padding: 1.8rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  backdrop-filter: blur(10px);
   position: relative;
   overflow: hidden;
 }
 
-.post-card::before {
+.article-card::before {
   content: '';
   position: absolute;
-  top: 0; left: 0;
-  width: 4px;
-  height: 100%;
-  background: linear-gradient(to bottom, #ff3366, #ff3366);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent);
+}
+
+.article-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(102, 126, 234, 0.4);
+}
+
+.article-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.article-category {
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.article-date {
+  color: #8888cc;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.article-title {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.4;
+  background: linear-gradient(135deg, #ffffff 0%, #b0b0ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.article-content {
+  color: #ccccff;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.article-footer {
+  border-top: 1px solid rgba(102, 126, 234, 0.2);
+  padding-top: 1.2rem;
+}
+
+.article-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.article-author {
+  color: #8888cc;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.article-stats {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+/* ==================== LIKE GOMB STÍLUSOK ==================== */
+.like-btn {
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #b0b0ff;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.like-btn:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.like-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.like-btn.active:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  transform: scale(1.05);
+}
+
+.comments-count {
+  color: #8888cc;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ==================== KOMMENT SZEKCIÓ ==================== */
+.comments-section {
+  flex: 1;
+  background: rgba(10, 10, 26, 0.5);
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  min-height: 600px; /* JAVÍTOTT: Minimum magasság */
+  height: 1800px; /* JAVÍTOTT: Automatikus magasság */
+  max-height: none; /* JAVÍTOTT: Távolítsuk el a max-height korlátozást */
+}
+
+.comments-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.comments-header h2 {
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.comments-header p {
+  color: #b0b0ff;
+  font-size: 1rem;
+}
+
+/* Új komment űrlap */
+.new-comment-form {
+  background: linear-gradient(135deg, rgba(20, 20, 40, 0.7) 0%, rgba(30, 30, 60, 0.5) 100%);
+  padding: 1.8rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  backdrop-filter: blur(10px);
+  flex-shrink: 0; /* JAVÍTOTT: Ne zsugorodjon */
+}
+
+.new-comment-form h3 {
+  margin-bottom: 1.2rem;
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 0.9rem;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s;
+  background: rgba(25, 25, 50, 0.8);
+  color: #e0e0ff;
+  backdrop-filter: blur(5px);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  background: rgba(30, 30, 60, 0.9);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #8888cc;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  letter-spacing: 0.5px;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+/* Komment lista */
+.comments-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  min-height: 300px; /* JAVÍTOTT: Minimum magasság a tartalomhoz */
+}
+
+.comments-list h3 {
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+/* Komment kártyák */
+.comment-card {
+  background: linear-gradient(135deg, rgba(20, 20, 40, 0.7) 0%, rgba(30, 30, 60, 0.5) 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.2rem;
+  border-left: 4px solid #667eea;
+  border-right: 1px solid rgba(102, 126, 234, 0.2);
+  border-top: 1px solid rgba(102, 126, 234, 0.2);
+  border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s;
+  opacity: 1; /* JAVÍTOTT: Biztosítsuk, hogy látható legyen */
+  visibility: visible; /* JAVÍTOTT: Biztosítsuk, hogy látható legyen */
+}
+
+.comment-card:hover {
+  transform: translateX(5px);
+  border-color: rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  flex-wrap: wrap; /* JAVÍTOTT: Reszponzív */
+}
+
+.comment-author {
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 1rem;
+  margin-right: 1rem; /* JAVÍTOTT: Távolság a dátumszövegtől */
+}
+
+.comment-date {
+  color: #8888cc;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.comment-content {
+  color: #ccccff;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  padding: 0.5rem 0; /* JAVÍTOTT: Belső térköz */
+}
+
+.comment-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(102, 126, 234, 0.1); /* JAVÍTOTT: Vékony elválasztó */
+}
+
+/* ==================== ÜRES ÁLLAPOTOK ==================== */
+.no-results,
+.no-comments {
+  text-align: center;
+  padding: 3rem;
+  color: #8888cc;
+  background: rgba(20, 20, 40, 0.5);
+  border-radius: 16px;
+  border: 2px dashed rgba(102, 126, 234, 0.3);
+  backdrop-filter: blur(5px);
+  margin-top: 2rem; /* JAVÍTOTT: Távolság */
+  font-size: 1.1rem; /* JAVÍTOTT: Nagyobb betűméret */
+}
+
+/* ==================== LÁBLÉC ==================== */
+.community-footer {
+  background: rgba(10, 10, 26, 0.7);
+  padding: 2rem;
+  text-align: center;
+  margin-top: 3rem;
+  color: #8888cc;
+  border-top: 2px solid rgba(102, 126, 234, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+}
+
+/* ==================== OLDALALAKÍTÁS ==================== */
+.pagination-container {
+  margin-top: 40px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(102, 126, 234, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-btn {
+  padding: 10px 20px;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  background: rgba(20, 20, 40, 0.6);
+  color: #b0b0ff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s;
+  backdrop-filter: blur(5px);
+}
+
+.page-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
+  border-color: #667eea;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: rgba(20, 20, 40, 0.3);
+}
+
+.page-numbers {
+  display: flex;
+  gap: 8px;
+}
+
+.page-number {
+  min-width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  background: rgba(20, 20, 40, 0.6);
+  color: #b0b0ff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s;
+  backdrop-filter: blur(5px);
+}
+
+.page-number:hover {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
+  border-color: #667eea;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.page-number.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  font-weight: 600;
+}
+
+.pagination-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #8888cc;
+}
+
+.page-indicator {
+  font-weight: 600;
+  color: #667eea;
+}
+
+/* ==================== RESZPONZÍV DESIGN ==================== */
+@media (max-width: 1200px) {
+  .community-content {
+    max-width: 100%;
+    padding: 0 2rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .community-content {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .articles-section,
+  .comments-section {
+    width: 100%;
+    max-height: none;
+  }
+  
+  .comments-section {
+    max-height: none;
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .community-header {
+    padding: 2rem 1rem;
+  }
+  
+  .community-header h1 {
+    font-size: 2.2rem;
+  }
+  
+  .community-header p {
+    font-size: 1.1rem;
+  }
+  
+  .community-content {
+    margin: 1.5rem auto;
+    padding: 0 1rem;
+  }
+  
+  .articles-section,
+  .comments-section {
+    padding: 1.5rem;
+  }
+  
+  .article-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .article-stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .category-filters {
+    justify-content: center;
+  }
+  
+  .comment-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .comment-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+  
+  .pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .page-numbers {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .page-btn {
+    order: 1;
+  }
+  
+  .next-btn {
+    order: 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .community-header {
+    padding: 1.5rem 1rem;
+  }
+  
+  .community-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .community-header p {
+    font-size: 1rem;
+  }
+  
+  .community-content {
+    margin: 1rem auto;
+    padding: 0 0.75rem;
+  }
+  
+  .articles-section,
+  .comments-section {
+    padding: 1.2rem;
+  }
+  
+  .article-card,
+  .comment-card {
+    padding: 1.2rem;
+  }
+  
+  .article-title {
+    font-size: 1.2rem;
+  }
+  
+  .page-number {
+    min-width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
+  
+  .page-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
+
+/* ==================== EGYÉNI SCROLLBAR ==================== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(20, 20, 40, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+/* ... az összes meglévő CSS marad változatlan ... */
+
+/* ==================== MODAL STÍLUSOK ==================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: none;
+  z-index: 1000;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
-.post-card:hover::before {
+.modal-overlay.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 1;
 }
 
-.post-card:hover {
-  transform: translateY(-6px);
+.modal-container {
+  background: linear-gradient(135deg, rgba(15, 15, 35, 0.95) 0%, rgba(25, 25, 55, 0.9) 100%);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-radius: 24px;
+  border: 1px solid rgba(102, 126, 234, 0.3);
   box-shadow: 
-    0 20px 48px rgba(0, 0, 0, 0.8),
-    0 0 24px rgba(255, 51, 102, 0.3);
+    0 40px 80px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90vh;
+  position: relative;
+  animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
 }
 
-.post-card mat-card-title {
-  color: #ff6699;
-  font-weight: 700;
-}
-
-.post-card p {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #d0d0ff;
-}
-
-/* KOMMENTEK – Kis padding, hogy elférjen */
-.comments mat-list-item {
-  background: rgba(20, 30, 50, 0.7);
-  border-radius: 14px;
-  padding: 16px;
-  margin: 8px 0;
-  border: 1px solid rgba(255, 51, 102, 0.15);
-  transition: all 0.3s ease;
-}
-
-.comments mat-list-item:hover {
-  background: rgba(30, 40, 70, 0.9);
-  border-color: #ff3366;
-  transform: translateX(4px);
-}
-
-.mat-mdc-text-field-wrapper {
-  width: 600%;
-}
-
-/* ANIMÁCIÓK – Finomabbak, nem túl durvák */
-@keyframes modalPop {
-  0% {
-    transform: translate(-50%, -50%) scale(0.9);
-    opacity: 0.8;
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
   }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
+  to {
     opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.modal-close-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  z-index: 1001;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+  border-color: #667eea;
 }
 
-/* MOBILE OPTIMALIZÁCIÓ – Minden stackelődik */
+.modal-content {
+  display: flex;
+  height: calc(90vh - 3rem);
+  overflow: hidden;
+}
+
+/* Bal oldal: Cikk */
+.modal-article-side {
+  flex: 2;
+  padding: 2.5rem;
+  border-right: 1px solid rgba(102, 126, 234, 0.2);
+  overflow-y: auto;
+  background: rgba(10, 10, 26, 0.5);
+}
+
+.modal-article-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.modal-article-category {
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.modal-article-date {
+  color: #8888cc;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.modal-article-title {
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  background: linear-gradient(135deg, #ffffff 0%, #b0b0ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.modal-article-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: rgba(20, 20, 40, 0.6);
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+}
+
+.author-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.author-name {
+  color: #b0b0ff;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.modal-article-content {
+  color: #ccccff;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.modal-article-content p {
+  margin-bottom: 1.5rem;
+}
+
+.modal-article-stats {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.modal-like-btn {
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #b0b0ff;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.modal-like-btn:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.modal-like-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.modal-like-btn.active:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.modal-like-btn.small {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+}
+
+.modal-comments-count {
+  color: #8888cc;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Jobb oldal: Kommentek */
+.modal-comments-side {
+  flex: 1.5;
+  padding: 2.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-comments-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.modal-comments-header h3 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.modal-new-comment {
+  background: linear-gradient(135deg, rgba(20, 20, 40, 0.7) 0%, rgba(30, 30, 60, 0.5) 100%);
+  padding: 1.5rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.modal-comments-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.modal-comment-card {
+  background: linear-gradient(135deg, rgba(20, 20, 40, 0.7) 0%, rgba(30, 30, 60, 0.5) 100%);
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid #667eea;
+  border-right: 1px solid rgba(102, 126, 234, 0.2);
+  border-top: 1px solid rgba(102, 126, 234, 0.2);
+  border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s;
+}
+
+.modal-comment-card:hover {
+  transform: translateX(5px);
+  border-color: rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.modal-comment-author {
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.modal-comment-date {
+  color: #8888cc;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.modal-comment-content {
+  color: #ccccff;
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+}
+
+.modal-comment-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.no-comments-modal {
+  text-align: center;
+  padding: 3rem;
+  color: #8888cc;
+  background: rgba(20, 20, 40, 0.5);
+  border-radius: 16px;
+  border: 2px dashed rgba(102, 126, 234, 0.3);
+  backdrop-filter: blur(5px);
+  font-size: 1.1rem;
+}
+
+/* Cikk kártya hover effektus */
+.article-card {
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.article-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(102, 126, 234, 0.4);
+}
+
+/* Reszponzív modal */
+@media (max-width: 1024px) {
+  .modal-content {
+    flex-direction: column;
+    height: auto;
+    max-height: 90vh;
+  }
+  
+  .modal-article-side {
+    border-right: none;
+    border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+    max-height: 50vh;
+  }
+  
+  .modal-comments-side {
+    max-height: 40vh;
+  }
+}
+
 @media (max-width: 768px) {
-  .articles-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+  .modal-container {
+    width: 95%;
+    margin: 1rem;
   }
-  .community-page {
-    padding: 0 8px 60px;
+  
+  .modal-article-title {
+    font-size: 1.8rem;
   }
-  .new-post {
-    padding: 16px;
-    margin: 32px 0 24px;
-  }
-  .post-card {
-    padding: 16px;
-  }
-  .modal-left h2 {
-    font-size: 24px;
-  }
-  .modal-left p {
-    font-size: 15px;
+  
+  .modal-article-side,
+  .modal-comments-side {
+    padding: 1.5rem;
   }
 }

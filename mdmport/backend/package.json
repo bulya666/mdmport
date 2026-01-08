@@ -4,6 +4,7 @@
   "description": "MDM Port backend – MVC struktúrában",
   "main": "src/server.js",
   "scripts": {
+    "prestart": "node ../scripts/ensure_update_once.js",
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,6 +18,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-mysql-session": "^3.0.3",
+    "express-session": "^1.18.2",
     "mysql2": "^3.11.3",
     "mysqldump": "^3.2.0",
     "nodemailer": "^6.9.15"

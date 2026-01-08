@@ -21,7 +21,6 @@ loadSqlOnStart().finally(() => {
   });
 });
 
-// Graceful shutdown + dump
 let shuttingDown = false;
 const handleShutdown = (signal) => {
   if (shuttingDown) return;

@@ -27,7 +27,6 @@ exports.addOwnedGame = async (req, res) => {
     const result = await OwnedGame.add(userid, gameid);
 
     if (result.alreadyOwned) {
-      // EZ A FONTOS: már birtokolja → 409 Conflict
       return res.json({
         success: false,
         alreadyOwned: true,

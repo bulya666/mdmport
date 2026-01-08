@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `ownedg` (
   KEY `gameid` (`gameid`),
   CONSTRAINT `ownedg_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`id`),
   CONSTRAINT `ownedg_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `games` (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 66 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 71 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 36 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 41 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: gamephotos
@@ -432,91 +432,23 @@ VALUES
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (44, 30, 6);
+  (66, 38, 7);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (45, 30, 1);
+  (67, 38, 1);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (46, 30, 2);
+  (68, 38, 9);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (47, 30, 12);
+  (69, 38, 11);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (48, 30, 10);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (49, 30, 9);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (50, 30, 11);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (51, 30, 3);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (52, 30, 4);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (53, 30, 8);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (54, 33, 8);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (55, 33, 1);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (56, 33, 7);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (57, 33, 9);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (58, 33, 10);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (59, 33, 12);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (60, 33, 5);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (61, 33, 3);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (62, 34, 2);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (63, 35, 4);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (64, 35, 9);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (65, 35, 2);
+  (70, 38, 12);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: users
@@ -534,57 +466,25 @@ INSERT INTO
   `users` (`id`, `username`, `password`)
 VALUES
   (
-    29,
-    'Szakacs',
-    '$2b$12$9C/g/bBswhWse8sQbqSUzeU7KZmDdGym0aUQCxMLK8Rfo8BX/MBsW'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    30,
+    38,
     'Bulya',
-    '$2b$12$E.dJEjI.yQd3OHZTlPpZz.SAGCq99rj7lTDZ66OATMDSCCKig025W'
+    '$2b$12$gv2XUPQYIeBAc3dPn/jVSO8hpmdZWXLub7tAGwu9.hW8TNZjHVkOK'
   );
 INSERT INTO
   `users` (`id`, `username`, `password`)
 VALUES
   (
-    31,
-    'teszt',
-    '$2b$12$GEmJsPdCy0PGl4gq9RRRDuBOT2CWCoWokHaDf66jLK1q5IPCsvg0e'
+    39,
+    'Szakacs',
+    '$2b$12$wl0TyjcupGDoQlyt3JdgXuaNQxT48xQJUStQcE.SVyQyjQUEmI6Zy'
   );
 INSERT INTO
   `users` (`id`, `username`, `password`)
 VALUES
   (
-    32,
-    'teszt1',
-    '$2b$12$.iW6sUlCpOR1H7i.uCvc/eZC1Qewxwub8H0uRjxoPdIHxLjaDmgXi'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    33,
-    'teszt2',
-    '$2b$12$fsl6I8U..FMkBRGYJvUVs.Uel4LztyXuYoKCLSR7qKaNtP4akr812'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    34,
-    'teszt3',
-    '$2b$12$5W00TMmFORdU3hN5rffu8u1gKbdSSqflamIbtsko8OX4FD3diCqvq'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    35,
-    'Bulya56',
-    '$2b$12$76btRu79XmPbNDYJXSKr/O0q7LxMb9ChNBLBmsrFzzd5WkccW6j/u'
+    40,
+    'Marci',
+    '$2b$12$nevQMoKcFS9qM6UXj7oT8.rbD781b1AA8cboe5gzcJAVIHusgsYIi'
   );
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
