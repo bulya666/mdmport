@@ -145,12 +145,10 @@
         <h3>Új hozzászólás írása</h3>
         <!-- Név megadása -->
         <div class="form-group">
-          <input 
-            type="text" 
-            [(ngModel)]="newComment.author"
-            placeholder="Neved"
-            class="form-input"
-          >
+          <div class="user-info">
+            <i class="fas fa-user-circle"></i>
+            <!-- <span>{{ loggedUser }}</span> -->
+          </div>
         </div>
         <!-- Hozzászólás szöveg -->
         <div class="form-group">

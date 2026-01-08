@@ -199,7 +199,7 @@ body {
   border: 1px solid #ff00004d;
   border-radius: 25px;
   background: rgba(201, 2, 2, 0.486);
-  color: #c4c4ff;
+  color: #ffffff;
   cursor: pointer;
   transition: all 0.3s;
   font-size: 0.9rem;
@@ -212,7 +212,7 @@ body {
   border: 2px;
   border-color: linear-gradient(100deg, rgba(253, 13, 13, 0.774) 0%, rgba(161, 1, 1, 0.616) 70%);
   color: #ffffff;
-  transform: translateY(-2px);
+  transform: translateY(-4px);
 }
 
 .category-btn.active {
