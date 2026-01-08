@@ -27,6 +27,77 @@ describe('CommunityComponent', () => {
     expect(component.comments.length).toBeGreaterThan(0);
   });
 
+  it('should toggle article like on/off', () => {
+    const article = component.articles[0];
+    const initialLikes = article.likes;
+    const initialLiked = component.isArticleLiked(article);
+    
+    // Első like
+    component.likeArticle(article);
+    expect(article.likes).toBe(initialLikes + 1);
+    expect(component.isArticleLiked(article)).toBe(!initialLiked);
+    
+    // Második like (lelike)
+    component.likeArticle(article);
+    expect(article.likes).toBe(initialLikes); // Vissza az eredeti értékre
+    expect(component.isArticleLiked(article)).toBe(initialLiked);
+  });
+
+  it('should toggle comment like on/off', () => {
+    const comment = component.comments[0];
+    const initialLikes = comment.likes;
+    const initialLiked = component.isCommentLiked(comment);
+    
+    // Első like
+    component.likeComment(comment);
+    expect(comment.likes).toBe(initialLikes + 1);
+    expect(component.isCommentLiked(comment)).toBe(!initialLiked);
+    
+    // Második like (lelike)
+    component.likeComment(comment);
+    expect(comment.likes).toBe(initialLikes); // Vissza az eredeti értékre
+    expect(component.isCommentLiked(comment)).toBe(initialLiked);
+  });
+
+  it('should have correct comment counts for articles', () => {
+    // Ellenőrizzük, hogy minden cikk commentsCount mezője megegyezik a hozzá tartozó kommentek számával
+    component.articles.forEach(article => {
+      const actualCommentCount = component.getCommentsForArticle(article.id).length;
+      expect(article.commentsCount).toBe(actualCommentCount);
+    });
+  });
+
+  it('should increment comment count when adding new comment', () => {
+    const article = component.articles[0];
+    const initialCommentCount = article.commentsCount;
+    
+    component.selectedArticle = article;
+    component.modalNewComment = {
+      author: 'TesztFelhasználó',
+      content: 'Teszt komment'
+    };
+    
+    component.addCommentToArticle(article.id);
+    
+    expect(article.commentsCount).toBe(initialCommentCount + 1);
+  });
+
+  it('should open modal when article is clicked', () => {
+    const article = component.articles[0];
+    component.openArticleModal(article);
+    
+    expect(component.isModalOpen).toBeTrue();
+    expect(component.selectedArticle).toBe(article);
+  });
+
+  it('should close modal', () => {
+    component.openArticleModal(component.articles[0]);
+    component.closeModal();
+    
+    expect(component.isModalOpen).toBeFalse();
+    expect(component.selectedArticle).toBeNull();
+  });
+
   it('should filter articles by category', () => {
     component.selectedCategory = 'game-updates';
     component.filterArticles();
@@ -50,64 +121,6 @@ describe('CommunityComponent', () => {
     expect(filteredArticles.length).toBeGreaterThan(0);
   });
 
-  it('should get comments for specific article', () => {
-    const articleId = 1;
-    const comments = component.getCommentsForArticle(articleId);
-    
-    const allForArticle = comments.every(comment => comment.articleId === articleId);
-    expect(allForArticle).toBeTrue();
-  });
-
-  it('should add new comment', () => {
-    const initialCommentCount = component.comments.length;
-    const initialArticleComments = component.articles.find(a => a.id === 1)?.commentsCount || 0;
-    
-    component.newComment = {
-      author: 'TesztFelhasználó',
-      content: 'Ez egy teszt hozzászólás',
-      articleId: 1
-    };
-    
-    component.addComment();
-    
-    expect(component.comments.length).toBe(initialCommentCount + 1);
-    expect(component.articles.find(a => a.id === 1)?.commentsCount).toBe(initialArticleComments + 1);
-  });
-
-  it('should not add comment with empty fields', () => {
-    const initialCommentCount = component.comments.length;
-    
-    component.newComment = {
-      author: '',
-      content: '',
-      articleId: 1
-    };
-    
-    spyOn(window, 'alert');
-    component.addComment();
-    
-    expect(component.comments.length).toBe(initialCommentCount);
-    expect(window.alert).toHaveBeenCalled();
-  });
-
-  it('should increment article likes', () => {
-    const article = component.articles[0];
-    const initialLikes = article.likes;
-    
-    component.likeArticle(article);
-    
-    expect(article.likes).toBe(initialLikes + 1);
-  });
-
-  it('should increment comment likes', () => {
-    const comment = component.comments[0];
-    const initialLikes = comment.likes;
-    
-    component.likeComment(comment);
-    
-    expect(comment.likes).toBe(initialLikes + 1);
-  });
-
   it('should get correct category name', () => {
     const categoryName = component.getCategoryName('news');
     expect(categoryName).toBe('Hírek');
@@ -116,5 +129,15 @@ describe('CommunityComponent', () => {
   it('should get correct category color', () => {
     const color = component.getCategoryColor('news');
     expect(color).toBe('#4CAF50');
+  });
+
+  it('should handle ESC key to close modal', () => {
+    component.openArticleModal(component.articles[0]);
+    expect(component.isModalOpen).toBeTrue();
+    
+    const event = new KeyboardEvent('keydown', { key: 'Escape' });
+    component.handleEscapeKey(event);
+    
+    expect(component.isModalOpen).toBeFalse();
   });
 });

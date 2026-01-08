@@ -37,7 +37,7 @@
 
       <!-- Cikkek listája -->
       <div class="articles-list">
-        <div *ngFor="let article of pagedArticles" class="article-card">
+        <div *ngFor="let article of pagedArticles" class="article-card" (click)="openArticleModal(article)">
           <!-- Cikk fejléc -->
           <div class="article-header">
             <!-- Kategória címke -->
@@ -61,11 +61,15 @@
             <div class="article-meta">
               <span class="article-author">Írta: {{ article.author }}</span>
               <div class="article-stats">
-                <!-- Like gomb -->
-                <button class="like-btn">
+                <!-- Like gomb (aktiválható/deaktiválható) -->
+                <button 
+                  class="like-btn" 
+                  [class.active]="isArticleLiked(article)"
+                  (click)="likeArticle(article, $event)"
+                >
                   👍 {{ article.likes }}
                 </button>
-                <!-- Hozzászólások száma -->
+                <!-- Hozzászólások száma (valós szám) -->
                 <span class="comments-count">
                   💬 {{ article.commentsCount }} hozzászólás
                 </span>
@@ -157,13 +161,17 @@
             class="form-textarea"
           ></textarea>
         </div>
+        <!-- Küldés gomb -->
+        <button class="submit-btn" (click)="addComment()">
+          Hozzászólás küldése
+        </button>
       </div>
 
       <!-- Kommentek listája -->
       <div class="comments-list">
-        <h3>Kommentek</h3>
+        <h3>Legújabb kommentek</h3>
         
-        <div *ngFor="let comment of comments" class="comment-card">
+        <div *ngFor="let comment of comments.slice(0, 5)" class="comment-card">
           <!-- Kommentelő és dátum -->
           <div class="comment-header">
             <span class="comment-author">{{ comment.author }}</span>
@@ -171,10 +179,17 @@
           </div>
           <!-- Komment szövege -->
           <div class="comment-content">{{ comment.content }}</div>
-          
+          <!-- Cikk címe -->
+          <div class="comment-article">
+            Cikk: {{ getArticleTitle(comment.articleId) }}
+          </div>
           <!-- Kedvelés gomb -->
           <div class="comment-footer">
-            <button class="like-btn" (click)="likeComment(comment)">
+            <button 
+              class="like-btn" 
+              [class.active]="isCommentLiked(comment)"
+              (click)="likeComment(comment)"
+            >
               👍 {{ comment.likes }}
             </button>
           </div>
@@ -191,5 +206,112 @@
         <p>© 2026 MDMPort | Minden jog fenntartva</p>
       </footer>
     </aside>
+  </div>
+</div>
+
+<!-- ==================== MODAL ABLAK ==================== -->
+<div class="modal-overlay" [class.active]="isModalOpen" (click)="closeModal($event)">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <!-- Bezáró gomb -->
+    <button class="modal-close-btn" (click)="closeModal()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    
+    <!-- Modal tartalom -->
+    <div class="modal-content" *ngIf="selectedArticle">
+      <!-- Bal oldal: Cikk -->
+      <div class="modal-article-side">
+        <div class="modal-article-header">
+          <span 
+            class="modal-article-category"
+            [style.backgroundColor]="getCategoryColor(selectedArticle.category)"
+          >
+            {{ getCategoryName(selectedArticle.category) }}
+          </span>
+          <span class="modal-article-date">{{ selectedArticle.date }}</span>
+        </div>
+        
+        <h2 class="modal-article-title">{{ selectedArticle.title }}</h2>
+        
+        <div class="modal-article-author">
+          <span class="author-avatar">{{ selectedArticle.author.charAt(0) }}</span>
+          <span class="author-name">Írta: {{ selectedArticle.author }}</span>
+        </div>
+        
+        <div class="modal-article-content">
+          <p>{{ selectedArticle.content }}</p>
+        </div>
+        
+        <div class="modal-article-stats">
+          <button 
+            class="modal-like-btn" 
+            [class.active]="isArticleLiked(selectedArticle)"
+            (click)="likeArticle(selectedArticle)"
+          >
+            👍 {{ selectedArticle.likes }}
+          </button>
+          <span class="modal-comments-count">
+            💬 {{ selectedArticle.commentsCount }} hozzászólás
+          </span>
+        </div>
+      </div>
+      
+      <!-- Jobb oldal: Kommentek -->
+      <div class="modal-comments-side">
+        <div class="modal-comments-header">
+          <h3>💬 Hozzászólások ({{ selectedArticle.commentsCount }})</h3>
+        </div>
+        
+        <!-- Új komment űrlap -->
+        <div class="modal-new-comment">
+          <div class="form-group">
+            <input 
+              type="text" 
+              [(ngModel)]="modalNewComment.author"
+              placeholder="Neved"
+              class="form-input"
+            >
+          </div>
+          <div class="form-group">
+            <textarea 
+              [(ngModel)]="modalNewComment.content"
+              placeholder="Írd meg hozzászólásodat..."
+              rows="3"
+              class="form-textarea"
+            ></textarea>
+          </div>
+          <button class="submit-btn" (click)="addCommentToArticle(selectedArticle.id)">
+            Hozzászólás küldése
+          </button>
+        </div>
+        
+        <!-- Kommentek listája -->
+        <div class="modal-comments-list">
+          <div *ngFor="let comment of getCommentsForArticle(selectedArticle.id)" class="modal-comment-card">
+            <div class="modal-comment-header">
+              <span class="modal-comment-author">{{ comment.author }}</span>
+              <span class="modal-comment-date">{{ comment.date }}</span>
+            </div>
+            <div class="modal-comment-content">{{ comment.content }}</div>
+            <div class="modal-comment-footer">
+              <button 
+                class="modal-like-btn small" 
+                [class.active]="isCommentLiked(comment)"
+                (click)="likeComment(comment)"
+              >
+                👍 {{ comment.likes }}
+              </button>
+            </div>
+          </div>
+          
+          <div *ngIf="getCommentsForArticle(selectedArticle.id).length === 0" class="no-comments-modal">
+            Még nincsenek hozzászólások. Legyél te az első!
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
