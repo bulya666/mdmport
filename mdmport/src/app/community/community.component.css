@@ -196,10 +196,10 @@ body {
 
 .category-btn {
   padding: 0.6rem 1.2rem;
-  border: 1px solid rgba(102, 126, 234, 0.3);
+  border: 1px solid #ff00004d;
   border-radius: 25px;
-  background: rgba(20, 20, 40, 0.6);
-  color: #b0b0ff;
+  background: rgba(201, 2, 2, 0.486);
+  color: #c4c4ff;
   cursor: pointer;
   transition: all 0.3s;
   font-size: 0.9rem;
@@ -208,17 +208,18 @@ body {
 }
 
 .category-btn:hover {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
-  border-color: #667eea;
+  background: linear-gradient(100deg, rgba(196, 2, 2, 0.774) 0%, rgba(161, 1, 1, 0.616) 60%);
+  border: 2px;
+  border-color: linear-gradient(100deg, rgba(253, 13, 13, 0.774) 0%, rgba(161, 1, 1, 0.616) 70%);
   color: #ffffff;
   transform: translateY(-2px);
 }
 
 .category-btn.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: rgba(201, 2, 2, 0.719);
   color: white;
   border-color: transparent;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 3px 6px 20px rgb(121, 0, 0);
 }
 
 /* Cikk lista */
@@ -269,7 +270,6 @@ body {
   color: white;
   font-size: 0.8rem;
   font-weight: 600;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
@@ -402,7 +402,7 @@ body {
 }
 
 .comments-header p {
-  color: #b0b0ff;
+  color: #ffffff;
   font-size: 1rem;
 }
 
@@ -459,7 +459,7 @@ body {
 .submit-btn {
   width: 100%;
   padding: 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #20c000 0%, #267701 100%);
   color: white;
   border: none;
   border-radius: 10px;
@@ -472,7 +472,7 @@ body {
 
 .submit-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 25px rgba(30, 255, 0, 0.555);
 }
 
 /* Komment lista */
