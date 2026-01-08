@@ -262,6 +262,50 @@
   width: 20%;
   margin-bottom: 10px;
 }
+/* ÁSZF csoport stílusai */
+.terms-group {
+  margin: 20px 0;
+}
+
+.terms-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.terms-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.terms-checkbox label {
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  user-select: none;
+}
+
+.terms-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.terms-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+/* A regisztrációs gomb letiltása, ha nincs elfogadva az ÁSZF */
+.submit-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* A többi meglévő stílus marad változatlan */
+
 @media (max-width: 480px) {
   .register-container form {
     padding: 26px 20px 22px;

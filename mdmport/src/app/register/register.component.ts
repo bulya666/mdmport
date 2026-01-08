@@ -17,6 +17,7 @@ export class RegisterComponent {
   username = '';
   password = '';
   confirmPassword = '';
+  acceptedTerms = false;
   showPassword = false;
   showConfirm = false;
   isLoading = false;
@@ -28,6 +29,7 @@ export class RegisterComponent {
   usernameError: string | null = null;
   passwordError: string | null = null;
   confirmError: string | null = null;
+  termsError: string | null = null;
 
   constructor(
     private http: HttpClient,
@@ -114,6 +116,12 @@ export class RegisterComponent {
 
     if (this.password !== this.confirmPassword) {
       this.confirmError = 'A jelszavak nem egyeznek!';
+      return;
+    }
+
+    if (!this.acceptedTerms) {
+      this.termsError = 'A regisztrációhoz el kell fogadnod az Általános Szerződési Feltételeket!';
+      this.toast.show('El kell fogadnod az ÁSZF-et a regisztrációhoz!', 'error');
       return;
     }
 
