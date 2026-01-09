@@ -140,17 +140,15 @@
         <p>Vegyél részt a beszélgetésben!</p>
       </div>
 
-      <!-- Új hozzászólás űrlap -->
-      <div class="new-comment-form">
+      <!-- <div class="new-comment-form">
         <h3>Új hozzászólás írása</h3>
-        <!-- Név megadása -->
         <div class="form-group">
-          <div class="user-info">
-            <i class="fas fa-user-circle"></i>
-            <!-- <span>{{ loggedUser }}</span> -->
-          </div>
+          <input 
+            type="text" 
+            [(ngModel)]="newComment.author"
+            placeholder="Felhasználóneved"
+            class="form-input">
         </div>
-        <!-- Hozzászólás szöveg -->
         <div class="form-group">
           <textarea 
             [(ngModel)]="newComment.content"
@@ -159,11 +157,10 @@
             class="form-textarea"
           ></textarea>
         </div>
-        <!-- Küldés gomb -->
         <button class="submit-btn" (click)="addComment()">
           Hozzászólás küldése
         </button>
-      </div>
+      </div> -->
 
       <!-- Kommentek listája -->
       <div class="comments-list">
