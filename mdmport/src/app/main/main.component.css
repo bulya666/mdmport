@@ -1134,3 +1134,58 @@
   }
   .modal h2#modal-title { font-size: 28px; }
 }
+/* Fix pozíció a jobb alsó sarokban, zöld, kerek kosár ikon, neon hatással */
+.cart-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+/* A kosár gomb stílusa, kerek, neon zöld háttér */
+.cart-button {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background-color: #39ff14; /* neon zöld háttér */
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 0 15px #39ff14, 0 0 30px #39ff14 inset; /* neon effekt */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+/* Hover effekt - opcionális */
+.cart-button:hover {
+  box-shadow: 0 0 25px #39ff14, 0 0 40px #39ff14 inset;
+  transform: scale(1.1);
+}
+
+/* A kosár ikon SVG vagy kép */
+.cart-icon {
+  width: 30px;
+  height: 30px;
+  fill: white; /* ikon színe */
+}
+
+/* A számláló buborék pozíciója a jobb felső sarokban */
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 20px;
+  height: 20px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px red, 0 0 20px red inset;
+  padding: 2px;
+}

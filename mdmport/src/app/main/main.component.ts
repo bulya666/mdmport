@@ -20,12 +20,19 @@ export class MainComponent implements AfterViewInit, OnInit {
   private toastTimeout: any;
   loadingRedirect = false;
   featured: any = null;
+  cartItemCount: number = 0;
+  shortDuration = 1500;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.loggedUser = localStorage.getItem("loggedUser");
     this.loadFeatured();
+    this.updateCartCount();
+
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'cart') this.updateCartCount();
+    });
   }
   ngAfterViewInit(): void {
     if ((window as any).initGameCatalog) {
@@ -49,7 +56,10 @@ export class MainComponent implements AfterViewInit, OnInit {
           f.price == 0 ? "INGYEN" : f.price;
       });
   }
-
+  updateCartCount() {
+    const cart = localStorage.getItem("cart");
+    this.cartItemCount = cart ? JSON.parse(cart).length : 0;
+  }
   private showToast(
     message: string,
     type: "success" | "error" = "success",
@@ -130,6 +140,8 @@ export class MainComponent implements AfterViewInit, OnInit {
     cart.push(item);
     localStorage.setItem("cart", JSON.stringify(cart));
 
+    this.updateCartCount();
+
     this.showToast(
       `A(z) "${title}" sikeresen hozzáadva a kosárhoz.`,
       "success",
@@ -191,12 +203,19 @@ export class MainComponent implements AfterViewInit, OnInit {
 
     cart.push(item);
     localStorage.setItem("cart", JSON.stringify(cart));
+    this.updateCartCount();
 
     this.showToast(
       `A(z) "${title}" sikeresen hozzáadva a kosárhoz.`,
       "success",
-      true,
+      true,  
     );
+    if (this.toastTimeout) {
+  clearTimeout(this.toastTimeout);
+}
+this.toastTimeout = setTimeout(() => {
+  this.toastVisible = false;
+}, this.shortDuration);
     const modal = document.getElementById("modal") as HTMLElement | null;
     if (modal) {
       modal.style.display = "none";
