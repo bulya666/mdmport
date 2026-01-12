@@ -76,7 +76,7 @@ export class MainComponent implements AfterViewInit, OnInit {
       }
       this.toastTimeout = setTimeout(() => {
         this.toastVisible = false;
-      }, 2200);
+      }, 1500);
     }
   }
 

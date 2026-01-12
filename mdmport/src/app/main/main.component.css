@@ -1134,58 +1134,68 @@
   }
   .modal h2#modal-title { font-size: 28px; }
 }
-/* Fix pozíció a jobb alsó sarokban, zöld, kerek kosár ikon, neon hatással */
-.cart-container {
+.floating-cart {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
+  bottom: 24px;
+  right: 24px;
+  z-index: 900;
 }
 
-/* A kosár gomb stílusa, kerek, neon zöld háttér */
-.cart-button {
+.cart-btn {
   position: relative;
-  width: 60px;
-  height: 60px;
-  background-color: #39ff14; /* neon zöld háttér */
-  border: none;
+  width: 64px;
+  height: 64px;
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 50%;
-  box-shadow: 0 0 15px #39ff14, 0 0 30px #39ff14 inset; /* neon effekt */
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: box-shadow 0.3s, transform 0.3s;
-}
-
-/* Hover effekt - opcionális */
-.cart-button:hover {
-  box-shadow: 0 0 25px #39ff14, 0 0 40px #39ff14 inset;
-  transform: scale(1.1);
-}
-
-/* A kosár ikon SVG vagy kép */
-.cart-icon {
-  width: 30px;
-  height: 30px;
-  fill: white; /* ikon színe */
-}
-
-/* A számláló buborék pozíciója a jobb felső sarokban */
-.cart-count {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  min-width: 20px;
-  height: 20px;
-  background-color: red;
   color: white;
-  font-size: 12px;
-  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 8px 32px rgba(0,0,0,0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.05);
+
+  &:hover {
+    transform: translateY(-4px) scale(1.06);
+    box-shadow: 
+      0 16px 48px rgba(0,0,0,0.45),
+      0 0 0 2px rgba(34,197,94,0.4);
+    background: rgba(30, 41, 59, 0.85);
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
+.cart-icon {
+  width: 28px;
+  height: 28px;
+  stroke: #86efac;
+  transition: transform 0.4s ease;
+}
+
+.cart-btn:hover .cart-icon {
+  transform: scale(1.15);
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 24px;
+  height: 24px;
+  background: #ef4444;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 10px red, 0 0 20px red inset;
-  padding: 2px;
+  display: grid;
+  place-items: center;
+  box-shadow: 
+    0 0 12px rgba(239,68,68,0.6),
+    inset 0 1px 2px rgba(255,255,255,0.3);
+  border: 2px solid rgba(30,41,59,0.9);
 }
