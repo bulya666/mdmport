@@ -202,11 +202,6 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   z-index: 2000;
   animation: slideIn 0.4s ease-out;
-
-  &--success { background: linear-gradient(135deg, #16a34a, #22c55e); }
-  &--error   { background: linear-gradient(135deg, #dc2626, #ef4444); }
-  &--warning { background: linear-gradient(135deg, #d97706, #f59e0b); color: #111827; }
-  &--info    { background: linear-gradient(135deg, #2563eb, #3b82f6); }
 }
 
 .toast-icon {
@@ -237,4 +232,49 @@
   .btn-purchase {
     width: 100%;
   }
+}
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
+  z-index: 1100;
+}
+
+.confirm-card {
+  background: #1f2937;
+  padding: 2.5rem;
+  border-radius: 16px;
+  text-align: center;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.confirm-card h3 {
+  margin: 0 0 1.25rem;
+  color: white;
+}
+
+.confirm-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.btn-confirm {
+  background: #22c55e;
+  color: white;
+}
+
+.btn-cancel {
+  background: #6b7280;
+  color: white;
+}
+
+.btn-confirm:hover, .btn-cancel:hover {
+  transform: translateY(-2px);
 }

@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `ownedg` (
   KEY `gameid` (`gameid`),
   CONSTRAINT `ownedg_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`id`),
   CONSTRAINT `ownedg_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `games` (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 78 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 90 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: sessions
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 38 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 39 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: gamephotos
@@ -576,6 +576,54 @@ INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
   (77, 37, 12);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (78, 37, 7);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (79, 37, 9);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (80, 37, 8);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (81, 37, 3);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (82, 38, 6);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (83, 38, 9);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (84, 38, 3);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (85, 38, 10);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (86, 38, 7);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (87, 38, 5);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (88, 38, 11);
+INSERT INTO
+  `ownedg` (`id`, `userid`, `gameid`)
+VALUES
+  (89, 38, 12);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: sessions
@@ -673,6 +721,14 @@ VALUES
     37,
     'Teszt12',
     '$2b$12$FO0kYvsZV6IkHNfkDl5e8u4RoT0QMNwzGI2tyx7LbZGOupJ0kJ2Gi'
+  );
+INSERT INTO
+  `users` (`id`, `username`, `password`)
+VALUES
+  (
+    38,
+    'Helo',
+    '$2b$12$1wKmi1yZahhWEiT6Wb4h..469RDy2vqYunJ4.eHOUJRNv476135Lq'
   );
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

@@ -22,6 +22,8 @@ export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
   isLoading = false;
   isPurchaseSuccess = false;
+  showConfirmDialog = false;      
+  pendingPurchase = false;
 
   notification = {
     show: false,
@@ -51,24 +53,45 @@ export class CartComponent implements OnInit {
     return this.cartItems.reduce((sum, item) => sum + item.price, 0);
   }
 
-  purchase() {
+confirmPurchase() {
+    if (this.cartItems.length === 0) return;
+
     const username = localStorage.getItem('loggedUser');
     if (!username) {
       this.showNotification('Bejelentkezés szükséges a vásárláshoz', 'warning');
       return;
     }
 
-    this.isLoading = true;
-    this.isPurchaseSuccess = false;
+    this.showConfirmDialog = true;
+  }
 
-    this.http.get<{ id: number }>(`http://localhost:3000/api/users/byname/${username}`)
-      .subscribe({
-        next: user => this.processPurchase(user.id),
-        error: () => {
-          this.isLoading = false;
-          this.showNotification('Nem sikerült betölteni a felhasználói adatokat', 'error');
-        }
-      });
+  cancelPurchase() {
+    this.showConfirmDialog = false;
+  }
+
+  executePurchase() {
+    this.showConfirmDialog = false;
+    this.isLoading = true;
+
+    // Realisztikus késleltetés: 1.4 – 3 másodperc között
+    const fakeDelay = Math.floor(Math.random() * 1600) + 1400;
+
+    setTimeout(() => {
+      this.startPurchaseProcess();
+    }, fakeDelay);
+  }
+
+  private startPurchaseProcess() {
+    const username = localStorage.getItem('loggedUser');
+    if (!username) {
+      this.handleError('Bejelentkezési állapot elveszett');
+      return;
+    }
+
+    this.http.get<{ id: number }>(`http://localhost:3000/api/users/byname/${username}`).subscribe({
+      next: (user) => this.processPurchase(user.id),
+      error: () => this.handleError('Nem sikerült betölteni a felhasználói adatokat')
+    });
   }
 
   private processPurchase(userId: number) {
@@ -97,12 +120,10 @@ export class CartComponent implements OnInit {
           }
 
           requests.push(
-            this.http.post<{ success: boolean; alreadyOwned?: boolean; message?: string }>(
+            this.http.post<{ success: boolean; alreadyOwned?: boolean }>(
               'http://localhost:3000/api/ownedg',
               { userid: userId, gameid: game.id }
-            ).pipe(
-              catchError(err => of({ success: false, error: err }))
-            )
+            ).pipe(catchError(() => of({ success: false })))
           );
         }
 
@@ -115,30 +136,25 @@ export class CartComponent implements OnInit {
         }
 
         forkJoin(requests).subscribe({
-          next: results => {
+          next: (results) => {
             const successes = results.filter(r => r.success).length;
-            const alreadyOwned = results.filter(r => r.alreadyOwned).length;
 
             if (successes > 0) {
-              this.showNotification(`${successes} játék sikeresen hozzáadva a könyvtárhoz!`, 'success');
+              this.showNotification(`${successes} játék sikeresen hozzáadva!`, 'success');
               this.isPurchaseSuccess = true;
               setTimeout(() => this.router.navigate(['/library']), 1800);
-            }
-
-            if (alreadyOwned > 0) {
-              this.showNotification(`${alreadyOwned} játék már a tulajdonodban volt`, 'info');
             }
 
             this.finishPurchase(true);
           },
           error: () => {
-            this.showNotification('Váratlan hiba történt a tranzakció közben', 'error');
+            this.showNotification('Hiba történt a tranzakció közben', 'error');
             this.finishPurchase(false);
           }
         });
       },
       error: () => {
-        this.showNotification('Nem sikerült betölteni a játéklistát', 'error');
+        this.showNotification('Nem sikerült betölteni a játékokat', 'error');
         this.finishPurchase(false);
       }
     });
@@ -146,19 +162,28 @@ export class CartComponent implements OnInit {
 
   private finishPurchase(success: boolean) {
     this.isLoading = false;
+
     if (success && this.isPurchaseSuccess) {
       setTimeout(() => {
         this.cartItems = [];
         localStorage.removeItem('cart');
-      }, 2000);
+        // Kis extra késés az átirányítás előtt
+        setTimeout(() => this.router.navigate(['/library']), 900);
+      }, 2200);
     }
+  }
+
+  private handleError(message: string) {
+    this.isLoading = false;
+    this.showNotification(message, 'error');
   }
 
   private showNotification(message: string, type: 'success' | 'error' | 'warning' | 'info' = 'info') {
     this.notification = { show: true, message, type };
-    setTimeout(() => this.notification.show = false, 3800);
+    setTimeout(() => this.notification.show = false, 4000);
   }
-  toStore(){
+
+  toStore() {
     this.router.navigate(['/']);
   }
 }

@@ -31,7 +31,7 @@
 
         <button 
           class="btn btn-purchase" 
-          (click)="purchase()"
+          (click)="executePurchase()"
           [disabled]="isLoading">
           {{ isLoading ? 'Feldolgozás...' : 'Vásárlás' }}
         </button>
@@ -60,7 +60,21 @@
       </p>
     </div>
   </div>
-
+<div class="confirm-overlay" *ngIf="showConfirmDialog">
+  <div class="confirm-card">
+    <h3>Biztosan meg szeretnéd vásárolni?</h3>
+    <p>Összesen: <strong>{{ total | currency:'USD':'symbol':'1.2-2' }}</strong></p>
+    
+    <div class="confirm-buttons">
+      <button class="btn btn-cancel" (click)="cancelPurchase()">
+        Mégse
+      </button>
+      <button class="btn btn-confirm" (click)="executePurchase()" [disabled]="isLoading">
+        Igen, vásárlás!
+      </button>
+    </div>
+  </div>
+</div>
   <!-- Notification toast -->
   <div class="toast" 
        *ngIf="notification.show"
