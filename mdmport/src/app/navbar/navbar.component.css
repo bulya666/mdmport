@@ -144,6 +144,7 @@
   cursor: pointer;
   position: relative;
   z-index: 100;
+  gap: 3px;
 }
 
 .hamburger span {
@@ -254,14 +255,14 @@
 }
 
 .user-menu {
-  position: absolute;
-  top: calc(100% + 10px);
+  position: relative;
+  top: 50px;
   right: 0;
   background: rgba(12, 22, 38, 0.98);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   min-width: 220px;
-  padding: 8px 0;
+  padding: px 0;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(12px);
   z-index: 1000;
@@ -482,55 +483,120 @@
     order: 2;
   }
 
- .nav-links {
+.nav-links {
+    /* Pozicionálás és méretek */
     position: fixed;
     top: 0;
     right: -100%;
     width: 280px;
     height: 100vh;
-    background: rgba(8, 26, 48, 0.98);
-    flex-direction: column;
-    padding: 80px 20px 20px;
-    transition: right 0.3s ease;
-    z-index: 999;
+    
+    /* Kinézet */
+    background: linear-gradient(135deg, rgba(8, 26, 48, 0.98) 0%, rgba(12, 35, 64, 0.98) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3);
+    
+    /* Layout */
     display: flex !important;
+    flex-direction: column;
+    padding: 100px 24px 30px;
+    
+    /* Animáció */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Egyéb */
+    z-index: 999;
     overflow-y: auto;
-  }
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-  .nav-links.show {
+.nav-links.show {
     right: 0;
-  }
+    animation: slideIn 0.4s ease-out;
+}
 
+.nav-links.menu-open {
+    top: 50px;
+}
 
-  /* Ha a user menu nyitva van, lejjebb helyezzük a nav linkeket */
-  .nav-links.menu-open {
-    top: 80px; /* vagy nagyobb érték, hogy lejjebb kerüljön */
-  }
-
-  /* Megjelenés a show osztállyal */
-  .nav-links.show.menu-open {
+.nav-links.show.menu-open {
     top: 80px;
-  }
+}
+
+/* Animációk */
+@keyframes slideIn {
+    0% {
+        transform: translateX(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Scrollbar stílus (opcionális) */
+.nav-links::-webkit-scrollbar {
+    width: 4px;
+}
+
+.nav-links::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+}
+
+.nav-links::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+}
+
+.nav-links::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Reszponzív módosítások */
+@media (max-width: 480px) {
+    .nav-links {
+        width: 100%;
+        padding: 90px 20px 25px;
+        border-left: none;
+    }
+    
+    .nav-links.show {
+        animation: slideInMobile 0.4s ease-out;
+    }
+}
+
+@keyframes slideInMobile {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
    .btn1 {
     width: 100%;
     padding: 14px 20px;
     text-align: left;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
+
   .hamburger {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s ease;
   }
 
   .hamburger:hover {
-    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
   }
 
 }.user-menu-container {
