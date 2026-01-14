@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `ownedg` (
   KEY `gameid` (`gameid`),
   CONSTRAINT `ownedg_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`id`),
   CONSTRAINT `ownedg_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `games` (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 55 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 73 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: users
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 32 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 41 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: gamephotos
@@ -432,47 +432,31 @@ VALUES
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (44, 30, 6);
+  (66, 38, 7);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (45, 30, 1);
+  (67, 38, 1);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (46, 30, 2);
+  (68, 38, 9);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (47, 30, 12);
+  (69, 38, 11);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (48, 30, 10);
+  (70, 38, 12);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (49, 30, 9);
+  (71, 38, 6);
 INSERT INTO
   `ownedg` (`id`, `userid`, `gameid`)
 VALUES
-  (50, 30, 11);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (51, 30, 3);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (52, 30, 4);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (53, 30, 8);
-INSERT INTO
-  `ownedg` (`id`, `userid`, `gameid`)
-VALUES
-  (54, 28, 10);
+  (72, 38, 2);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: users
@@ -490,25 +474,25 @@ INSERT INTO
   `users` (`id`, `username`, `password`)
 VALUES
   (
-    29,
-    'Szakacs',
-    '$2b$12$9C/g/bBswhWse8sQbqSUzeU7KZmDdGym0aUQCxMLK8Rfo8BX/MBsW'
-  );
-INSERT INTO
-  `users` (`id`, `username`, `password`)
-VALUES
-  (
-    30,
+    38,
     'Bulya',
-    '$2b$12$E.dJEjI.yQd3OHZTlPpZz.SAGCq99rj7lTDZ66OATMDSCCKig025W'
+    '$2b$12$gv2XUPQYIeBAc3dPn/jVSO8hpmdZWXLub7tAGwu9.hW8TNZjHVkOK'
   );
 INSERT INTO
   `users` (`id`, `username`, `password`)
 VALUES
   (
-    31,
-    'felhasznalo',
-    '$2b$12$7o0setnuODpCvvMYlVvObe9Ef.9NPOpjAuhXHD5JKTt5dFmdiOtLS'
+    39,
+    'Szakacs',
+    '$2b$12$wl0TyjcupGDoQlyt3JdgXuaNQxT48xQJUStQcE.SVyQyjQUEmI6Zy'
+  );
+INSERT INTO
+  `users` (`id`, `username`, `password`)
+VALUES
+  (
+    40,
+    'Marci',
+    '$2b$12$nevQMoKcFS9qM6UXj7oT8.rbD781b1AA8cboe5gzcJAVIHusgsYIi'
   );
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
