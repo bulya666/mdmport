@@ -17,6 +17,7 @@ router.get('/users/byname/:username', usersCtrl.getUserByUsername);
 router.get('/ownedg', ownedgCtrl.getOwnedGames);
 router.post('/ownedg', ownedgCtrl.addOwnedGame);
 router.get('/ownedg/:userid', ownedgCtrl.getOwnedByUserId);
+router.post('/ownedg/checkout', ownedgCtrl.checkout);
 
 router.get('/gamephotos', photosCtrl.getAllPhotos);
 router.get('/gamephotos/:gameid', photosCtrl.getPhotoByGameId);

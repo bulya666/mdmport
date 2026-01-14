@@ -1,74 +1,89 @@
-<main class="container">
-  <section class="hero" style="display:flex;justify-content:flex-start;gap:40px">
-    <div style="flex:1;max-width:600px">
-      <h2>Kosár</h2>
+<main class="cart-container">
+  <h1 class="page-title">Kosár</h1>
 
-      <div *ngIf="cartItems.length > 0; else emptyCart">
-        <div *ngFor="let item of cartItems" style="display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;border-bottom:1px solid #2a2a2a;padding-bottom:12px">
-          <div>
-            <img
-            id="m-cover"
-            [src]="item.image"
-            alt="{{ item.name }}"
-            style="width:200px;max-width:100%;border-radius:6px;object-fit:cover;display:block;margin-bottom:8px"
-          />
+  <div class="cart-content">
+    <ng-container *ngIf="cartItems.length > 0; else empty">
+      <div class="cart-items">
+        <div class="cart-item" *ngFor="let item of cartItems">
+          <img [src]="item.image" [alt]="item.name" class="item-cover" />
+
+          <div class="item-info">
+            <h3 class="item-title">{{ item.name }}</h3>
+            <div class="item-price">
+              <ng-container *ngIf="item.price > 0">
+                {{ item.price | currency:'USD':'symbol':'1.2-2' }}
+              </ng-container>
+              <span *ngIf="item.price === 0" class="free-tag">Ingyenes</span>
+            </div>
           </div>
 
-          <div style="flex:1">
-            <h3 style="margin:0 0 6px 0">{{ item.name }}</h3>
-            <p *ngIf="item.price > 0" style="font-weight:600;color:#bff39b">
-              ${{ item.price.toFixed(2) }}
-            </p>
-            <p *ngIf="item.price === 0" style="color:#bff39b">Free</p>
-            <button (click)="removeFromCart(item)" class="remove">Eltávolítás</button>
-          </div>
-        </div>
-
-        <div style="display:flex;align-items:center;gap:16px;margin-top:20px">
-          <p style="margin:0;font-weight:700;color:#bff39b">
-            Összesen: ${{ getTotal().toFixed(2) }}
-          </p>
-          <button (click)="purchase()" class="purchase" onmouseover="this.style.backgroundColor='#43a047'" onmouseout="this.style.backgroundColor='#4caf50'">
-            Vásárlás
+          <button class="btn btn-remove" (click)="removeItem(item)">
+            Eltávolítás
           </button>
-
         </div>
       </div>
 
-      <ng-template #emptyCart>
-        <p>A kosarad üres.</p>
-      </ng-template>
+      <div class="cart-summary">
+        <div class="total">
+          <span>Összesen:</span>
+          <strong>{{ total | currency:'USD':'symbol':'1.2-2' }}</strong>
+        </div>
+
+        <button 
+          class="btn btn-purchase" 
+          (click)="executePurchase()"
+          [disabled]="isLoading">
+          {{ isLoading ? 'Feldolgozás...' : 'Vásárlás' }}
+        </button>
+      </div>
+    </ng-container>
+
+    <ng-template #empty>
+      <div class="empty-cart">
+        <div class="empty-icon">🛒</div>
+        <h2>A kosarad üres</h2>
+        <p>Fedezz fel új játékokat a boltban!</p>
+        <button class="btn btn-outline" (click)="toStore()">
+          Bolt megtekintése
+        </button>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Loading overlay -->
+  <div class="loading-overlay" *ngIf="isLoading || isPurchaseSuccess">
+    <div class="loading-card">
+      <div class="spinner" *ngIf="!isPurchaseSuccess"></div>
+      <div class="success-check" *ngIf="isPurchaseSuccess">✓</div>
+      <p>
+        {{ isPurchaseSuccess ? 'Sikeres vásárlás!' : 'Fizetés folyamatban...' }}
+      </p>
     </div>
-  </section>
+  </div>
+<div class="confirm-overlay" *ngIf="showConfirmDialog">
+  <div class="confirm-card">
+    <h3>Biztosan meg szeretnéd vásárolni?</h3>
+    <p>Összesen: <strong>{{ total | currency:'USD':'symbol':'1.2-2' }}</strong></p>
+    
+    <div class="confirm-buttons">
+      <button class="btn btn-cancel" (click)="cancelPurchase()">
+        Mégse
+      </button>
+      <button class="btn btn-confirm" (click)="executePurchase()" [disabled]="isLoading">
+        Igen, vásárlás!
+      </button>
+    </div>
+  </div>
+</div>
+  <!-- Notification toast -->
+  <div class="toast" 
+       *ngIf="notification.show"
+       [ngClass]="['toast--' + notification.type]">
+    <span class="toast-icon">
+      {{ notification.type === 'success' ? '✓' : 
+         notification.type === 'error' ? '✕' : 
+         notification.type === 'warning' ? '⚠' : 'ℹ' }}
+    </span>
+    <span class="toast-message">{{ notification.message }}</span>
+  </div>
 </main>
-
-<div *ngIf="loadingPopup" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);display:flex;justify-content:center;align-items:center;z-index:9999">
-  <div style="background:#1e1e1e;padding:22px 30px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:18px;">
-
-    <div *ngIf="!loadingDone" class="spinner"></div>
-
-    <div *ngIf="loadingDone" style="font-size:48px;color:#4caf50;">✔</div>
-
-    <p style="margin:0;font-size:17px;">
-      {{ loadingDone ? 'Fizetés sikeres' : 'Fizetés folyamatban...' }}
-    </p>
-
-  </div>
-</div>
-
-<div class="notification" *ngIf="notification.visible" [ngClass]="notification.type">
-  <div class="notification-inner">
-    <div class="notification-icon">
-      <span *ngIf="notification.type === 'success'">✔</span>
-      <span *ngIf="notification.type === 'error'">✖</span>
-      <span *ngIf="notification.type === 'warning'">⚠</span>
-      <span *ngIf="notification.type === 'info'">ℹ</span>
-    </div>
-    <div class="notification-text">
-      {{ notification.message }}
-    </div>
-    <button class="notification-close" (click)="notification.visible = false">
-      ✕
-    </button>
-  </div>
-</div>
