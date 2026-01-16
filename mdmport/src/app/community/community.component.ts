@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NavigationEnd, Router } from '@angular/router';
 
 // Cikk (Article) adatszerkezet
 interface Article {
@@ -46,19 +47,17 @@ export class CommunityComponent implements OnInit {
   isModalOpen: boolean = false;
   selectedArticle: Article | null = null;
 
-  // Jelenlegi felhasználó (demo célokra)
-  currentUser = 'Guest'; // Ezt később valós bejelentkezésre cserélni
+  // Jelenlegi felhasználó
+  currentUser: string = 'Guest';
 
   // Új komment adatai (fő oldalhoz)
   newComment = {
-    author: '',
     content: '',
     articleId: 1
   };
 
   // Új komment adatai (modalhoz)
   modalNewComment = {
-    author: '',
     content: ''
   };
 
@@ -81,6 +80,8 @@ export class CommunityComponent implements OnInit {
     { id: 'events', name: 'Események' }
   ];
 
+  constructor(private router: Router) {}
+
   // ESC billentyű figyelése a modal bezárásához
   @HostListener('document:keydown.escape', ['$event'])
   handleEscapeKey(event: KeyboardEvent) {
@@ -93,6 +94,14 @@ export class CommunityComponent implements OnInit {
     this.loadSampleData();
     this.filteredArticles = [...this.articles];
     this.updatePagination();
+    
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.currentUser = localStorage.getItem("loggedUser") || 'Guest';
+      }
+    });
+    
+    this.currentUser = localStorage.getItem("loggedUser") || 'Guest';
   }
 
   // ==================== LIKE FUNKCIÓK ====================
@@ -142,14 +151,19 @@ export class CommunityComponent implements OnInit {
   // ==================== KOMMENT FUNKCIÓK ====================
 
   addCommentToArticle(articleId: number): void {
-    if (!this.modalNewComment.author.trim() || !this.modalNewComment.content.trim()) {
-      alert('Kérjük töltsd ki mindkét mezőt!');
+    if (!this.modalNewComment.content.trim()) {
+      alert('Kérjük írd meg a hozzászólásodat!');
+      return;
+    }
+
+    if (this.currentUser === 'Guest') {
+      alert('Kérjük jelentkezz be a hozzászóláshoz!');
       return;
     }
 
     const newComment: Comment = {
       id: this.comments.length + 1,
-      author: this.modalNewComment.author,
+      author: this.currentUser,
       content: this.modalNewComment.content,
       date: new Date().toISOString().split('T')[0],
       likes: 0,
@@ -163,19 +177,24 @@ export class CommunityComponent implements OnInit {
       this.selectedArticle.commentsCount++;
     }
 
-    this.modalNewComment = { author: '', content: '' };
+    this.modalNewComment = { content: '' };
   }
 
   // Komment hozzáadása fő oldalon
   addComment(): void {
-    if (!this.newComment.author.trim() || !this.newComment.content.trim()) {
-      alert('Kérjük töltsd ki mindkét mezőt!');
+    if (!this.newComment.content.trim()) {
+      alert('Kérjük írd meg a hozzászólásodat!');
+      return;
+    }
+
+    if (this.currentUser === 'Guest') {
+      alert('Kérjük jelentkezz be a hozzászóláshoz!');
       return;
     }
 
     const newComment: Comment = {
       id: this.comments.length + 1,
-      author: this.newComment.author,
+      author: this.currentUser,
       content: this.newComment.content,
       date: new Date().toISOString().split('T')[0],
       likes: 0,
@@ -192,7 +211,7 @@ export class CommunityComponent implements OnInit {
     }
 
     // Reseteljük az űrlapot
-    this.newComment = { author: '', content: '', articleId: 1 };
+    this.newComment = { content: '', articleId: 1 };
   }
 
   // ==================== MODAL FUNKCIÓK ====================
@@ -200,7 +219,7 @@ export class CommunityComponent implements OnInit {
   openArticleModal(article: Article): void {
     this.selectedArticle = article;
     this.isModalOpen = true;
-    this.modalNewComment = { author: '', content: '' };
+    this.modalNewComment = { content: '' };
     document.body.style.overflow = 'hidden';
   }
 
@@ -309,186 +328,152 @@ export class CommunityComponent implements OnInit {
 
   loadSampleData(): void {
     // Cikkek listája
-this.articles = [
-  {
-    id: 11,
-    title: 'Új pálya érkezett a játékba',
-    content: 'Megérkezett a vadonatúj, havas tematikájú pálya, amely teljesen új játékmeneti elemeket és kihívásokat kínál. A csúszós terep, az extrém időjárási körülmények és az egyedi ellenféltípusok új stratégiák alkalmazását teszik szükségessé. A pálya egyaránt kihívást jelent kezdő és tapasztalt játékosok számára.',
-    category: 'game-updates',
-    author: 'Support',
-    date: '2024-01-17',
-    likes: 63,
-    commentsCount: 3,
-    likedBy: ['Guest', 'User1', 'User2']
-  },
-  {
-    id: 4,
-    title: 'Haladó stratégiák PvP módhoz',
-    content: 'Ebben az útmutatóban részletesen bemutatjuk a jelenlegi PvP meta legfontosabb elemeit. Megvizsgáljuk a leghatékonyabb karakterkombinációkat, felszereléseket és taktikai megoldásokat. Az útmutató célja, hogy segítsen felkészülni rangsorolt mérkőzésekre és kompetitív eseményekre.',
-    category: 'guides',
-    author: 'Guides',
-    date: '2024-01-18',
-    likes: 34,
-    commentsCount: 2,
-    likedBy: ['User1']
-  },
-  {
-    id: 16,
-    title: 'Fejlesztői roadmap közzétéve',
-    content: 'Nyilvánosságra hoztuk az év első felére vonatkozó fejlesztési ütemtervet. A roadmap részletesen bemutatja az érkező funkciókat, tervezett frissítéseket, valamint azokat a területeket, amelyek kiemelt figyelmet kapnak a következő hónapokban.',
-    category: 'news',
-    author: 'Support',
-    date: '2024-01-24',
-    likes: 31,
-    commentsCount: 1,
-    likedBy: []
-  },
-  {
-    id: 1,
-    title: 'Új játék frissítés érkezik a héten',
-    content: 'A hét folyamán egy jelentős frissítés érkezik a játékhoz, amely több új funkciót, hibajavítást és egyensúlymódosítást tartalmaz. A frissítés célja a stabilitás növelése és a játékosélmény javítása. A pontos megjelenés péntek délután várható.',
-    category: 'game-updates',
-    author: 'Support',
-    date: '2024-01-15',
-    likes: 42,
-    commentsCount: 2,
-    likedBy: ['Guest']
-  },
-  {
-    id: 8,
-    title: 'Új moderátorok csatlakoztak',
-    content: 'Örömmel jelentjük be, hogy új moderátorok csatlakoztak a csapathoz. Feladatuk a közösségi szabályok betartatása, a fórumok és chatfelületek felügyelete, valamint a játékosok segítése a mindennapi kérdésekben.',
-    category: 'news',
-    author: 'Support',
-    date: '2024-01-16',
-    likes: 26,
-    commentsCount: 1,
-    likedBy: ['User2']
-  },
-  {
-    id: 13,
-    title: 'Hétvégi dupla XP esemény',
-    content: 'A hétvége folyamán minden játékos dupla tapasztalati pontot szerezhet minden játékmódban. Ez kiváló lehetőség a gyorsabb szintlépésre, karakterfejlesztésre és új tartalmak feloldására. Az esemény péntek estétől vasárnap éjfélig tart.',
-    category: 'events',
-    author: 'Admin',
-    date: '2024-01-13',
-    likes: 72,
-    commentsCount: 4,
-    likedBy: ['Guest', 'User1', 'User2', 'User3']
-  },
-  {
-    id: 6,
-    title: 'Karakterfejlesztési útmutató',
-    content: 'Ez az útmutató részletes segítséget nyújt a karakterek hatékony fejlesztéséhez. Bemutatjuk a képességfák működését, a legjobb statelosztási megoldásokat, valamint tippeket adunk kezdőknek és haladóknak egyaránt.',
-    category: 'guides',
-    author: 'Guides',
-    date: '2024-01-22',
-    likes: 50,
-    commentsCount: 2,
-    likedBy: ['User1', 'User3']
-  },
-  {
-    id: 14,
-    title: 'Közösségi verseny indul',
-    content: 'Új közösségi versenyt indítunk, ahol a játékosok különböző kihívások teljesítésével szerezhetnek pontokat. A legjobbak exkluzív jutalmakban részesülnek, beleértve ritka kozmetikai elemeket és egyedi címeket.',
-    category: 'events',
-    author: 'Admin',
-    date: '2024-01-18',
-    likes: 55,
-    commentsCount: 3,
-    likedBy: ['User1', 'User3']
-  },
-  {
-    id: 3,
-    title: 'Új kezdők útmutató',
-    content: 'Ez az útmutató lépésről lépésre vezeti végig az új játékosokat az alapvető játékelemeken. Megismerheted a kezelőfelületet, a harcrendszert, valamint hasznos tippeket kapsz a gyorsabb fejlődéshez.',
-    category: 'guides',
-    author: 'Guides',
-    date: '2024-01-05',
-    likes: 56,
-    commentsCount: 1,
-    likedBy: ['Guest', 'User2']
-  },
-  {
-    id: 17,
-    title: 'Fontos bejelentés',
-    content: 'Rendkívüli technikai probléma lépett fel, amely átmeneti szolgáltatáskimaradást okozhat. A csapat már dolgozik a hiba elhárításán, és minden tőlünk telhetőt megteszünk a mielőbbi helyreállítás érdekében.',
-    category: 'news',
-    author: 'Support',
-    date: '2024-03-12',
-    likes: 42,
-    commentsCount: 1,
-    likedBy: ['User2']
-  }
-];
+    this.articles = [
+      {
+        id: 11,
+        title: 'Új pálya érkezett a játékba',
+        content: 'Megérkezett a vadonatúj, havas tematikájú pálya, amely teljesen új játékmeneti elemeket és kihívásokat kínál. A csúszós terep, az extrém időjárási körülmények és az egyedi ellenféltípusok új stratégiák alkalmazását teszik szükségessé. A pálya egyaránt kihívást jelent kezdő és tapasztalt játékosok számára.',
+        category: 'game-updates',
+        author: 'Support',
+        date: '2024-01-17',
+        likes: 63,
+        commentsCount: 3,
+        likedBy: ['Guest', 'User1', 'User2']
+      },
+      {
+        id: 4,
+        title: 'Haladó stratégiák PvP módhoz',
+        content: 'Ebben az útmutatóban részletesen bemutatjuk a jelenlegi PvP meta legfontosabb elemeit. Megvizsgáljuk a leghatékonyabb karakterkombinációkat, felszereléseket és taktikai megoldásokat. Az útmutató célja, hogy segítsen felkészülni rangsorolt mérkőzésekre és kompetitív eseményekre.',
+        category: 'guides',
+        author: 'Guides',
+        date: '2024-01-18',
+        likes: 34,
+        commentsCount: 2,
+        likedBy: ['User1']
+      },
+      {
+        id: 16,
+        title: 'Fejlesztői roadmap közzétéve',
+        content: 'Nyilvánosságra hoztuk az év első felére vonatkozó fejlesztési ütemtervet. A roadmap részletesen bemutatja az érkező funkciókat, tervezett frissítéseket, valamint azokat a területeket, amelyek kiemelt figyelmet kapnak a következő hónapokban.',
+        category: 'news',
+        author: 'Support',
+        date: '2024-01-24',
+        likes: 31,
+        commentsCount: 1,
+        likedBy: []
+      },
+      {
+        id: 1,
+        title: 'Új játék frissítés érkezik a héten',
+        content: 'A hét folyamán egy jelentős frissítés érkezik a játékhoz, amely több új funkciót, hibajavítást és egyensúlymódosítást tartalmaz. A frissítés célja a stabilitás növelése és a játékosélmény javítása. A pontos megjelenés péntek délután várható.',
+        category: 'game-updates',
+        author: 'Support',
+        date: '2024-01-15',
+        likes: 42,
+        commentsCount: 2,
+        likedBy: ['Guest']
+      },
+      {
+        id: 8,
+        title: 'Új moderátorok csatlakoztak',
+        content: 'Örömmel jelentjük be, hogy új moderátorok csatlakoztak a csapathoz. Feladatuk a közösségi szabályok betartatása, a fórumok és chatfelületek felügyelete, valamint a játékosok segítése a mindennapi kérdésekben.',
+        category: 'news',
+        author: 'Support',
+        date: '2024-01-16',
+        likes: 26,
+        commentsCount: 1,
+        likedBy: ['User2']
+      },
+      {
+        id: 13,
+        title: 'Hétvégi dupla XP esemény',
+        content: 'A hétvége folyamán minden játékos dupla tapasztalati pontot szerezhet minden játékmódban. Ez kiváló lehetőség a gyorsabb szintlépésre, karakterfejlesztésre és új tartalmak feloldására. Az esemény péntek estétől vasárnap éjfélig tart.',
+        category: 'events',
+        author: 'Admin',
+        date: '2024-01-13',
+        likes: 72,
+        commentsCount: 4,
+        likedBy: ['Guest', 'User1', 'User2', 'User3']
+      },
+      {
+        id: 6,
+        title: 'Karakterfejlesztési útmutató',
+        content: 'Ez az útmutató részletes segítséget nyújt a karakterek hatékony fejlesztéséhez. Bemutatjuk a képességfák működését, a legjobb statelosztási megoldásokat, valamint tippeket adunk kezdőknek és haladóknak egyaránt.',
+        category: 'guides',
+        author: 'Guides',
+        date: '2024-01-22',
+        likes: 50,
+        commentsCount: 2,
+        likedBy: ['User1', 'User3']
+      },
+      {
+        id: 14,
+        title: 'Közösségi verseny indul',
+        content: 'Új közösségi versenyt indítunk, ahol a játékosok különböző kihívások teljesítésével szerezhetnek pontokat. A legjobbak exkluzív jutalmakban részesülnek, beleértve ritka kozmetikai elemeket és egyedi címeket.',
+        category: 'events',
+        author: 'Admin',
+        date: '2024-01-18',
+        likes: 55,
+        commentsCount: 3,
+        likedBy: ['User1', 'User3']
+      },
+      {
+        id: 3,
+        title: 'Új kezdők útmutató',
+        content: 'Ez az útmutató lépésről lépésre vezeti végig az új játékosokat az alapvető játékelemeken. Megismerheted a kezelőfelületet, a harcrendszert, valamint hasznos tippeket kapsz a gyorsabb fejlődéshez.',
+        category: 'guides',
+        author: 'Guides',
+        date: '2024-01-05',
+        likes: 56,
+        commentsCount: 1,
+        likedBy: ['Guest', 'User2']
+      },
+      {
+        id: 17,
+        title: 'Fontos bejelentés',
+        content: 'Rendkívüli technikai probléma lépett fel, amely átmeneti szolgáltatáskimaradást okozhat. A csapat már dolgozik a hiba elhárításán, és minden tőlünk telhetőt megteszünk a mielőbbi helyreállítás érdekében.',
+        category: 'news',
+        author: 'Support',
+        date: '2024-03-12',
+        likes: 42,
+        commentsCount: 1,
+        likedBy: ['User2']
+      }
+    ];
 
-
-    // Kommentek listája (kommentek száma megegyezik a cikkek commentsCount mezőjével)
+    // Kommentek listája
     this.comments = [
-  // Cikk 11 - 3 komment
-  { id: 1, author: 'Norbi92', content: 'Ez nagyon jól hangzik, kíváncsi vagyok mit hoz a frissítés.', date: '2024-01-16', likes: 5, articleId: 11, likedBy: ['Guest'] },
-  { id: 2, author: 'IceWolf', content: 'Ha tényleg jön új pálya, az hatalmas plusz lenne.', date: '2024-01-17', likes: 3, articleId: 11, likedBy: [] },
-  { id: 3, author: 'Karesz', content: 'Van már pontos időpont, mikor indul?', date: '2024-01-12', likes: 2, articleId: 11, likedBy: ['User1'] },
-
-  // Cikk 4 - 2 komment
-  { id: 4, author: 'ZoliFPS', content: 'Őszintén, ezek a balansz változtatások már nagyon kellettek.', date: '2024-01-15', likes: 6, articleId: 4, likedBy: ['Guest', 'User2'] },
-  { id: 5, author: 'MatePlay', content: 'Átolvastam az egészet, meglepően sok új dolgot tanultam.', date: '2024-01-06', likes: 4, articleId: 4, likedBy: [] },
-
-  // Cikk 16 - 1 komment
-  { id: 6, author: 'ShadowPvP', content: 'A PvP-s rész különösen hasznos lett, jó irány.', date: '2024-01-19', likes: 7, articleId: 16, likedBy: ['User1'] },
-
-  // Cikk 1 - 2 komment
-  { id: 7, author: 'MarketGuru', content: 'Végre valaki normálisan elmagyarázta a gazdasági rendszert.', date: '2024-01-21', likes: 5, articleId: 1, likedBy: [] },
-  { id: 8, author: 'Petya', content: 'Új játékosként ez most nagyon sokat segített, köszi!', date: '2024-01-22', likes: 8, articleId: 1, likedBy: ['Guest'] },
-
-  // Cikk 8 - 1 komment
-  { id: 9, author: 'Laci', content: 'Jó, hogy előre szóltok a karbantartásról.', date: '2024-01-12', likes: 1, articleId: 8, likedBy: [] },
-
-  // Cikk 13 - 4 komment
-  { id: 10, author: 'Anna', content: 'Sok sikert az új moderátoroknak!', date: '2024-01-16', likes: 3, articleId: 13, likedBy: ['User2'] },
-  { id: 11, author: 'Bence', content: 'Szerintem teljesen rendben vannak az új szabályok.', date: '2024-01-19', likes: 2, articleId: 13, likedBy: [] },
-  { id: 12, author: 'TesztElek', content: 'A januári frissítés óta tényleg simábban fut a játék.', date: '2024-01-15', likes: 6, articleId: 13, likedBy: ['Guest'] },
-  { id: 13, author: 'Felfedező', content: 'Az új pálya hangulata nagyon el lett találva.', date: '2024-01-18', likes: 9, articleId: 13, likedBy: ['User1'] },
-
-  // Cikk 6 - 2 komment
-  { id: 14, author: 'BalazsPC', content: 'Nálam is javult az FPS, főleg nagyobb harcoknál.', date: '2024-01-21', likes: 4, articleId: 6, likedBy: [] },
-  { id: 15, author: 'LevelUp', content: 'Dupla XP alatt végre sikerült pár szintet ugrani.', date: '2024-01-14', likes: 10, articleId: 6, likedBy: ['Guest', 'User2'] },
-
-  // Cikk 2 - 3 komment
-  { id: 16, author: 'Versenyző', content: 'Az ilyen közösségi versenyek mindig feldobják a játékot.', date: '2024-01-18', likes: 7, articleId: 2, likedBy: [] },
-  { id: 17, author: 'Niki', content: 'Remélem idén is lesznek különleges Valentin-napi jutalmak.', date: '2024-01-23', likes: 5, articleId: 2, likedBy: ['User1'] },
-  { id: 18, author: 'Tomi', content: 'Jó látni, hogy folyamatosan jönnek az új tartalmak.', date: '2024-01-20', likes: 3, articleId: 2, likedBy: [] },
-
-  // Cikk 10 - 1 komment
-  { id: 19, author: 'HardcoreZ', content: 'Tetszik az irány, remélem ez így megy tovább.', date: '2024-01-16', likes: 6, articleId: 10, likedBy: [] },
-
-  // Cikk 5 - 1 komment
-  { id: 20, author: 'Rita', content: 'Az események mindig visszahoznak játszani.', date: '2024-01-13', likes: 8, articleId: 5, likedBy: ['User3'] },
-
-  // Cikk 14 - 3 komment
-  { id: 21, author: 'Stratéga', content: 'Jó lenne később egy részletesebb csapatos útmutató is.', date: '2024-01-24', likes: 4, articleId: 14, likedBy: [] },
-  { id: 22, author: 'FixIt', content: 'Pozitív meglepetés, hogy ilyen gyorsan javították a hibákat.', date: '2024-01-24', likes: 6, articleId: 14, likedBy: ['Guest'] },
-  { id: 23, author: 'KözösségiArc', content: 'Az ilyen eventek miatt jó ide visszajárni.', date: '2024-01-25', likes: 5, articleId: 14, likedBy: [] },
-
-  // Cikk 7 - 1 komment
-  { id: 24, author: 'Figyelő', content: 'Kíváncsi vagyok, mi lesz a következő nagy frissítés.', date: '2024-01-25', likes: 7, articleId: 7, likedBy: ['User2'] },
-
-  // Cikk 3 - 1 komment
-  { id: 25, author: 'Adam', content: 'Kezdőként ez pont az volt, amire szükségem volt.', date: '2024-01-26', likes: 3, articleId: 3, likedBy: [] },
-
-  // Cikk 12 - 2 komment
-  { id: 26, author: 'PlayerOne', content: 'Stabilabb lett a játék, kevesebb a fagyás.', date: '2024-01-27', likes: 4, articleId: 12, likedBy: [] },
-  { id: 27, author: 'Eszter', content: 'Köszi a gyors javításokat, így sokkal élvezhetőbb.', date: '2024-01-27', likes: 2, articleId: 12, likedBy: ['Guest'] },
-
-  // Cikk 9 - 1 komment
-  { id: 28, author: 'Misi', content: 'Szerintem ez a szabályzat frissítés teljesen rendben van.', date: '2024-01-28', likes: 1, articleId: 9, likedBy: [] },
-
-  // Cikk 15 - 2 komment
-  { id: 29, author: 'Lilla', content: 'Nagyon várom a Valentin-napi eseményt.', date: '2024-01-29', likes: 5, articleId: 15, likedBy: [] },
-  { id: 30, author: 'Eventes', content: 'Jöhet bármilyen event, én benne vagyok.', date: '2024-01-29', likes: 3, articleId: 15, likedBy: ['User1'] },
-
-  // Cikk 17 - 1 komment
-  { id: 31, author: 'Gabor', content: 'Remélem tényleg csak rövid ideig tart a leállás.', date: '2024-03-12', likes: 2, articleId: 17, likedBy: [] }
-];
+      { id: 1, author: 'Norbi92', content: 'Ez nagyon jól hangzik, kíváncsi vagyok mit hoz a frissítés.', date: '2024-01-16', likes: 5, articleId: 11, likedBy: ['Guest'] },
+      { id: 2, author: 'IceWolf', content: 'Ha tényleg jön új pálya, az hatalmas plusz lenne.', date: '2024-01-17', likes: 3, articleId: 11, likedBy: [] },
+      { id: 3, author: 'Karesz', content: 'Van már pontos időpont, mikor indul?', date: '2024-01-12', likes: 2, articleId: 11, likedBy: ['User1'] },
+      { id: 4, author: 'ZoliFPS', content: 'Őszintén, ezek a balansz változtatások már nagyon kellettek.', date: '2024-01-15', likes: 6, articleId: 4, likedBy: ['Guest', 'User2'] },
+      { id: 5, author: 'MatePlay', content: 'Átolvastam az egészet, meglepően sok új dolgot tanultam.', date: '2024-01-06', likes: 4, articleId: 4, likedBy: [] },
+      { id: 6, author: 'ShadowPvP', content: 'A PvP-s rész különösen hasznos lett, jó irány.', date: '2024-01-19', likes: 7, articleId: 16, likedBy: ['User1'] },
+      { id: 7, author: 'MarketGuru', content: 'Végre valaki normálisan elmagyarázta a gazdasági rendszert.', date: '2024-01-21', likes: 5, articleId: 1, likedBy: [] },
+      { id: 8, author: 'Petya', content: 'Új játékosként ez most nagyon sokat segített, köszi!', date: '2024-01-22', likes: 8, articleId: 1, likedBy: ['Guest'] },
+      { id: 9, author: 'Laci', content: 'Jó, hogy előre szóltok a karbantartásról.', date: '2024-01-12', likes: 1, articleId: 8, likedBy: [] },
+      { id: 10, author: 'Anna', content: 'Sok sikert az új moderátoroknak!', date: '2024-01-16', likes: 3, articleId: 13, likedBy: ['User2'] },
+      { id: 11, author: 'Bence', content: 'Szerintem teljesen rendben vannak az új szabályok.', date: '2024-01-19', likes: 2, articleId: 13, likedBy: [] },
+      { id: 12, author: 'TesztElek', content: 'A januári frissítés óta tényleg simábban fut a játék.', date: '2024-01-15', likes: 6, articleId: 13, likedBy: ['Guest'] },
+      { id: 13, author: 'Felfedező', content: 'Az új pálya hangulata nagyon el lett találva.', date: '2024-01-18', likes: 9, articleId: 13, likedBy: ['User1'] },
+      { id: 14, author: 'BalazsPC', content: 'Nálam is javult az FPS, főleg nagyobb harcoknál.', date: '2024-01-21', likes: 4, articleId: 6, likedBy: [] },
+      { id: 15, author: 'LevelUp', content: 'Dupla XP alatt végre sikerült pár szintet ugrani.', date: '2024-01-14', likes: 10, articleId: 6, likedBy: ['Guest', 'User2'] },
+      { id: 16, author: 'Versenyző', content: 'Az ilyen közösségi versenyek mindig feldobják a játékot.', date: '2024-01-18', likes: 7, articleId: 2, likedBy: [] },
+      { id: 17, author: 'Niki', content: 'Remélem idén is lesznek különleges Valentin-napi jutalmak.', date: '2024-01-23', likes: 5, articleId: 2, likedBy: ['User1'] },
+      { id: 18, author: 'Tomi', content: 'Jó látni, hogy folyamatosan jönnek az új tartalmak.', date: '2024-01-20', likes: 3, articleId: 2, likedBy: [] },
+      { id: 19, author: 'HardcoreZ', content: 'Tetszik az irány, remélem ez így megy tovább.', date: '2024-01-16', likes: 6, articleId: 10, likedBy: [] },
+      { id: 20, author: 'Rita', content: 'Az események mindig visszahoznak játszani.', date: '2024-01-13', likes: 8, articleId: 5, likedBy: ['User3'] },
+      { id: 21, author: 'Stratéga', content: 'Jó lenne később egy részletesebb csapatos útmutató is.', date: '2024-01-24', likes: 4, articleId: 14, likedBy: [] },
+      { id: 22, author: 'FixIt', content: 'Pozitív meglepetés, hogy ilyen gyorsan javították a hibákat.', date: '2024-01-24', likes: 6, articleId: 14, likedBy: ['Guest'] },
+      { id: 23, author: 'KözösségiArc', content: 'Az ilyen eventek miatt jó ide visszajárni.', date: '2024-01-25', likes: 5, articleId: 14, likedBy: [] },
+      { id: 24, author: 'Figyelő', content: 'Kíváncsi vagyok, mi lesz a következő nagy frissítés.', date: '2024-01-25', likes: 7, articleId: 7, likedBy: ['User2'] },
+      { id: 25, author: 'Adam', content: 'Kezdőként ez pont az volt, amire szükségem volt.', date: '2024-01-26', likes: 3, articleId: 3, likedBy: [] },
+      { id: 26, author: 'PlayerOne', content: 'Stabilabb lett a játék, kevesebb a fagyás.', date: '2024-01-27', likes: 4, articleId: 12, likedBy: [] },
+      { id: 27, author: 'Eszter', content: 'Köszi a gyors javításokat, így sokkal élvezhetőbb.', date: '2024-01-27', likes: 2, articleId: 12, likedBy: ['Guest'] },
+      { id: 28, author: 'Misi', content: 'Szerintem ez a szabályzat frissítés teljesen rendben van.', date: '2024-01-28', likes: 1, articleId: 9, likedBy: [] },
+      { id: 29, author: 'Lilla', content: 'Nagyon várom a Valentin-napi eseményt.', date: '2024-01-29', likes: 5, articleId: 15, likedBy: [] },
+      { id: 30, author: 'Eventes', content: 'Jöhet bármilyen event, én benne vagyok.', date: '2024-01-29', likes: 3, articleId: 15, likedBy: ['User1'] },
+      { id: 31, author: 'Gabor', content: 'Remélem tényleg csak rövid ideig tart a leállás.', date: '2024-03-12', likes: 2, articleId: 17, likedBy: [] }
+    ];
   }
 }

@@ -140,27 +140,27 @@
         <p>Vegyél részt a beszélgetésben!</p>
       </div>
 
-      <!-- <div class="new-comment-form">
+      <div class="new-comment-form">
         <h3>Új hozzászólás írása</h3>
-        <div class="form-group">
-          <input 
-            type="text" 
-            [(ngModel)]="newComment.author"
-            placeholder="Felhasználóneved"
-            class="form-input">
-        </div>
+        <p *ngIf="currentUser !== 'Guest'" class="user-info">
+          Bejelentkezve mint: <strong>{{ currentUser }}</strong>
+        </p>
+        <p *ngIf="currentUser === 'Guest'" class="user-info warning">
+          Kérjük jelentkezz be a hozzászóláshoz!
+        </p>
         <div class="form-group">
           <textarea 
             [(ngModel)]="newComment.content"
             placeholder="Írd meg hozzászólásodat..."
             rows="4"
             class="form-textarea"
+            [disabled]="currentUser === 'Guest'"
           ></textarea>
         </div>
-        <button class="submit-btn" (click)="addComment()">
+        <button class="submit-btn" (click)="addComment()" [disabled]="currentUser === 'Guest'">
           Hozzászólás küldése
         </button>
-      </div> -->
+      </div>
 
       <!-- Kommentek listája -->
       <div class="comments-list">
@@ -174,10 +174,6 @@
           </div>
           <!-- Komment szövege -->
           <div class="comment-content">{{ comment.content }}</div>
-          <!-- Cikk címe -->
-          <div class="comment-article">
-            Cikk: {{ getArticleTitle(comment.articleId) }}
-          </div>
           <!-- Kedvelés gomb -->
           <div class="comment-footer">
             <button 
@@ -262,23 +258,22 @@
         
         <!-- Új komment űrlap -->
         <div class="modal-new-comment">
-          <div class="form-group">
-            <input 
-              type="text" 
-              [(ngModel)]="modalNewComment.author"
-              placeholder="Neved"
-              class="form-input"
-            >
-          </div>
+          <p *ngIf="currentUser !== 'Guest'" class="user-info">
+            Bejelentkezve mint: <strong>{{ currentUser }}</strong>
+          </p>
+          <p *ngIf="currentUser === 'Guest'" class="user-info warning">
+            Kérjük jelentkezz be a hozzászóláshoz!
+          </p>
           <div class="form-group">
             <textarea 
               [(ngModel)]="modalNewComment.content"
               placeholder="Írd meg hozzászólásodat..."
               rows="3"
               class="form-textarea"
+              [disabled]="currentUser === 'Guest'"
             ></textarea>
           </div>
-          <button class="submit-btn" (click)="addCommentToArticle(selectedArticle.id)">
+          <button class="submit-btn" (click)="addCommentToArticle(selectedArticle.id)" [disabled]="currentUser === 'Guest'">
             Hozzászólás küldése
           </button>
         </div>
