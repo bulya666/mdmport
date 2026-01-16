@@ -8,6 +8,8 @@ const photosCtrl = require('../controllers/gamephotosController');
 const authCtrl = require('../controllers/authController');
 const mailCtrl = require('../controllers/mailController');
 
+const settingsRoutes = require('./settingsRoutes');
+
 router.get('/games', gamesCtrl.getGames);
 router.get('/games/:id', gamesCtrl.getGameById);
 
@@ -26,5 +28,7 @@ router.post('/login', authCtrl.login);
 router.post('/register', authCtrl.register);
 
 router.post('/send-mail', mailCtrl.sendMail);
+
+router.use('/', settingsRoutes);
 
 module.exports = router;

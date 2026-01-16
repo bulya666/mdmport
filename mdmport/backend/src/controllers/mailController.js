@@ -12,15 +12,15 @@ exports.sendMail = async (req, res) => {
       port: 465,
       secure: true,
       auth: {
-        user: 'mdmport@leleszedgar.hu',
+        user: 'mdmport@kemenesklima.hu',
         pass: 'mdmport2026'
       }
     });
 
     await transporter.sendMail({
-      from: `"${name}" <mdmport@leleszedgar.hu>`,
+      from: `"${name}" <mdmport@kemenesklima.hu>`,
       replyTo: email,
-      to: 'mdmport@leleszedgar.hu',
+      to: 'mdmport@kemenesklima.hu',
       subject,
       text: `Név: ${name}\nE-mail: ${email}\n\nÜzenet:\n${message}`
     });

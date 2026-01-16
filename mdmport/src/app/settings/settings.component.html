@@ -1,35 +1,212 @@
-<div class="settings-card">
-  <h2>Beállítások</h2>
-  <p class="subtitle">Itt tudod személyre szabni az oldalt.</p>
+<div class="settings-container">
+  <header class="settings-header">
+    <h1>Fiók beállítások</h1>
+    <p class="lead">Kezeld a profil, értesítések és adatvédelmi beállításaidat.</p>
+  </header>
 
-  <form [formGroup]="form" class="settings-form">
+  <!-- Notification -->
+  <div class="notification" *ngIf="message.visible" [ngClass]="['notification--' + message.type]" role="alert">
+    <span class="notification-icon">{{ message.type === 'success' ? '✓' : '✕' }}</span>
+    <span class="notification-text">{{ message.text }}</span>
+  </div>
 
-    <section class="settings-section">
-      <h3>Elrendezés sűrűsége</h3>
-      <div class="option-row">
-        <label>
-          <input type="radio" formControlName="density" value="comfortable" />
-          Kényelmes
-        </label>
-        <label>
-          <input type="radio" formControlName="density" value="compact" />
-          Kompakt
-        </label>
-      </div>
-    </section>
+  <div class="settings-content">
+    <!-- Sidebar -->
+    <aside class="settings-sidebar">
+      <nav class="tab-nav" role="tablist">
+        <button 
+          *ngFor="let tab of tabs"
+          [attr.aria-selected]="activeTab === tab"
+          role="tab"
+          class="tab-button"
+          [class.active]="activeTab === tab"
+          (click)="selectTab(tab)">
+          <span class="tab-label">{{ tabLabels[tab] }}</span>
+        </button>
+      </nav>
+    </aside>
 
-    <section class="settings-section">
-      <h3>Tippek</h3>
-      <label class="switch-row">
-        <input type="checkbox" formControlName="showTips" />
-        <span>Mutasd az oktató tippeket az oldalon</span>
-      </label>
-    </section>
+    <!-- Main -->
+    <main class="settings-main" role="tabpanel">
+      
+      <!-- Profile tab -->
+      <section *ngIf="activeTab === 'profile'" class="settings-panel">
+        <h2>Profil módosítása</h2>
+        
+        <form class="settings-form" (ngSubmit)="saveProfileChanges()">
+          <div class="form-group">
+            <label for="username">Felhasználónév</label>
+            <input 
+              id="username"
+              type="text" 
+              [(ngModel)]="userSettings.username" 
+              name="username"
+              class="form-input"
+              required>
+          </div>
 
-    <div class="actions">
-      <button type="button" (click)="resetToDefaults()">
-        Alapértelmezett beállítások
-      </button>
-    </div>
-  </form>
+          <div class="form-group">
+            <label for="email">Email cím</label>
+            <input 
+              id="email"
+              type="email" 
+              [(ngModel)]="userSettings.email" 
+              name="email"
+              class="form-input"
+              required>
+          </div>
+
+          <hr class="divider">
+
+          <h3>Jelszó módosítása (opcionális)</h3>
+
+          <div class="form-group">
+            <label for="currentPassword">Jelenlegi jelszó</label>
+            <div class="password-input-wrapper">
+              <input 
+                id="currentPassword"
+                [type]="passwordVisible ? 'text' : 'password'" 
+                [(ngModel)]="userSettings.currentPassword" 
+                name="currentPassword"
+                class="form-input">
+              <button 
+                type="button" 
+                class="password-toggle"
+                (click)="togglePasswordVisibility('password')"
+                [attr.aria-label]="passwordVisible ? 'Jelszó elrejtése' : 'Jelszó megjelenítése'">
+                {{ passwordVisible ? '👁️' : '👁️' }}
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="newPassword">Új jelszó</label>
+            <input 
+              id="newPassword"
+              type="password" 
+              [(ngModel)]="userSettings.newPassword" 
+              name="newPassword"
+              class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Új jelszó megerősítése</label>
+            <div class="password-input-wrapper">
+              <input 
+                id="confirmPassword"
+                [type]="confirmPasswordVisible ? 'text' : 'password'" 
+                [(ngModel)]="userSettings.confirmPassword" 
+                name="confirmPassword"
+                class="form-input">
+              <button 
+                type="button" 
+                class="password-toggle"
+                (click)="togglePasswordVisibility('confirmPassword')"
+                [attr.aria-label]="confirmPasswordVisible ? 'Jelszó elrejtése' : 'Jelszó megjelenítése'">
+                {{ confirmPasswordVisible ? '👁️' : '👁️' }}
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+            {{ isLoading ? 'Mentés...' : 'Profil mentése' }}
+          </button>
+        </form>
+      </section>
+
+      <!-- Preferences tab -->
+      <section *ngIf="activeTab === 'preferences'" class="settings-panel">
+        <h2>Beállítások</h2>
+
+        <form class="settings-form" (ngSubmit)="savePreferences()">
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="preferences.emailNotifications" name="emailNotifications">
+              <span class="checkbox-text">Email értesítések</span>
+              <span class="checkbox-desc">Értesítéseket kapj email-ben az új hírekben és frissítésekben.</span>
+            </label>
+          </div>
+
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="preferences.pushNotifications" name="pushNotifications">
+              <span class="checkbox-text">Push értesítések</span>
+              <span class="checkbox-desc">Böngésző push értesítések engedélyezése.</span>
+            </label>
+          </div>
+
+          <hr class="divider">
+          <h3>Profil láthatósága</h3>
+
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="preferences.profilePublic" name="profilePublic">
+              <span class="checkbox-text">Nyilvános profil</span>
+              <span class="checkbox-desc">Más felhasználók meglátják a profilodat.</span>
+            </label>
+          </div>
+
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="preferences.showActivity" name="showActivity">
+              <span class="checkbox-text">Tevékenység megjelenítése</span>
+              <span class="checkbox-desc">Megjelenik, mit játszol és mit szerzel.</span>
+            </label>
+          </div>
+
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="preferences.allowMessaging" name="allowMessaging">
+              <span class="checkbox-text">Üzenetek engedélyezése</span>
+              <span class="checkbox-desc">Más felhasználók üzenetet küldhetnek neked.</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+            {{ isLoading ? 'Mentés...' : 'Beállítások mentése' }}
+          </button>
+        </form>
+      </section>
+
+      <!-- Privacy tab -->
+      <section *ngIf="activeTab === 'privacy'" class="settings-panel">
+        <h2>Adatvédelmi beállítások</h2>
+        <p class="info-text">Az mdmport szigorúan követi az adatvédelmi törvényeket.</p>
+
+        <div class="info-box">
+          <h3>🔐 Adatok letöltése</h3>
+          <p>Letöltheted az összes személyes adatodat.</p>
+          <button class="btn btn-secondary">Adatok letöltése</button>
+        </div>
+
+        <div class="info-box warning">
+          <h3>🗑️ Adatok törlése</h3>
+          <p>Összes személyes adatod törlődik, de a vásárlási előzmények 7 évig megmaradnak jogi okok miatt.</p>
+          <button class="btn btn-danger">Adatok törlése</button>
+        </div>
+      </section>
+
+      <!-- Danger zone -->
+      <section *ngIf="activeTab === 'danger'" class="settings-panel danger-zone">
+        <h2>⚠️ Veszélyes műveletek</h2>
+
+        <div class="danger-box">
+          <h3>Fiók törlése</h3>
+          <p>A fiók véglegesen törlődik. Ez nem vonható vissza.</p>
+          <form class="danger-form" (ngSubmit)="deleteAccount(deletePassword.value)">
+            <input 
+              #deletePassword
+              type="password" 
+              placeholder="Jelszó megerősítéshez"
+              class="form-input"
+              required>
+            <button type="submit" class="btn btn-danger" [disabled]="isLoading">
+              {{ isLoading ? 'Törlés...' : 'Fiók véglegesen törlése' }}
+            </button>
+          </form>
+        </div>
+      </section>
+
+    </main>
+  </div>
 </div>
