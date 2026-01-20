@@ -444,7 +444,7 @@ export class CommunityComponent implements OnInit {
     // Kommentek listája
     this.comments = [
       { id: 1, author: 'Norbi92', content: 'Ez nagyon jól hangzik, kíváncsi vagyok mit hoz a frissítés.', date: '2024-01-16', likes: 5, articleId: 11, likedBy: ['Guest'] },
-      { id: 2, author: 'IceWolf', content: 'Ha tényleg jön új pálya, az hatalmas plusz lenne.', date: '2024-01-17', likes: 3, articleId: 11, likedBy: [] },
+      { id: 2, author: 'Nati', content: 'Nemtudom, találj ki valamit.', date: '2026-01-20', likes: 67, articleId: 11, likedBy: [] },
       { id: 3, author: 'Karesz', content: 'Van már pontos időpont, mikor indul?', date: '2024-01-12', likes: 2, articleId: 11, likedBy: ['User1'] },
       { id: 4, author: 'ZoliFPS', content: 'Őszintén, ezek a balansz változtatások már nagyon kellettek.', date: '2024-01-15', likes: 6, articleId: 4, likedBy: ['Guest', 'User2'] },
       { id: 5, author: 'MatePlay', content: 'Átolvastam az egészet, meglepően sok új dolgot tanultam.', date: '2024-01-06', likes: 4, articleId: 4, likedBy: [] },
