@@ -23,34 +23,6 @@ class User {
     const hashed = await bcrypt.hash(password, 12);
     await pool.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashed]);
   }
-
-  static async getPreferences(username) {
-    try {
-      const [rows] = await pool.query('SELECT preferences FROM users WHERE username = ?', [username]);
-      if (!rows[0]) return {};
-      return rows[0].preferences ? JSON.parse(rows[0].preferences) : {};
-    } catch (err) {
-      console.error('Hiba a beállítások lekérésekor:', err);
-      return {};
-    }
-  }
-
-  static async updatePreferences(username, preferences) {
-    try {
-      await pool.query('UPDATE users SET preferences = ? WHERE username = ?', [JSON.stringify(preferences), username]);
-    } catch (err) {
-      console.error('Hiba a beállítások frissítésekor:', err);
-      throw err;
-    }
-  }
-  static async deleteAccount(username) {
-  try {
-    await pool.query('DELETE FROM users WHERE username = ?', [username]);
-  } catch (err) {
-    console.error('Hiba a fiók törléskor:', err);
-    throw err;
-  }
-}
 }
 
 module.exports = User;
