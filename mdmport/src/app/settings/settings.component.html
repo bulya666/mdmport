@@ -34,26 +34,12 @@
         <h2>Profil módosítása</h2>
         
         <form class="settings-form" (ngSubmit)="saveProfileChanges()">
-          <div class="form-group">
-            <label for="username">Felhasználónév</label>
-            <input 
-              id="username"
-              type="text" 
-              [(ngModel)]="userSettings.username" 
-              name="username"
-              class="form-input"
-              required>
-          </div>
-
-          <div class="form-group">
-            <label for="email">Email cím</label>
-            <input 
-              id="email"
-              type="email" 
-              [(ngModel)]="userSettings.email" 
-              name="email"
-              class="form-input"
-              required>
+                    <hr class="divider">
+        <div class="form-group">
+            <label>Felhasználónév</label>
+            <div class="current-username">
+              {{ loggedUser || 'Nincs bejelentkezve' }}
+            </div>
           </div>
 
           <hr class="divider">
@@ -192,7 +178,8 @@
 
         <div class="danger-box">
           <h3>Fiók törlése</h3>
-          <p>A fiók véglegesen törlődik. Ez nem vonható vissza.</p>
+          <p class="warning">Ez a művelet végleges és nem visszavonható!</p>
+          
           <form class="danger-form" (ngSubmit)="deleteAccount(deletePassword.value)">
             <input 
               #deletePassword

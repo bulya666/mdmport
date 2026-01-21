@@ -10,7 +10,6 @@ type TabType = 'profile' | 'preferences' | 'privacy' | 'danger';
 
 interface UserSettings {
   username: string;
-  email: string;
   currentPassword?: string;
   newPassword?: string;
   confirmPassword?: string;
@@ -22,6 +21,12 @@ interface Preferences {
   profilePublic: boolean;
   showActivity: boolean;
   allowMessaging: boolean;
+}
+
+interface ProfileUpdatePayload {
+  email: string;
+  currentPassword?: string;
+  newPassword?: string;
 }
 
 @Component({
@@ -37,10 +42,10 @@ export class SettingsComponent implements OnInit {
   private http = inject(HttpClient);
   private router = inject(Router);
   form!: FormGroup;
-
+  loggedUser: string | null = null;
+  
   userSettings: UserSettings = {
   username: '',
-  email: '',
   currentPassword: '',
   newPassword: '',
   confirmPassword: ''
@@ -68,14 +73,27 @@ export class SettingsComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    const current = this.settingsService.settings;
-    this.loadUserSettings();
-    this.loadPreferences();
+    this.loggedUser = localStorage.getItem("loggedUser");
 
+    if (!this.loggedUser) {
+      console.warn('Nincs bejelentkezve – beállítások nem töltődnek');
+      this.router.navigate(['/login']);
+      return;
+    }
+    else {
+      console.log('Bejelentkezett felhasználó (localStorage):', this.loggedUser);
+      this.userSettings.username = this.loggedUser;
+    }
+    if (this.loggedUser) {
+      this.loadUserSettings();
+      this.loadPreferencesFromLocal();
+    }
+
+    const current = this.settingsService.settings;
     this.form = this.fb.group({
-      density: [current.density as Density],
-      showTips: [current.showTips],
-    });
+        density: [current.density as Density],
+        showTips: [current.showTips],
+      });
 
     this.form.valueChanges.subscribe((value: any) => {
       const patch: Partial<Settings> = {
@@ -84,84 +102,95 @@ export class SettingsComponent implements OnInit {
       };
       this.settingsService.update(patch);
     });
+
   }
     private loadUserSettings() {
     const username = localStorage.getItem('loggedUser');
     if (username) {
+      this.userSettings.username = username;
       this.http.get(`/api/users/byname/${username}`, { withCredentials: true })
         .subscribe({
           next: (user: any) => {
             this.userSettings = {
               username: user.username,
-              email: user.email || ''
             };
           },
           error: (err) => this.showMessage('Hiba a felhasználói adatok betöltésekor', 'error')
         });
     }
   }
-
-  private loadPreferences() {
-    const username = localStorage.getItem('loggedUser');
-    if (!username) {
-      console.warn('Nincs bejelentkezve');
-      return;
+  private loadPreferencesFromLocal() {
+    const saved = localStorage.getItem('userPreferences');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        this.preferences = { ...this.preferences, ...parsed };
+        console.log('Preferenciák betöltve localStorage-ból');
+      } catch (err) {
+        console.error('Hibás formátumú userPreferences a localStorage-ban', err);
+      }
+    } else {
+      console.log('Nincsenek mentett preferenciák → alapértelmezett értékek maradnak');
     }
-  console.log('Beállítások betöltése:', username);
-
-    // Backend-ből töltjük be a beállításokat
-    this.http.get(`/api/users/${username}/preferences`, { withCredentials: true })
-      .subscribe({
-        next: (prefs: any) => {
-          console.log('Beállítások betöltve:', prefs);
-          this.preferences = { ...this.preferences, ...prefs };
-        },
-        error: (err) => {
-          console.error('Hiba a beállítások betöltésekor:', err);
-          console.log('Status:', err.status);
-          console.log('Message:', err.message);
-          const saved = localStorage.getItem('userPreferences');
-          if (saved) {
-            console.log('Fallback: lokális tárolóból töltöm');
-            this.preferences = JSON.parse(saved);
-          }
-        }
-      });
   }
 
   selectTab(tab: TabType) {
     this.activeTab = tab;
   }
 
-  saveProfileChanges() {
-    if (!this.validateProfileForm()) return;
+saveProfileChanges() {
+  if (!this.validateProfileForm()) return;
 
-    this.isLoading = true;
-    const payload = {
-      username: this.userSettings.username,
-      email: this.userSettings.email,
-      ...(this.userSettings.newPassword && {
-        currentPassword: this.userSettings.currentPassword,
-        newPassword: this.userSettings.newPassword
-      })
-    };
-
-    this.http.put(`/api/users/${this.userSettings.username}`, payload, { withCredentials: true })
-      .subscribe({
-        next: () => {
-          localStorage.setItem('loggedUser', this.userSettings.username);
-          this.showMessage('Profil sikeresen módosítva!', 'success');
-          this.userSettings.currentPassword = '';
-          this.userSettings.newPassword = '';
-          this.userSettings.confirmPassword = '';
-        },
-        error: (err) => this.showMessage(err.error?.message || 'Hiba a profil mentésekor', 'error'),
-        complete: () => this.isLoading = false
-      });
+  if (!this.userSettings.newPassword?.trim()) {
+    this.showMessage('Adj meg új jelszót a módosításhoz', 'error');
+    return;
   }
+
+  this.isLoading = true;
+
+  const payload = {
+    currentPassword: this.userSettings.currentPassword?.trim() || '',
+    newPassword: this.userSettings.newPassword.trim(),
+  };
+
+  const username = this.userSettings.username || localStorage.getItem('loggedUser');
+
+  if (!username) {
+    this.showMessage('Nincs bejelentkezve – próbáld újra', 'error');
+    this.isLoading = false;
+    return;
+  }
+
+  this.http
+    .put(`/api/users/${username}`, payload, { withCredentials: true })
+    .subscribe({
+      next: () => {
+        this.showMessage('Jelszó sikeresen megváltoztatva!', 'success');
+        this.userSettings.currentPassword = '';
+        this.userSettings.newPassword = '';
+        this.userSettings.confirmPassword = '';
+      },
+      error: (err) => {
+        let msg = 'Hiba a jelszó módosításakor';
+        if (err.status === 401) msg = 'Hibás jelenlegi jelszó';
+        else if (err.status === 400) msg = err.error?.message || msg;
+        else if (err.error?.message) msg = err.error.message;
+
+        this.showMessage(msg, 'error');
+      },
+      complete: () => (this.isLoading = false),
+    });
+}
   savePreferences() {
+    if (!this.loggedUser) {
+    this.showMessage('Nincs bejelentkezve – mentés sikertelen', 'error');
+    return;
+  }
     this.isLoading = true;
     const username = localStorage.getItem('loggedUser');
+    localStorage.setItem('userPreferences', JSON.stringify(this.preferences));
+    this.showMessage('Beállítások mentve!', 'success');
+    this.isLoading = false;
     
     if (!username) {
       this.showMessage('Felhasználó nem található', 'error');
@@ -183,39 +212,60 @@ export class SettingsComponent implements OnInit {
       });
   }
 
-  deleteAccount(password: string) {
-    if (!password.trim()) {
-      this.showMessage('Jelszó megadása szükséges', 'error');
-      return;
-    }
-
-    if (!confirm('Biztosan törölni szeretnéd a fiókot? Ez nem vonható vissza!')) return;
-
-    this.isLoading = true;
-    const username = localStorage.getItem('loggedUser');
-    
-    this.http.delete(`/api/users/${username}`, {
-      body: { password },
-      withCredentials: true
-    })
-      .subscribe({
-        next: () => {
-          localStorage.removeItem('loggedUser');
-          localStorage.removeItem('userPreferences');
-          this.showMessage('Fiók törölve. Átirányítás...', 'success');
-          setTimeout(() => this.router.navigate(['/login']), 2000);
-        },
-        error: (err) => {
-          console.error('Fiók törlési hiba:', err);
-          this.showMessage(err.error?.message || 'Hiba a fiók törléskor', 'error');
-        },
-        complete: () => this.isLoading = false
-      });
+deleteAccount(password: string) {
+  if (!password?.trim()) {
+    this.showMessage('Jelszó megadása kötelező a törléshez', 'error');
+    return;
   }
 
+  if (!confirm('Biztosan törölni szeretnéd a fiókot?\nEz a művelet NEM visszavonható!')) {
+    return;
+  }
+
+  this.isLoading = true;
+
+  const username = localStorage.getItem('loggedUser') || this.userSettings.username;
+
+  if (!username) {
+    this.showMessage('Nincs bejelentkezett felhasználó', 'error');
+    this.isLoading = false;
+    return;
+  }
+
+  const payload = {
+    currentPassword: password.trim(),
+  };
+
+  this.http
+    .delete(`/api/users/${username}`, {
+      body: payload,
+      withCredentials: true,
+    })
+    .subscribe({
+      next: () => {
+        localStorage.removeItem('loggedUser');
+        localStorage.removeItem('userPreferences');
+        this.showMessage('Fiók sikeresen törölve. Átirányítás...', 'success');
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 1800);
+      },
+      error: (err) => {
+        let msg = 'Hiba a fiók törlésekor';
+        if (err.status === 401) {
+          msg = 'Hibás jelszó – a fiók nem törölhető';
+        } else if (err.error?.message) {
+          msg = err.error.message;
+        }
+        this.showMessage(msg, 'error');
+      },
+      complete: () => (this.isLoading = false),
+    });
+}
+
     private validateProfileForm(): boolean {
-    if (!this.userSettings.username || !this.userSettings.email) {
-      this.showMessage('Felhasználónév és email megadása szükséges', 'error');
+    if (!this.userSettings.username) {
+      this.showMessage('Felhasználónév megadása szükséges', 'error');
       return false;
     }
 

@@ -69,7 +69,8 @@
               "buildTarget": "mdmport:build:production"
             },
             "development": {
-              "buildTarget": "mdmport:build:development"
+              "buildTarget": "mdmport:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
