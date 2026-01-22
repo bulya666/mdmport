@@ -235,12 +235,11 @@ deleteAccount(password: string) {
   const payload = {
     currentPassword: password.trim(),
   };
-
-  this.http
-    .delete(`/api/users/${username}`, {
-      body: payload,
-      withCredentials: true,
-    })
+  
+  this.http.delete(`/api/settings/${username}`, {
+    body: { currentPassword: password.trim() },
+    withCredentials: true,
+  })
     .subscribe({
       next: () => {
         localStorage.removeItem('loggedUser');

@@ -5,7 +5,9 @@ const User = require('../models/User');
 
 router.get('/users/:username/preferences', SettingsController.getPreferences);
 router.put('/users/:username/preferences', SettingsController.updatePreferences);
+
 router.delete('/users/:username', SettingsController.deleteAccount);
+
 router.put('/users/:username', async (req, res) => {
   const { username } = req.params;
   const { currentPassword, newPassword } = req.body;
@@ -39,26 +41,19 @@ router.put('/users/:username', async (req, res) => {
 
     res.status(status).json({ success: false, message });
   }
-  router.delete('/users/:username', async (req, res) => {
+router.delete('/:username', async (req, res) => {
   const { username } = req.params;
-    const { currentPassword } = req.body; 
+  const { currentPassword } = req.body;
 
-  if (!currentPassword) {
-    return res.status(400).json({
-      success: false,
-      message: 'Jelszó megadása kötelező a törléshez'
-    });
+  if (!currentPassword?.trim()) {
+    return res.status(400).json({ success: false, message: 'Jelszó megadása kötelező' });
   }
 
   try {
     await User.deleteByUsernameWithPassword(username, currentPassword);
-    res.json({
-      success: true,
-      message: 'Fiók sikeresen törölve'
-    });
+    res.json({ success: true, message: 'Fiók sikeresen törölve' });
   } catch (err) {
     console.error('Fiók törlési hiba:', err.message);
-
     let status = 500;
     let message = 'Szerver hiba';
 

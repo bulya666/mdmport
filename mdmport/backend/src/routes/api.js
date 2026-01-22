@@ -29,6 +29,6 @@ router.post('/register', authCtrl.register);
 
 router.post('/send-mail', mailCtrl.sendMail);
 
-router.use('/', settingsRoutes);
+router.use('/settings', settingsRoutes);
 
 module.exports = router;
