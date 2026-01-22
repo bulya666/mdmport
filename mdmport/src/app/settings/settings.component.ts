@@ -160,9 +160,8 @@ saveProfileChanges() {
     this.isLoading = false;
     return;
   }
-
-  this.http
-    .put(`/api/users/${username}`, payload, { withCredentials: true })
+this.http
+  .put(`/api/users/${username}/password`, payload, { withCredentials: true })
     .subscribe({
       next: () => {
         this.showMessage('Jelszó sikeresen megváltoztatva!', 'success');
@@ -236,7 +235,7 @@ deleteAccount(password: string) {
     currentPassword: password.trim(),
   };
   
-  this.http.delete(`/api/settings/${username}`, {
+  this.http.delete(`/api/users/${username}`, {                                       // ← CSAK EZ A SOR VÁLTOZIK
     body: { currentPassword: password.trim() },
     withCredentials: true,
   })

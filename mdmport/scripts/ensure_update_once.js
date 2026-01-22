@@ -6,26 +6,26 @@ const MARKER = path.join(__dirname, '..', '.npm_update_done');
 
 function runUpdateOnce() {
   if (fs.existsSync(MARKER)) {
-    console.log('Skipping npm update — already run on this machine.');
+    console.log('Frissítés átlépése — már futott ezen a gépen.');
     return 0;
   }
 
-  console.log('First start detected — running `npm update`...');
+  console.log('Első indítás észlelve — futtatás: `npm update`...');
 
   const repoRoot = path.join(__dirname, '..');
   const { execSync } = require('child_process');
   try {
     execSync('npm update', { stdio: 'inherit', cwd: repoRoot, env: process.env, shell: true });
   } catch (err) {
-    console.error('Failed to run npm update:', err);
+    console.error('Hiba a frissítés során:', err);
     return 2;
   }
 
   try {
     fs.writeFileSync(MARKER, new Date().toISOString());
-    console.log('Created marker file:', MARKER);
+    console.log('Marker fájl létrehozva:', MARKER);
   } catch (err) {
-    console.warn('npm update succeeded but failed to write marker file:', err);
+    console.warn('npm update sikeres, de a marker fájl írása nem sikerült:', err);
   }
 
   return 0;
