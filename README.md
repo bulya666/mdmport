@@ -19,7 +19,7 @@ Az **MDM Port** egy teljes stack webalkalmazás videojátékok értékesítésé
 
 ---
 
-##Funkciók
+## -Funkciók
 
 ### Felhasználókezelés
 - **Regisztráció és bejelentkezés**: Felhasználói fiók létrehozása felhasználónév és jelszó segítségével, bcrypt alapú jelszóhash-eléssel.
