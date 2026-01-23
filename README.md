@@ -98,10 +98,7 @@ MySQL adatbázis (mdmport_db)
 ```bash
 git clone https://github.com/bulya666/mdmport.git
 cd mdmport/mdmport
-npm install
-cd backend
-npm install
-cd ..
+npm start
 ```
 
 ### Környezeti változók
