@@ -1,4 +1,4 @@
-# 🎮 MDM Port – Játékáruház Platform
+# MDM Port – Játékáruház Platform
 
 Az **MDM Port** egy teljes stack webalkalmazás videojátékok értékesítésére és kezelésére, **Angular 18** alapú kliensoldali (frontend) alkalmazással és **Node.js / Express** alapú szerveroldali (backend) rendszerrel. A projekt célja egy modern, biztonságos és skálázható e-kereskedelmi platform megvalósítása, amely megfelel az oktatási és vizsgakövetelményeknek.
 
