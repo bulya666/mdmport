@@ -415,6 +415,12 @@
   background: rgba(30,41,59,0.85);
 }
 
+.cart-icon{
+  width: 32px;
+  margin-top: 6px;
+  margin-left: -5px;
+}
+
 .cart-badge {
   position: absolute;
   top: -6px;
