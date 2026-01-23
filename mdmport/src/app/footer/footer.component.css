@@ -2,23 +2,27 @@
   background: radial-gradient(circle at top left, var(--bg-soft), var(--bg));
   color: var(--text);
   border-top: 1px solid var(--ring);
-  box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 -8px 24px rgba(0,0,0,0.2);
+}
+
+:host {
+  display: block;
+  margin-top: auto;
 }
 
 .mdm-wrap {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px 24px;
+  padding: 40px 20px 28px;
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   gap: 40px;
-  align-items: flex-start;
 }
 
 .mdm-brand {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .mdm-logo {
@@ -27,11 +31,9 @@
   letter-spacing: 0.3px;
   color: var(--text);
   text-decoration: none;
-  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transform-origin: left center;
   transition: transform 0.25s ease, letter-spacing 0.25s ease;
 }
 
@@ -43,23 +45,20 @@
   content: "";
   position: absolute;
   left: 0;
-  bottom: -6px;
-  width: 66px;
+  bottom: -5px;
+  width: 60px;
   height: 2px;
   border-radius: 999px;
   background: var(--acc);
+  transform: scaleX(0.45);
+  opacity: 0.7;
   transform-origin: left;
-  transform: scaleX(0.4);
-  opacity: 0.8;
-  transition: transform 0.25s ease, opacity 0.25s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
-:host {
-  display: block;
-  margin-top: auto;
-}
+
 .mdm-logo:hover {
-  transform: translateY(-1px) scale(1.02);
-  letter-spacing: 0.8px;
+  transform: translateY(-1px) scale(1.015);
+  letter-spacing: 0.7px;
 }
 
 .mdm-logo:hover::after {
@@ -68,10 +67,11 @@
 }
 
 .mdm-tag {
-  margin: 0.6rem 0 1.1rem;
+  margin: 0.5rem 0 1rem;
   color: var(--muted);
-  max-width: 52ch;
+  max-width: 48ch;
   line-height: 1.5;
+  font-size: 14px;
 }
 
 .mdm-badges {
@@ -84,55 +84,34 @@
   background: var(--bg-soft);
   color: var(--text);
   border: 1px solid var(--ring);
-  padding: 6px 12px;
+  padding: 5px 11px;
   border-radius: 999px;
   font-size: 12px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  line-height: 1;
-  position: relative;
-  overflow: hidden;
-  cursor: default;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.badge::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.12), transparent);
-  opacity: 0;
-  transition: opacity 0.2s ease;
+  gap: 5px;
+  transition: all 0.2s ease;
 }
 
 .badge:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
-  background: rgba(255, 255, 255, 0.02);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+  background: rgba(255,255,255,0.03);
   border-color: var(--acc);
-}
-
-.badge:hover::before {
-  opacity: 1;
 }
 
 .mdm-columns {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px 32px;
 }
 
 .mdm-columns h3 {
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--muted);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  margin-bottom: 12px;
+  letter-spacing: 0.11em;
+  margin-bottom: 10px;
 }
 
 .mdm-columns ul {
@@ -143,100 +122,72 @@
   gap: 6px;
 }
 
-.mdm-columns li {
-  position: relative;
-}
-
 .mdm-columns a {
   color: var(--text);
   text-decoration: none;
-  opacity: 0.8;
+  opacity: 0.82;
   font-size: 14px;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 3px 0;
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
-}
-
-.mdm-columns a::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: var(--acc);
-  transform: scale(0);
-  opacity: 0;
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-.mdm-columns a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 1px;
-  width: 0;
-  background: var(--acc);
-  border-radius: 999px;
-  transition: width 0.2s ease;
+  padding: 2px 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .mdm-columns a:hover {
   opacity: 1;
-  transform: translateX(2px);
-}
-
-.mdm-columns a:hover::before {
-  transform: scale(1);
-  opacity: 1;
-}
-
-.mdm-columns a:hover::after {
-  width: 100%;
+  transform: translateX(3px);
 }
 
 .mdm-footer-bottom {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 14px 20px 10px;
+  padding: 14px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-top: 1px solid rgba(255,255,255,0.05);
   font-size: 12px;
   color: var(--muted);
-  margin-top: auto;
 }
 
-@media (max-width: 900px) {
+/* ────────────────────────────────────────
+   Responsive
+───────────────────────────────────────── */
+
+@media (max-width: 960px) {
   .mdm-wrap {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 36px;
   }
 
   .mdm-columns {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px 24px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 32px;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .mdm-wrap {
-    padding: 28px 16px 18px;
+    padding: 32px 16px 24px;
   }
 
   .mdm-columns {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .mdm-footer-bottom {
     flex-direction: column;
     align-items: flex-start;
+    gap: 10px;
+    padding: 16px;
+  }
+
+  .mdm-logo {
+    font-size: 24px;
+  }
+
+  .mdm-tag {
+    font-size: 13.5px;
   }
 }

@@ -1,11 +1,9 @@
-/* Alap reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Háttérgradients */
 body {
   background-color: #0a0a1a;
   background-image: 
@@ -18,14 +16,12 @@ body {
   min-height: 100vh;
 }
 
-/* Közösségi konténer */
 .community-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
   color: #e0e0ff;
 }
 
-/* ==================== FEJLÉC - MODERN MINIMALISTA ==================== */
 .community-header {
   background: rgba(10, 10, 26, 0.85);
   backdrop-filter: blur(20px);
@@ -83,47 +79,6 @@ body {
   border-radius: 3px;
 }
 
-.community-header .subtitle {
-  color: #b0b0ff;
-  font-size: 1.3rem;
-  max-width: 700px;
-  margin: 0 auto 2rem;
-  line-height: 1.6;
-  opacity: 0.9;
-}
-
-.community-header .stats {
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(102, 126, 234, 0.1);
-}
-
-.stat-item {
-  text-align: center;
-}
-
-.stat-number {
-  display: block;
-  font-size: 2.2rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 0.3rem;
-}
-
-.stat-label {
-  color: #8888cc;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* ==================== FŐ TARTALOM ==================== */
 .community-content {
   display: flex;
   max-width: 1400px;
@@ -132,7 +87,6 @@ body {
   gap: 2rem;
 }
 
-/* ==================== CIKKEK SZEKCIÓ ==================== */
 .articles-section {
   flex: 3;
   border-radius: 20px;
@@ -143,7 +97,6 @@ body {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
-/* Szűrők */
 .filters {
   margin-bottom: 2.5rem;
   padding-bottom: 1.5rem;
@@ -187,7 +140,6 @@ body {
   font-size: 1.2rem;
 }
 
-/* Kategória gombok */
 .category-filters {
   display: flex;
   flex-wrap: wrap;
@@ -222,14 +174,12 @@ body {
   box-shadow: 3px 6px 20px rgb(121, 0, 0);
 }
 
-/* Cikk lista */
 .articles-list {
   display: grid;
   gap: 1.5rem;
   min-height: 500px;
 }
 
-/* Cikk kártyák */
 .article-card {
   background: linear-gradient(135deg, rgba(20, 20, 40, 0.7) 0%, rgba(30, 30, 60, 0.5) 100%);
   border-radius: 16px;
@@ -239,6 +189,7 @@ body {
   backdrop-filter: blur(10px);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .article-card::before {
@@ -252,7 +203,7 @@ body {
 }
 
 .article-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-8px) scale(1.02);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   border-color: rgba(102, 126, 234, 0.4);
 }
@@ -323,7 +274,6 @@ body {
   align-items: center;
 }
 
-/* ==================== LIKE GOMB STÍLUSOK ==================== */
 .like-btn {
   background: rgba(102, 126, 234, 0.1);
   border: 1px solid rgba(102, 126, 234, 0.3);
@@ -354,11 +304,6 @@ body {
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
-.like-btn.active:hover {
-  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
-  transform: scale(1.05);
-}
-
 .comments-count {
   color: #8888cc;
   font-size: 0.9rem;
@@ -367,7 +312,6 @@ body {
   gap: 0.4rem;
 }
 
-/* ==================== KOMMENT SZEKCIÓ ==================== */
 .comments-section {
   flex: 1;
   background: rgba(10, 10, 26, 0.5);
@@ -378,9 +322,7 @@ body {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  min-height: 600px; /* JAVÍTOTT: Minimum magasság */
-  height: 1800px; /* JAVÍTOTT: Automatikus magasság */
-  max-height: none; /* JAVÍTOTT: Távolítsuk el a max-height korlátozást */
+  min-height: 600px;
 }
 
 .comments-header {
@@ -401,12 +343,6 @@ body {
   background-clip: text;
 }
 
-.comments-header p {
-  color: #ffffff;
-  font-size: 1rem;
-}
-
-/* Új komment űrlap */
 .new-comment-form {
   background: linear-gradient(135deg, rgba(20, 20, 40, 0.7) 0%, rgba(30, 30, 60, 0.5) 100%);
   padding: 1.8rem;
@@ -414,7 +350,7 @@ body {
   margin-bottom: 2rem;
   border: 1px solid rgba(102, 126, 234, 0.2);
   backdrop-filter: blur(10px);
-  flex-shrink: 0; /* JAVÍTOTT: Ne zsugorodjon */
+  flex-shrink: 0;
 }
 
 .new-comment-form h3 {
@@ -428,8 +364,6 @@ body {
   margin-bottom: 1.2rem;
 }
 
-.form-input,
-.form-select,
 .form-textarea {
   width: 100%;
   padding: 0.9rem;
@@ -442,8 +376,6 @@ body {
   backdrop-filter: blur(5px);
 }
 
-.form-input:focus,
-.form-select:focus,
 .form-textarea:focus {
   outline: none;
   border-color: #667eea;
@@ -451,7 +383,6 @@ body {
   background: rgba(30, 30, 60, 0.9);
 }
 
-.form-input::placeholder,
 .form-textarea::placeholder {
   color: #8888cc;
 }
@@ -475,12 +406,11 @@ body {
   box-shadow: 0 8px 25px rgba(30, 255, 0, 0.555);
 }
 
-/* Komment lista */
 .comments-list {
   flex: 1;
   overflow-y: auto;
   padding-right: 0.5rem;
-  min-height: 300px; /* JAVÍTOTT: Minimum magasság a tartalomhoz */
+  min-height: 300px;
 }
 
 .comments-list h3 {
@@ -493,7 +423,6 @@ body {
   border-bottom: 1px solid rgba(102, 126, 234, 0.2);
 }
 
-/* Komment kártyák */
 .comment-card {
   background: linear-gradient(135deg, rgba(20, 20, 40, 0.7) 0%, rgba(30, 30, 60, 0.5) 100%);
   border-radius: 12px;
@@ -505,8 +434,6 @@ body {
   border-bottom: 1px solid rgba(102, 126, 234, 0.2);
   backdrop-filter: blur(10px);
   transition: all 0.3s;
-  opacity: 1; /* JAVÍTOTT: Biztosítsuk, hogy látható legyen */
-  visibility: visible; /* JAVÍTOTT: Biztosítsuk, hogy látható legyen */
 }
 
 .comment-card:hover {
@@ -520,14 +447,14 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.8rem;
-  flex-wrap: wrap; /* JAVÍTOTT: Reszponzív */
+  flex-wrap: wrap;
 }
 
 .comment-author {
   font-weight: 600;
   color: #ffffff;
   font-size: 1rem;
-  margin-right: 1rem; /* JAVÍTOTT: Távolság a dátumszövegtől */
+  margin-right: 1rem;
 }
 
 .comment-date {
@@ -541,17 +468,16 @@ body {
   line-height: 1.6;
   margin-bottom: 1rem;
   font-size: 0.95rem;
-  padding: 0.5rem 0; /* JAVÍTOTT: Belső térköz */
+  padding: 0.5rem 0;
 }
 
 .comment-footer {
   display: flex;
   justify-content: flex-end;
   padding-top: 0.5rem;
-  border-top: 1px solid rgba(102, 126, 234, 0.1); /* JAVÍTOTT: Vékony elválasztó */
+  border-top: 1px solid rgba(102, 126, 234, 0.1);
 }
 
-/* ==================== ÜRES ÁLLAPOTOK ==================== */
 .no-results,
 .no-comments {
   text-align: center;
@@ -561,11 +487,10 @@ body {
   border-radius: 16px;
   border: 2px dashed rgba(102, 126, 234, 0.3);
   backdrop-filter: blur(5px);
-  margin-top: 2rem; /* JAVÍTOTT: Távolság */
-  font-size: 1.1rem; /* JAVÍTOTT: Nagyobb betűméret */
+  margin-top: 2rem;
+  font-size: 1.1rem;
 }
 
-/* ==================== LÁBLÉC ==================== */
 .community-footer {
   background: rgba(10, 10, 26, 0.7);
   padding: 2rem;
@@ -577,7 +502,6 @@ body {
   border-radius: 15px;
 }
 
-/* ==================== OLDALALAKÍTÁS ==================== */
 .pagination-container {
   margin-top: 40px;
   padding: 20px 0;
@@ -671,169 +595,6 @@ body {
   color: #667eea;
 }
 
-/* ==================== RESZPONZÍV DESIGN ==================== */
-@media (max-width: 1200px) {
-  .community-content {
-    max-width: 100%;
-    padding: 0 2rem;
-  }
-}
-
-@media (max-width: 1024px) {
-  .community-content {
-    flex-direction: column;
-    gap: 2rem;
-  }
-  
-  .articles-section,
-  .comments-section {
-    width: 100%;
-    max-height: none;
-  }
-  
-  .comments-section {
-    max-height: none;
-    height: auto;
-  }
-}
-
-@media (max-width: 768px) {
-  .community-header {
-    padding: 2rem 1rem;
-  }
-  
-  .community-header h1 {
-    font-size: 2.2rem;
-  }
-  
-  .community-header p {
-    font-size: 1.1rem;
-  }
-  
-  .community-content {
-    margin: 1.5rem auto;
-    padding: 0 1rem;
-  }
-  
-  .articles-section,
-  .comments-section {
-    padding: 1.5rem;
-  }
-  
-  .article-meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  
-  .article-stats {
-    width: 100%;
-    justify-content: space-between;
-  }
-  
-  .category-filters {
-    justify-content: center;
-  }
-  
-  .comment-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-  
-  .comment-footer {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.8rem;
-  }
-  
-  .pagination {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .page-numbers {
-    order: 3;
-    width: 100%;
-    justify-content: center;
-    margin-top: 10px;
-  }
-  
-  .page-btn {
-    order: 1;
-  }
-  
-  .next-btn {
-    order: 2;
-  }
-}
-
-@media (max-width: 480px) {
-  .community-header {
-    padding: 1.5rem 1rem;
-  }
-  
-  .community-header h1 {
-    font-size: 1.8rem;
-  }
-  
-  .community-header p {
-    font-size: 1rem;
-  }
-  
-  .community-content {
-    margin: 1rem auto;
-    padding: 0 0.75rem;
-  }
-  
-  .articles-section,
-  .comments-section {
-    padding: 1.2rem;
-  }
-  
-  .article-card,
-  .comment-card {
-    padding: 1.2rem;
-  }
-  
-  .article-title {
-    font-size: 1.2rem;
-  }
-  
-  .page-number {
-    min-width: 36px;
-    height: 36px;
-    font-size: 13px;
-  }
-  
-  .page-btn {
-    padding: 8px 16px;
-    font-size: 13px;
-  }
-}
-
-/* ==================== EGYÉNI SCROLLBAR ==================== */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(20, 20, 40, 0.3);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
-}
-
-/* ... az összes meglévő CSS marad változatlan ... */
-
-/* ==================== MODAL STÍLUSOK ==================== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -914,7 +675,6 @@ body {
   overflow: hidden;
 }
 
-/* Bal oldal: Cikk */
 .modal-article-side {
   flex: 2;
   padding: 2.5rem;
@@ -1041,10 +801,6 @@ body {
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
-.modal-like-btn.active:hover {
-  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
-}
-
 .modal-like-btn.small {
   padding: 0.4rem 0.8rem;
   font-size: 0.9rem;
@@ -1058,7 +814,6 @@ body {
   gap: 0.5rem;
 }
 
-/* Jobb oldal: Kommentek */
 .modal-comments-side {
   flex: 1.5;
   padding: 2.5rem;
@@ -1161,20 +916,43 @@ body {
   font-size: 1.1rem;
 }
 
-/* Cikk kártya hover effektus */
-.article-card {
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.article-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  border-color: rgba(102, 126, 234, 0.4);
+::-webkit-scrollbar-track {
+  background: rgba(20, 20, 40, 0.3);
+  border-radius: 4px;
 }
 
-/* Reszponzív modal */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .community-content {
+    max-width: 100%;
+    padding: 0 2rem;
+  }
+}
+
 @media (max-width: 1024px) {
+  .community-content {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .articles-section,
+  .comments-section {
+    width: 100%;
+  }
+  
   .modal-content {
     flex-direction: column;
     height: auto;
@@ -1193,6 +971,71 @@ body {
 }
 
 @media (max-width: 768px) {
+  .community-header {
+    padding: 2rem 1rem;
+  }
+  
+  .community-header h1 {
+    font-size: 2.2rem;
+  }
+  
+  .community-content {
+    margin: 1.5rem auto;
+    padding: 0 1rem;
+  }
+  
+  .articles-section,
+  .comments-section {
+    padding: 1.5rem;
+  }
+  
+  .article-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .article-stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .category-filters {
+    justify-content: center;
+  }
+  
+  .comment-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .comment-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+  
+  .pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .page-numbers {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .page-btn {
+    order: 1;
+  }
+  
+  .next-btn {
+    order: 2;
+  }
+  
   .modal-container {
     width: 95%;
     margin: 1rem;
@@ -1205,5 +1048,45 @@ body {
   .modal-article-side,
   .modal-comments-side {
     padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .community-header {
+    padding: 1.5rem 1rem;
+  }
+  
+  .community-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .community-content {
+    margin: 1rem auto;
+    padding: 0 0.75rem;
+  }
+  
+  .articles-section,
+  .comments-section {
+    padding: 1.2rem;
+  }
+  
+  .article-card,
+  .comment-card {
+    padding: 1.2rem;
+  }
+  
+  .article-title {
+    font-size: 1.2rem;
+  }
+  
+  .page-number {
+    min-width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
+  
+  .page-btn {
+    padding: 8px 16px;
+    font-size: 13px;
   }
 }

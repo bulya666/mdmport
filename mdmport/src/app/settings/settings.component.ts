@@ -23,12 +23,6 @@ interface Preferences {
   allowMessaging: boolean;
 }
 
-interface ProfileUpdatePayload {
-  email: string;
-  currentPassword?: string;
-  newPassword?: string;
-}
-
 @Component({
   selector: "app-settings",
   standalone: true,
@@ -235,7 +229,7 @@ deleteAccount(password: string) {
     currentPassword: password.trim(),
   };
   
-  this.http.delete(`/api/users/${username}`, {                                       // ← CSAK EZ A SOR VÁLTOZIK
+  this.http.delete(`/api/users/${username}`, {                                      
     body: { currentPassword: password.trim() },
     withCredentials: true,
   })

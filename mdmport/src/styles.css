@@ -1,4 +1,3 @@
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,17 +5,18 @@
   user-select: none;
 }
 
-
 html, body {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   min-width: 800px;
 }
+
 app-root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
+
 a {
   text-decoration: none;
   color: inherit;
@@ -28,19 +28,22 @@ img {
 }
 
 :root {
---bg:
-  radial-gradient(circle at 20% 30%, rgba(0, 200, 255, 0.18), transparent 55%),
-  radial-gradient(circle at 80% 70%, rgba(255, 45, 85, 0.22), transparent 60%),
-  radial-gradient(circle at 60% 20%, rgba(180, 0, 255, 0.15), transparent 65%),
-  linear-gradient(135deg, #050912, #0a1422 40%, #050912);
-  --bg-soft: #101319; 
-  --text: #e5e7eb; 
-  --muted: #9aa3af; 
-  --acc: #9B111E; 
-  --ring: #2b3340; 
+  --bg: radial-gradient(circle at 20% 30%, rgba(0, 200, 255, 0.18), transparent 55%),
+        radial-gradient(circle at 80% 70%, rgba(255, 45, 85, 0.22), transparent 60%),
+        radial-gradient(circle at 60% 20%, rgba(180, 0, 255, 0.15), transparent 65%),
+        linear-gradient(135deg, #050912, #0a1422 40%, #050912);
+  --bg-soft: #101319;
+  --text: #e5e7eb;
+  --muted: #9aa3af;
+  --acc: #9B111E;
+  --ring: #2b3340;
   --card: #12151b;
 }
 
+body {
+  background: var(--bg);
+  color: var(--text);
+}
 
 .catalog {
   width: 100%;
@@ -76,12 +79,14 @@ img {
   overflow: hidden;
   position: relative;
 }
+
 .thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform .4s ease;
 }
+
 .card:hover .thumb img {
   transform: scale(1.08);
 }
@@ -105,10 +110,10 @@ img {
   color: var(--muted);
   font-size: 0.9rem;
   line-height: 1.4;
-  line-clamp : var(--bg);
+  display: -webkit-box;
+  line-clamp: inherit;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -155,65 +160,43 @@ img {
   box-shadow: none;
 }
 
-.mat-card-subtitle-text-color {
-  color: #005cbb;
-}
-
 .no-sales {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:18px;
-  padding:80px 40px;
-  margin:80px 0px 100px 300px;
-  max-width:700px;
-  width:300%;
-  box-shadow:0 0 40px rgba(0,0,0,0.25);
-  opacity:0;
-  transform:scale(0.97);
-  transition:opacity 0.4s ease, transform 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 18px;
+  padding: 80px 40px;
+  margin: 80px 0 100px 300px;
+  max-width: 700px;
+  width: 300%;
+  box-shadow: 0 0 40px rgba(0,0,0,0.25);
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 .no-sales img {
-  width:100px;
-  height:100px;
-  opacity:0.7;
-  margin-bottom:25px;
+  width: 100px;
+  height: 100px;
+  opacity: 0.7;
+  margin-bottom: 25px;
 }
 
 .no-sales h2 {
-  color:#fff;
-  font-weight:700;
-  margin-bottom:12px;
-  font-size:1.6rem;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 12px;
+  font-size: 1.6rem;
 }
 
 .no-sales p {
-  color:#ccc;
-  font-size:1.1rem;
+  color: #ccc;
+  font-size: 1.1rem;
 }
-
-.mat-mdc-tab-header {
-  padding-top: 8px;
-}
-
-.mat-mdc-tab-label {
-  color: #fff !important;
-  padding: 8px 16px !important;
-  font-weight: 600;
-  font-size: 15px;
-  text-transform: uppercase;
-  border-radius: 8px 8px 0 0;
-}
-
-.mat-mdc-tab-label .mat-mdc-tab-label-content {
-  color: #fff !important;
-}
-
 
 .legal-container {
   max-width: 960px;
@@ -225,11 +208,7 @@ img {
 }
 
 .legal-card {
-  background: linear-gradient(
-    180deg,
-    rgba(8, 26, 48, 0.96),
-    rgba(8, 26, 48, 0.98)
-  );
+  background: linear-gradient(180deg, rgba(8, 26, 48, 0.96), rgba(8, 26, 48, 0.98));
   padding: 30px 24px;
   border-radius: 16px;
   border: 1px solid var(--ring);
@@ -243,9 +222,8 @@ img {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 0 0, rgba(155, 17, 30, 0.45), transparent 55%),
-    radial-gradient(circle at 100% 0, rgba(191, 243, 155, 0.16), transparent 50%);
+  background: radial-gradient(circle at 0 0, rgba(155, 17, 30, 0.45), transparent 55%),
+              radial-gradient(circle at 100% 0, rgba(191, 243, 155, 0.16), transparent 50%);
   opacity: 0.8;
   pointer-events: none;
 }
@@ -292,7 +270,6 @@ img {
   color: var(--muted);
 }
 
-
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -325,8 +302,7 @@ textarea.form-control {
   outline: none;
   background: rgba(255, 255, 255, 0.02);
   color: var(--text);
-  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease,
-    transform 0.1s ease;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, transform 0.1s ease;
 }
 
 textarea.form-control {
@@ -355,14 +331,6 @@ textarea.form-control.ng-invalid.ng-touched {
   color: #ff8a80;
 }
 
-.form-help {
-  margin-top: 4px;
-  font-size: 0.78rem;
-  color: var(--muted);
-}
-
-
-
 .btn-primary {
   border: none;
   border-radius: 10px;
@@ -390,7 +358,6 @@ textarea.form-control.ng-invalid.ng-touched {
   box-shadow: none;
 }
 
-
 .alert-success {
   margin-top: 14px;
   padding: 8px 14px;
@@ -399,59 +366,6 @@ textarea.form-control.ng-invalid.ng-touched {
   color: #0b260e;
   font-size: 0.86rem;
 }
-
-
-/* ---- SŰRŰSÉG ---- */
-body.density-comfortable .grid,
-body.density-comfortable .list {
-  gap: 16px;
-}
-
-body.density-compact .grid,
-body.density-compact .list {
-  gap: 6px;
-}
-
-/* ---- TIPPEK ---- */
-body.show-tips .tip {
-  display: block;
-}
-body:not(.show-tips) .tip {
-  display: none;
-}
-
-/* ---- ALAP FELÜLET SZÍNEZÉSE ---- */
-
-body {
-  background: var(--bg);
-  color: var(--text);
-}
-
-/* navbar + fő konténer alapjai a meglévő HTML-hez igazítva */
-.topbar {
-  background: #020617;
-  color: #e5e7eb;
-}
-
-body.theme-light .topbar {
-  background: #0f172a;
-  color: #e5e7eb;
-}
-
-.container {
-  background: transparent;
-}
-
-/* kártyák, settings */
-.settings-card,
-.card,
-.modal {
-  background: var(--bg-elevated);
-  color: var(--text);
-}
-
-/* meglévő elemekre (hero, grid stb.) is érvényes lesz a szín */
-
 
 @keyframes fadeInUp {
   from {
@@ -464,90 +378,11 @@ body.theme-light .topbar {
   }
 }
 
-@media (max-width: 768px) {
-  .legal-container {
-    padding: 24px 14px 40px;
-  }
-
-  .legal-card {
-    padding: 22px 18px;
-    border-radius: 14px;
-  }
-
-  .legal-card h1 {
-    font-size: 1.6rem;
-  }
-
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-@media (max-width:768px) {
-  .no-sales {
-    padding:50px 24px;
-    margin:40px auto;
-    max-width:500px;
-  }
-
-  .no-sales img {
-    width:80px;
-    height:80px;
-  }
-
-  .no-sales h2 {
-    font-size:1.3rem;
-  }
-
-  .no-sales p {
-    font-size:1rem;
-  }
-}
-
-@media (max-width:480px) {
-  .no-sales {
-    padding:40px 20px;
-    max-width:90%;
-  }
-
-  .no-sales img {
-    width:70px;
-    height:70px;
-  }
-
-  .no-sales h2 {
-    font-size:1.1rem;
-  }
-
-  .no-sales p {
-    font-size:0.95rem;
-  }
-  .tabs{
-    margin: auto;
-  }
-}
-
-@media (max-width: 700px) {
-  .catalog {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 14px;
-    padding: 0 12px;
-  }
-
-  .meta {
-    padding: 12px;
-  }
-
-  .buy {
-    width: 100%;
-    text-align: center;
-  }
-}
 .fade-out {
   opacity: 0;
   transition: opacity 0.8s ease;
 }
+
 .search-dropdown {
   position: absolute;
   top: 100%;
@@ -598,4 +433,74 @@ body.theme-light .topbar {
 .search-item-price {
   margin-left: auto;
   font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .legal-container {
+    padding: 24px 14px 40px;
+  }
+
+  .legal-card {
+    padding: 22px 18px;
+    border-radius: 14px;
+  }
+
+  .legal-card h1 {
+    font-size: 1.6rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .no-sales {
+    padding: 50px 24px;
+    margin: 40px auto;
+    max-width: 500px;
+  }
+
+  .no-sales img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .no-sales h2 {
+    font-size: 1.3rem;
+  }
+
+  .no-sales p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .no-sales {
+    padding: 40px 20px;
+    max-width: 90%;
+  }
+
+  .no-sales img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .no-sales h2 {
+    font-size: 1.1rem;
+  }
+
+  .no-sales p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .catalog {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    padding: 0 12px;
+  }
+
+  .meta {
+    padding: 12px;
+  }
 }
