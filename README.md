@@ -104,10 +104,7 @@ cd mdmport/mdmport
 
 ### Függőségek telepítése
 ```bash
-npm install
-cd backend
-npm install
-cd ..
+npm start
 ```
 
 ### Környezeti változók
