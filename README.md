@@ -120,9 +120,6 @@ SESSION_SECRET=titkos-kulcs
 ---
 
 ## Adatbázis séma
-
-(A sémák megegyeznek az angol verzióval, csak a dokumentáció nyelve változott.)
-
 ---
 
 ## API végpontok
