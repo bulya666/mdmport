@@ -6,20 +6,20 @@ Az **MDM Port** egy teljes stack webalkalmazás videojátékok értékesítésé
 
 ## Tartalomjegyzék
 
-- [Funkciók](#-funkciók)
-- [Projekt architektúra](#-projekt-architektúra)
-- [Technológiai stack](#-technológiai-stack)
-- [Telepítés és beállítás](#-telepítés-és-beállítás)
-- [Adatbázis séma](#-adatbázis-séma)
-- [API végpontok](#-api-végpontok)
-- [Fejlesztési munkafolyamat](#-fejlesztési-munkafolyamat)
-- [Projekt struktúra](#-projekt-struktúra)
-- [Biztonsági megoldások](#-biztonsági-megoldások)
-- [Jövőbeli fejlesztések](#-jövőbeli-fejlesztések)
+- [Funkciók](#funkciók)
+- [Projekt architektúra](#projekt-architektúra)
+- [Technológiai stack](#technológiai-stack)
+- [Telepítés és beállítás](#telepítés-és-beállítás)
+- [Adatbázis séma](#adatbázis-séma)
+- [API végpontok](#api-végpontok)
+- [Fejlesztési munkafolyamat](#fejlesztési-munkafolyamat)
+- [Projekt struktúra](#projekt-struktúra)
+- [Biztonsági megoldások](#biztonsági-megoldások)
+- [Jövőbeli fejlesztések](#jövőbeli-fejlesztések)
 
 ---
 
-##-Funkciók
+## Funkciók
 
 ### Felhasználókezelés
 - **Regisztráció és bejelentkezés**: Felhasználói fiók létrehozása felhasználónév és jelszó segítségével, bcrypt alapú jelszóhash-eléssel.
