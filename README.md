@@ -1,10 +1,10 @@
-# 🎮 MDM Port – Játékáruház Platform
+# MDM Port – Játékáruház Platform
 
 Egy teljes stack webalkalmazás videojátékok kezelésére és értékesítésére, **Angular 18** frontenddel és **Node.js/Express** backenddel. Az MDM Port egy modern játék e-kereskedelmi platform felhasználókezeléssel, játékkönyvtárral, bevásárlókosárral és felhasználói beállításokkal.
 
 ---
 
-## 📋 Tartalomjegyzék
+## Tartalomjegyzék
 
 - [Funkciók](#-funkciók)
 - [Projekt architektúra](#-projekt-architektúra)
@@ -18,7 +18,7 @@ Egy teljes stack webalkalmazás videojátékok kezelésére és értékesítés�
 
 ---
 
-## ✨ Funkciók
+## Funkciók
 
 ### Felhasználókezelés
 - **Regisztráció és bejelentkezés** – Felhasználónév/jelszó (bcrypt titkosítás)
@@ -45,7 +45,7 @@ Egy teljes stack webalkalmazás videojátékok kezelésére és értékesítés�
 
 ---
 
-## 🏗️ Projekt architektúra
+## Projekt architektúra
 
 ```
 Angular 18 SPA Frontend (localhost:4200)
@@ -67,7 +67,7 @@ MySQL adatbázis (mdmport_db)
 
 ---
 
-## 🛠️ Technológiai stack
+## Technológiai stack
 
 ### Frontend
 - Angular 18
@@ -88,7 +88,7 @@ MySQL adatbázis (mdmport_db)
 
 ---
 
-## 🚀 Telepítés és beállítás
+## Telepítés és beállítás
 
 ### Előfeltételek
 - Node.js 18+
@@ -122,13 +122,13 @@ SESSION_SECRET=titkos-kulcs
 
 ---
 
-## 📊 Adatbázis séma
+## Adatbázis séma
 
 (A sémák megegyeznek az angol verzióval, csak a dokumentáció nyelve változott.)
 
 ---
 
-## 📡 API végpontok
+## API végpontok
 
 - `/api/login` – Bejelentkezés
 - `/api/register` – Regisztráció
@@ -137,7 +137,7 @@ SESSION_SECRET=titkos-kulcs
 
 ---
 
-## 🔧 Fejlesztési munkafolyamat
+## Fejlesztési munkafolyamat
 
 ```bash
 npm start
@@ -145,13 +145,13 @@ npm start
 
 ---
 
-## 📁 Projekt struktúra
+## Projekt struktúra
 
 (A struktúra változatlan, lásd az eredeti README-t.)
 
 ---
 
-## 🔐 Biztonság
+## Biztonság
 
 - Jelszóhash-elés bcrypttel
 - HTTP-only session sütik
@@ -159,16 +159,17 @@ npm start
 
 ---
 
-## 📄 Licenc
+## Licenc
 
 ISC License
 
 ---
 
-## 👤 Szerző
+## Szerző
 
 **bulya666**
-
+**Szakacs-skibidi**
+**MarcellJelencsity**
 ---
 
 **Utolsó frissítés**: 2026. január
