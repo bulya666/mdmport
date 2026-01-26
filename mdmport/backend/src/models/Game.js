@@ -2,7 +2,7 @@ const { pool } = require('../config/db');
 
 class Game {
   static async getAll({ tag, q } = {}) {
-    let sql = `SELECT id, title, tag, price, \`desc\` AS \`desc\`, thumbnail FROM games`;
+    let sql = `SELECT id, title, tag, price, \`desc\` AS \`desc\`, thumbnail FROM B_games`;
     const where = [];
     const params = [];
 
@@ -30,7 +30,7 @@ class Game {
 
   static async getById(id) {
     const [rows] = await pool.query(
-      `SELECT id, title, tag, price, \`desc\` AS \`desc\`, thumbnail FROM games WHERE id = ? LIMIT 1`,
+      `SELECT id, title, tag, price, \`desc\` AS \`desc\`, thumbnail FROM B_games WHERE id = ? LIMIT 1`,
       [id]
     );
     return rows[0] || null;

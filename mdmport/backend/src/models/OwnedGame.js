@@ -2,7 +2,7 @@ const { pool } = require('../config/db');
 
 class OwnedGame {
   static async getAll(filters = {}) {
-    let sql = `SELECT id, userid, gameid FROM ownedg`;
+    let sql = `SELECT id, userid, gameid FROM D_ownedg`;
     const conditions = [];
     const params = [];
 
@@ -28,7 +28,7 @@ static async getByUserId(userid) {
   }
 
   const [rows] = await pool.query(
-    'SELECT id, userid, gameid FROM ownedg WHERE userid = ? ORDER BY id ASC',
+    'SELECT id, userid, gameid FROM D_ownedg WHERE userid = ? ORDER BY id ASC',
     [userid]
   );
   return rows;
@@ -43,7 +43,7 @@ static async getByUserId(userid) {
         }
 
         console.log(`[OwnedGame.add] Próbáljuk hozzáadni: user=${userid}, game=${gameid}`);
-        const sql = 'INSERT IGNORE INTO ownedg (userid, gameid) VALUES (?, ?)';
+        const sql = 'INSERT IGNORE INTO D_ownedg (userid, gameid) VALUES (?, ?)';
         const params = [userid, gameid];
         const maxRetries = 3;
         let attempt = 0;

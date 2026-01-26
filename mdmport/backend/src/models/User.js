@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 
 class User {
   static async getAll({ q } = {}) {
-    let sql = `SELECT id, username, password FROM users`;
+    let sql = `SELECT id, username, password FROM A_users`;
     const params = [];
     if (q) {
       sql += ` WHERE username LIKE ?`;
@@ -15,13 +15,13 @@ class User {
   }
 
   static async findByUsername(username) {
-    const [rows] = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
+    const [rows] = await pool.query('SELECT * FROM A_users WHERE username = ?', [username]);
     return rows[0] || null;
   }
 
   static async create({ username, password }) {
     const hashed = await bcrypt.hash(password, 12);
-    await pool.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashed]);
+    await pool.query('INSERT INTO A_users (username, password) VALUES (?, ?)', [username, hashed]);
   }
   static async updateProfile(username, { email }) {
     const updates = [];
@@ -35,7 +35,7 @@ class User {
     if (updates.length === 0) return false;
 
     values.push(username);
-    const sql = `UPDATE users SET ${updates.join(', ')} WHERE username = ?`;
+    const sql = `UPDATE A_users SET ${updates.join(', ')} WHERE username = ?`;
 
     const [result] = await pool.query(sql, values);
     return result.affectedRows > 0;
@@ -59,7 +59,7 @@ class User {
     const hashed = await bcrypt.hash(newPlainPassword, 12);
 
     await pool.query(
-      'UPDATE users SET password = ? WHERE username = ?',
+      'UPDATE A_users SET password = ? WHERE username = ?',
       [hashed, username]
     );
 
@@ -78,7 +78,7 @@ class User {
   }
 
   const [result] = await pool.query(
-    'DELETE FROM users WHERE username = ?',
+    'DELETE FROM A_users WHERE username = ?',
     [username]
   );
 
