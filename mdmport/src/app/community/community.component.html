@@ -1,16 +1,12 @@
 <div class="community-container">
-  <!-- Fejléc -->
   <header class="community-header">
     <h1>Közösségi Portál</h1>
     <p>Maradj naprakész a legújabb hírekkel, frissítésekkel és közösségi eseményekkel</p>
   </header>
 
   <div class="community-content">
-    <!-- Bal oldal: Cikkek -->
     <main class="articles-section">
-      <!-- Szűrők -->
       <div class="filters">
-        <!-- Keresés mező -->
         <div class="search-box">
           <input 
             type="text" 
@@ -22,7 +18,6 @@
           <span class="search-icon">🔍</span>
         </div>
         
-        <!-- Kategória szűrők gombjai -->
         <div class="category-filters">
           <button 
             *ngFor="let category of categories"
@@ -35,33 +30,25 @@
         </div>
       </div>
 
-      <!-- Cikkek listája -->
       <div class="articles-list">
         <div *ngFor="let article of pagedArticles" class="article-card" (click)="openArticleModal(article)">
-          <!-- Cikk fejléc -->
           <div class="article-header">
-            <!-- Kategória címke -->
             <span 
               class="article-category"
               [style.backgroundColor]="getCategoryColor(article.category)"
             >
               {{ getCategoryName(article.category) }}
             </span>
-            <!-- Dátum -->
             <span class="article-date">{{ article.date }}</span>
           </div>
 
-          <!-- Cikk címe és tartalma -->
           <h3 class="article-title">{{ article.title }}</h3>
           <p class="article-content">{{ article.content }}</p>
           
-          <!-- Cikk lábléc -->
           <div class="article-footer">
-            <!-- Szerző és statisztika -->
             <div class="article-meta">
               <span class="article-author">Írta: {{ article.author }}</span>
               <div class="article-stats">
-                <!-- Like gomb (aktiválható/deaktiválható) -->
                 <button 
                   class="like-btn" 
                   [class.active]="isArticleLiked(article)"
@@ -69,7 +56,6 @@
                 >
                   👍 {{ article.likes }}
                 </button>
-                <!-- Hozzászólások száma (valós szám) -->
                 <span class="comments-count">
                   💬 {{ article.commentsCount }} hozzászólás
                 </span>
@@ -78,16 +64,13 @@
           </div>
         </div>
 
-        <!-- Üres eredmény esetén -->
         <div *ngIf="pagedArticles.length === 0" class="no-results">
           <p>Nincs találat a keresési feltételek alapján.</p>
         </div>
       </div>
 
-      <!-- Lapozó (Paginator) -->
       <div *ngIf="filteredArticles.length > itemsPerPage" class="pagination-container">
         <div class="pagination">
-          <!-- Előző oldal -->
           <button 
             class="page-btn prev-btn" 
             [disabled]="currentPage === 1"
@@ -96,7 +79,6 @@
             &laquo; Előző
           </button>
           
-          <!-- Oldalszámok -->
           <div class="page-numbers">
             <button 
               *ngFor="let page of pages"
@@ -108,7 +90,6 @@
             </button>
           </div>
           
-          <!-- Következő oldal -->
           <button 
             class="page-btn next-btn" 
             [disabled]="currentPage === totalPages"
@@ -118,7 +99,6 @@
           </button>
         </div>
         
-        <!-- Oldal információ -->
         <div class="pagination-info">
           <span>
             {{ getMin(currentPage * itemsPerPage, filteredArticles.length) }} - 
@@ -132,9 +112,7 @@
       </div>
     </main>
 
-    <!-- Jobb oldal: Komment szekció -->
     <aside class="comments-section">
-      <!-- Komment szekció fejléc -->
       <div class="comments-header">
         <h2>💬 Hozzászólások</h2>
         <p>Vegyél részt a beszélgetésben!</p>
@@ -162,19 +140,15 @@
         </button>
       </div>
 
-      <!-- Kommentek listája -->
       <div class="comments-list">
         <h3>Legújabb kommentek</h3>
         
         <div *ngFor="let comment of comments.slice(0, 5)" class="comment-card">
-          <!-- Kommentelő és dátum -->
           <div class="comment-header">
             <span class="comment-author">{{ comment.author }}</span>
             <span class="comment-date">{{ comment.date }}</span>
           </div>
-          <!-- Komment szövege -->
           <div class="comment-content">{{ comment.content }}</div>
-          <!-- Kedvelés gomb -->
           <div class="comment-footer">
             <button 
               class="like-btn" 
@@ -186,13 +160,11 @@
           </div>
         </div>
         
-        <!-- Nincsenek kommentek -->
         <div *ngIf="comments.length === 0" class="no-comments">
           Nincsenek kommentek még.
         </div>
       </div>
 
-      <!-- Lábléc -->
       <footer class="community-footer">
         <p>© 2026 MDMPort | Minden jog fenntartva</p>
       </footer>
@@ -200,10 +172,8 @@
   </div>
 </div>
 
-<!-- ==================== MODAL ABLAK ==================== -->
 <div class="modal-overlay" [class.active]="isModalOpen" (click)="closeModal($event)">
   <div class="modal-container" (click)="$event.stopPropagation()">
-    <!-- Bezáró gomb -->
     <button class="modal-close-btn" (click)="closeModal()">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -211,9 +181,7 @@
       </svg>
     </button>
     
-    <!-- Modal tartalom -->
     <div class="modal-content" *ngIf="selectedArticle">
-      <!-- Bal oldal: Cikk -->
       <div class="modal-article-side">
         <div class="modal-article-header">
           <span 
@@ -250,13 +218,11 @@
         </div>
       </div>
       
-      <!-- Jobb oldal: Kommentek -->
       <div class="modal-comments-side">
         <div class="modal-comments-header">
           <h3>💬 Hozzászólások ({{ selectedArticle.commentsCount }})</h3>
         </div>
         
-        <!-- Új komment űrlap -->
         <div class="modal-new-comment">
           <p *ngIf="currentUser !== 'Guest'" class="user-info">
             Bejelentkezve mint: <strong>{{ currentUser }}</strong>
@@ -278,7 +244,6 @@
           </button>
         </div>
         
-        <!-- Kommentek listája -->
         <div class="modal-comments-list">
           <div *ngFor="let comment of getCommentsForArticle(selectedArticle.id)" class="modal-comment-card">
             <div class="modal-comment-header">

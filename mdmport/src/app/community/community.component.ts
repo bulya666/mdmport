@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 
-// Cikk (Article) adatszerkezet
 interface Article {
   id: number;
   title: string;
@@ -13,10 +12,9 @@ interface Article {
   date: string;
   likes: number;
   commentsCount: number;
-  likedBy: string[]; // Új: Tárolja, ki likeolta már
+  likedBy: string[];
 }
 
-// Komment (Comment) adatszerkezet
 interface Comment {
   id: number;
   author: string;
@@ -24,7 +22,7 @@ interface Comment {
   date: string;
   likes: number;
   articleId: number;
-  likedBy: string[]; // Új: Tárolja, ki likeolta már
+  likedBy: string[];
 }
 
 @Component({
@@ -35,43 +33,35 @@ interface Comment {
   styleUrls: ['./community.component.css']
 })
 export class CommunityComponent implements OnInit {
-  // Cikkek és kommentek listái
   articles: Article[] = [];
   comments: Comment[] = [];
-  
-  // Szűrt cikkek és aktuális oldal cikkei
   filteredArticles: Article[] = [];
   pagedArticles: Article[] = [];
 
-  // Modal változók
   isModalOpen: boolean = false;
+
   selectedArticle: Article | null = null;
 
-  // Jelenlegi felhasználó
   currentUser: string = 'Guest';
 
-  // Új komment adatai (fő oldalhoz)
   newComment = {
     content: '',
     articleId: 1
   };
 
-  // Új komment adatai (modalhoz)
   modalNewComment = {
     content: ''
   };
 
-  // Oldalváltozók
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalPages: number = 1;
   pages: number[] = [];
 
-  // Szűrési és keresési szempontok
   selectedCategory: string = 'all';
   searchTerm: string = '';
 
-  // Kategóriák listája
+
   categories = [
     { id: 'all', name: 'Összes kategória' },
     { id: 'news', name: 'Hírek' },
@@ -82,7 +72,6 @@ export class CommunityComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  // ESC billentyű figyelése a modal bezárásához
   @HostListener('document:keydown.escape', ['$event'])
   handleEscapeKey(event: KeyboardEvent) {
     if (this.isModalOpen) {
@@ -104,51 +93,39 @@ export class CommunityComponent implements OnInit {
     this.currentUser = localStorage.getItem("loggedUser") || 'Guest';
   }
 
-  // ==================== LIKE FUNKCIÓK ====================
-
-  // Cikk likeolása/lelikeolása
   likeArticle(article: Article, event?: Event): void {
     if (event) event.stopPropagation();
     
     const userIndex = article.likedBy.indexOf(this.currentUser);
     
     if (userIndex === -1) {
-      // Még nem likeolta -> like
       article.likes++;
       article.likedBy.push(this.currentUser);
     } else {
-      // Már likeolta -> lelike
       article.likes--;
       article.likedBy.splice(userIndex, 1);
     }
   }
 
-  // Komment likeolása/lelikeolása
   likeComment(comment: Comment): void {
     const userIndex = comment.likedBy.indexOf(this.currentUser);
     
     if (userIndex === -1) {
-      // Még nem likeolta -> like
       comment.likes++;
       comment.likedBy.push(this.currentUser);
     } else {
-      // Már likeolta -> lelike
       comment.likes--;
       comment.likedBy.splice(userIndex, 1);
     }
   }
 
-  // Ellenőrzi, hogy a felhasználó már likeolta-e a cikket
   isArticleLiked(article: Article): boolean {
     return article.likedBy.includes(this.currentUser);
   }
 
-  // Ellenőrzi, hogy a felhasználó már likeolta-e a kommentet
   isCommentLiked(comment: Comment): boolean {
     return comment.likedBy.includes(this.currentUser);
   }
-
-  // ==================== KOMMENT FUNKCIÓK ====================
 
   addCommentToArticle(articleId: number): void {
     if (!this.modalNewComment.content.trim()) {
@@ -180,7 +157,6 @@ export class CommunityComponent implements OnInit {
     this.modalNewComment = { content: '' };
   }
 
-  // Komment hozzáadása fő oldalon
   addComment(): void {
     if (!this.newComment.content.trim()) {
       alert('Kérjük írd meg a hozzászólásodat!');
@@ -204,17 +180,13 @@ export class CommunityComponent implements OnInit {
 
     this.comments.unshift(newComment);
     
-    // Növeljük a cikk komment számát
     const article = this.articles.find(a => a.id === this.newComment.articleId);
     if (article) {
       article.commentsCount++;
     }
 
-    // Reseteljük az űrlapot
     this.newComment = { content: '', articleId: 1 };
   }
-
-  // ==================== MODAL FUNKCIÓK ====================
   
   openArticleModal(article: Article): void {
     this.selectedArticle = article;
@@ -231,8 +203,6 @@ export class CommunityComponent implements OnInit {
     }
     document.body.style.overflow = 'auto';
   }
-
-  // ==================== SEGÉDFUNKCIÓK ====================
 
   getCommentsForArticle(articleId: number): Comment[] {
     return this.comments.filter(comment => comment.articleId === articleId)
@@ -258,8 +228,6 @@ export class CommunityComponent implements OnInit {
       default: return '#9E9E9E';
     }
   }
-
-  // ==================== OLDALALAKÍTÁS ====================
 
   updatePagination(): void {
     this.totalPages = Math.ceil(this.filteredArticles.length / this.itemsPerPage);
@@ -324,10 +292,7 @@ export class CommunityComponent implements OnInit {
     this.updatePagination();
   }
 
-  // ==================== ADATBETÖLTÉS ====================
-
   loadSampleData(): void {
-    // Cikkek listája
     this.articles = [
       {
         id: 11,
@@ -441,7 +406,6 @@ export class CommunityComponent implements OnInit {
       }
     ];
 
-    // Kommentek listája
     this.comments = [
       { id: 1, author: 'Norbi92', content: 'Ez nagyon jól hangzik, kíváncsi vagyok mit hoz a frissítés.', date: '2024-01-16', likes: 5, articleId: 11, likedBy: ['Guest'] },
       { id: 2, author: 'Nati', content: 'Nemtudom, találj ki valamit.', date: '2026-01-20', likes: 67, articleId: 11, likedBy: [] },

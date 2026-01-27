@@ -19,10 +19,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false, // Development: false, Production: true (HTTPS)
+    secure: false,
     httpOnly: true,
     sameSite: 'lax',
-    maxAge: 1000 * 60 * 60 * 24, // 24 óra
+    maxAge: 1000 * 60 * 60 * 24,
     path: '/'
   }
 }));

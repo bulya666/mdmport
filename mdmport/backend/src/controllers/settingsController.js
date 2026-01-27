@@ -5,7 +5,7 @@ class SettingsController {
   static async getPreferences(req, res) {
     try {
       const { username } = req.params;
-      
+
       console.log('Session:', req.session);
       console.log('User:', req.session?.user);
       console.log('Username param:', username);
@@ -14,7 +14,7 @@ class SettingsController {
         console.warn('Nincs bejelentkezve');
         return res.status(401).json({ message: 'Nincs bejelentkezve' });
       }
-      
+
       if (req.session.user.username !== username) {
         console.warn('Jogosultság ellenőrzés nem sikerült');
         return res.status(403).json({ message: 'Nincs jogosultságod' });
@@ -31,11 +31,11 @@ class SettingsController {
   static async updatePreferences(req, res) {
     try {
       const { username } = req.params;
-      
+
       if (!req.session?.user) {
         return res.status(401).json({ message: 'Nincs bejelentkezve' });
       }
-      
+
       if (req.session.user.username !== username) {
         return res.status(403).json({ message: 'Nincs jogosultságod' });
       }
@@ -52,11 +52,11 @@ class SettingsController {
     try {
       const { username } = req.params;
       const { password } = req.body;
-      
+
       if (!req.session?.user) {
         return res.status(401).json({ message: 'Nincs bejelentkezve' });
       }
-      
+
       if (req.session.user.username !== username) {
         return res.status(403).json({ message: 'Nincs jogosultságod' });
       }

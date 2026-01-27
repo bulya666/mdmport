@@ -45,7 +45,7 @@ router.put('/users/:username/password', async (req, res) => {
   } catch (err) {
     console.error('Jelszóváltoztatási hiba:', err.message);
     const status = err.message.includes('Hibás jelenlegi jelszó') ? 401 :
-                   err.message.includes('legalább') ? 400 : 500;
+      err.message.includes('legalább') ? 400 : 500;
     res.status(status).json({ success: false, message: err.message || 'Szerver hiba' });
   }
 });

@@ -98,5 +98,8 @@ export class NavbarComponent implements OnInit {
     if (!target.closest(".user-menu-container")) {
       this.userMenuOpen = false;
     }
+    if (!target.closest(".topbar")) {
+      this.menuOpen = false;
+    }
   }
 }

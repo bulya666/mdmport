@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace mdmAdmin.Models
 {
-       [Table("users")]
+       [Table("a_users")]
         public class User
         {
             [Key]

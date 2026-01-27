@@ -237,10 +237,6 @@
   to   { transform: translateY(0);    opacity: 1; }
 }
 
-/* ──────────────────────────────────────────────── */
-/* Responsive adjustments                               */
-/* ──────────────────────────────────────────────── */
-
 @media (max-width: 768px) {
   .cart-container {
     padding: 0 1rem;

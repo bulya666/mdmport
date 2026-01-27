@@ -50,7 +50,6 @@
     </ng-template>
   </div>
 
-  <!-- Loading overlay -->
   <div class="loading-overlay" *ngIf="isLoading || isPurchaseSuccess">
     <div class="loading-card">
       <div class="spinner" *ngIf="!isPurchaseSuccess"></div>
@@ -75,7 +74,6 @@
     </div>
   </div>
 </div>
-  <!-- Notification toast -->
   <div class="toast" 
        *ngIf="notification.show"
        [ngClass]="['toast--' + notification.type]">

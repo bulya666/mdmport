@@ -65,29 +65,29 @@ class User {
 
     return true;
   }
-  
+
   static async deleteByUsernameWithPassword(username, plainPassword) {
-  const user = await this.findByUsername(username);
-  if (!user) {
-    throw new Error('Felhasználó nem található');
+    const user = await this.findByUsername(username);
+    if (!user) {
+      throw new Error('Felhasználó nem található');
+    }
+
+    const isValid = await bcrypt.compare(plainPassword, user.password);
+    if (!isValid) {
+      throw new Error('Hibás jelszó');
+    }
+
+    const [result] = await pool.query(
+      'DELETE FROM A_users WHERE username = ?',
+      [username]
+    );
+
+    if (result.affectedRows === 0) {
+      throw new Error('Törlés sikertelen – felhasználó nem létezik');
+    }
+
+    return true;
   }
-
-  const isValid = await bcrypt.compare(plainPassword, user.password);
-  if (!isValid) {
-    throw new Error('Hibás jelszó');
-  }
-
-  const [result] = await pool.query(
-    'DELETE FROM A_users WHERE username = ?',
-    [username]
-  );
-
-  if (result.affectedRows === 0) {
-    throw new Error('Törlés sikertelen – felhasználó nem létezik');
-  }
-
-  return true;
-}
 }
 
 module.exports = User;

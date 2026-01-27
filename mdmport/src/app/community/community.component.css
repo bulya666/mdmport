@@ -934,7 +934,6 @@ body {
   background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
 }
 
-/* Responsive */
 @media (max-width: 1200px) {
   .community-content {
     max-width: 100%;

@@ -238,3 +238,85 @@
     align-items: flex-start;
   }
 }
+@media (max-width: 520px) {
+  .mdm-wrap {
+    padding: 32px 14px 20px;
+    gap: 36px;
+  }
+
+  .mdm-brand {
+    align-items: center;
+    text-align: center;
+  }
+
+  .mdm-logo {
+    font-size: 24px;
+    justify-content: center;
+  }
+
+  .mdm-logo::after {
+    left: 50%;
+    transform: translateX(-50%) scaleX(0.4);
+    width: 80px;
+  }
+
+  .mdm-logo:hover::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+
+  .mdm-tag {
+    margin: 0.8rem auto 1.4rem;
+    text-align: center;
+    max-width: 38ch;
+  }
+
+  .mdm-badges {
+    justify-content: center;
+  }
+
+
+  .mdm-columns {
+    grid-template-columns: 1fr;
+    gap: 28px 0;                      
+  }
+
+  .mdm-columns h3 {
+    font-size: 12px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .mdm-columns ul {
+    justify-items: center;
+  }
+
+  .mdm-columns a {
+    justify-content: center;
+    font-size: 13.5px;
+    padding: 4px 0;
+  }
+
+  .mdm-footer-bottom {
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px 14px 12px;
+    text-align: center;
+    font-size: 11.5px;
+  }
+
+  @media (max-width: 380px) {
+    .mdm-wrap {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    
+    .mdm-logo {
+      font-size: 22px;
+    }
+    
+    .mdm-tag {
+      font-size: 13px;
+      max-width: 32ch;
+    }
+  }
+}

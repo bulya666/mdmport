@@ -17,7 +17,6 @@ import { CdkObserveContent } from "@angular/cdk/observers";
 export class CartComponent implements OnInit {
   private http = inject(HttpClient);
   private router = inject(Router);
-  // private notification = inject(NotificationService); // ha külön service-t használsz
 
   cartItems: CartItem[] = [];
   isLoading = false;
@@ -73,7 +72,6 @@ confirmPurchase() {
     this.showConfirmDialog = false;
     this.isLoading = true;
 
-    // Realisztikus késleltetés: 1.4 – 3 másodperc között
     const fakeDelay = Math.floor(Math.random() * 1600) + 1400;
 
     setTimeout(() => {
@@ -167,7 +165,6 @@ confirmPurchase() {
       setTimeout(() => {
         this.cartItems = [];
         localStorage.removeItem('cart');
-        // Kis extra késés az átirányítás előtt
         setTimeout(() => this.router.navigate(['/library']), 900);
       }, 2200);
     }

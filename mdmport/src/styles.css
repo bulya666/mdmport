@@ -436,71 +436,126 @@ textarea.form-control.ng-invalid.ng-touched {
 }
 
 @media (max-width: 768px) {
-  .legal-container {
-    padding: 24px 14px 40px;
+  html, body {
+    min-width: 320px;
   }
 
-  .legal-card {
-    padding: 22px 18px;
-    border-radius: 14px;
+  .catalog {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    padding: 0 16px;
+    margin: 24px auto;
   }
 
-  .legal-card h1 {
-    font-size: 1.6rem;
+  .card {
+    min-height: 340px;
   }
 
-  .form-grid {
-    grid-template-columns: 1fr;
+  .meta {
+    padding: 14px;
+    gap: 8px;
+  }
+
+  .meta h3 {
+    font-size: 1rem;
+  }
+
+  .muted {
+    font-size: 0.85rem;
+    line-clamp: inherit;
+    -webkit-line-clamp: 2;
+  }
+
+  .price-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding-top: 8px;
+  }
+
+  .price {
+    font-size: 0.9rem;
+    padding: 5px 9px;
+  }
+
+  .check {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.95rem;
   }
 
   .no-sales {
-    padding: 50px 24px;
     margin: 40px auto;
-    max-width: 500px;
+    padding: 50px 24px;
+    max-width: 90%;
+    width: auto;
   }
 
   .no-sales img {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
+    margin-bottom: 20px;
   }
 
   .no-sales h2 {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
   }
 
   .no-sales p {
     font-size: 1rem;
   }
-}
 
-@media (max-width: 480px) {
-  .no-sales {
-    padding: 40px 20px;
-    max-width: 90%;
+  .legal-container {
+    padding: 24px 16px 48px;
+    margin: 16px auto 32px;
   }
 
-  .no-sales img {
-    width: 70px;
-    height: 70px;
+  .legal-card {
+    padding: 20px 16px;
+    border-radius: 14px;
   }
 
-  .no-sales h2 {
-    font-size: 1.1rem;
+  .legal-card h1 {
+    font-size: 1.65rem;
   }
 
-  .no-sales p {
+  .legal-card h2 {
+    font-size: 1.15rem;
+    margin-top: 24px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 10px;
     font-size: 0.95rem;
   }
-}
 
-@media (max-width: 700px) {
-  .catalog {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 14px;
-    padding: 0 12px;
+  .search-dropdown {
+    margin-top: 2px;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
   }
 
-  .meta {
-    padding: 12px;
+  .search-item {
+    padding: 8px 12px;
+  }
+
+  .search-item-thumb img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .search-item-title {
+    font-size: 13px;
+  }
+
+  .search-item-desc {
+    font-size: 11px;
   }
 }

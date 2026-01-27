@@ -17,7 +17,6 @@ namespace mdmAdmin.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // XAMPP MySQL alapértelmezés
             var cs = "server=localhost;port=3306;database=mdmport_db;user id=root;password=;";
             var serverVersion = ServerVersion.AutoDetect(cs);
 

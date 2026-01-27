@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace mdmAdmin.Models
 {
-    [Table("ownedg")]
+    [Table("d_ownedg")]
     public class Ownedg
     {
         [Key]

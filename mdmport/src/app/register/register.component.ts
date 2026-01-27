@@ -55,11 +55,9 @@ export class RegisterComponent {
       return;
     }
 
-    // Hosszúság ellenőrzés
     if (p.length >= 8) score += 20;
     if (p.length >= 12) score += 15;
 
-    // Karaktertípusok
     if (/[a-z]/.test(p)) score += 15;
     if (/[A-Z]/.test(p)) score += 20;
     if (/[0-9]/.test(p)) score += 15;

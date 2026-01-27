@@ -59,6 +59,7 @@ export class SettingsComponent implements OnInit {
   passwordVisible = false;
   confirmPasswordVisible = false;
   tabs: TabType[] = ['profile', 'preferences', 'privacy', 'danger'];
+  
   tabLabels: Record<TabType, string> = {
     profile: '👤 Profil',
     preferences: '⚙️ Beállítások',
