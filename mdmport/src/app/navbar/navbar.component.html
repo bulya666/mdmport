@@ -1,12 +1,12 @@
 <div class="topbar">
   <a (click)="toStore()">
-		<div class="brand">
-			<img src="mdmlogo.ico" alt="MDMPort logo" id="logo" />
-			<section class="mdm-brand">
-				<div class="mdm-logo" aria-label="mdmport kezdőlap">mdm<span>port</span></div>
-			</section>
-		</div>
-	</a>
+    <div class="brand">
+      <img src="mdmlogo.ico" alt="MDMPort logo" id="logo" />
+      <section class="mdm-brand">
+        <div class="mdm-logo" aria-label="mdmport kezdőlap">mdm<span>port</span></div>
+      </section>
+    </div>
+  </a>
 
   <div class="search">
     <input id="search" placeholder="⌕ Játékok keresése..." />
@@ -21,11 +21,12 @@
     </button>
 
     <div class="nav-links" [class.show]="menuOpen">
-      
+
       <a routerLink="/" class="btn1" (click)="closeMenu()" (click)="toStore()">Áruház</a>
       <a routerLink="/community" class="btn1" (click)="closeMenu()" (click)="goToCommunity()">Közösség</a>
       <a routerLink="/kapcsolat" class="btn1" (click)="closeMenu()">Kapcsolat</a>
-      <a *ngIf="!loggedUser" routerLink="/login" class="btn1" (click)="closeMenu()" (click)="goToLogin()">Bejelentkezés</a>
+      <a *ngIf="!loggedUser" routerLink="/login" class="btn1" (click)="closeMenu()"
+        (click)="goToLogin()">Bejelentkezés</a>
 
 
       <div class="user-menu-container" *ngIf="loggedUser">
@@ -37,17 +38,17 @@
 
         <div class="user-menu" *ngIf="userMenuOpen">
           <a routerLink="/cart" (click)="closeUserMenu()" class="user-menu-item">
-				<i class="fas fa-shopping-cart"></i> Kosár
-				</a>
+            <i class="fas fa-shopping-cart"></i> Kosár
+          </a>
           <a routerLink="/library" (click)="closeUserMenu()" class="user-menu-item">
-				<i class="fas fa-book"></i> Könyvtár
-				</a>
+            <i class="fas fa-book"></i> Könyvtár
+          </a>
           <a routerLink="/settings" (click)="closeUserMenu()" class="user-menu-item">
-				<i class="fas fa-cog"></i> Beállítások
-				</a>
+            <i class="fas fa-cog"></i> Beállítások
+          </a>
           <a (click)="logout()" class="user-menu-item logout">
-				<i class="fas fa-sign-out-alt"></i> Kijelentkezés
-				</a>
+            <i class="fas fa-sign-out-alt"></i> Kijelentkezés
+          </a>
         </div>
       </div>
     </div>

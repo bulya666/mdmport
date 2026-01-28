@@ -8,23 +8,14 @@
     <main class="articles-section">
       <div class="filters">
         <div class="search-box">
-          <input 
-            type="text" 
-            [(ngModel)]="searchTerm" 
-            (input)="filterArticles()"
-            placeholder="Keresés cikkek között..."
-            class="search-input"
-          >
+          <input type="text" [(ngModel)]="searchTerm" (input)="filterArticles()" placeholder="Keresés cikkek között..."
+            class="search-input">
           <span class="search-icon">🔍</span>
         </div>
-        
+
         <div class="category-filters">
-          <button 
-            *ngFor="let category of categories"
-            [class.active]="selectedCategory === category.id"
-            (click)="selectedCategory = category.id; filterArticles()"
-            class="category-btn"
-          >
+          <button *ngFor="let category of categories" [class.active]="selectedCategory === category.id"
+            (click)="selectedCategory = category.id; filterArticles()" class="category-btn">
             {{ category.name }}
           </button>
         </div>
@@ -33,10 +24,7 @@
       <div class="articles-list">
         <div *ngFor="let article of pagedArticles" class="article-card" (click)="openArticleModal(article)">
           <div class="article-header">
-            <span 
-              class="article-category"
-              [style.backgroundColor]="getCategoryColor(article.category)"
-            >
+            <span class="article-category" [style.backgroundColor]="getCategoryColor(article.category)">
               {{ getCategoryName(article.category) }}
             </span>
             <span class="article-date">{{ article.date }}</span>
@@ -44,16 +32,13 @@
 
           <h3 class="article-title">{{ article.title }}</h3>
           <p class="article-content">{{ article.content }}</p>
-          
+
           <div class="article-footer">
             <div class="article-meta">
               <span class="article-author">Írta: {{ article.author }}</span>
               <div class="article-stats">
-                <button 
-                  class="like-btn" 
-                  [class.active]="isArticleLiked(article)"
-                  (click)="likeArticle(article, $event)"
-                >
+                <button class="like-btn" [class.active]="isArticleLiked(article)"
+                  (click)="likeArticle(article, $event)">
                   👍 {{ article.likes }}
                 </button>
                 <span class="comments-count">
@@ -71,38 +56,26 @@
 
       <div *ngIf="filteredArticles.length > itemsPerPage" class="pagination-container">
         <div class="pagination">
-          <button 
-            class="page-btn prev-btn" 
-            [disabled]="currentPage === 1"
-            (click)="prevPage()"
-          >
+          <button class="page-btn prev-btn" [disabled]="currentPage === 1" (click)="prevPage()">
             &laquo; Előző
           </button>
-          
+
           <div class="page-numbers">
-            <button 
-              *ngFor="let page of pages"
-              class="page-number"
-              [class.active]="page === currentPage"
-              (click)="goToPage(page)"
-            >
+            <button *ngFor="let page of pages" class="page-number" [class.active]="page === currentPage"
+              (click)="goToPage(page)">
               {{ page }}
             </button>
           </div>
-          
-          <button 
-            class="page-btn next-btn" 
-            [disabled]="currentPage === totalPages"
-            (click)="nextPage()"
-          >
+
+          <button class="page-btn next-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">
             Következő &raquo;
           </button>
         </div>
-        
+
         <div class="pagination-info">
           <span>
-            {{ getMin(currentPage * itemsPerPage, filteredArticles.length) }} - 
-            {{ getMax((currentPage - 1) * itemsPerPage + 1, 1) }} / 
+            {{ getMin(currentPage * itemsPerPage, filteredArticles.length) }} -
+            {{ getMax((currentPage - 1) * itemsPerPage + 1, 1) }} /
             {{ filteredArticles.length }} cikk
           </span>
           <span class="page-indicator">
@@ -127,13 +100,8 @@
           Kérjük jelentkezz be a hozzászóláshoz!
         </p>
         <div class="form-group">
-          <textarea 
-            [(ngModel)]="newComment.content"
-            placeholder="Írd meg hozzászólásodat..."
-            rows="4"
-            class="form-textarea"
-            [disabled]="currentUser === 'Guest'"
-          ></textarea>
+          <textarea [(ngModel)]="newComment.content" placeholder="Írd meg hozzászólásodat..." rows="4"
+            class="form-textarea" [disabled]="currentUser === 'Guest'"></textarea>
         </div>
         <button class="submit-btn" (click)="addComment()" [disabled]="currentUser === 'Guest'">
           Hozzászólás küldése
@@ -142,7 +110,7 @@
 
       <div class="comments-list">
         <h3>Legújabb kommentek</h3>
-        
+
         <div *ngFor="let comment of comments.slice(0, 5)" class="comment-card">
           <div class="comment-header">
             <span class="comment-author">{{ comment.author }}</span>
@@ -150,16 +118,12 @@
           </div>
           <div class="comment-content">{{ comment.content }}</div>
           <div class="comment-footer">
-            <button 
-              class="like-btn" 
-              [class.active]="isCommentLiked(comment)"
-              (click)="likeComment(comment)"
-            >
+            <button class="like-btn" [class.active]="isCommentLiked(comment)" (click)="likeComment(comment)">
               👍 {{ comment.likes }}
             </button>
           </div>
         </div>
-        
+
         <div *ngIf="comments.length === 0" class="no-comments">
           Nincsenek kommentek még.
         </div>
@@ -180,36 +144,30 @@
         <line x1="6" y1="6" x2="18" y2="18"></line>
       </svg>
     </button>
-    
+
     <div class="modal-content" *ngIf="selectedArticle">
       <div class="modal-article-side">
         <div class="modal-article-header">
-          <span 
-            class="modal-article-category"
-            [style.backgroundColor]="getCategoryColor(selectedArticle.category)"
-          >
+          <span class="modal-article-category" [style.backgroundColor]="getCategoryColor(selectedArticle.category)">
             {{ getCategoryName(selectedArticle.category) }}
           </span>
           <span class="modal-article-date">{{ selectedArticle.date }}</span>
         </div>
-        
+
         <h2 class="modal-article-title">{{ selectedArticle.title }}</h2>
-        
+
         <div class="modal-article-author">
           <span class="author-avatar">{{ selectedArticle.author.charAt(0) }}</span>
           <span class="author-name">Írta: {{ selectedArticle.author }}</span>
         </div>
-        
+
         <div class="modal-article-content">
           <p>{{ selectedArticle.content }}</p>
         </div>
-        
+
         <div class="modal-article-stats">
-          <button 
-            class="modal-like-btn" 
-            [class.active]="isArticleLiked(selectedArticle)"
-            (click)="likeArticle(selectedArticle)"
-          >
+          <button class="modal-like-btn" [class.active]="isArticleLiked(selectedArticle)"
+            (click)="likeArticle(selectedArticle)">
             👍 {{ selectedArticle.likes }}
           </button>
           <span class="modal-comments-count">
@@ -217,12 +175,12 @@
           </span>
         </div>
       </div>
-      
+
       <div class="modal-comments-side">
         <div class="modal-comments-header">
           <h3>💬 Hozzászólások ({{ selectedArticle.commentsCount }})</h3>
         </div>
-        
+
         <div class="modal-new-comment">
           <p *ngIf="currentUser !== 'Guest'" class="user-info">
             Bejelentkezve mint: <strong>{{ currentUser }}</strong>
@@ -231,19 +189,15 @@
             Kérjük jelentkezz be a hozzászóláshoz!
           </p>
           <div class="form-group">
-            <textarea 
-              [(ngModel)]="modalNewComment.content"
-              placeholder="Írd meg hozzászólásodat..."
-              rows="3"
-              class="form-textarea"
-              [disabled]="currentUser === 'Guest'"
-            ></textarea>
+            <textarea [(ngModel)]="modalNewComment.content" placeholder="Írd meg hozzászólásodat..." rows="3"
+              class="form-textarea" [disabled]="currentUser === 'Guest'"></textarea>
           </div>
-          <button class="submit-btn" (click)="addCommentToArticle(selectedArticle.id)" [disabled]="currentUser === 'Guest'">
+          <button class="submit-btn" (click)="addCommentToArticle(selectedArticle.id)"
+            [disabled]="currentUser === 'Guest'">
             Hozzászólás küldése
           </button>
         </div>
-        
+
         <div class="modal-comments-list">
           <div *ngFor="let comment of getCommentsForArticle(selectedArticle.id)" class="modal-comment-card">
             <div class="modal-comment-header">
@@ -252,16 +206,13 @@
             </div>
             <div class="modal-comment-content">{{ comment.content }}</div>
             <div class="modal-comment-footer">
-              <button 
-                class="modal-like-btn small" 
-                [class.active]="isCommentLiked(comment)"
-                (click)="likeComment(comment)"
-              >
+              <button class="modal-like-btn small" [class.active]="isCommentLiked(comment)"
+                (click)="likeComment(comment)">
                 👍 {{ comment.likes }}
               </button>
             </div>
           </div>
-          
+
           <div *ngIf="getCommentsForArticle(selectedArticle.id).length === 0" class="no-comments-modal">
             Még nincsenek hozzászólások. Legyél te az első!
           </div>

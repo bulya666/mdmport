@@ -70,7 +70,7 @@ export class CommunityComponent implements OnInit {
     { id: 'events', name: 'Események' }
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   @HostListener('document:keydown.escape', ['$event'])
   handleEscapeKey(event: KeyboardEvent) {
@@ -83,21 +83,21 @@ export class CommunityComponent implements OnInit {
     this.loadSampleData();
     this.filteredArticles = [...this.articles];
     this.updatePagination();
-    
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.currentUser = localStorage.getItem("loggedUser") || 'Guest';
       }
     });
-    
+
     this.currentUser = localStorage.getItem("loggedUser") || 'Guest';
   }
 
   likeArticle(article: Article, event?: Event): void {
     if (event) event.stopPropagation();
-    
+
     const userIndex = article.likedBy.indexOf(this.currentUser);
-    
+
     if (userIndex === -1) {
       article.likes++;
       article.likedBy.push(this.currentUser);
@@ -109,7 +109,7 @@ export class CommunityComponent implements OnInit {
 
   likeComment(comment: Comment): void {
     const userIndex = comment.likedBy.indexOf(this.currentUser);
-    
+
     if (userIndex === -1) {
       comment.likes++;
       comment.likedBy.push(this.currentUser);
@@ -149,7 +149,7 @@ export class CommunityComponent implements OnInit {
     };
 
     this.comments.unshift(newComment);
-    
+
     if (this.selectedArticle) {
       this.selectedArticle.commentsCount++;
     }
@@ -179,7 +179,7 @@ export class CommunityComponent implements OnInit {
     };
 
     this.comments.unshift(newComment);
-    
+
     const article = this.articles.find(a => a.id === this.newComment.articleId);
     if (article) {
       article.commentsCount++;
@@ -187,7 +187,7 @@ export class CommunityComponent implements OnInit {
 
     this.newComment = { content: '', articleId: 1 };
   }
-  
+
   openArticleModal(article: Article): void {
     this.selectedArticle = article;
     this.isModalOpen = true;

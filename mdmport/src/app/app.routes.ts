@@ -11,14 +11,14 @@ import { AszfComponent } from './aszf/aszf.component';
 import { KapcsolatComponent } from './kapcsolat/kapcsolat.component';
 
 export const routes: Routes = [
-    {path:"", component:MainComponent},
-    {path:"login", component:LoginComponent},
-    {path:"register", component:RegisterComponent},
-    {path:"community", component:CommunityComponent},
-    {path:"cart", component:CartComponent},
-    {path:"library", component:LibraryComponent},  
-    {path: 'settings',component: SettingsComponent},
-    {path: 'impresszum', component: ImpresszumComponent},
-    {path: 'aszf', component: AszfComponent},
-    {path: 'kapcsolat', component: KapcsolatComponent},
+    { path: "", component: MainComponent },
+    { path: "login", component: LoginComponent },
+    { path: "register", component: RegisterComponent },
+    { path: "community", component: CommunityComponent },
+    { path: "cart", component: CartComponent },
+    { path: "library", component: LibraryComponent },
+    { path: 'settings', component: SettingsComponent },
+    { path: 'impresszum', component: ImpresszumComponent },
+    { path: 'aszf', component: AszfComponent },
+    { path: 'kapcsolat', component: KapcsolatComponent },
 ];

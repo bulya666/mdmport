@@ -6,8 +6,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Táblák (változatlanul, de AUTO_INCREMENT igazítva ahol szükséges)
-
 CREATE TABLE IF NOT EXISTS `a_users` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(100) NOT NULL,
@@ -48,8 +46,6 @@ CREATE TABLE IF NOT EXISTS `d_ownedg` (
   CONSTRAINT `d_ownedg_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `b_games` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Felhasználók – superadmin kivéve, id-k újraszámozva 1-től (ha szükséges, de most megtartottam az eredetit)
-
 INSERT IGNORE INTO `a_users` (`id`, `username`, `password`, `role`, `preferences`) VALUES
 (2, 'Admin',   '$2b$12$LxKFdUGTxSax1OQRj8o/1uqx1CwfwSeEfsOQNk.OSVJmVAlVYJtWO', 'admin',   NULL),
 (3, 'Bulya',   '$2b$12$yjlwvXFu.1SPhLLIUS7f.eLAKuVFqPk2lYw0samGc2qsw3Ih5z49G', 'user',    NULL),
@@ -57,8 +53,6 @@ INSERT IGNORE INTO `a_users` (`id`, `username`, `password`, `role`, `preferences
 (5, 'Marci',   '$2b$12$nevQMoKcFS9qM6UXj7oT8.rbD781b1AA8cboe5gzcJAVIHusgsYIi', 'user',    NULL),
 (6, 'teszt1',  '$2b$12$wVt7MsL57.TTDVoV3QULOuV6ON9FY8PZqjhQ7ajx7LUlmVTGcOeDC', 'user',    NULL),
 (7, 'Teszt12', '$2b$12$btgVoqqClaz4/ZfOBnS/yecBfWRwHx1Mo0VEdrAIULbauf9qu.9vu', 'user',    NULL);
-
--- Játékok (változatlan)
 
 INSERT IGNORE INTO `b_games` (`id`, `title`, `tag`, `price`, `desc`, `thumbnail`) VALUES
 (1,  'Counter-Strike 2',         'free top',    'INGYEN',  'Csapat alapú FPS versenyjáték.',                  'https://cdn.cloudflare.steamstatic.com/steam/apps/730/capsule_616x353.jpg'),
@@ -74,8 +68,6 @@ INSERT IGNORE INTO `b_games` (`id`, `title`, `tag`, `price`, `desc`, `thumbnail`
 (11, 'The Witcher 3: Wild Hunt', 'top',         '$29,99',  'Nyílt világú fantasy RPG.',                       'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg'),
 (12, 'Cyberpunk 2077',           'all',         '$82,78',  'Futurisztikus akció-RPG.',                        'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg');
 
--- Képek (változatlan)
-
 INSERT IGNORE INTO `c_gamephotos` (`id`, `gameid`, `pic`) VALUES
 (1,1,'cs2_1.png'),   (2,1,'cs2_2.png'),   (3,1,'cs2_3.png'),   (4,1,'cs2_4.png'),
 (5,2,'dota2_1.jpg'), (6,2,'dota2_2.jpg'), (7,2,'dota2_3.jpg'), (8,2,'dota2_4.jpg'),
@@ -89,8 +81,6 @@ INSERT IGNORE INTO `c_gamephotos` (`id`, `gameid`, `pic`) VALUES
 (37,10,'wwm_1.jpg'),(38,10,'wwm_2.jpg'),(39,10,'wwm_3.jpg'),(40,10,'wwm_4.jpg'),
 (41,11,'tw3_1.jpg'),(42,11,'tw3_2.jpg'),(43,11,'tw3_3.jpg'),(44,11,'tw3_4.jpg'),
 (45,12,'cyber_1.jpg'),(46,12,'cyber_2.jpg'),(47,12,'cyber_3.jpg'),(48,12,'cyber_4.jpeg');
-
--- Tulajdonlások – superadmin-hoz tartozó sorok kivéve
 
 INSERT IGNORE INTO `d_ownedg` (`id`, `userid`, `gameid`) VALUES
 (1,  2, 1),
@@ -114,8 +104,6 @@ INSERT IGNORE INTO `d_ownedg` (`id`, `userid`, `gameid`) VALUES
 (19, 7, 1),
 (20, 7, 5),
 (21, 7, 9);
-
--- Visszaállítás
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

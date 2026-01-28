@@ -19,6 +19,7 @@ const DB_CONFIG = {
 
 const DB_NAME = DB_CONFIG.database;
 const SQL_FILE = path.join(__dirname, '../../mdmport_db.sql');
+const SQL_DUMP = path.join(__dirname, '../../mdmport_dump.sql');
 
 const pool = mysql.createPool(DB_CONFIG);
 
@@ -187,7 +188,7 @@ async function dumpSqlOnShutdown() {
         password: DB_CONFIG.password,
         database: DB_NAME,
       },
-      dumpToFile: SQL_FILE,
+      dumpToFile: SQL_DUMP,
       dump: {
         schema: {
           table: {
@@ -202,7 +203,7 @@ async function dumpSqlOnShutdown() {
       }
     });
 
-    console.log(`Database saved to ${SQL_FILE}`);
+    console.log(`Database saved to ${SQL_DUMP}`);
   } catch (error) {
     console.error('Error creating dump:', error.message);
     throw error;

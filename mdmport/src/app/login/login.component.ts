@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private toast: ToastService,
-  ) {}
+  ) { }
 
   togglePassword() {
     this.showPassword = !this.showPassword;
@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.isLoading = true;
-    
+
     this.http
       .post<any>("http://localhost:3000/api/login", {
         username: this.username,
@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
             this.passwordError = 'Hibás jelszó';
           }
         },
-    });
+      });
   }
 
   goToShop() {

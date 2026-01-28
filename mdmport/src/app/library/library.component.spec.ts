@@ -10,7 +10,7 @@ describe('LibraryComponent', () => {
     await TestBed.configureTestingModule({
       imports: [LibraryComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(LibraryComponent);
     component = fixture.componentInstance;

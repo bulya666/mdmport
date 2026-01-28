@@ -1,34 +1,20 @@
 <div class="login-container">
   <form (ngSubmit)="login()" novalidate>
-        <img src="mdmlogo_m.png" alt="" id="logo">
+    <img src="mdmlogo_m.png" alt="" id="logo">
     <h2>Bejelentkezés</h2>
 
     <div class="input-group">
       <label for="username">Felhasználónév</label>
-      <input
-        id="username"
-        type="text"
-        [(ngModel)]="username"
-        name="username"
-        required
-        placeholder="Felhasználónév"
-        autocomplete="username"
-      />
+      <input id="username" type="text" [(ngModel)]="username" name="username" required placeholder="Felhasználónév"
+        autocomplete="username" />
       <div *ngIf="usernameError" class="error-message">{{ usernameError }}</div>
     </div>
 
     <div class="input-group password-group">
       <label for="password">Jelszó</label>
       <div class="password-wrapper">
-        <input
-          id="password"
-          [type]="showPassword ? 'text' : 'password'"
-          [(ngModel)]="password"
-          name="password"
-          required
-          placeholder="Jelszó"
-          autocomplete="current-password"
-        />
+        <input id="password" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" name="password" required
+          placeholder="Jelszó" autocomplete="current-password" />
         <button type="button" class="toggle-password" (click)="togglePassword()">
           <i class="{{ showPassword ? 'fas fa-eye-slash' : 'fas fa-eye' }}"></i>
         </button>

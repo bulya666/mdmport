@@ -10,7 +10,7 @@ describe('ImpresszumComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ImpresszumComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ImpresszumComponent);
     component = fixture.componentInstance;

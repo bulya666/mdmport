@@ -12,10 +12,10 @@
 }
 
 .cart-content {
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 16px;
   padding: 1.5rem;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
 }
 
@@ -25,7 +25,7 @@
   gap: 1rem;
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .cart-item {
@@ -35,12 +35,12 @@
   align-items: center;
   padding: 1rem;
   border-radius: 12px;
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
   transition: background 0.25s, transform 0.25s;
 }
 
 .cart-item:hover {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   transform: translateY(-1px);
 }
 
@@ -49,7 +49,7 @@
   aspect-ratio: 3 / 4;
   object-fit: cover;
   border-radius: 10px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
 .item-info {
@@ -152,7 +152,7 @@
 .confirm-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(5px);
   display: grid;
   place-items: center;
@@ -171,7 +171,7 @@
   text-align: center;
   min-width: 300px;
   max-width: 90%;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.55);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55);
 }
 
 .spinner {
@@ -201,7 +201,7 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
   z-index: 2000;
   animation: slideIn 0.35s ease-out;
 }
@@ -229,12 +229,21 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes slideIn {
-  from { transform: translateY(120%); opacity: 0; }
-  to   { transform: translateY(0);    opacity: 1; }
+  from {
+    transform: translateY(120%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @media (max-width: 768px) {

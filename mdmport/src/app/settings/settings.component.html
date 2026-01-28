@@ -12,26 +12,21 @@
   <div class="settings-content">
     <aside class="settings-sidebar">
       <nav class="tab-nav" role="tablist">
-        <button 
-          *ngFor="let tab of tabs"
-          [attr.aria-selected]="activeTab === tab"
-          role="tab"
-          class="tab-button"
-          [class.active]="activeTab === tab"
-          (click)="selectTab(tab)">
+        <button *ngFor="let tab of tabs" [attr.aria-selected]="activeTab === tab" role="tab" class="tab-button"
+          [class.active]="activeTab === tab" (click)="selectTab(tab)">
           <span class="tab-label">{{ tabLabels[tab] }}</span>
         </button>
       </nav>
     </aside>
 
     <main class="settings-main" role="tabpanel">
-      
+
       <section *ngIf="activeTab === 'profile'" class="settings-panel">
         <h2>Profil módosítása</h2>
-        
+
         <form class="settings-form" (ngSubmit)="saveProfileChanges()">
-                    <hr class="divider">
-        <div class="form-group">
+          <hr class="divider">
+          <div class="form-group">
             <label>Felhasználónév</label>
             <div class="current-username">
               {{ loggedUser || 'Nincs bejelentkezve' }}
@@ -45,16 +40,9 @@
           <div class="form-group">
             <label for="currentPassword">Jelenlegi jelszó</label>
             <div class="password-input-wrapper">
-              <input 
-                id="currentPassword"
-                [type]="passwordVisible ? 'text' : 'password'" 
-                [(ngModel)]="userSettings.currentPassword" 
-                name="currentPassword"
-                class="form-input">
-              <button 
-                type="button" 
-                class="password-toggle"
-                (click)="togglePasswordVisibility('password')"
+              <input id="currentPassword" [type]="passwordVisible ? 'text' : 'password'"
+                [(ngModel)]="userSettings.currentPassword" name="currentPassword" class="form-input">
+              <button type="button" class="password-toggle" (click)="togglePasswordVisibility('password')"
                 [attr.aria-label]="passwordVisible ? 'Jelszó elrejtése' : 'Jelszó megjelenítése'">
                 {{ passwordVisible ? '👁️' : '👁️' }}
               </button>
@@ -63,27 +51,16 @@
 
           <div class="form-group">
             <label for="newPassword">Új jelszó</label>
-            <input 
-              id="newPassword"
-              type="password" 
-              [(ngModel)]="userSettings.newPassword" 
-              name="newPassword"
+            <input id="newPassword" type="password" [(ngModel)]="userSettings.newPassword" name="newPassword"
               class="form-input">
           </div>
 
           <div class="form-group">
             <label for="confirmPassword">Új jelszó megerősítése</label>
             <div class="password-input-wrapper">
-              <input 
-                id="confirmPassword"
-                [type]="confirmPasswordVisible ? 'text' : 'password'" 
-                [(ngModel)]="userSettings.confirmPassword" 
-                name="confirmPassword"
-                class="form-input">
-              <button 
-                type="button" 
-                class="password-toggle"
-                (click)="togglePasswordVisibility('confirmPassword')"
+              <input id="confirmPassword" [type]="confirmPasswordVisible ? 'text' : 'password'"
+                [(ngModel)]="userSettings.confirmPassword" name="confirmPassword" class="form-input">
+              <button type="button" class="password-toggle" (click)="togglePasswordVisibility('confirmPassword')"
                 [attr.aria-label]="confirmPasswordVisible ? 'Jelszó elrejtése' : 'Jelszó megjelenítése'">
                 {{ confirmPasswordVisible ? '👁️' : '👁️' }}
               </button>
@@ -172,14 +149,9 @@
         <div class="danger-box">
           <h3>Fiók törlése</h3>
           <p class="warning">Ez a művelet végleges és nem visszavonható!</p>
-          
+
           <form class="danger-form" (ngSubmit)="deleteAccount(deletePassword.value)">
-            <input 
-              #deletePassword
-              type="password" 
-              placeholder="Jelszó megerősítéshez"
-              class="form-input"
-              required>
+            <input #deletePassword type="password" placeholder="Jelszó megerősítéshez" class="form-input" required>
             <button type="submit" class="btn btn-danger" [disabled]="isLoading">
               {{ isLoading ? 'Törlés...' : 'Fiók véglegesen törlése' }}
             </button>

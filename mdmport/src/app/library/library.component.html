@@ -36,11 +36,8 @@
           </p>
 
           <div class="tag-row" *ngIf="game.tag && game.tag.length">
-            <span
-              class="tag-chip"
-              *ngFor="let t of game.tag"
-            >
-            {{ t }}
+            <span class="tag-chip" *ngFor="let t of game.tag">
+              {{ t }}
             </span>
           </div>
 
@@ -76,10 +73,7 @@
   <div class="modal" (click)="$event.stopPropagation()">
     <div class="modal-media">
       <div class="modal-main-shot">
-        <img
-          [src]="g.thumbnail"
-          [alt]="g.title"
-        />
+        <img [src]="g.thumbnail" [alt]="g.title" />
       </div>
       <div class="modal-main-gradient"></div>
       <div class="modal-meta-bar">
@@ -110,11 +104,8 @@
             {{ g.title }}
           </h2>
           <div class="modal-tags" *ngIf="g.tag && g.tag.length">
-            <span
-              class="modal-tag"
-              *ngFor="let t of g.tag"
-            >
-            {{ t }}
+            <span class="modal-tag" *ngFor="let t of g.tag">
+              {{ t }}
             </span>
           </div>
         </div>

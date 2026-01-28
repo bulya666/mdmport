@@ -4,4 +4,4 @@ import { Component } from '@angular/core';
   selector: 'app-impresszum',
   templateUrl: './impresszum.component.html'
 })
-export class ImpresszumComponent {}
+export class ImpresszumComponent { }

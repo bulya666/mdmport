@@ -35,7 +35,7 @@ export class RegisterComponent {
     private http: HttpClient,
     private router: Router,
     private toast: ToastService
-  ) {}
+  ) { }
 
   validateUsername() {
     this.usernameError = null;

@@ -23,7 +23,7 @@ export class MainComponent implements AfterViewInit, OnInit {
   cartItemCount: number = 0;
   shortDuration = 1500;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.loggedUser = localStorage.getItem("loggedUser");
@@ -122,7 +122,7 @@ export class MainComponent implements AfterViewInit, OnInit {
 
     const price =
       priceText.toLowerCase().includes("ingyen") ||
-      priceText.toLowerCase().includes("free")
+        priceText.toLowerCase().includes("free")
         ? 0
         : parseFloat(priceText.replace("$", "").replace(",", "."));
 
@@ -186,7 +186,7 @@ export class MainComponent implements AfterViewInit, OnInit {
 
     const price =
       priceText.toLowerCase().includes("ingyen") ||
-      priceText.toLowerCase().includes("free")
+        priceText.toLowerCase().includes("free")
         ? 0
         : parseFloat(priceText.replace("$", "").replace(",", "."));
 
@@ -208,14 +208,14 @@ export class MainComponent implements AfterViewInit, OnInit {
     this.showToast(
       `A(z) "${title}" sikeresen hozzáadva a kosárhoz.`,
       "success",
-      true,  
+      true,
     );
     if (this.toastTimeout) {
-  clearTimeout(this.toastTimeout);
-}
-this.toastTimeout = setTimeout(() => {
-  this.toastVisible = false;
-}, this.shortDuration);
+      clearTimeout(this.toastTimeout);
+    }
+    this.toastTimeout = setTimeout(() => {
+      this.toastVisible = false;
+    }, this.shortDuration);
     const modal = document.getElementById("modal") as HTMLElement | null;
     if (modal) {
       modal.style.display = "none";

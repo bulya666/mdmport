@@ -238,6 +238,7 @@
     align-items: flex-start;
   }
 }
+
 @media (max-width: 520px) {
   .mdm-wrap {
     padding: 32px 14px 20px;
@@ -277,7 +278,7 @@
 
   .mdm-columns {
     grid-template-columns: 1fr;
-    gap: 28px 0;                      
+    gap: 28px 0;
   }
 
   .mdm-columns h3 {
@@ -309,11 +310,11 @@
       padding-left: 12px;
       padding-right: 12px;
     }
-    
+
     .mdm-logo {
       font-size: 22px;
     }
-    
+
     .mdm-tag {
       font-size: 13px;
       max-width: 32ch;

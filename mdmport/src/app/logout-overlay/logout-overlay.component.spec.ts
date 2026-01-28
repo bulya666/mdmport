@@ -10,7 +10,7 @@ describe('LogoutOverlayComponent', () => {
     await TestBed.configureTestingModule({
       imports: [LogoutOverlayComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(LogoutOverlayComponent);
     component = fixture.componentInstance;

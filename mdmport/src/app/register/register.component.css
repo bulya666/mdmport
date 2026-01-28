@@ -37,8 +37,15 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 form h2 {
@@ -150,10 +157,21 @@ form h2::after {
   text-align: right;
 }
 
-.weak        { background: #ff4d4d; }
-.medium      { background: #ffaa00; }
-.strong      { background: #33cc33; }
-.very-strong { background: #00cc00; }
+.weak {
+  background: #ff4d4d;
+}
+
+.medium {
+  background: #ffaa00;
+}
+
+.strong {
+  background: #33cc33;
+}
+
+.very-strong {
+  background: #00cc00;
+}
 
 .error-message {
   color: #ff4d4d;

@@ -5,30 +5,16 @@
 
     <div class="input-group">
       <label for="username">Felhasználónév</label>
-      <input
-        id="username"
-        type="text"
-        [(ngModel)]="username"
-        name="username"
-        required
-        placeholder="Felhasználónév"
-        (input)="validateUsername()"
-      />
+      <input id="username" type="text" [(ngModel)]="username" name="username" required placeholder="Felhasználónév"
+        (input)="validateUsername()" />
       <div *ngIf="usernameError" class="error-message">{{ usernameError }}</div>
     </div>
 
     <div class="input-group password-group">
       <label for="password">Jelszó</label>
       <div class="password-wrapper">
-        <input
-          id="password"
-          [type]="showPassword ? 'text' : 'password'"
-          [(ngModel)]="password"
-          name="password"
-          required
-          placeholder="**********"
-          (input)="checkPasswordStrength()"
-        />
+        <input id="password" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" name="password" required
+          placeholder="**********" (input)="checkPasswordStrength()" />
         <button type="button" class="toggle-password" (click)="togglePassword()">
           <i class="{{ showPassword ? 'fas fa-eye-slash' : 'fas fa-eye' }}"></i>
         </button>
@@ -43,14 +29,8 @@
     <div class="input-group password-group">
       <label for="confirmPassword">Jelszó újra</label>
       <div class="password-wrapper">
-        <input
-          id="confirmPassword"
-          [type]="showConfirm ? 'text' : 'password'"
-          [(ngModel)]="confirmPassword"
-          name="confirmPassword"
-          required
-          placeholder="**********"
-        />
+        <input id="confirmPassword" [type]="showConfirm ? 'text' : 'password'" [(ngModel)]="confirmPassword"
+          name="confirmPassword" required placeholder="**********" />
         <button type="button" class="toggle-password" (click)="toggleConfirm()">
           <i class="{{ showConfirm ? 'fas fa-eye-slash' : 'fas fa-eye' }}"></i>
         </button>
@@ -60,13 +40,7 @@
 
     <div class="input-group terms-group">
       <div class="terms-checkbox">
-        <input
-          type="checkbox"
-          id="acceptTerms"
-          [(ngModel)]="acceptedTerms"
-          name="acceptTerms"
-          required
-        />
+        <input type="checkbox" id="acceptTerms" [(ngModel)]="acceptedTerms" name="acceptTerms" required />
         <label for="acceptTerms">
           Elfogadom az <a href="/aszf" target="_blank" class="terms-link">Általános Szerződési Feltételeket</a>
         </label>

@@ -21,7 +21,7 @@ export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
   isLoading = false;
   isPurchaseSuccess = false;
-  showConfirmDialog = false;      
+  showConfirmDialog = false;
   pendingPurchase = false;
 
   notification = {
@@ -52,7 +52,7 @@ export class CartComponent implements OnInit {
     return this.cartItems.reduce((sum, item) => sum + item.price, 0);
   }
 
-confirmPurchase() {
+  confirmPurchase() {
     if (this.cartItems.length === 0) return;
 
     const username = localStorage.getItem('loggedUser');
@@ -103,7 +103,7 @@ confirmPurchase() {
         const remaining: CartItem[] = [];
 
         for (const item of this.cartItems) {
-          const game = allGames.find(g => 
+          const game = allGames.find(g =>
             g.title.trim().toLowerCase() === item.name.trim().toLowerCase()
           );
 
