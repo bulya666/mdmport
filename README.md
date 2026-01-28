@@ -128,7 +128,7 @@ A rendszer relációs adatbázist használ, idegen kulcsos kapcsolatokkal és eg
 
 ### users tábla
 ```sql
-CREATE TABLE users (
+CREATE TABLE a_users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(100) UNIQUE NOT NULL,
   password VARCHAR(100) NOT NULL,
@@ -138,7 +138,7 @@ CREATE TABLE users (
 
 ### games tábla
 ```sql
-CREATE TABLE games (
+CREATE TABLE b_games (
   id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(100) NOT NULL,
   tag VARCHAR(100),
@@ -150,7 +150,7 @@ CREATE TABLE games (
 
 ### gamephotos tábla
 ```sql
-CREATE TABLE gamephotos (
+CREATE TABLE c_gamephotos (
   id INT AUTO_INCREMENT PRIMARY KEY,
   gameid INT NOT NULL,
   pic VARCHAR(255),
@@ -160,7 +160,7 @@ CREATE TABLE gamephotos (
 
 ### ownedg tábla
 ```sql
-CREATE TABLE ownedg (
+CREATE TABLE d_ownedg (
   id INT AUTO_INCREMENT PRIMARY KEY,
   userid INT NOT NULL,
   gameid INT NOT NULL,
