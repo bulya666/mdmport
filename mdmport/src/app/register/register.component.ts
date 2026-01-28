@@ -1,30 +1,30 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { ToastService } from '../services/toast.service';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Router } from "@angular/router";
+import { ToastService } from "../services/toast.service";
+import { FormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
+import { RouterLink } from "@angular/router";
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.css"],
   standalone: true,
   imports: [FormsModule, CommonModule, RouterLink],
 })
 export class RegisterComponent {
-  username = '';
-  password = '';
-  confirmPassword = '';
+  username = "";
+  password = "";
+  confirmPassword = "";
   acceptedTerms = false;
   showPassword = false;
   showConfirm = false;
   isLoading = false;
 
   passwordStrength = 0;
-  strengthText = '';
-  strengthClass = '';
+  strengthText = "";
+  strengthClass = "";
 
   usernameError: string | null = null;
   passwordError: string | null = null;
@@ -35,12 +35,13 @@ export class RegisterComponent {
     private http: HttpClient,
     private router: Router,
     private toast: ToastService
-  ) { }
+  ) {}
 
   validateUsername() {
     this.usernameError = null;
     if (this.username.trim().length < 3) {
-      this.usernameError = 'A felhasználónév legalább 3 karakter hosszú kell legyen!';
+      this.usernameError =
+        "A felhasználónév legalább 3 karakter hosszú kell legyen!";
     }
   }
 
@@ -50,8 +51,8 @@ export class RegisterComponent {
 
     if (!p) {
       this.passwordStrength = 0;
-      this.strengthText = '';
-      this.strengthClass = '';
+      this.strengthText = "";
+      this.strengthClass = "";
       return;
     }
 
@@ -66,20 +67,23 @@ export class RegisterComponent {
     this.passwordStrength = Math.min(100, score);
 
     if (score < 40) {
-      this.strengthText = 'Gyenge';
-      this.strengthClass = 'weak';
+      this.strengthText = "Gyenge";
+      this.strengthClass = "weak";
     } else if (score < 70) {
-      this.strengthText = 'Közepes';
-      this.strengthClass = 'medium';
+      this.strengthText = "Közepes";
+      this.strengthClass = "medium";
     } else if (score < 90) {
-      this.strengthText = 'Erős';
-      this.strengthClass = 'strong';
+      this.strengthText = "Erős";
+      this.strengthClass = "strong";
     } else {
-      this.strengthText = 'Nagyon erős';
-      this.strengthClass = 'very-strong';
+      this.strengthText = "Nagyon erős";
+      this.strengthClass = "very-strong";
     }
 
-    this.passwordError = p.length < 8 ? 'A jelszónak legalább 8 karakternek kell lennie és tartalmaznia kell idegen karaktert a biztonság érdekében!' : null;
+    this.passwordError =
+      p.length < 8
+        ? "A jelszónak legalább 8 karakternek kell lennie és tartalmaznia kell idegen karaktert a biztonság érdekében!"
+        : null;
   }
 
   togglePassword() {
@@ -98,35 +102,40 @@ export class RegisterComponent {
     const trimmedUsername = this.username.trim();
 
     if (!trimmedUsername || !this.password || !this.confirmPassword) {
-      this.toast.show('Töltsd ki az összes mezőt!', 'error');
+      this.toast.show("Töltsd ki az összes mezőt!", "error");
       return;
     }
 
     if (trimmedUsername.length < 3) {
-      this.usernameError = 'A felhasználónév legalább 3 karakter hosszú kell legyen!';
+      this.usernameError =
+        "A felhasználónév legalább 3 karakter hosszú kell legyen!";
       return;
     }
 
     if (this.password.length < 8) {
-      this.passwordError = 'A jelszónak legalább 8 karakternek kell lennie!';
+      this.passwordError = "A jelszónak legalább 8 karakternek kell lennie!";
       return;
     }
 
     if (this.password !== this.confirmPassword) {
-      this.confirmError = 'A jelszavak nem egyeznek!';
+      this.confirmError = "A jelszavak nem egyeznek!";
       return;
     }
 
     if (!this.acceptedTerms) {
-      this.termsError = 'A regisztrációhoz el kell fogadnod az Általános Szerződési Feltételeket!';
-      this.toast.show('El kell fogadnod az ÁSZF-et a regisztrációhoz!', 'error');
+      this.termsError =
+        "A regisztrációhoz el kell fogadnod az Általános Szerződési Feltételeket!";
+      this.toast.show(
+        "El kell fogadnod az ÁSZF-et a regisztrációhoz!",
+        "error"
+      );
       return;
     }
 
     this.isLoading = true;
 
     this.http
-      .post<any>('http://localhost:3000/api/register', {
+      .post<any>("http://localhost:3000/api/register", {
         username: trimmedUsername,
         password: this.password,
       })
@@ -134,17 +143,18 @@ export class RegisterComponent {
         next: (res) => {
           this.isLoading = false;
           if (res?.success) {
-            this.toast.show('Sikeres regisztráció! Átirányítás...', 'success');
-            setTimeout(() => this.router.navigate(['/login']), 1200);
+            this.toast.show("Sikeres regisztráció! Átirányítás...", "success");
+            setTimeout(() => this.router.navigate(["/login"]), 1200);
           } else {
-            this.toast.show(res.message || 'Hiba történt', 'error');
+            this.toast.show(res.message || "Hiba történt", "error");
           }
         },
         error: (err) => {
           this.isLoading = false;
           this.toast.show(
-            err.error?.message || 'A felhasználónév már létezik vagy szerver hiba!',
-            'error'
+            err.error?.message ||
+              "A felhasználónév már létezik vagy szerver hiba!",
+            "error"
           );
         },
       });

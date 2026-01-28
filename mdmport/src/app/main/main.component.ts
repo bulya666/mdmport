@@ -23,15 +23,15 @@ export class MainComponent implements AfterViewInit, OnInit {
   cartItemCount: number = 0;
   shortDuration = 1500;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.loggedUser = localStorage.getItem("loggedUser");
     this.loadFeatured();
     this.updateCartCount();
 
-    window.addEventListener('storage', (e) => {
-      if (e.key === 'cart') this.updateCartCount();
+    window.addEventListener("storage", (e) => {
+      if (e.key === "cart") this.updateCartCount();
     });
   }
   ngAfterViewInit(): void {
@@ -63,7 +63,7 @@ export class MainComponent implements AfterViewInit, OnInit {
   private showToast(
     message: string,
     type: "success" | "error" = "success",
-    withActions: boolean = false,
+    withActions: boolean = false
   ) {
     this.toastMessage = message;
     this.toastType = type;
@@ -122,7 +122,7 @@ export class MainComponent implements AfterViewInit, OnInit {
 
     const price =
       priceText.toLowerCase().includes("ingyen") ||
-        priceText.toLowerCase().includes("free")
+      priceText.toLowerCase().includes("free")
         ? 0
         : parseFloat(priceText.replace("$", "").replace(",", "."));
 
@@ -145,7 +145,7 @@ export class MainComponent implements AfterViewInit, OnInit {
     this.showToast(
       `A(z) "${title}" sikeresen hozzáadva a kosárhoz.`,
       "success",
-      true,
+      true
     );
     const modal = document.getElementById("modal") as HTMLElement | null;
     if (modal) {
@@ -186,7 +186,7 @@ export class MainComponent implements AfterViewInit, OnInit {
 
     const price =
       priceText.toLowerCase().includes("ingyen") ||
-        priceText.toLowerCase().includes("free")
+      priceText.toLowerCase().includes("free")
         ? 0
         : parseFloat(priceText.replace("$", "").replace(",", "."));
 
@@ -208,7 +208,7 @@ export class MainComponent implements AfterViewInit, OnInit {
     this.showToast(
       `A(z) "${title}" sikeresen hozzáadva a kosárhoz.`,
       "success",
-      true,
+      true
     );
     if (this.toastTimeout) {
       clearTimeout(this.toastTimeout);

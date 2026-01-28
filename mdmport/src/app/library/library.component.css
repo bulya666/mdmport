@@ -2,7 +2,8 @@
   min-height: 70vh;
   padding: 1.5rem clamp(1rem, 3.5vw, 3rem);
   color: #e5e7eb;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
 }
 
 .library-header {
@@ -446,7 +447,6 @@
 .btn-icon {
   font-size: 1.1rem;
 }
-
 
 @media (max-width: 860px) {
   .modal {

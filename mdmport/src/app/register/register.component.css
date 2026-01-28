@@ -11,7 +11,7 @@
 }
 
 .register-container::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 480px;
   height: 480px;
@@ -31,7 +31,8 @@
   width: 100%;
   max-width: 400px;
   text-align: center;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.015);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(255, 255, 255, 0.015);
   border: 1px solid rgba(230, 0, 0, 0.28);
   animation: fadeIn 0.5s ease-out;
 }
@@ -59,7 +60,7 @@ form h2 {
 }
 
 form h2::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 50%;
   bottom: -6px;

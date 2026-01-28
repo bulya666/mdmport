@@ -23,7 +23,7 @@ export class AuthService {
             this.loggedUserSubject.next(response.username);
             sessionStorage.setItem("user", response.username);
           }
-        }),
+        })
       );
   }
 

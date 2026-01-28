@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
   menuOpen = false;
   userMenuOpen = false;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.router.events.subscribe((event) => {
