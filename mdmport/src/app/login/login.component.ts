@@ -6,13 +6,19 @@ import { HttpClient } from "@angular/common/http";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatButtonModule } from "@angular/material/button";
 import { ToastService } from "../services/toast.service";
-import { CommonModule } from '@angular/common';
+import { CommonModule } from "@angular/common";
 import { RouterLink } from "@angular/router";
 
 @Component({
   selector: "app-login",
   standalone: true,
-  imports: [FormsModule, MatSnackBarModule, MatButtonModule, CommonModule, RouterLink],
+  imports: [
+    FormsModule,
+    MatSnackBarModule,
+    MatButtonModule,
+    CommonModule,
+    RouterLink,
+  ],
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"],
 })
@@ -32,8 +38,8 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private http: HttpClient,
     private router: Router,
-    private toast: ToastService,
-  ) { }
+    private toast: ToastService
+  ) {}
 
   togglePassword() {
     this.showPassword = !this.showPassword;
@@ -49,7 +55,7 @@ export class LoginComponent implements OnInit {
     const trimmedUsername = this.username.trim();
 
     if (!trimmedUsername || !this.password) {
-      this.toast.show('Töltsd ki az összes mezőt!', 'error');
+      this.toast.show("Töltsd ki az összes mezőt!", "error");
       return;
     }
 
@@ -75,11 +81,11 @@ export class LoginComponent implements OnInit {
         },
         error: (err) => {
           this.isLoading = false;
-          const msg = err.error?.message || 'Hibás felhasználónév vagy jelszó!';
-          this.toast.show(msg, 'error');
+          const msg = err.error?.message || "Hibás felhasználónév vagy jelszó!";
+          this.toast.show(msg, "error");
 
           if (err.status === 401) {
-            this.passwordError = 'Hibás jelszó';
+            this.passwordError = "Hibás jelszó";
           }
         },
       });

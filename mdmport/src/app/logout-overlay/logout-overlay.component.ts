@@ -44,4 +44,4 @@ import { trigger, transition, style, animate } from "@angular/animations";
     ]),
   ],
 })
-export class LogoutOverlayComponent { }
+export class LogoutOverlayComponent {}

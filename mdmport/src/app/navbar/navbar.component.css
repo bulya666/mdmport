@@ -3,7 +3,11 @@
   align-items: center;
   gap: 20px;
   padding: 12px 20px;
-  background: linear-gradient(180deg, rgba(8, 26, 48, 1) 0%, rgba(8, 26, 48, 1) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(8, 26, 48, 1) 0%,
+    rgba(8, 26, 48, 1) 100%
+  );
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
@@ -12,12 +16,12 @@
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  transition: transform .25s ease, filter .25s ease;
+  transition: transform 0.25s ease, filter 0.25s ease;
 }
 
 #logo {
   height: 32px;
-  transition: transform .25s ease, filter .25s ease;
+  transition: transform 0.25s ease, filter 0.25s ease;
 }
 
 .brand:hover {
@@ -37,7 +41,7 @@
 .mdm-logo {
   font-size: 1.4rem;
   font-weight: 700;
-  transition: letter-spacing .25s ease, transform .25s ease;
+  transition: letter-spacing 0.25s ease, transform 0.25s ease;
   color: var(--text);
 }
 
@@ -67,7 +71,8 @@
   backdrop-filter: blur(6px);
   color: white;
   font-size: 15px;
-  transition: border-color .25s ease, background .25s ease, box-shadow .25s ease;
+  transition: border-color 0.25s ease, background 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .search input::placeholder {
@@ -129,7 +134,7 @@
   color: rgba(255, 255, 255, 0.75);
   text-decoration: none;
   padding: 6px 4px;
-  transition: color .25s ease, transform .25s ease;
+  transition: color 0.25s ease, transform 0.25s ease;
   position: relative;
 }
 
@@ -142,7 +147,7 @@
   height: 2px;
   background: rgba(214, 65, 65, 0.9);
   transform: translateX(-50%);
-  transition: width .25s ease;
+  transition: width 0.25s ease;
 }
 
 .nav-links a:hover {
@@ -190,7 +195,7 @@
 .user-icon {
   font-size: 20px;
   color: rgba(255, 255, 255, 0.82);
-  transition: color .25s ease;
+  transition: color 0.25s ease;
 }
 
 .user-btn:hover .user-icon {
@@ -227,7 +232,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  transition: background .22s ease, padding-left .22s ease, color .22s ease;
+  transition: background 0.22s ease, padding-left 0.22s ease, color 0.22s ease;
 }
 
 .user-menu-item:hover {
@@ -252,7 +257,7 @@
   border-radius: 10px;
   padding: 8px 0;
   margin-top: 6px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, .6);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
   display: none;
   z-index: 999;
 }
@@ -294,7 +299,7 @@
 
 .search-item-desc {
   font-size: 12px;
-  opacity: .7;
+  opacity: 0.7;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -337,7 +342,11 @@
     width: 82vw;
     max-width: 300px;
     height: 100vh;
-    background: linear-gradient(135deg, rgba(8, 26, 48, 0.98) 0%, rgba(12, 35, 64, 0.97) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(8, 26, 48, 0.98) 0%,
+      rgba(12, 35, 64, 0.97) 100%
+    );
     backdrop-filter: blur(12px);
     box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3);
     flex-direction: column;

@@ -37,7 +37,7 @@ export class LibraryComponent implements OnInit {
 
   private api = "http://localhost:3000/api";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     const username = localStorage.getItem("loggedUser");

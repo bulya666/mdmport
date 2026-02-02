@@ -14,10 +14,7 @@ export class KapcsolatComponent {
   contactForm: FormGroup;
   submitted = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
-  ) {
+  constructor(private fb: FormBuilder, private http: HttpClient) {
     this.contactForm = this.fb.group({
       name: ["", [Validators.required, Validators.minLength(2)]],
       email: [

@@ -1,12 +1,10 @@
 <main class="cart-container">
   <h1 class="page-title">Kosár</h1>
-
   <div class="cart-content">
     <ng-container *ngIf="cartItems.length > 0; else empty">
       <div class="cart-items">
         <div class="cart-item" *ngFor="let item of cartItems">
           <img [src]="item.image" [alt]="item.name" class="item-cover" />
-
           <div class="item-info">
             <h3 class="item-title">{{ item.name }}</h3>
             <div class="item-price">
@@ -16,37 +14,32 @@
               <span *ngIf="item.price === 0" class="free-tag">Ingyenes</span>
             </div>
           </div>
-
           <button class="btn btn-remove" (click)="removeItem(item)">
-            Eltávolítás
+          Eltávolítás
           </button>
         </div>
       </div>
-
       <div class="cart-summary">
         <div class="total">
           <span>Összesen:</span>
           <strong>{{ total | currency:'USD':'symbol':'1.2-2' }}</strong>
         </div>
-
         <button class="btn btn-purchase" (click)="executePurchase()" [disabled]="isLoading">
-          {{ isLoading ? 'Feldolgozás...' : 'Vásárlás' }}
+        {{ isLoading ? 'Feldolgozás...' : 'Vásárlás' }}
         </button>
       </div>
     </ng-container>
-
     <ng-template #empty>
       <div class="empty-cart">
         <div class="empty-icon">🛒</div>
         <h2>A kosarad üres</h2>
         <p>Fedezz fel új játékokat a boltban!</p>
         <button class="btn btn-outline" (click)="toStore()">
-          Bolt megtekintése
+        Bolt megtekintése
         </button>
       </div>
     </ng-template>
   </div>
-
   <div class="loading-overlay" *ngIf="isLoading || isPurchaseSuccess">
     <div class="loading-card">
       <div class="spinner" *ngIf="!isPurchaseSuccess"></div>
@@ -60,23 +53,22 @@
     <div class="confirm-card">
       <h3>Biztosan meg szeretnéd vásárolni?</h3>
       <p>Összesen: <strong>{{ total | currency:'USD':'symbol':'1.2-2' }}</strong></p>
-
       <div class="confirm-buttons">
         <button class="btn btn-cancel" (click)="cancelPurchase()">
-          Mégse
+        Mégse
         </button>
         <button class="btn btn-confirm" (click)="executePurchase()" [disabled]="isLoading">
-          Igen, vásárlás!
+        Igen, vásárlás!
         </button>
       </div>
     </div>
   </div>
   <div class="toast" *ngIf="notification.show" [ngClass]="['toast--' + notification.type]">
-    <span class="toast-icon">
-      {{ notification.type === 'success' ? '✓' :
-      notification.type === 'error' ? '✕' :
-      notification.type === 'warning' ? '⚠' : 'ℹ' }}
-    </span>
-    <span class="toast-message">{{ notification.message }}</span>
+  <span class="toast-icon">
+  {{ notification.type === 'success' ? '✓' :
+  notification.type === 'error' ? '✕' :
+  notification.type === 'warning' ? '⚠' : 'ℹ' }}
+  </span>
+  <span class="toast-message">{{ notification.message }}</span>
   </div>
 </main>
