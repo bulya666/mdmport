@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideRouter } from '@angular/router';
+import { routes } from '../app.routes';
 import { ImpresszumComponent } from './impresszum.component';
 
 describe('ImpresszumComponent', () => {
@@ -8,7 +9,10 @@ describe('ImpresszumComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ImpresszumComponent]
+      declarations: [ImpresszumComponent],
+      providers: [
+      provideRouter(routes)
+    ]
     })
       .compileComponents();
 

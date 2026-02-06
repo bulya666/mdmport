@@ -39,7 +39,7 @@ export class CommunityComponent implements OnInit {
   pagedArticles: Article[] = [];
 
   isModalOpen: boolean = false;
-
+  selectedPost: string = "";
   selectedArticle: Article | null = null;
 
   currentUser: string = "Guest";
@@ -57,7 +57,6 @@ export class CommunityComponent implements OnInit {
   itemsPerPage: number = 5;
   totalPages: number = 1;
   pages: number[] = [];
-
   selectedCategory: string = "all";
   searchTerm: string = "";
 

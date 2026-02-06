@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideRouter } from '@angular/router';
+import { routes } from '../app.routes';
 import { LogoutOverlayComponent } from './logout-overlay.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('LogoutOverlayComponent', () => {
   let component: LogoutOverlayComponent;
@@ -8,7 +10,11 @@ describe('LogoutOverlayComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LogoutOverlayComponent]
+      imports: [LogoutOverlayComponent, NoopAnimationsModule],
+      providers: [
+        provideRouter(routes)
+
+      ]
     })
       .compileComponents();
 

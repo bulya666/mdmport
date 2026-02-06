@@ -12,7 +12,7 @@ import { CdkObserveContent } from "@angular/cdk/observers";
   standalone: true,
   imports: [CommonModule, CdkObserveContent],
   templateUrl: "./cart.component.html",
-  styleUrl: "./cart.component.scss",
+  styleUrl: "./cart.component.css",
 })
 export class CartComponent implements OnInit {
   private http = inject(HttpClient);

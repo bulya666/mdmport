@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { KapcsolatComponent } from './kapcsolat.component';
+import { provideRouter } from '@angular/router';
+import { routes } from '../app.routes';
 
 describe('KapcsolatComponent', () => {
   let component: KapcsolatComponent;
@@ -8,7 +11,12 @@ describe('KapcsolatComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [KapcsolatComponent]
+      imports: [KapcsolatComponent],
+      providers: [
+      provideHttpClient(),        
+      provideHttpClientTesting(),
+      provideRouter(routes)
+    ]
     })
     .compileComponents();
 

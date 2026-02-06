@@ -1,7 +1,6 @@
 const gamesController = require('./gamesController.js');
 const Game = require('../models/Game.js');
 
-// Mockoljuk a Game modellt (hogy ne menjen ténylegesen adatbázishoz)
 jest.mock('../models/Game');
 
 describe('Games Controller', () => {
@@ -9,7 +8,6 @@ describe('Games Controller', () => {
   let mockResponse;
 
   beforeEach(() => {
-    // Minden teszt előtt tiszta request/response objektumok
     mockRequest = {
       query: {},
       params: {},
@@ -26,7 +24,6 @@ describe('Games Controller', () => {
   });
 
   test('getGames - sikeresen visszaadja az összes játékot', async () => {
-    // Mock adat
     const mockGames = [
       { id: 1, title: 'Super Mario', price: 19.99 },
       { id: 2, title: 'Zelda', price: 49.99 },
