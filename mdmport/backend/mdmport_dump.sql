@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `a_users` (
   `preferences` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`preferences`)),
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: b_games
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `d_ownedg` (
   KEY `gameid` (`gameid`),
   CONSTRAINT `d_ownedg_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `a_users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `d_ownedg_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `b_games` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: a_users
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `a_users` (
   `preferences` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`preferences`)),
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: b_games
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `d_ownedg` (
   KEY `gameid` (`gameid`),
   CONSTRAINT `d_ownedg_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `a_users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `d_ownedg_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `b_games` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: a_users
@@ -126,36 +126,36 @@ CREATE TABLE IF NOT EXISTS `d_ownedg` (
 # DATA DUMP FOR TABLE: a_users
 # ------------------------------------------------------------
 
-INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (1,'Admin','$2b$12$LxKFdUGTxSax1OQRj8o/1uqx1CwfwSeEfsOQNk.OSVJmVAlVYJtWO','admin',NULL);
-INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (2,'Bulya','$2b$12$yjlwvXFu.1SPhLLIUS7f.eLAKuVFqPk2lYw0samGc2qsw3Ih5z49G','user',NULL);
-INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (3,'Szakacs','$2b$12$wl0TyjcupGDoQlyt3JdgXuaNQxT48xQJUStQcE.SVyQyjQUEmI6Zy','user',NULL);
-INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (4,'Marci','$2b$12$nevQMoKcFS9qM6UXj7oT8.rbD781b1AA8cboe5gzcJAVIHusgsYIi','user',NULL);
+INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (2,'Admin','$2b$12$LxKFdUGTxSax1OQRj8o/1uqx1CwfwSeEfsOQNk.OSVJmVAlVYJtWO','admin',NULL);
+INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (2,'Admin','$2b$12$LxKFdUGTxSax1OQRj8o/1uqx1CwfwSeEfsOQNk.OSVJmVAlVYJtWO','admin',NULL);
+INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (3,'Bulya','$2b$12$yjlwvXFu.1SPhLLIUS7f.eLAKuVFqPk2lYw0samGc2qsw3Ih5z49G','user',NULL);
+INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (4,'Szakacs','$2b$12$wl0TyjcupGDoQlyt3JdgXuaNQxT48xQJUStQcE.SVyQyjQUEmI6Zy','user',NULL);
+INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (5,'Marci','$2b$12$nevQMoKcFS9qM6UXj7oT8.rbD781b1AA8cboe5gzcJAVIHusgsYIi','user',NULL);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: b_games
 # ------------------------------------------------------------
 
-INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (1,'Admin','$2b$12$LxKFdUGTxSax1OQRj8o/1uqx1CwfwSeEfsOQNk.OSVJmVAlVYJtWO','admin',NULL);
+INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (3,'Bulya','$2b$12$yjlwvXFu.1SPhLLIUS7f.eLAKuVFqPk2lYw0samGc2qsw3Ih5z49G','user',NULL);
+INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (4,'Szakacs','$2b$12$wl0TyjcupGDoQlyt3JdgXuaNQxT48xQJUStQcE.SVyQyjQUEmI6Zy','user',NULL);
+INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (5,'Marci','$2b$12$nevQMoKcFS9qM6UXj7oT8.rbD781b1AA8cboe5gzcJAVIHusgsYIi','user',NULL);
+
+# ------------------------------------------------------------
+# DATA DUMP FOR TABLE: b_games
+# ------------------------------------------------------------
+
 INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (1,'Counter-Strike 2','free top','INGYEN','Csapat alapú FPS versenyjáték.','https://cdn.cloudflare.steamstatic.com/steam/apps/730/capsule_616x353.jpg');
 INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (2,'Dota 2','free','INGYEN','MOBA — taktika és együttműködés.','https://cdn.cloudflare.steamstatic.com/steam/apps/570/capsule_616x353.jpg');
 INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (3,'Team Fortress 2','free','INGYEN','Színes, osztályalapú humoros FPS.','https://cdn.cloudflare.steamstatic.com/steam/apps/440/capsule_616x353.jpg');
 INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (4,'World Of Tanks','free','INGYEN','Többjátékos online harckocsis csatajáték.','https://cdn.cloudflare.steamstatic.com/steam/apps/1407200/capsule_616x353.jpg');
 INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (5,'Green Hell','all','$20.99','Nyílt világú túlélőszimulátor.','https://cdn.steamstatic.com/steam/apps/815370/capsule_616x353.jpg');
 INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (6,'Red Dead Redemption 2','all top','$59.99','Vadnyugati akció-kaland.','https://cdn.steamstatic.com/steam/apps/1174180/capsule_616x353.jpg');
-INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (2,'Bulya','$2b$12$yjlwvXFu.1SPhLLIUS7f.eLAKuVFqPk2lYw0samGc2qsw3Ih5z49G','user',NULL);
 INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (7,'Rust','all top','$39.99','Online túlélőjáték.','https://cdn.steamstatic.com/steam/apps/252490/capsule_616x353.jpg');
-INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (3,'Szakacs','$2b$12$wl0TyjcupGDoQlyt3JdgXuaNQxT48xQJUStQcE.SVyQyjQUEmI6Zy','user',NULL);
 INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (8,'Sons Of The Forest','all top','$28.99','Nyílt világú túlélő-horror.','https://cdn.steamstatic.com/steam/apps/1326470/capsule_616x353.jpg');
-INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (4,'Marci','$2b$12$nevQMoKcFS9qM6UXj7oT8.rbD781b1AA8cboe5gzcJAVIHusgsYIi','user',NULL);
-INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (9,'ARC Raiders','top','$39.99','Sci-fi többjátékos kaland.','https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1808500/header.jpg');
-
-INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (10,'Where Winds Meet','top free','INGYEN','Wuxia akció-RPG.','https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3564740/a6ddae369ac5ea3963775e17ef82c1c65794bed9/header_alt_assets_2.jpg?t=1772758997');
-# ------------------------------------------------------------
-INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (11,'The Witcher 3: Wild Hunt','top','$29.99','Nyílt világú fantasy RPG.','https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg');
-# DATA DUMP FOR TABLE: b_games
-INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (12,'Cyberpunk 2077','all','$82.78','Futurisztikus akció-RPG.','https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg');
-# ------------------------------------------------------------
-
+INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (9,'ARC Raiders','top','$39,99','Sci-fi többjátékos kaland.','https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1808500/header.jpg');
+INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (10,'Where Winds Meet','top free','INGYEN','Wuxia akció-RPG.','https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3564740/6d94b048393d5358690a04a7db99f2c9739c703c/header.jpg?t=1768270140');
+INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (11,'The Witcher 3: Wild Hunt','top','$29,99','Nyílt világú fantasy RPG.','https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg');
+INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (12,'Cyberpunk 2077','all','$82,78','Futurisztikus akció-RPG.','https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: c_gamephotos
@@ -165,31 +165,31 @@ INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (1,
 INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (2,'Dota 2','free','INGYEN','MOBA — taktika és együttműködés.','https://cdn.cloudflare.steamstatic.com/steam/apps/570/capsule_616x353.jpg');
 INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (3,'Team Fortress 2','free','INGYEN','Színes, osztályalapú humoros FPS.','https://cdn.cloudflare.steamstatic.com/steam/apps/440/capsule_616x353.jpg');
 INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (4,'World Of Tanks','free','INGYEN','Többjátékos online harckocsis csatajáték.','https://cdn.cloudflare.steamstatic.com/steam/apps/1407200/capsule_616x353.jpg');
+INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (5,'Green Hell','all','$20.99','Nyílt világú túlélőszimulátor.','https://cdn.steamstatic.com/steam/apps/815370/capsule_616x353.jpg');
+INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (6,'Red Dead Redemption 2','all top','$59.99','Vadnyugati akció-kaland.','https://cdn.steamstatic.com/steam/apps/1174180/capsule_616x353.jpg');
+INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (7,'Rust','all top','$39.99','Online túlélőjáték.','https://cdn.steamstatic.com/steam/apps/252490/capsule_616x353.jpg');
+INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (8,'Sons Of The Forest','all top','$28.99','Nyílt világú túlélő-horror.','https://cdn.steamstatic.com/steam/apps/1326470/capsule_616x353.jpg');
+INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (9,'ARC Raiders','top','$39,99','Sci-fi többjátékos kaland.','https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1808500/header.jpg');
+INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (10,'Where Winds Meet','top free','INGYEN','Wuxia akció-RPG.','https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3564740/6d94b048393d5358690a04a7db99f2c9739c703c/header.jpg?t=1768270140');
+INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (11,'The Witcher 3: Wild Hunt','top','$29,99','Nyílt világú fantasy RPG.','https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg');
+INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (12,'Cyberpunk 2077','all','$82,78','Futurisztikus akció-RPG.','https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg');
+
+# ------------------------------------------------------------
+# DATA DUMP FOR TABLE: c_gamephotos
+# ------------------------------------------------------------
+
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (1,1,'cs2_1.png');
-INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (5,'Green Hell','all','$20.99','Nyílt világú túlélőszimulátor.','https://cdn.steamstatic.com/steam/apps/815370/capsule_616x353.jpg');
-INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (6,'Red Dead Redemption 2','all top','$59.99','Vadnyugati akció-kaland.','https://cdn.steamstatic.com/steam/apps/1174180/capsule_616x353.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (2,1,'cs2_2.png');
-INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (7,'Rust','all top','$39.99','Online túlélőjáték.','https://cdn.steamstatic.com/steam/apps/252490/capsule_616x353.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (3,1,'cs2_3.png');
-INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (8,'Sons Of The Forest','all top','$28.99','Nyílt világú túlélő-horror.','https://cdn.steamstatic.com/steam/apps/1326470/capsule_616x353.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (4,1,'cs2_4.png');
-INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (9,'ARC Raiders','top','$39.99','Sci-fi többjátékos kaland.','https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1808500/header.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (5,2,'dota2_1.jpg');
-INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (10,'Where Winds Meet','top free','INGYEN','Wuxia akció-RPG.','https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3564740/a6ddae369ac5ea3963775e17ef82c1c65794bed9/header_alt_assets_2.jpg?t=1772758997');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (6,2,'dota2_2.jpg');
-INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (11,'The Witcher 3: Wild Hunt','top','$29.99','Nyílt világú fantasy RPG.','https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (7,2,'dota2_3.jpg');
-INSERT INTO `b_games` (`id`,`title`,`tag`,`price`,`desc`,`thumbnail`) VALUES (12,'Cyberpunk 2077','all','$82.78','Futurisztikus akció-RPG.','https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (8,2,'dota2_4.jpg');
-
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (9,3,'tf2_1.jpg');
-# ------------------------------------------------------------
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (10,3,'tf2_2.jpg');
-# DATA DUMP FOR TABLE: c_gamephotos
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (11,3,'tf2_3.jpg');
-# ------------------------------------------------------------
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (12,3,'tf2_4.jpg');
-
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (13,4,'wot_1.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (14,4,'wot_2.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (15,4,'wot_3.jpg');
@@ -288,17 +288,37 @@ INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (1,2,1);
 INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (2,2,2);
 INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (3,2,3);
 INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (4,2,4);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (5,2,6);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (6,2,7);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (7,2,8);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (15,2,9);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (8,3,1);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (10,3,2);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (9,3,6);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (11,3,7);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (12,3,9);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (13,3,11);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (14,3,12);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (5,2,5);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (6,2,6);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (7,2,7);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (8,2,8);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (16,2,9);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (22,2,10);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (10,3,1);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (15,3,2);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (14,3,6);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (9,3,7);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (11,3,9);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (12,3,11);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (13,3,12);
+
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (1,2,1);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (2,2,2);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (3,2,3);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (4,2,4);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (5,2,5);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (6,2,6);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (7,2,7);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (8,2,8);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (16,2,9);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (22,2,10);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (10,3,1);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (15,3,2);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (14,3,6);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (9,3,7);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (11,3,9);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (12,3,11);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (13,3,12);
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

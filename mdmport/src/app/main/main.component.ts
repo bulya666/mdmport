@@ -22,13 +22,19 @@ export class MainComponent implements AfterViewInit, OnInit {
   featured: any = null;
   cartItemCount: number = 0;
   shortDuration = 1500;
+  selectedGame: any = null;
 
   isInCart(name: string): boolean {
     const saved = localStorage.getItem("cart");
+    if (!saved) return false;
     const cart = saved ? JSON.parse(saved) : [];
     return cart.some((c: any) => c.name === name);
   }
-  
+
+  openGame(game: any) {
+    this.selectedGame = game;
+  }
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {
@@ -40,6 +46,7 @@ export class MainComponent implements AfterViewInit, OnInit {
       if (e.key === "cart") this.updateCartCount();
     });
   }
+
   ngAfterViewInit(): void {
     if ((window as any).initGameCatalog) {
       (window as any).initGameCatalog();
@@ -47,7 +54,7 @@ export class MainComponent implements AfterViewInit, OnInit {
   }
 
   async loadFeatured() {
-    var randomId = Math.floor(Math.random() * 12) + 1;
+    const randomId = Math.floor(Math.random() * 12) + 1;
 
     fetch(`/api/games/${randomId}`)
       .then((r) => r.json())
@@ -56,16 +63,17 @@ export class MainComponent implements AfterViewInit, OnInit {
         const f = this.featured;
         (document.getElementById("f-title") as HTMLElement).innerText = f.title;
         (document.getElementById("f-desc") as HTMLElement).innerText = f.desc;
-        (document.getElementById("f-cover") as HTMLImageElement).src =
-          f.thumbnail;
+        (document.getElementById("f-cover") as HTMLImageElement).src = f.thumbnail;
         (document.getElementById("f-price") as HTMLElement).innerText =
           f.price == 0 ? "INGYEN" : f.price;
       });
   }
+
   updateCartCount() {
     const cart = localStorage.getItem("cart");
     this.cartItemCount = cart ? JSON.parse(cart).length : 0;
   }
+
   private showToast(
     message: string,
     type: "success" | "error" = "success",
@@ -96,114 +104,57 @@ export class MainComponent implements AfterViewInit, OnInit {
   }
 
   RecomendedAddToCart() {
-    const titleEl = document.getElementById("f-title") as HTMLElement;
-    const priceEl = document.getElementById("f-price") as HTMLElement;
-    const imageEl = document.getElementById("f-cover") as HTMLImageElement;
+    const title = (document.getElementById("f-title") as HTMLElement)?.innerText?.trim();
+    const priceText = (document.getElementById("f-price") as HTMLElement)?.innerText?.trim();
+    const image = (document.getElementById("f-cover") as HTMLImageElement)?.src;
 
-    if (!this.loggedUser) {
-      this.showToast("Kérjük, jelentkezzen be a kosárhoz adáshoz.", "error");
+    if (!title || !image) return;
 
-      this.loadingRedirect = true;
-
-      setTimeout(() => {
-        this.router.navigate(["/login"]);
-      }, 1500);
-
-      return;
-    }
-
-    if (!titleEl || !priceEl || !imageEl || !imageEl.src) {
-      this.showToast("Hiba történt a játék hozzáadásakor.", "error");
-      return;
-    }
-
-    const title = titleEl.innerText.trim();
-    const priceText = priceEl.innerText.trim();
-    const image = imageEl.src;
-
-    if (!title || title.toLowerCase().includes("játék címe")) {
-      this.showToast("Érvénytelen játékcím.", "error");
-      return;
-    }
-
-    const price =
-      priceText.toLowerCase().includes("ingyen") ||
-      priceText.toLowerCase().includes("free")
-        ? 0
-        : parseFloat(priceText.replace("$", "").replace(",", "."));
-
-    const item = { name: title, price: isNaN(price) ? 0 : price, image };
-
-    const saved = localStorage.getItem("cart");
-    const cart = saved ? JSON.parse(saved) : [];
-
-    const alreadyInCart = cart.some((c: any) => c.name === item.name);
-    if (alreadyInCart) {
-      this.showToast(`A(z) "${title}" már a kosárban van.`, "error");
-      return;
-    }
-
-    cart.push(item);
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    this.updateCartCount();
-
-    this.showToast(
-      `A(z) "${title}" sikeresen hozzáadva a kosárhoz.`,
-      "success",
-      true
-    );
-    const modal = document.getElementById("modal") as HTMLElement | null;
-    if (modal) {
-      modal.style.display = "none";
-      modal.setAttribute("aria-hidden", "true");
-    }
+    this.addGameToCart(title, priceText, image);
   }
-  addToCart() {
-    const titleEl = document.getElementById("m-title") as HTMLElement;
-    const priceEl = document.getElementById("m-price") as HTMLElement;
-    const imageEl = document.getElementById("m-cover") as HTMLImageElement;
 
+  addToCart() {
+    const title = (document.getElementById("m-title") as HTMLElement)?.innerText?.trim();
+    const priceText = (document.getElementById("m-price") as HTMLElement)?.innerText?.trim();
+    const image = (document.getElementById("m-cover") as HTMLImageElement)?.src;
+
+    if (!title || !image) return;
+
+    this.addGameToCart(title, priceText, image);
+    
+  }
+
+  addGameToCart(title: string, price: number | string, image: string) {
     if (!this.loggedUser) {
       this.showToast("Kérjük, jelentkezzen be a kosárhoz adáshoz.", "error");
-
       this.loadingRedirect = true;
-
-      setTimeout(() => {
-        this.router.navigate(["/login"]);
-      }, 1500);
-
+      setTimeout(() => this.router.navigate(["/login"]), 1500);
       return;
     }
 
-    if (!titleEl || !priceEl || !imageEl || !imageEl.src) {
-      this.showToast("Hiba történt a játék hozzáadásakor.", "error");
-      return;
+    let finalPrice: number;
+    if (typeof price === 'string') {
+      finalPrice = price.toLowerCase().includes('ingyen') || price.toLowerCase().includes('free')
+        ? 0
+        : parseFloat(price.replace(/[^0-9.,]/g, '').replace(',', '.'));
+    } else {
+      finalPrice = price;
     }
 
-    const title = titleEl.innerText.trim();
-    const priceText = priceEl.innerText.trim();
-    const image = imageEl.src;
+    if (isNaN(finalPrice)) finalPrice = 0;
 
-    if (!title || title.toLowerCase().includes("játék címe")) {
+    const item = { name: title.trim(), price: finalPrice, image };
+
+    if (!item.name || item.name.toLowerCase().includes('játék címe')) {
       this.showToast("Érvénytelen játékcím.", "error");
       return;
     }
 
-    const price =
-      priceText.toLowerCase().includes("ingyen") ||
-      priceText.toLowerCase().includes("free")
-        ? 0
-        : parseFloat(priceText.replace("$", "").replace(",", "."));
-
-    const item = { name: title, price: isNaN(price) ? 0 : price, image };
-
     const saved = localStorage.getItem("cart");
-    const cart = saved ? JSON.parse(saved) : [];
+    const cart: any[] = saved ? JSON.parse(saved) : [];
 
-    const alreadyInCart = cart.some((c: any) => c.name === item.name);
-    if (alreadyInCart) {
-      this.showToast(`A(z) "${title}" már a kosárban van.`, "error");
+    if (cart.some(c => c.name === item.name)) {
+      this.showToast(`A(z) "${item.name}" már a kosárban van.`, "error");
       return;
     }
 
@@ -211,21 +162,6 @@ export class MainComponent implements AfterViewInit, OnInit {
     localStorage.setItem("cart", JSON.stringify(cart));
     this.updateCartCount();
 
-    this.showToast(
-      `A(z) "${title}" sikeresen hozzáadva a kosárhoz.`,
-      "success",
-      true
-    );
-    if (this.toastTimeout) {
-      clearTimeout(this.toastTimeout);
-    }
-    this.toastTimeout = setTimeout(() => {
-      this.toastVisible = false;
-    }, this.shortDuration);
-    const modal = document.getElementById("modal") as HTMLElement | null;
-    if (modal) {
-      modal.style.display = "none";
-      modal.setAttribute("aria-hidden", "true");
-    }
+    this.showToast(`A(z) "${item.name}" sikeresen hozzáadva a kosárhoz.`, "success", true);
   }
 }
