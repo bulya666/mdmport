@@ -23,6 +23,12 @@ export class MainComponent implements AfterViewInit, OnInit {
   cartItemCount: number = 0;
   shortDuration = 1500;
 
+  isInCart(name: string): boolean {
+    const saved = localStorage.getItem("cart");
+    const cart = saved ? JSON.parse(saved) : [];
+    return cart.some((c: any) => c.name === name);
+  }
+  
   constructor(private router: Router) {}
 
   ngOnInit(): void {

@@ -3,14 +3,12 @@ import { CommonModule } from "@angular/common";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { catchError, map, forkJoin, of } from "rxjs";
-
 import { CartItem, Game, OwnedGame } from "./cart-item.model";
-import { CdkObserveContent } from "@angular/cdk/observers";
 
 @Component({
   selector: "app-cart",
   standalone: true,
-  imports: [CommonModule, CdkObserveContent],
+  imports: [CommonModule],
   templateUrl: "./cart.component.html",
   styleUrl: "./cart.component.css",
 })
@@ -43,8 +41,8 @@ export class CartComponent implements OnInit {
     localStorage.setItem("cart", JSON.stringify(this.cartItems));
   }
 
-  removeItem(item: CartItem) {
-    this.cartItems = this.cartItems.filter((i) => i.id !== item.id);
+  removeItem(index: number) {
+    this.cartItems.splice(index, 1);
     this.saveCart();
   }
 
