@@ -135,3 +135,4 @@ C:\Users\bulya\OneDrive\Documents\mdmport\mdmAdmin\mdmAdmin\obj\Debug\net8.0-win
 C:\Users\bulya\OneDrive\Documents\mdmport\mdmAdmin\mdmAdmin\obj\Debug\net8.0-windows\mdmAdmin.pdb
 C:\Users\bulya\OneDrive\Documents\mdmport\mdmAdmin\mdmAdmin\obj\Debug\net8.0-windows\mdmAdmin.genruntimeconfig.cache
 C:\Users\bulya\OneDrive\Documents\mdmport\mdmAdmin\mdmAdmin\obj\Debug\net8.0-windows\ref\mdmAdmin.dll
+C:\Users\Technikus\Documents\GitHub\mdmport\mdmAdmin\mdmAdmin\bin\Debug\net8.0-windows\BCrypt.Net-Next.dll

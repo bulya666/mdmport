@@ -1,5 +1,8 @@
 ﻿using mdmAdmin.Data;
 using mdmAdmin.Models;
+using mdmAdmin.Security;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Linq;
 
 namespace mdmAdmin
 {
@@ -35,26 +37,52 @@ namespace mdmAdmin
         {
             UserGrid.ItemsSource = _db.Users.ToList();
         }
+        private bool TrySaveChanges()
+        {
+            try
+            {
+                _db.SaveChanges();
+                return true;
+            }
+            catch (DbUpdateException ex)
+            {
+                var msg = ex.InnerException?.Message ?? ex.GetBaseException()?.Message ?? ex.Message;
+                MessageBox.Show(msg, "Database error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+        }
 
         private void UserGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (UserGrid.SelectedItem is User u)
             {
                 UsernameBox.Text = u.Username;
-                PasswordBox.Text = u.Password;
+                PasswordBox.Text = string.Empty;
+            }
+            else
+            {
+                UsernameBox.Text = string.Empty;
+                PasswordBox.Text = string.Empty;
             }
         }
 
         private void AddUser_Click(object sender, RoutedEventArgs e)
         {
+            var passwordText = PasswordBox.Text ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(UsernameBox.Text) || string.IsNullOrWhiteSpace(passwordText))
+            {
+                MessageBox.Show("Username and password are required.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             var u = new User
             {
                 Username = UsernameBox.Text,
-                Password = PasswordBox.Text
+                Password = PasswordHasher.HashPassword(passwordText)
             };
 
             _db.Users.Add(u);
-            _db.SaveChanges();
+            if (!TrySaveChanges()) return;
             LoadUsers();
         }
 
@@ -63,7 +91,12 @@ namespace mdmAdmin
             if (UserGrid.SelectedItem is not User u) return;
 
             u.Username = UsernameBox.Text;
-            u.Password = PasswordBox.Text;
+
+            var newPassword = PasswordBox.Text ?? string.Empty;
+            if (!string.IsNullOrWhiteSpace(newPassword))
+            {
+                u.Password = PasswordHasher.HashPassword(newPassword);
+            }
 
             _db.SaveChanges();
             LoadUsers();
@@ -93,6 +126,14 @@ namespace mdmAdmin
                 GameDescBox.Text = g.Desc;
                 GameThumbnailBox.Text = g.Thumbnail;
             }
+            else
+            {
+                GameTitleBox.Text = string.Empty;
+                GameTagBox.Text = string.Empty;
+                GamePriceBox.Text = string.Empty;
+                GameDescBox.Text = string.Empty;
+                GameThumbnailBox.Text = string.Empty;
+            }
         }
 
         private void AddGame_Click(object sender, RoutedEventArgs e)
@@ -107,7 +148,7 @@ namespace mdmAdmin
             };
 
             _db.Games.Add(g);
-            _db.SaveChanges();
+            if (!TrySaveChanges()) return;
             LoadGames();
         }
 
@@ -145,6 +186,11 @@ namespace mdmAdmin
                 PhotoGameIdBox.Text = p.GameId.ToString();
                 PhotoPicBox.Text = p.Pic;
             }
+            else
+            {
+                PhotoGameIdBox.Text = string.Empty;
+                PhotoPicBox.Text = string.Empty;
+            }
         }
 
         private void AddPhoto_Click(object sender, RoutedEventArgs e)
@@ -158,7 +204,7 @@ namespace mdmAdmin
             };
 
             _db.GamePhotos.Add(p);
-            _db.SaveChanges();
+            if (!TrySaveChanges()) return;
             LoadPhotos();
         }
 
@@ -195,6 +241,11 @@ namespace mdmAdmin
                 OwnedUserIdBox.Text = o.UserId.ToString();
                 OwnedGameIdBox.Text = o.GameId.ToString();
             }
+            else
+            {
+                OwnedUserIdBox.Text = string.Empty;
+                OwnedGameIdBox.Text = string.Empty;
+            }
         }
 
         private void AddOwned_Click(object sender, RoutedEventArgs e)
@@ -209,7 +260,7 @@ namespace mdmAdmin
             };
 
             _db.Ownedg.Add(o);
-            _db.SaveChanges();
+            if (!TrySaveChanges()) return;
             LoadOwned();
         }
 
@@ -235,4 +286,5 @@ namespace mdmAdmin
             LoadOwned();
         }
     }
+
 }
