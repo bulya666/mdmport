@@ -61,24 +61,19 @@ export class LoginComponent implements OnInit {
 
     this.isLoading = true;
 
-    this.http
-      .post<any>("http://localhost:3000/api/login", {
-        username: this.username,
-        password: this.password,
-      })
-      .subscribe({
-        next: (res) => {
-          this.isLoading = false;
-          if (res?.success) {
-            localStorage.setItem("loggedUser", res.user);
-            this.toast.show("Sikeres bejelentkezés!", "success");
-            setTimeout(() => {
-              this.router.navigate(["/"]).then(() => {
-                window.location.reload();
-              });
-            }, 800);
-          }
-        },
+    this.auth.login(this.username, this.password).subscribe({
+      next: (res) => {
+        this.isLoading = false;
+        if (res?.success) {
+          localStorage.setItem("loggedUser", res.username);
+          this.toast.show("Sikeres bejelentkezés!", "success");
+          setTimeout(() => {
+            this.router.navigate(["/"]).then(() => {
+              window.location.reload();
+            });
+          }, 800);
+        }
+      },
         error: (err) => {
           this.isLoading = false;
           const msg = err.error?.message || "Hibás felhasználónév vagy jelszó!";

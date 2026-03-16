@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const { exec } = require('child_process');
+const path = require('path');
 
 const gamesCtrl = require('../controllers/gamesController');
 const usersCtrl = require('../controllers/usersController');
@@ -29,6 +31,25 @@ router.post('/login', authCtrl.login);
 router.post('/register', authCtrl.register);
 
 router.post('/send-mail', mailCtrl.sendMail);
+
+router.post('/launch-admin', async (req, res) => {
+  try {
+    // Ellenőrizzük, hogy admin-e (feltételezzük, hogy a frontend csak akkor hívja, ha admin)
+    // Itt hozzáadhatunk további ellenőrzéseket, ha szükséges
+
+    const exePath = path.join(__dirname, '../../desktop/mdmAdmin.exe');
+    exec(`start "" "${exePath}"`, (error, stdout, stderr) => {
+      if (error) {
+        console.error('Error launching admin app:', error);
+        return res.status(500).json({ success: false, message: 'Nem sikerült elindítani az admin alkalmazást' });
+      }
+      res.json({ success: true, message: 'Admin alkalmazás elindítva' });
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Szerver hiba' });
+  }
+});
 
 router.use('/settings', settingsRoutes);
 router.put('/users/:username/password', async (req, res) => {

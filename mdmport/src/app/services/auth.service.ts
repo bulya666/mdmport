@@ -15,13 +15,16 @@ export class AuthService {
   login(username: string, password: string) {
     return this.http
       .post<{
+        success: boolean;
         username: string;
+        role: string;
       }>(`${this.apiUrl}/login`, { username, password })
       .pipe(
         tap((response) => {
-          if (response?.username) {
+          if (response?.success && response.username) {
             this.loggedUserSubject.next(response.username);
             sessionStorage.setItem("user", response.username);
+            sessionStorage.setItem("role", response.role);
           }
         })
       );
@@ -37,6 +40,7 @@ export class AuthService {
   logout() {
     this.loggedUserSubject.next(null);
     sessionStorage.removeItem("user");
+    sessionStorage.removeItem("role");
   }
 
   checkSession() {
@@ -46,5 +50,13 @@ export class AuthService {
 
   getLoggedUser() {
     return this.loggedUserSubject.value;
+  }
+
+  getUserRole() {
+    return sessionStorage.getItem("role");
+  }
+
+  launchAdminApp() {
+    return this.http.post(`${this.apiUrl}/launch-admin`, {});
   }
 }

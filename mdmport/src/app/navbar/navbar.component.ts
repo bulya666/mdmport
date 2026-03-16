@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit {
   private router = inject(Router);
   private auth = inject(AuthService);
   loggedUser: string | null = null;
+  userRole: string | null = null;
   menuOpen = false;
   userMenuOpen = false;
 
@@ -34,9 +35,11 @@ export class NavbarComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.loggedUser = localStorage.getItem("loggedUser");
+        this.userRole = this.auth.getUserRole();
       }
     });
     this.loggedUser = localStorage.getItem("loggedUser");
+    this.userRole = this.auth.getUserRole();
   }
 
   toggleMenu() {
@@ -84,12 +87,25 @@ export class NavbarComponent implements OnInit {
       this.closeMenu();
       localStorage.removeItem("loggedUser");
       this.loggedUser = null;
+      this.userRole = null;
 
       this.appRef.detachView(overlayRef.hostView);
       overlayRef.destroy();
 
       this.router.navigate(["/"]).then(() => window.location.reload());
     }, 1500);
+  }
+
+  launchAdminApp() {
+    // API hívás az exe indítására
+    this.auth.launchAdminApp().subscribe({
+      next: (response) => {
+        console.log('Admin app launched');
+      },
+      error: (error) => {
+        console.error('Error launching admin app', error);
+      }
+    });
   }
 
   @HostListener("document:click", ["$event"])

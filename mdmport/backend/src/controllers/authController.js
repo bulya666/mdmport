@@ -10,7 +10,7 @@ exports.login = async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).json({ success: false, message: 'Hibás adatok' });
 
-    res.json({ success: true, user: user.username });
+    res.json({ success: true, username: user.username, role: user.role });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: 'Szerver hiba' });

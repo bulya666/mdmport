@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `a_users` (
   `preferences` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`preferences`)),
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE = InnoDB AUTO_INCREMENT = 8 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: b_games
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `d_ownedg` (
   KEY `gameid` (`gameid`),
   CONSTRAINT `d_ownedg_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `a_users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `d_ownedg_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `b_games` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 23 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: a_users
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `a_users` (
   `preferences` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`preferences`)),
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE = InnoDB AUTO_INCREMENT = 8 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: b_games
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `d_ownedg` (
   KEY `gameid` (`gameid`),
   CONSTRAINT `d_ownedg_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `a_users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `d_ownedg_ibfk_2` FOREIGN KEY (`gameid`) REFERENCES `b_games` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 23 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: a_users
@@ -131,6 +131,7 @@ INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (
 INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (3,'Bulya','$2b$12$yjlwvXFu.1SPhLLIUS7f.eLAKuVFqPk2lYw0samGc2qsw3Ih5z49G','user',NULL);
 INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (4,'Szakacs','$2b$12$wl0TyjcupGDoQlyt3JdgXuaNQxT48xQJUStQcE.SVyQyjQUEmI6Zy','user',NULL);
 INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (5,'Marci','$2b$12$nevQMoKcFS9qM6UXj7oT8.rbD781b1AA8cboe5gzcJAVIHusgsYIi','user',NULL);
+INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (8,'teszt','$2b$12$YAoOZyLxqm06mfvTgOGqu.GMWsWrsR2cn06vI76293QieaSFxFuFa','user',NULL);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: b_games
@@ -139,6 +140,7 @@ INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (
 INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (3,'Bulya','$2b$12$yjlwvXFu.1SPhLLIUS7f.eLAKuVFqPk2lYw0samGc2qsw3Ih5z49G','user',NULL);
 INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (4,'Szakacs','$2b$12$wl0TyjcupGDoQlyt3JdgXuaNQxT48xQJUStQcE.SVyQyjQUEmI6Zy','user',NULL);
 INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (5,'Marci','$2b$12$nevQMoKcFS9qM6UXj7oT8.rbD781b1AA8cboe5gzcJAVIHusgsYIi','user',NULL);
+INSERT INTO `a_users` (`id`,`username`,`password`,`role`,`preferences`) VALUES (8,'teszt','$2b$12$YAoOZyLxqm06mfvTgOGqu.GMWsWrsR2cn06vI76293QieaSFxFuFa','user',NULL);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: b_games
@@ -223,6 +225,7 @@ INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (42,11,'tw3_2.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (43,11,'tw3_3.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (44,11,'tw3_4.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (45,12,'cyber_1.jpg');
+INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (1,1,'cs2_1.png');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (46,12,'cyber_2.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (47,12,'cyber_3.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (48,12,'cyber_4.jpeg');
@@ -231,7 +234,6 @@ INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (48,12,'cyber_4.jpeg');
 # DATA DUMP FOR TABLE: d_ownedg
 # ------------------------------------------------------------
 
-INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (1,1,'cs2_1.png');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (2,1,'cs2_2.png');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (3,1,'cs2_3.png');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (4,1,'cs2_4.png');
@@ -241,30 +243,54 @@ INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (7,2,'dota2_3.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (8,2,'dota2_4.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (9,3,'tf2_1.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (10,3,'tf2_2.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (1,2,1);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (11,3,'tf2_3.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (12,3,'tf2_4.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (2,2,2);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (13,4,'wot_1.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (3,2,3);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (14,4,'wot_2.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (4,2,4);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (15,4,'wot_3.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (5,2,5);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (16,4,'wot_4.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (6,2,6);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (17,5,'greenhell_1.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (7,2,7);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (18,5,'greenhell_2.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (8,2,8);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (19,5,'greenhell_3.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (16,2,9);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (20,5,'greenhell_4.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (22,2,10);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (21,6,'rdr2_1.png');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (23,2,11);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (22,6,'rdr2_2.png');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (10,3,1);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (23,6,'rdr2_3.png');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (15,3,2);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (24,6,'rdr2_4.png');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (14,3,6);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (25,7,'rust_1.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (9,3,7);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (26,7,'rust_2.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (11,3,9);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (27,7,'rust_3.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (12,3,11);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (28,7,'rust_4.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (13,3,12);
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (29,8,1);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (29,8,'sotf_1.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (28,8,3);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (30,8,'sotf_2.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (31,8,'sotf_3.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (26,8,4);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (32,8,'sotf_4.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (25,8,5);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (33,9,'arc_1.jpg');
+INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (27,8,11);
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (34,9,'arc_2.jpg');
+
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (35,9,'arc_3.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (36,9,'arc_4.jpg');
 INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (37,10,'wwm_1.jpg');
@@ -283,42 +309,6 @@ INSERT INTO `c_gamephotos` (`id`,`gameid`,`pic`) VALUES (48,12,'cyber_4.jpeg');
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: d_ownedg
 # ------------------------------------------------------------
-
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (1,2,1);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (2,2,2);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (3,2,3);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (4,2,4);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (5,2,5);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (6,2,6);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (7,2,7);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (8,2,8);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (16,2,9);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (22,2,10);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (10,3,1);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (15,3,2);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (14,3,6);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (9,3,7);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (11,3,9);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (12,3,11);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (13,3,12);
-
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (1,2,1);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (2,2,2);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (3,2,3);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (4,2,4);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (5,2,5);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (6,2,6);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (7,2,7);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (8,2,8);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (16,2,9);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (22,2,10);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (10,3,1);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (15,3,2);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (14,3,6);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (9,3,7);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (11,3,9);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (12,3,11);
-INSERT INTO `d_ownedg` (`id`,`userid`,`gameid`) VALUES (13,3,12);
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
